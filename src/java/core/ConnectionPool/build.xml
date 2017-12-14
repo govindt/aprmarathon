@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+
+<!-- 
+   NAME
+     build.xml - <one-line expansion of the name>
+
+   DESCRIPTION
+     <short description of component this file declares/defines>
+
+   NOTES
+     <other useful comments, qualifications, etc.>
+
+   MODIFIED   (MM/DD/YY)
+   gothirum    10/10/11 - Creation
+
+-->
+<project default="compile-core-connectionpool">
+<property environment="env" />
+<import file="${env.JAVA_DEV_ROOT}/build.xml"/>
+</project>

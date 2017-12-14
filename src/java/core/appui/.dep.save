@@ -1,0 +1,21 @@
+tt_default: tt_all
+
+
+../../../../jst/classes/core/appui/UtilBean.class : UtilBean.java ../../../../jst/classes/core/ui/InputElement.class ../../../../jst/classes/core/util/Constants.class ../../../../jst/classes/core/util/AppException.class ../../../../jst/classes/core/util/App.class $(JARHOME)/jakarta-regexp-1.2.jar ../../../../jst/classes/core/ui/StringElement.class ../../../../jst/classes/core/ui/AnchorElement.class ../../../../jst/classes/core/util/QAConstants.class $(JARHOME)/servlet.jar ../../../../jst/classes/core/ui/SelectElement.class ../../../../jst/classes/core/ui/TableElement.class ../../../../jst/classes/core/ui/TableRowElement.class ../../../../jst/classes/core/ui/TableDataElement.class ../../../../jst/classes/core/ui/BoldElement.class ../../../../jst/classes/core/util/LdapUtil.class ../../../../jst/classes/core/ui/HTMLElementObject.class
+	$(JAVAC) $(JAVAC_FLAGS) -d ../../../../jst/classes/ $<
+
+# WARNING: [UtilBean.java, 13] declared package java.lang is not in CLASSPATH.
+# WARNING: [UtilBean.java, 14] declared package java.util is not in CLASSPATH.
+# WARNING: [UtilBean.java, 15] declared package java.text is not in CLASSPATH.
+# WARNING: [UtilBean.java, 25] Cannot resolve dependency for possible type String.class, so none created
+# WARNING: [UtilBean.java, 182] Cannot resolve dependency for possible type NumberFormat.class, so none created
+# WARNING: [UtilBean.java, 260] Cannot resolve dependency for possible type StringTokenizer.class, so none created
+# WARNING: [UtilBean.java, 372] Cannot resolve dependency for possible type Vector.class, so none created
+# WARNING: [UtilBean.java, 486] Cannot resolve dependency for possible type Hashtable.class, so none created
+# WARNING: [UtilBean.java, 490] Cannot resolve dependency for possible type Integer.class, so none created
+# WARNING: [UtilBean.java, 491] Cannot resolve dependency for possible type NumberFormatException.class, so none created
+# WARNING: [UtilBean.java, 622] Cannot resolve dependency for possible type Properties.class, so none created
+
+TGTS = ../../../../jst/classes/core/appui/UtilBean.class 
+tt_all: all
+

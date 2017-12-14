@@ -1,0 +1,13 @@
+tt_default: tt_all
+
+
+/home1/govind/testtool/jst/classes/core/busobj/IdObject.class : IdObject.java
+	$(JAVAC) $(JAVAC_FLAGS) -d /home1/govind/testtool/jst/classes/ $<
+
+# WARNING: [IdObject.java, 29] Cannot resolve dependency for possible type String.class, so none created
+# WARNING: [IdObject.java, 91] Cannot resolve dependency for possible type Object.class, so none created
+# WARNING: [IdObject.java, 99] Cannot resolve dependency for possible type Exception.class, so none created
+
+TGTS = /home1/govind/testtool/jst/classes/core/busobj/IdObject.class 
+tt_all: all
+

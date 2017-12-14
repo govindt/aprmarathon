@@ -1,0 +1,88 @@
+tt_default: tt_all
+
+
+../../../../jst/classes/app/businterface/BuildInterface.class : BuildInterface.java ../../../../jst/classes/app/busobj/BuildObject.class ../../../../jst/classes/core/util/AppException.class
+	$(JAVAC) $(JAVAC_FLAGS) -d ../../../../jst/classes/ $<
+
+# WARNING: [BuildInterface.java, 11] declared package java.lang is not in CLASSPATH.
+# WARNING: [BuildInterface.java, 12] declared package java.util is not in CLASSPATH.
+# WARNING: [BuildInterface.java, 50] Cannot resolve dependency for possible type Vector.class, so none created
+# WARNING: [BuildInterface.java, 74] Cannot resolve dependency for possible type Integer.class, so none created
+
+../../../../jst/classes/app/businterface/TopologyInterface.class : TopologyInterface.java ../../../../jst/classes/app/busobj/TopologyObject.class ../../../../jst/classes/core/util/AppException.class
+	$(JAVAC) $(JAVAC_FLAGS) -d ../../../../jst/classes/ $<
+
+# WARNING: [TopologyInterface.java, 11] declared package java.lang is not in CLASSPATH.
+# WARNING: [TopologyInterface.java, 12] declared package java.util is not in CLASSPATH.
+# WARNING: [TopologyInterface.java, 50] Cannot resolve dependency for possible type Vector.class, so none created
+# WARNING: [TopologyInterface.java, 62] Cannot resolve dependency for possible type Integer.class, so none created
+
+../../../../jst/classes/app/businterface/TestBuildInterface.class : TestBuildInterface.java ../../../../jst/classes/app/busobj/TestBuildObject.class ../../../../jst/classes/core/util/AppException.class
+	$(JAVAC) $(JAVAC_FLAGS) -d ../../../../jst/classes/ $<
+
+# WARNING: [TestBuildInterface.java, 11] declared package java.lang is not in CLASSPATH.
+# WARNING: [TestBuildInterface.java, 12] declared package java.util is not in CLASSPATH.
+# WARNING: [TestBuildInterface.java, 50] Cannot resolve dependency for possible type Vector.class, so none created
+# WARNING: [TestBuildInterface.java, 149] Cannot resolve dependency for possible type String.class, so none created
+# WARNING: [TestBuildInterface.java, 240] Cannot resolve dependency for possible type Integer.class, so none created
+
+../../../../jst/classes/app/businterface/TestInterface.class : TestInterface.java ../../../../jst/classes/app/busobj/TestObject.class ../../../../jst/classes/core/util/AppException.class
+	$(JAVAC) $(JAVAC_FLAGS) -d ../../../../jst/classes/ $<
+
+# WARNING: [TestInterface.java, 11] declared package java.lang is not in CLASSPATH.
+# WARNING: [TestInterface.java, 12] declared package java.util is not in CLASSPATH.
+# WARNING: [TestInterface.java, 50] Cannot resolve dependency for possible type Vector.class, so none created
+# WARNING: [TestInterface.java, 77] Cannot resolve dependency for possible type Integer.class, so none created
+
+../../../../jst/classes/app/businterface/TestSuiteInterface.class : TestSuiteInterface.java ../../../../jst/classes/app/busobj/TestSuiteObject.class ../../../../jst/classes/core/util/AppException.class
+	$(JAVAC) $(JAVAC_FLAGS) -d ../../../../jst/classes/ $<
+
+# WARNING: [TestSuiteInterface.java, 11] declared package java.lang is not in CLASSPATH.
+# WARNING: [TestSuiteInterface.java, 12] declared package java.util is not in CLASSPATH.
+# WARNING: [TestSuiteInterface.java, 50] Cannot resolve dependency for possible type Vector.class, so none created
+# WARNING: [TestSuiteInterface.java, 76] Cannot resolve dependency for possible type Integer.class, so none created
+
+../../../../jst/classes/app/businterface/UserTblInterface.class : UserTblInterface.java ../../../../jst/classes/core/util/AppException.class ../../../../jst/classes/app/busobj/UserTblObject.class
+	$(JAVAC) $(JAVAC_FLAGS) -d ../../../../jst/classes/ $<
+
+# WARNING: [UserTblInterface.java, 11] declared package java.lang is not in CLASSPATH.
+# WARNING: [UserTblInterface.java, 12] declared package java.util is not in CLASSPATH.
+# WARNING: [UserTblInterface.java, 37] Cannot resolve dependency for possible type String.class, so none created
+# WARNING: [UserTblInterface.java, 93] Cannot resolve dependency for possible type Vector.class, so none created
+# WARNING: [UserTblInterface.java, 105] Cannot resolve dependency for possible type Integer.class, so none created
+
+../../../../jst/classes/app/businterface/TestResultsInterface.class : TestResultsInterface.java ../../../../jst/classes/app/busobj/TestResultsObject.class ../../../../jst/classes/core/util/AppException.class
+	$(JAVAC) $(JAVAC_FLAGS) -d ../../../../jst/classes/ $<
+
+# WARNING: [TestResultsInterface.java, 11] declared package java.lang is not in CLASSPATH.
+# WARNING: [TestResultsInterface.java, 12] declared package java.util is not in CLASSPATH.
+# WARNING: [TestResultsInterface.java, 52] Cannot resolve dependency for possible type Vector.class, so none created
+# WARNING: [TestResultsInterface.java, 108] Cannot resolve dependency for possible type Integer.class, so none created
+
+../../../../jst/classes/app/businterface/MachinesInterface.class : MachinesInterface.java ../../../../jst/classes/app/busobj/MachinesObject.class ../../../../jst/classes/core/util/AppException.class
+	$(JAVAC) $(JAVAC_FLAGS) -d ../../../../jst/classes/ $<
+
+# WARNING: [MachinesInterface.java, 11] declared package java.lang is not in CLASSPATH.
+# WARNING: [MachinesInterface.java, 12] declared package java.util is not in CLASSPATH.
+# WARNING: [MachinesInterface.java, 50] Cannot resolve dependency for possible type Vector.class, so none created
+# WARNING: [MachinesInterface.java, 62] Cannot resolve dependency for possible type Integer.class, so none created
+
+../../../../jst/classes/app/businterface/ProductInterface.class : ProductInterface.java ../../../../jst/classes/app/busobj/ProductObject.class ../../../../jst/classes/core/util/AppException.class
+	$(JAVAC) $(JAVAC_FLAGS) -d ../../../../jst/classes/ $<
+
+# WARNING: [ProductInterface.java, 11] declared package java.lang is not in CLASSPATH.
+# WARNING: [ProductInterface.java, 12] declared package java.util is not in CLASSPATH.
+# WARNING: [ProductInterface.java, 50] Cannot resolve dependency for possible type Vector.class, so none created
+# WARNING: [ProductInterface.java, 62] Cannot resolve dependency for possible type Integer.class, so none created
+
+../../../../jst/classes/app/businterface/TestTypeInterface.class : TestTypeInterface.java ../../../../jst/classes/app/busobj/TestTypeObject.class ../../../../jst/classes/core/util/AppException.class
+	$(JAVAC) $(JAVAC_FLAGS) -d ../../../../jst/classes/ $<
+
+# WARNING: [TestTypeInterface.java, 11] declared package java.lang is not in CLASSPATH.
+# WARNING: [TestTypeInterface.java, 12] declared package java.util is not in CLASSPATH.
+# WARNING: [TestTypeInterface.java, 50] Cannot resolve dependency for possible type Vector.class, so none created
+# WARNING: [TestTypeInterface.java, 62] Cannot resolve dependency for possible type Integer.class, so none created
+
+TGTS = ../../../../jst/classes/app/businterface/BuildInterface.class ../../../../jst/classes/app/businterface/TopologyInterface.class ../../../../jst/classes/app/businterface/TestBuildInterface.class ../../../../jst/classes/app/businterface/TestInterface.class ../../../../jst/classes/app/businterface/TestSuiteInterface.class ../../../../jst/classes/app/businterface/UserTblInterface.class ../../../../jst/classes/app/businterface/TestResultsInterface.class ../../../../jst/classes/app/businterface/MachinesInterface.class ../../../../jst/classes/app/businterface/ProductInterface.class ../../../../jst/classes/app/businterface/TestTypeInterface.class 
+tt_all: all
+

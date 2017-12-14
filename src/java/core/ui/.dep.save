@@ -1,0 +1,193 @@
+tt_default: tt_all
+
+
+../../../../jst/classes/core/ui/AnchorElement.class : AnchorElement.java ../../../../jst/classes/core/ui/HTMLElementObject.class ../../../../jst/classes/core/ui/InputElement.class ../../../../jst/classes/core/ui/ImageElement.class
+	$(JAVAC) $(JAVAC_FLAGS) -d ../../../../jst/classes/ $<
+
+# WARNING: [AnchorElement.java, 15] declared package java.lang is not in CLASSPATH.
+# WARNING: [AnchorElement.java, 40] Cannot resolve dependency for possible type String.class, so none created
+# WARNING: [AnchorElement.java, 209] Cannot resolve dependency for possible type StringBuffer.class, so none created
+
+../../../../jst/classes/core/ui/BlinkElement.class : BlinkElement.java ../../../../jst/classes/core/ui/HTMLElementObject.class
+	$(JAVAC) $(JAVAC_FLAGS) -d ../../../../jst/classes/ $<
+
+# WARNING: [BlinkElement.java, 15] declared package java.lang is not in CLASSPATH.
+# WARNING: [BlinkElement.java, 57] Cannot resolve dependency for possible type String.class, so none created
+# WARNING: [BlinkElement.java, 69] Cannot resolve dependency for possible type StringBuffer.class, so none created
+
+../../../../jst/classes/core/ui/BoldElement.class : BoldElement.java ../../../../jst/classes/core/ui/HTMLElementObject.class
+	$(JAVAC) $(JAVAC_FLAGS) -d ../../../../jst/classes/ $<
+
+# WARNING: [BoldElement.java, 16] declared package java.lang is not in CLASSPATH.
+# WARNING: [BoldElement.java, 39] Cannot resolve dependency for possible type String.class, so none created
+# WARNING: [BoldElement.java, 74] Cannot resolve dependency for possible type StringBuffer.class, so none created
+
+../../../../jst/classes/core/ui/BreakElement.class : BreakElement.java ../../../../jst/classes/core/ui/HTMLElementObject.class
+	$(JAVAC) $(JAVAC_FLAGS) -d ../../../../jst/classes/ $<
+
+# WARNING: [BreakElement.java, 16] declared package java.lang is not in CLASSPATH.
+# WARNING: [BreakElement.java, 56] Cannot resolve dependency for possible type StringBuffer.class, so none created
+
+../../../../jst/classes/core/ui/CaptionElement.class : CaptionElement.java ../../../../jst/classes/core/ui/HTMLElementObject.class
+	$(JAVAC) $(JAVAC_FLAGS) -d ../../../../jst/classes/ $<
+
+# WARNING: [CaptionElement.java, 15] declared package java.lang is not in CLASSPATH.
+# WARNING: [CaptionElement.java, 56] Cannot resolve dependency for possible type String.class, so none created
+# WARNING: [CaptionElement.java, 68] Cannot resolve dependency for possible type StringBuffer.class, so none created
+
+../../../../jst/classes/core/ui/CenteredElement.class : CenteredElement.java ../../../../jst/classes/core/ui/HTMLElementObject.class
+	$(JAVAC) $(JAVAC_FLAGS) -d ../../../../jst/classes/ $<
+
+# WARNING: [CenteredElement.java, 15] declared package java.lang is not in CLASSPATH.
+# WARNING: [CenteredElement.java, 56] Cannot resolve dependency for possible type String.class, so none created
+# WARNING: [CenteredElement.java, 68] Cannot resolve dependency for possible type StringBuffer.class, so none created
+
+../../../../jst/classes/core/ui/HTMLElement.class : HTMLElement.java ../../../../jst/classes/core/ui/InputElement.class ../../../../jst/classes/core/ui/ImageElement.class ../../../../jst/classes/core/ui/CaptionElement.class ../../../../jst/classes/core/ui/TableRowElement.class ../../../../jst/classes/core/ui/TableHeadingElement.class ../../../../jst/classes/core/ui/TableDataElement.class
+	$(JAVAC) $(JAVAC_FLAGS) -d ../../../../jst/classes/ $<
+
+# WARNING: [HTMLElement.java, 15] declared package java.lang is not in CLASSPATH.
+# WARNING: [HTMLElement.java, 16] declared package java.util is not in CLASSPATH.
+# WARNING: [HTMLElement.java, 25] Cannot resolve dependency for possible type String.class, so none created
+# WARNING: [HTMLElement.java, 37] Cannot resolve dependency for possible type Hashtable.class, so none created
+# WARNING: [HTMLElement.java, 43] Cannot resolve dependency for possible type Vector.class, so none created
+
+../../../../jst/classes/core/ui/HTMLElementObject.class : HTMLElementObject.java ../../../../jst/classes/core/ui/HTMLElement.class ../../../../jst/classes/core/ui/InputElement.class ../../../../jst/classes/core/ui/ImageElement.class ../../../../jst/classes/core/ui/CaptionElement.class ../../../../jst/classes/core/ui/TableRowElement.class ../../../../jst/classes/core/ui/TableDataElement.class ../../../../jst/classes/core/ui/TableHeadingElement.class
+	$(JAVAC) $(JAVAC_FLAGS) -d ../../../../jst/classes/ $<
+
+# WARNING: [HTMLElementObject.java, 15] declared package java.lang is not in CLASSPATH.
+# WARNING: [HTMLElementObject.java, 16] declared package java.util is not in CLASSPATH.
+# WARNING: [HTMLElementObject.java, 28] Cannot resolve dependency for possible type String.class, so none created
+# WARNING: [HTMLElementObject.java, 118] Cannot resolve dependency for possible type Hashtable.class, so none created
+# WARNING: [HTMLElementObject.java, 127] Cannot resolve dependency for possible type Vector.class, so none created
+
+../../../../jst/classes/core/ui/HeadingElement.class : HeadingElement.java ../../../../jst/classes/core/ui/HTMLElementObject.class
+	$(JAVAC) $(JAVAC_FLAGS) -d ../../../../jst/classes/ $<
+
+# WARNING: [HeadingElement.java, 54] Cannot resolve dependency for possible type String.class, so none created
+# WARNING: [HeadingElement.java, 95] Cannot resolve dependency for possible type StringBuffer.class, so none created
+
+../../../../jst/classes/core/ui/HorizontalRuleElement.class : HorizontalRuleElement.java ../../../../jst/classes/core/ui/HTMLElementObject.class
+	$(JAVAC) $(JAVAC_FLAGS) -d ../../../../jst/classes/ $<
+
+# WARNING: [HorizontalRuleElement.java, 15] declared package java.lang is not in CLASSPATH.
+# WARNING: [HorizontalRuleElement.java, 55] Cannot resolve dependency for possible type StringBuffer.class, so none created
+
+../../../../jst/classes/core/ui/ImageElement.class : ImageElement.java ../../../../jst/classes/core/ui/HTMLElementObject.class
+	$(JAVAC) $(JAVAC_FLAGS) -d ../../../../jst/classes/ $<
+
+# WARNING: [ImageElement.java, 15] declared package java.lang is not in CLASSPATH.
+# WARNING: [ImageElement.java, 40] Cannot resolve dependency for possible type String.class, so none created
+# WARNING: [ImageElement.java, 227] Cannot resolve dependency for possible type StringBuffer.class, so none created
+
+../../../../jst/classes/core/ui/InputElement.class : InputElement.java ../../../../jst/classes/core/ui/HTMLElementObject.class
+	$(JAVAC) $(JAVAC_FLAGS) -d ../../../../jst/classes/ $<
+
+# WARNING: [InputElement.java, 15] declared package java.lang is not in CLASSPATH.
+# WARNING: [InputElement.java, 20] Cannot resolve dependency for possible type String.class, so none created
+# WARNING: [InputElement.java, 297] Cannot resolve dependency for possible type StringBuffer.class, so none created
+
+../../../../jst/classes/core/ui/ItalicElement.class : ItalicElement.java ../../../../jst/classes/core/ui/HTMLElementObject.class
+	$(JAVAC) $(JAVAC_FLAGS) -d ../../../../jst/classes/ $<
+
+# WARNING: [ItalicElement.java, 15] declared package java.lang is not in CLASSPATH.
+# WARNING: [ItalicElement.java, 56] Cannot resolve dependency for possible type String.class, so none created
+# WARNING: [ItalicElement.java, 68] Cannot resolve dependency for possible type StringBuffer.class, so none created
+
+../../../../jst/classes/core/ui/ParagraphElement.class : ParagraphElement.java ../../../../jst/classes/core/ui/HTMLElementObject.class
+	$(JAVAC) $(JAVAC_FLAGS) -d ../../../../jst/classes/ $<
+
+# WARNING: [ParagraphElement.java, 15] declared package java.lang is not in CLASSPATH.
+# WARNING: [ParagraphElement.java, 56] Cannot resolve dependency for possible type String.class, so none created
+# WARNING: [ParagraphElement.java, 68] Cannot resolve dependency for possible type StringBuffer.class, so none created
+
+../../../../jst/classes/core/ui/SelectElement.class : SelectElement.java ../../../../jst/classes/core/ui/HTMLElementObject.class
+	$(JAVAC) $(JAVAC_FLAGS) -d ../../../../jst/classes/ $<
+
+# WARNING: [SelectElement.java, 15] declared package java.lang is not in CLASSPATH.
+# WARNING: [SelectElement.java, 16] declared package java.util is not in CLASSPATH.
+# WARNING: [SelectElement.java, 54] Cannot resolve dependency for possible type Hashtable.class, so none created
+# WARNING: [SelectElement.java, 55] Cannot resolve dependency for possible type Vector.class, so none created
+# WARNING: [SelectElement.java, 57] Cannot resolve dependency for possible type String.class, so none created
+# WARNING: [SelectElement.java, 299] Cannot resolve dependency for possible type StringBuffer.class, so none created
+# WARNING: [SelectElement.java, 321] Cannot resolve dependency for possible type Enumeration.class, so none created
+# WARNING: [SelectElement.java, 327] Cannot resolve dependency for possible type NullPointerException.class, so none created
+# WARNING: [SelectElement.java, 336] Cannot resolve dependency for possible type StringTokenizer.class, so none created
+
+../../../../jst/classes/core/ui/StringElement.class : StringElement.java ../../../../jst/classes/core/ui/HTMLElementObject.class ../../../../jst/classes/core/ui/BoldElement.class ../../../../jst/classes/core/ui/ItalicElement.class ../../../../jst/classes/core/ui/ParagraphElement.class ../../../../jst/classes/core/ui/UnderlineElement.class ../../../../jst/classes/core/ui/BlinkElement.class ../../../../jst/classes/core/ui/HeadingElement.class ../../../../jst/classes/core/ui/AnchorElement.class ../../../../jst/classes/core/ui/CenteredElement.class
+	$(JAVAC) $(JAVAC_FLAGS) -d ../../../../jst/classes/ $<
+
+# WARNING: [StringElement.java, 15] declared package java.lang is not in CLASSPATH.
+# WARNING: [StringElement.java, 40] Cannot resolve dependency for possible type String.class, so none created
+# WARNING: [StringElement.java, 133] Cannot resolve dependency for possible type StringBuffer.class, so none created
+
+../../../../jst/classes/core/ui/TableDataElement.class : TableDataElement.java ../../../../jst/classes/core/ui/HTMLElementObject.class ../../../../jst/classes/core/ui/HTMLElement.class
+	$(JAVAC) $(JAVAC_FLAGS) -d ../../../../jst/classes/ $<
+
+# WARNING: [TableDataElement.java, 15] declared package java.lang is not in CLASSPATH.
+# WARNING: [TableDataElement.java, 16] declared package java.util is not in CLASSPATH.
+# WARNING: [TableDataElement.java, 87] Cannot resolve dependency for possible type String.class, so none created
+# WARNING: [TableDataElement.java, 95] Cannot resolve dependency for possible type Vector.class, so none created
+# WARNING: [TableDataElement.java, 271] Cannot resolve dependency for possible type StringBuffer.class, so none created
+
+../../../../jst/classes/core/ui/TableElement.class : TableElement.java ../../../../jst/classes/core/ui/HTMLElementObject.class ../../../../jst/classes/core/ui/CaptionElement.class ../../../../jst/classes/core/ui/TableRowElement.class
+	$(JAVAC) $(JAVAC_FLAGS) -d ../../../../jst/classes/ $<
+
+# WARNING: [TableElement.java, 15] declared package java.lang is not in CLASSPATH.
+# WARNING: [TableElement.java, 16] declared package java.util is not in CLASSPATH.
+# WARNING: [TableElement.java, 40] Cannot resolve dependency for possible type String.class, so none created
+# WARNING: [TableElement.java, 47] Cannot resolve dependency for possible type Vector.class, so none created
+# WARNING: [TableElement.java, 249] Cannot resolve dependency for possible type StringBuffer.class, so none created
+# WARNING: [TableElement.java, 286] Cannot resolve dependency for possible type Enumeration.class, so none created
+
+../../../../jst/classes/core/ui/TableHeadingElement.class : TableHeadingElement.java ../../../../jst/classes/core/ui/HTMLElementObject.class ../../../../jst/classes/core/ui/HTMLElement.class
+	$(JAVAC) $(JAVAC_FLAGS) -d ../../../../jst/classes/ $<
+
+# WARNING: [TableHeadingElement.java, 15] declared package java.lang is not in CLASSPATH.
+# WARNING: [TableHeadingElement.java, 16] declared package java.util is not in CLASSPATH.
+# WARNING: [TableHeadingElement.java, 87] Cannot resolve dependency for possible type String.class, so none created
+# WARNING: [TableHeadingElement.java, 93] Cannot resolve dependency for possible type Vector.class, so none created
+# WARNING: [TableHeadingElement.java, 245] Cannot resolve dependency for possible type StringBuffer.class, so none created
+
+../../../../jst/classes/core/ui/TableRowElement.class : TableRowElement.java ../../../../jst/classes/core/ui/HTMLElementObject.class ../../../../jst/classes/core/ui/TableHeadingElement.class ../../../../jst/classes/core/ui/TableDataElement.class
+	$(JAVAC) $(JAVAC_FLAGS) -d ../../../../jst/classes/ $<
+
+# WARNING: [TableRowElement.java, 15] declared package java.lang is not in CLASSPATH.
+# WARNING: [TableRowElement.java, 16] declared package java.util is not in CLASSPATH.
+# WARNING: [TableRowElement.java, 87] Cannot resolve dependency for possible type String.class, so none created
+# WARNING: [TableRowElement.java, 92] Cannot resolve dependency for possible type Vector.class, so none created
+# WARNING: [TableRowElement.java, 223] Cannot resolve dependency for possible type StringBuffer.class, so none created
+# WARNING: [TableRowElement.java, 246] Cannot resolve dependency for possible type Enumeration.class, so none created
+
+../../../../jst/classes/core/ui/TextareaElement.class : TextareaElement.java ../../../../jst/classes/core/ui/HTMLElementObject.class
+	$(JAVAC) $(JAVAC_FLAGS) -d ../../../../jst/classes/ $<
+
+# WARNING: [TextareaElement.java, 15] declared package java.lang is not in CLASSPATH.
+# WARNING: [TextareaElement.java, 16] declared package java.io is not in CLASSPATH.
+# WARNING: [TextareaElement.java, 17] declared package java.util is not in CLASSPATH.
+# WARNING: [TextareaElement.java, 44] Cannot resolve dependency for possible type String.class, so none created
+# WARNING: [TextareaElement.java, 162] Cannot resolve dependency for possible type StringBuffer.class, so none created
+
+../../../../jst/classes/core/ui/UnderlineElement.class : UnderlineElement.java ../../../../jst/classes/core/ui/HTMLElementObject.class
+	$(JAVAC) $(JAVAC_FLAGS) -d ../../../../jst/classes/ $<
+
+# WARNING: [UnderlineElement.java, 15] declared package java.lang is not in CLASSPATH.
+# WARNING: [UnderlineElement.java, 56] Cannot resolve dependency for possible type String.class, so none created
+# WARNING: [UnderlineElement.java, 68] Cannot resolve dependency for possible type StringBuffer.class, so none created
+
+../../../../jst/classes/core/ui/UnorderedListElement.class : UnorderedListElement.java ../../../../jst/classes/core/ui/HTMLElementObject.class
+	$(JAVAC) $(JAVAC_FLAGS) -d ../../../../jst/classes/ $<
+
+# WARNING: [UnorderedListElement.java, 15] declared package java.lang is not in CLASSPATH.
+# WARNING: [UnorderedListElement.java, 56] Cannot resolve dependency for possible type String.class, so none created
+# WARNING: [UnorderedListElement.java, 68] Cannot resolve dependency for possible type StringBuffer.class, so none created
+
+../../../../jst/classes/core/ui/DivElement.class : DivElement.java ../../../../jst/classes/core/ui/HTMLElementObject.class
+	$(JAVAC) $(JAVAC_FLAGS) -d ../../../../jst/classes/ $<
+
+# WARNING: [DivElement.java, 15] declared package java.lang is not in CLASSPATH.
+# WARNING: [DivElement.java, 39] Cannot resolve dependency for possible type String.class, so none created
+# WARNING: [DivElement.java, 84] Cannot resolve dependency for possible type StringBuffer.class, so none created
+
+TGTS = ../../../../jst/classes/core/ui/AnchorElement.class ../../../../jst/classes/core/ui/BlinkElement.class ../../../../jst/classes/core/ui/BoldElement.class ../../../../jst/classes/core/ui/BreakElement.class ../../../../jst/classes/core/ui/CaptionElement.class ../../../../jst/classes/core/ui/CenteredElement.class ../../../../jst/classes/core/ui/HTMLElement.class ../../../../jst/classes/core/ui/HTMLElementObject.class ../../../../jst/classes/core/ui/HeadingElement.class ../../../../jst/classes/core/ui/HorizontalRuleElement.class ../../../../jst/classes/core/ui/ImageElement.class ../../../../jst/classes/core/ui/InputElement.class ../../../../jst/classes/core/ui/ItalicElement.class ../../../../jst/classes/core/ui/ParagraphElement.class ../../../../jst/classes/core/ui/SelectElement.class ../../../../jst/classes/core/ui/StringElement.class ../../../../jst/classes/core/ui/TableDataElement.class ../../../../jst/classes/core/ui/TableElement.class ../../../../jst/classes/core/ui/TableHeadingElement.class ../../../../jst/classes/core/ui/TableRowElement.class ../../../../jst/classes/core/ui/TextareaElement.class ../../../../jst/classes/core/ui/UnderlineElement.class ../../../../jst/classes/core/ui/UnorderedListElement.class ../../../../jst/classes/core/ui/DivElement.class 
+tt_all: all
+

@@ -1,0 +1,34 @@
+tt_default: tt_all
+
+
+../../../../jst/classes/core/ConnectionPool/ConnectionPool.class : ConnectionPool.java ../../../../jst/classes/core/ConnectionPool/LogWriter.class
+	$(JAVAC) $(JAVAC_FLAGS) -d ../../../../jst/classes/ $<
+
+# WARNING: [ConnectionPool.java, 204] import package core.ConnectionPool is not in CLASSPATH. Creating pseudo-package.
+# WARNING: [ConnectionPool.java, 12] declared package java.sql is not in CLASSPATH.
+# WARNING: [ConnectionPool.java, 13] declared package java.util is not in CLASSPATH.
+# WARNING: [ConnectionPool.java, 14] declared package java.io is not in CLASSPATH.
+# WARNING: [ConnectionPool.java, 19] Cannot resolve dependency for possible type Vector.class, so none created
+# WARNING: [ConnectionPool.java, 20] Cannot resolve dependency for possible type String.class, so none created
+# WARNING: [ConnectionPool.java, 30] Cannot resolve dependency for possible type PrintWriter.class, so none created
+# WARNING: [ConnectionPool.java, 43] Cannot resolve dependency for possible type System.class, so none created
+# WARNING: [ConnectionPool.java, 51] Cannot resolve dependency for possible type Connection.class, so none created
+# WARNING: [ConnectionPool.java, 54] Cannot resolve dependency for possible type SQLException.class, so none created
+# WARNING: [ConnectionPool.java, 90] Cannot resolve dependency for possible type InterruptedException.class, so none created
+# WARNING: [ConnectionPool.java, 115] Cannot resolve dependency for possible type Statement.class, so none created
+# WARNING: [ConnectionPool.java, 168] Cannot resolve dependency for possible type DriverManager.class, so none created
+# WARNING: [ConnectionPool.java, 190] Cannot resolve dependency for possible type Enumeration.class, so none created
+
+../../../../jst/classes/core/ConnectionPool/LogWriter.class : LogWriter.java
+	$(JAVAC) $(JAVAC_FLAGS) -d ../../../../jst/classes/ $<
+
+# WARNING: [LogWriter.java, 66] import package core.ConnectionPool is not in CLASSPATH. Creating pseudo-package.
+# WARNING: [LogWriter.java, 13] declared package java.util is not in CLASSPATH.
+# WARNING: [LogWriter.java, 14] declared package java.io is not in CLASSPATH.
+# WARNING: [LogWriter.java, 23] Cannot resolve dependency for possible type String.class, so none created
+# WARNING: [LogWriter.java, 25] Cannot resolve dependency for possible type PrintWriter.class, so none created
+# WARNING: [LogWriter.java, 50] Cannot resolve dependency for possible type Throwable.class, so none created
+
+TGTS = ../../../../jst/classes/core/ConnectionPool/ConnectionPool.class ../../../../jst/classes/core/ConnectionPool/LogWriter.class 
+tt_all: all
+

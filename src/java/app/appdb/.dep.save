@@ -1,0 +1,147 @@
+tt_default: tt_all
+
+
+../../../../jst/classes/app/appdb/PersistentBuild.class : PersistentBuild.java ../../../../jst/classes/core/db/PersistentObject.class ../../../../jst/classes/app/busobj/BuildObject.class ../../../../jst/classes/core/db/DBException.class ../../../../jst/classes/core/db/PreparedSQLStatement.class ../../../../jst/classes/core/db/SQLParam.class ../../../../jst/classes/core/db/CallableSQLStatement.class ../../../../jst/classes/core/util/DebugHandler.class
+	$(JAVAC) $(JAVAC_FLAGS) -d ../../../../jst/classes/ $<
+
+# WARNING: [PersistentBuild.java, 11] declared package java.sql is not in CLASSPATH.
+# WARNING: [PersistentBuild.java, 12] declared package java.sql is not in CLASSPATH.
+# WARNING: [PersistentBuild.java, 13] declared package java.util is not in CLASSPATH.
+# WARNING: [PersistentBuild.java, 58] Cannot resolve dependency for possible type Object.class, so none created
+# WARNING: [PersistentBuild.java, 60] Cannot resolve dependency for possible type String.class, so none created
+# WARNING: [PersistentBuild.java, 70] Cannot resolve dependency for possible type Vector.class, so none created
+# WARNING: [PersistentBuild.java, 93] Cannot resolve dependency for possible type Integer.class, so none created
+# WARNING: [PersistentBuild.java, 93] Cannot resolve dependency for possible type Types.class, so none created
+# WARNING: [PersistentBuild.java, 118] Cannot resolve dependency for possible type ResultSet.class, so none created
+# WARNING: [PersistentBuild.java, 126] Cannot resolve dependency for possible type Exception.class, so none created
+
+../../../../jst/classes/app/appdb/PersistentTopology.class : PersistentTopology.java ../../../../jst/classes/core/db/PersistentObject.class ../../../../jst/classes/app/busobj/TopologyObject.class ../../../../jst/classes/core/db/DBException.class ../../../../jst/classes/core/db/PreparedSQLStatement.class ../../../../jst/classes/core/db/SQLParam.class
+	$(JAVAC) $(JAVAC_FLAGS) -d ../../../../jst/classes/ $<
+
+# WARNING: [PersistentTopology.java, 11] declared package java.sql is not in CLASSPATH.
+# WARNING: [PersistentTopology.java, 12] declared package java.sql is not in CLASSPATH.
+# WARNING: [PersistentTopology.java, 13] declared package java.util is not in CLASSPATH.
+# WARNING: [PersistentTopology.java, 57] Cannot resolve dependency for possible type Object.class, so none created
+# WARNING: [PersistentTopology.java, 59] Cannot resolve dependency for possible type String.class, so none created
+# WARNING: [PersistentTopology.java, 65] Cannot resolve dependency for possible type Vector.class, so none created
+# WARNING: [PersistentTopology.java, 88] Cannot resolve dependency for possible type Integer.class, so none created
+# WARNING: [PersistentTopology.java, 88] Cannot resolve dependency for possible type Types.class, so none created
+# WARNING: [PersistentTopology.java, 194] Cannot resolve dependency for possible type ResultSet.class, so none created
+# WARNING: [PersistentTopology.java, 206] Cannot resolve dependency for possible type Exception.class, so none created
+
+../../../../jst/classes/app/appdb/PersistentTest.class : PersistentTest.java ../../../../jst/classes/core/db/PersistentObject.class ../../../../jst/classes/app/busobj/TestObject.class ../../../../jst/classes/core/db/DBException.class ../../../../jst/classes/core/db/PreparedSQLStatement.class ../../../../jst/classes/core/db/SQLParam.class
+	$(JAVAC) $(JAVAC_FLAGS) -d ../../../../jst/classes/ $<
+
+# WARNING: [PersistentTest.java, 11] declared package java.sql is not in CLASSPATH.
+# WARNING: [PersistentTest.java, 12] declared package java.sql is not in CLASSPATH.
+# WARNING: [PersistentTest.java, 13] declared package java.util is not in CLASSPATH.
+# WARNING: [PersistentTest.java, 57] Cannot resolve dependency for possible type Object.class, so none created
+# WARNING: [PersistentTest.java, 59] Cannot resolve dependency for possible type String.class, so none created
+# WARNING: [PersistentTest.java, 69] Cannot resolve dependency for possible type Vector.class, so none created
+# WARNING: [PersistentTest.java, 92] Cannot resolve dependency for possible type Integer.class, so none created
+# WARNING: [PersistentTest.java, 92] Cannot resolve dependency for possible type Types.class, so none created
+# WARNING: [PersistentTest.java, 222] Cannot resolve dependency for possible type ResultSet.class, so none created
+# WARNING: [PersistentTest.java, 246] Cannot resolve dependency for possible type Exception.class, so none created
+
+../../../../jst/classes/app/appdb/PersistentTestBuild.class : PersistentTestBuild.java ../../../../jst/classes/core/db/PersistentObject.class ../../../../jst/classes/app/busobj/TestBuildObject.class ../../../../jst/classes/core/db/DBException.class ../../../../jst/classes/core/db/PreparedSQLStatement.class ../../../../jst/classes/core/util/DebugHandler.class ../../../../jst/classes/core/db/SQLParam.class
+	$(JAVAC) $(JAVAC_FLAGS) -d ../../../../jst/classes/ $<
+
+# WARNING: [PersistentTestBuild.java, 11] declared package java.sql is not in CLASSPATH.
+# WARNING: [PersistentTestBuild.java, 12] declared package java.sql is not in CLASSPATH.
+# WARNING: [PersistentTestBuild.java, 13] declared package java.util is not in CLASSPATH.
+# WARNING: [PersistentTestBuild.java, 33] Cannot resolve dependency for possible type String.class, so none created
+# WARNING: [PersistentTestBuild.java, 60] Cannot resolve dependency for possible type Object.class, so none created
+# WARNING: [PersistentTestBuild.java, 68] Cannot resolve dependency for possible type ResultSet.class, so none created
+# WARNING: [PersistentTestBuild.java, 69] Cannot resolve dependency for possible type Vector.class, so none created
+# WARNING: [PersistentTestBuild.java, 77] Cannot resolve dependency for possible type Exception.class, so none created
+# WARNING: [PersistentTestBuild.java, 168] Cannot resolve dependency for possible type Integer.class, so none created
+# WARNING: [PersistentTestBuild.java, 168] Cannot resolve dependency for possible type Types.class, so none created
+
+../../../../jst/classes/app/appdb/PersistentTestSuite.class : PersistentTestSuite.java ../../../../jst/classes/core/db/PersistentObject.class ../../../../jst/classes/app/busobj/TestSuiteObject.class ../../../../jst/classes/core/db/DBException.class ../../../../jst/classes/core/db/PreparedSQLStatement.class ../../../../jst/classes/core/db/SQLParam.class
+	$(JAVAC) $(JAVAC_FLAGS) -d ../../../../jst/classes/ $<
+
+# WARNING: [PersistentTestSuite.java, 11] declared package java.io is not in CLASSPATH.
+# WARNING: [PersistentTestSuite.java, 12] declared package java.sql is not in CLASSPATH.
+# WARNING: [PersistentTestSuite.java, 13] declared package java.sql is not in CLASSPATH.
+# WARNING: [PersistentTestSuite.java, 14] declared package java.util is not in CLASSPATH.
+# WARNING: [PersistentTestSuite.java, 58] Cannot resolve dependency for possible type Object.class, so none created
+# WARNING: [PersistentTestSuite.java, 60] Cannot resolve dependency for possible type String.class, so none created
+# WARNING: [PersistentTestSuite.java, 69] Cannot resolve dependency for possible type Vector.class, so none created
+# WARNING: [PersistentTestSuite.java, 91] Cannot resolve dependency for possible type Integer.class, so none created
+# WARNING: [PersistentTestSuite.java, 91] Cannot resolve dependency for possible type Types.class, so none created
+# WARNING: [PersistentTestSuite.java, 203] Cannot resolve dependency for possible type ResultSet.class, so none created
+# WARNING: [PersistentTestSuite.java, 218] Cannot resolve dependency for possible type Exception.class, so none created
+
+../../../../jst/classes/app/appdb/PersistentUserTbl.class : PersistentUserTbl.java ../../../../jst/classes/core/db/PersistentObject.class ../../../../jst/classes/app/busobj/UserTblObject.class ../../../../jst/classes/core/db/DBException.class ../../../../jst/classes/core/db/PreparedSQLStatement.class ../../../../jst/classes/core/util/DebugHandler.class ../../../../jst/classes/core/db/SQLParam.class
+	$(JAVAC) $(JAVAC_FLAGS) -d ../../../../jst/classes/ $<
+
+# WARNING: [PersistentUserTbl.java, 11] declared package java.sql is not in CLASSPATH.
+# WARNING: [PersistentUserTbl.java, 12] declared package java.sql is not in CLASSPATH.
+# WARNING: [PersistentUserTbl.java, 13] declared package java.util is not in CLASSPATH.
+# WARNING: [PersistentUserTbl.java, 58] Cannot resolve dependency for possible type Object.class, so none created
+# WARNING: [PersistentUserTbl.java, 60] Cannot resolve dependency for possible type String.class, so none created
+# WARNING: [PersistentUserTbl.java, 66] Cannot resolve dependency for possible type Vector.class, so none created
+# WARNING: [PersistentUserTbl.java, 98] Cannot resolve dependency for possible type Integer.class, so none created
+# WARNING: [PersistentUserTbl.java, 98] Cannot resolve dependency for possible type Types.class, so none created
+# WARNING: [PersistentUserTbl.java, 211] Cannot resolve dependency for possible type ResultSet.class, so none created
+# WARNING: [PersistentUserTbl.java, 224] Cannot resolve dependency for possible type Exception.class, so none created
+
+../../../../jst/classes/app/appdb/PersistentTestResults.class : PersistentTestResults.java ../../../../jst/classes/core/db/PersistentObject.class ../../../../jst/classes/app/busobj/TestResultsObject.class ../../../../jst/classes/core/db/DBException.class ../../../../jst/classes/core/db/PreparedSQLStatement.class ../../../../jst/classes/core/db/SQLParam.class ../../../../jst/classes/core/db/CallableSQLStatement.class
+	$(JAVAC) $(JAVAC_FLAGS) -d ../../../../jst/classes/ $<
+
+# WARNING: [PersistentTestResults.java, 11] declared package java.sql is not in CLASSPATH.
+# WARNING: [PersistentTestResults.java, 12] declared package java.sql is not in CLASSPATH.
+# WARNING: [PersistentTestResults.java, 13] declared package java.util is not in CLASSPATH.
+# WARNING: [PersistentTestResults.java, 57] Cannot resolve dependency for possible type Object.class, so none created
+# WARNING: [PersistentTestResults.java, 59] Cannot resolve dependency for possible type String.class, so none created
+# WARNING: [PersistentTestResults.java, 66] Cannot resolve dependency for possible type Vector.class, so none created
+# WARNING: [PersistentTestResults.java, 116] Cannot resolve dependency for possible type Integer.class, so none created
+# WARNING: [PersistentTestResults.java, 116] Cannot resolve dependency for possible type Types.class, so none created
+# WARNING: [PersistentTestResults.java, 223] Cannot resolve dependency for possible type ResultSet.class, so none created
+# WARNING: [PersistentTestResults.java, 240] Cannot resolve dependency for possible type Exception.class, so none created
+
+../../../../jst/classes/app/appdb/PersistentMachines.class : PersistentMachines.java ../../../../jst/classes/core/db/PersistentObject.class ../../../../jst/classes/app/busobj/MachinesObject.class ../../../../jst/classes/core/db/DBException.class ../../../../jst/classes/core/db/PreparedSQLStatement.class ../../../../jst/classes/core/db/SQLParam.class
+	$(JAVAC) $(JAVAC_FLAGS) -d ../../../../jst/classes/ $<
+
+# WARNING: [PersistentMachines.java, 11] declared package java.sql is not in CLASSPATH.
+# WARNING: [PersistentMachines.java, 12] declared package java.sql is not in CLASSPATH.
+# WARNING: [PersistentMachines.java, 13] declared package java.util is not in CLASSPATH.
+# WARNING: [PersistentMachines.java, 57] Cannot resolve dependency for possible type Object.class, so none created
+# WARNING: [PersistentMachines.java, 59] Cannot resolve dependency for possible type String.class, so none created
+# WARNING: [PersistentMachines.java, 65] Cannot resolve dependency for possible type Vector.class, so none created
+# WARNING: [PersistentMachines.java, 88] Cannot resolve dependency for possible type Integer.class, so none created
+# WARNING: [PersistentMachines.java, 88] Cannot resolve dependency for possible type Types.class, so none created
+# WARNING: [PersistentMachines.java, 214] Cannot resolve dependency for possible type ResultSet.class, so none created
+# WARNING: [PersistentMachines.java, 236] Cannot resolve dependency for possible type Exception.class, so none created
+
+../../../../jst/classes/app/appdb/PersistentProduct.class : PersistentProduct.java ../../../../jst/classes/core/db/PersistentObject.class ../../../../jst/classes/app/busobj/ProductObject.class ../../../../jst/classes/core/db/DBException.class ../../../../jst/classes/core/db/PreparedSQLStatement.class ../../../../jst/classes/core/db/SQLParam.class
+	$(JAVAC) $(JAVAC_FLAGS) -d ../../../../jst/classes/ $<
+
+# WARNING: [PersistentProduct.java, 11] declared package java.sql is not in CLASSPATH.
+# WARNING: [PersistentProduct.java, 12] declared package java.sql is not in CLASSPATH.
+# WARNING: [PersistentProduct.java, 13] declared package java.util is not in CLASSPATH.
+# WARNING: [PersistentProduct.java, 57] Cannot resolve dependency for possible type Object.class, so none created
+# WARNING: [PersistentProduct.java, 59] Cannot resolve dependency for possible type String.class, so none created
+# WARNING: [PersistentProduct.java, 65] Cannot resolve dependency for possible type Vector.class, so none created
+# WARNING: [PersistentProduct.java, 88] Cannot resolve dependency for possible type Integer.class, so none created
+# WARNING: [PersistentProduct.java, 88] Cannot resolve dependency for possible type Types.class, so none created
+# WARNING: [PersistentProduct.java, 196] Cannot resolve dependency for possible type ResultSet.class, so none created
+# WARNING: [PersistentProduct.java, 209] Cannot resolve dependency for possible type Exception.class, so none created
+
+../../../../jst/classes/app/appdb/PersistentTestType.class : PersistentTestType.java ../../../../jst/classes/core/db/PersistentObject.class ../../../../jst/classes/app/busobj/TestTypeObject.class ../../../../jst/classes/core/db/DBException.class ../../../../jst/classes/core/db/PreparedSQLStatement.class ../../../../jst/classes/core/db/SQLParam.class
+	$(JAVAC) $(JAVAC_FLAGS) -d ../../../../jst/classes/ $<
+
+# WARNING: [PersistentTestType.java, 11] declared package java.sql is not in CLASSPATH.
+# WARNING: [PersistentTestType.java, 12] declared package java.sql is not in CLASSPATH.
+# WARNING: [PersistentTestType.java, 13] declared package java.util is not in CLASSPATH.
+# WARNING: [PersistentTestType.java, 56] Cannot resolve dependency for possible type Object.class, so none created
+# WARNING: [PersistentTestType.java, 58] Cannot resolve dependency for possible type String.class, so none created
+# WARNING: [PersistentTestType.java, 64] Cannot resolve dependency for possible type Vector.class, so none created
+# WARNING: [PersistentTestType.java, 87] Cannot resolve dependency for possible type Integer.class, so none created
+# WARNING: [PersistentTestType.java, 87] Cannot resolve dependency for possible type Types.class, so none created
+# WARNING: [PersistentTestType.java, 191] Cannot resolve dependency for possible type ResultSet.class, so none created
+# WARNING: [PersistentTestType.java, 202] Cannot resolve dependency for possible type Exception.class, so none created
+
+TGTS = ../../../../jst/classes/app/appdb/PersistentBuild.class ../../../../jst/classes/app/appdb/PersistentTopology.class ../../../../jst/classes/app/appdb/PersistentTest.class ../../../../jst/classes/app/appdb/PersistentTestBuild.class ../../../../jst/classes/app/appdb/PersistentTestSuite.class ../../../../jst/classes/app/appdb/PersistentUserTbl.class ../../../../jst/classes/app/appdb/PersistentTestResults.class ../../../../jst/classes/app/appdb/PersistentMachines.class ../../../../jst/classes/app/appdb/PersistentProduct.class ../../../../jst/classes/app/appdb/PersistentTestType.class 
+tt_all: all
+

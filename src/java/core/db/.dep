@@ -1,0 +1,160 @@
+tt_default: tt_all
+
+
+/home1/govind/testtool/jst/classes/core/db/CallableSQLStatement.class : CallableSQLStatement.java /home1/govind/testtool/jst/classes/core/db/PreparedSQLStatement.class /home1/govind/testtool/jst/classes/core/db/SQLParam.class /home1/govind/testtool/jst/classes/core/db/DBException.class
+	$(JAVAC) $(JAVAC_FLAGS) -d /home1/govind/testtool/jst/classes/ $<
+
+# WARNING: [CallableSQLStatement.java, 15] declared package java.sql is not in CLASSPATH.
+# WARNING: [CallableSQLStatement.java, 16] declared package java.sql is not in CLASSPATH.
+# WARNING: [CallableSQLStatement.java, 17] declared package java.sql is not in CLASSPATH.
+# WARNING: [CallableSQLStatement.java, 18] declared package java.sql is not in CLASSPATH.
+# WARNING: [CallableSQLStatement.java, 19] declared package java.util is not in CLASSPATH.
+# WARNING: [CallableSQLStatement.java, 53] Cannot resolve dependency for possible type String.class, so none created
+# WARNING: [CallableSQLStatement.java, 150] Cannot resolve dependency for possible type CallableStatement.class, so none created
+# WARNING: [CallableSQLStatement.java, 154] Cannot resolve dependency for possible type SQLException.class, so none created
+# WARNING: [CallableSQLStatement.java, 218] Cannot resolve dependency for possible type NullPointerException.class, so none created
+# WARNING: [CallableSQLStatement.java, 235] Cannot resolve dependency for possible type Object.class, so none created
+
+/home1/govind/testtool/jst/classes/core/db/DBException.class : DBException.java /home1/govind/testtool/jst/classes/core/util/AppException.class
+	$(JAVAC) $(JAVAC_FLAGS) -d /home1/govind/testtool/jst/classes/ $<
+
+# WARNING: [DBException.java, 17] declared package java.lang is not in CLASSPATH.
+# WARNING: [DBException.java, 40] Cannot resolve dependency for possible type String.class, so none created
+# WARNING: [DBException.java, 43] Cannot resolve dependency for possible type Exception.class, so none created
+# WARNING: [DBException.java, 60] Cannot resolve dependency for possible type Object.class, so none created
+# WARNING: [DBException.java, 223] Cannot resolve dependency for possible type NullPointerException.class, so none created
+
+/home1/govind/testtool/jst/classes/core/db/DBManager.class : DBManager.java /home1/govind/testtool/jst/classes/core/ConnectionPool/ConnectionPool.class /home1/govind/testtool/jst/classes/core/db/TransactionContext.class /home1/govind/testtool/jst/classes/core/db/DBException.class /home1/govind/testtool/jst/classes/core/util/DebugHandler.class /home1/govind/testtool/jst/classes/core/ConnectionPool/LogWriter.class
+	$(JAVAC) $(JAVAC_FLAGS) -d /home1/govind/testtool/jst/classes/ $<
+
+# WARNING: [DBManager.java, 15] declared package java.sql is not in CLASSPATH.
+# WARNING: [DBManager.java, 16] declared package java.sql is not in CLASSPATH.
+# WARNING: [DBManager.java, 18] declared package java.io is not in CLASSPATH.
+# WARNING: [DBManager.java, 19] declared package java.io is not in CLASSPATH.
+# WARNING: [DBManager.java, 20] declared package java.io is not in CLASSPATH.
+# WARNING: [DBManager.java, 21] declared package java.sql is not in CLASSPATH.
+# WARNING: [DBManager.java, 22] declared package java.util is not in CLASSPATH.
+# WARNING: [DBManager.java, 23] declared package java.util is not in CLASSPATH.
+# WARNING: [DBManager.java, 24] declared package java.util is not in CLASSPATH.
+# WARNING: [DBManager.java, 50] Cannot resolve dependency for possible type String.class, so none created
+# WARNING: [DBManager.java, 91] Cannot resolve dependency for possible type Connection.class, so none created
+# WARNING: [DBManager.java, 152] Cannot resolve dependency for possible type Properties.class, so none created
+# WARNING: [DBManager.java, 155] Cannot resolve dependency for possible type ResourceBundle.class, so none created
+# WARNING: [DBManager.java, 156] Cannot resolve dependency for possible type Enumeration.class, so none created
+# WARNING: [DBManager.java, 160] Cannot resolve dependency for possible type Exception.class, so none created
+# WARNING: [DBManager.java, 195] Cannot resolve dependency for possible type Integer.class, so none created
+# WARNING: [DBManager.java, 196] Cannot resolve dependency for possible type NumberFormatException.class, so none created
+# WARNING: [DBManager.java, 224] Cannot resolve dependency for possible type Class.class, so none created
+# WARNING: [DBManager.java, 225] Cannot resolve dependency for possible type ClassNotFoundException.class, so none created
+# WARNING: [DBManager.java, 237] Cannot resolve dependency for possible type PrintWriter.class, so none created
+# WARNING: [DBManager.java, 237] Cannot resolve dependency for possible type System.class, so none created
+# WARNING: [DBManager.java, 304] Cannot resolve dependency for possible type SQLException.class, so none created
+# WARNING: [DBManager.java, 325] Cannot resolve dependency for possible type NullPointerException.class, so none created
+
+/home1/govind/testtool/jst/classes/core/db/DBUtil.class : DBUtil.java /home1/govind/testtool/jst/classes/core/db/DBException.class /home1/govind/testtool/jst/classes/core/db/Persistent.class /home1/govind/testtool/jst/classes/core/db/PersistenceFactory.class /home1/govind/testtool/jst/classes/core/db/TransactionContext.class /home1/govind/testtool/jst/classes/core/busobj/IdObject.class
+	$(JAVAC) $(JAVAC_FLAGS) -d /home1/govind/testtool/jst/classes/ $<
+
+# WARNING: [DBUtil.java, 53] Cannot resolve dependency for possible type Object.class, so none created
+# WARNING: [DBUtil.java, 539] Cannot resolve dependency for possible type String.class, so none created
+# WARNING: [DBUtil.java, 548] Cannot resolve dependency for possible type NullPointerException.class, so none created
+
+/home1/govind/testtool/jst/classes/core/db/ObjectRelationalMap.class : ObjectRelationalMap.java
+	$(JAVAC) $(JAVAC_FLAGS) -d /home1/govind/testtool/jst/classes/ $<
+
+# WARNING: [ObjectRelationalMap.java, 15] declared package java.sql is not in CLASSPATH.
+# WARNING: [ObjectRelationalMap.java, 37] Cannot resolve dependency for possible type Object.class, so none created
+# WARNING: [ObjectRelationalMap.java, 37] Cannot resolve dependency for possible type ResultSet.class, so none created
+
+/home1/govind/testtool/jst/classes/core/db/PersistenceFactory.class : PersistenceFactory.java /home1/govind/testtool/jst/classes/core/db/Persistent.class /home1/govind/testtool/jst/classes/core/db/DBException.class
+	$(JAVAC) $(JAVAC_FLAGS) -d /home1/govind/testtool/jst/classes/ $<
+
+# WARNING: [PersistenceFactory.java, 15] declared package java.io is not in CLASSPATH.
+# WARNING: [PersistenceFactory.java, 16] declared package java.io is not in CLASSPATH.
+# WARNING: [PersistenceFactory.java, 17] declared package java.util is not in CLASSPATH.
+# WARNING: [PersistenceFactory.java, 18] declared package java.util is not in CLASSPATH.
+# WARNING: [PersistenceFactory.java, 19] declared package java.util is not in CLASSPATH.
+# WARNING: [PersistenceFactory.java, 20] declared package java.util is not in CLASSPATH.
+# WARNING: [PersistenceFactory.java, 37] Cannot resolve dependency for possible type Hashtable.class, so none created
+# WARNING: [PersistenceFactory.java, 61] Cannot resolve dependency for possible type String.class, so none created
+# WARNING: [PersistenceFactory.java, 64] Cannot resolve dependency for possible type ResourceBundle.class, so none created
+# WARNING: [PersistenceFactory.java, 65] Cannot resolve dependency for possible type Properties.class, so none created
+# WARNING: [PersistenceFactory.java, 68] Cannot resolve dependency for possible type Enumeration.class, so none created
+# WARNING: [PersistenceFactory.java, 74] Cannot resolve dependency for possible type Exception.class, so none created
+# WARNING: [PersistenceFactory.java, 89] Cannot resolve dependency for possible type Object.class, so none created
+# WARNING: [PersistenceFactory.java, 97] Cannot resolve dependency for possible type NullPointerException.class, so none created
+# WARNING: [PersistenceFactory.java, 110] Cannot resolve dependency for possible type Class.class, so none created
+
+/home1/govind/testtool/jst/classes/core/db/Persistent.class : Persistent.java /home1/govind/testtool/jst/classes/core/db/TransactionContext.class /home1/govind/testtool/jst/classes/core/db/DBException.class
+	$(JAVAC) $(JAVAC_FLAGS) -d /home1/govind/testtool/jst/classes/ $<
+
+# WARNING: [Persistent.java, 15] declared package java.util is not in CLASSPATH.
+# WARNING: [Persistent.java, 47] Cannot resolve dependency for possible type Object.class, so none created
+
+/home1/govind/testtool/jst/classes/core/db/PersistentObject.class : PersistentObject.java /home1/govind/testtool/jst/classes/core/db/Persistent.class /home1/govind/testtool/jst/classes/core/db/ObjectRelationalMap.class /home1/govind/testtool/jst/classes/core/db/TransactionContext.class /home1/govind/testtool/jst/classes/core/db/SQLStatement.class /home1/govind/testtool/jst/classes/core/db/DBException.class
+	$(JAVAC) $(JAVAC_FLAGS) -d /home1/govind/testtool/jst/classes/ $<
+
+# WARNING: [PersistentObject.java, 15] declared package java.sql is not in CLASSPATH.
+# WARNING: [PersistentObject.java, 103] Cannot resolve dependency for possible type Object.class, so none created
+# WARNING: [PersistentObject.java, 245] Cannot resolve dependency for possible type ResultSet.class, so none created
+
+/home1/govind/testtool/jst/classes/core/db/PreparedSQLStatement.class : PreparedSQLStatement.java /home1/govind/testtool/jst/classes/core/db/SQLStatement.class /home1/govind/testtool/jst/classes/core/db/SQLParam.class /home1/govind/testtool/jst/classes/core/db/DBException.class
+	$(JAVAC) $(JAVAC_FLAGS) -d /home1/govind/testtool/jst/classes/ $<
+
+# WARNING: [PreparedSQLStatement.java, 15] declared package java.sql is not in CLASSPATH.
+# WARNING: [PreparedSQLStatement.java, 16] declared package java.sql is not in CLASSPATH.
+# WARNING: [PreparedSQLStatement.java, 17] declared package java.sql is not in CLASSPATH.
+# WARNING: [PreparedSQLStatement.java, 18] declared package java.sql is not in CLASSPATH.
+# WARNING: [PreparedSQLStatement.java, 49] Cannot resolve dependency for possible type String.class, so none created
+# WARNING: [PreparedSQLStatement.java, 132] Cannot resolve dependency for possible type PreparedStatement.class, so none created
+# WARNING: [PreparedSQLStatement.java, 136] Cannot resolve dependency for possible type SQLException.class, so none created
+
+/home1/govind/testtool/jst/classes/core/db/SQLParam.class : SQLParam.java
+	$(JAVAC) $(JAVAC_FLAGS) -d /home1/govind/testtool/jst/classes/ $<
+
+# WARNING: [SQLParam.java, 15] declared package java.sql is not in CLASSPATH.
+# WARNING: [SQLParam.java, 16] declared package java.util is not in CLASSPATH.
+# WARNING: [SQLParam.java, 30] Cannot resolve dependency for possible type Object.class, so none created
+# WARNING: [SQLParam.java, 118] Cannot resolve dependency for possible type Types.class, so none created
+# WARNING: [SQLParam.java, 128] Cannot resolve dependency for possible type String.class, so none created
+# WARNING: [SQLParam.java, 130] Cannot resolve dependency for possible type Character.class, so none created
+# WARNING: [SQLParam.java, 132] Cannot resolve dependency for possible type Integer.class, so none created
+# WARNING: [SQLParam.java, 134] Cannot resolve dependency for possible type Long.class, so none created
+# WARNING: [SQLParam.java, 136] Cannot resolve dependency for possible type Short.class, so none created
+# WARNING: [SQLParam.java, 138] Cannot resolve dependency for possible type Double.class, so none created
+# WARNING: [SQLParam.java, 140] Cannot resolve dependency for possible type Float.class, so none created
+# WARNING: [SQLParam.java, 142] Cannot resolve dependency for possible type Number.class, so none created
+# WARNING: [SQLParam.java, 144] Cannot resolve dependency for possible type Date.class, so none created
+# WARNING: [SQLParam.java, 146] Cannot resolve dependency for possible type StringBuffer.class, so none created
+# WARNING: [SQLParam.java, 148] Cannot resolve dependency for possible type Byte.class, so none created
+
+/home1/govind/testtool/jst/classes/core/db/SQLStatement.class : SQLStatement.java /home1/govind/testtool/jst/classes/core/db/DBManager.class /home1/govind/testtool/jst/classes/core/db/DBException.class /home1/govind/testtool/jst/classes/core/db/TransactionContext.class /home1/govind/testtool/jst/classes/core/db/ObjectRelationalMap.class
+	$(JAVAC) $(JAVAC_FLAGS) -d /home1/govind/testtool/jst/classes/ $<
+
+# WARNING: [SQLStatement.java, 15] declared package java.sql is not in CLASSPATH.
+# WARNING: [SQLStatement.java, 16] declared package java.sql is not in CLASSPATH.
+# WARNING: [SQLStatement.java, 17] declared package java.sql is not in CLASSPATH.
+# WARNING: [SQLStatement.java, 18] declared package java.sql is not in CLASSPATH.
+# WARNING: [SQLStatement.java, 19] declared package java.sql is not in CLASSPATH.
+# WARNING: [SQLStatement.java, 20] declared package java.sql is not in CLASSPATH.
+# WARNING: [SQLStatement.java, 21] declared package java.util is not in CLASSPATH.
+# WARNING: [SQLStatement.java, 50] Cannot resolve dependency for possible type String.class, so none created
+# WARNING: [SQLStatement.java, 56] Cannot resolve dependency for possible type Statement.class, so none created
+# WARNING: [SQLStatement.java, 62] Cannot resolve dependency for possible type Connection.class, so none created
+# WARNING: [SQLStatement.java, 138] Cannot resolve dependency for possible type SQLException.class, so none created
+# WARNING: [SQLStatement.java, 185] Cannot resolve dependency for possible type ResultSet.class, so none created
+# WARNING: [SQLStatement.java, 202] Cannot resolve dependency for possible type PreparedStatement.class, so none created
+# WARNING: [SQLStatement.java, 224] Cannot resolve dependency for possible type Object.class, so none created
+# WARNING: [SQLStatement.java, 309] Cannot resolve dependency for possible type Integer.class, so none created
+
+/home1/govind/testtool/jst/classes/core/db/TransactionContext.class : TransactionContext.java /home1/govind/testtool/jst/classes/core/db/DBException.class
+	$(JAVAC) $(JAVAC_FLAGS) -d /home1/govind/testtool/jst/classes/ $<
+
+# WARNING: [TransactionContext.java, 15] declared package java.sql is not in CLASSPATH.
+# WARNING: [TransactionContext.java, 16] declared package java.sql is not in CLASSPATH.
+# WARNING: [TransactionContext.java, 35] Cannot resolve dependency for possible type String.class, so none created
+# WARNING: [TransactionContext.java, 41] Cannot resolve dependency for possible type Connection.class, so none created
+# WARNING: [TransactionContext.java, 57] Cannot resolve dependency for possible type SQLException.class, so none created
+
+TGTS = /home1/govind/testtool/jst/classes/core/db/CallableSQLStatement.class /home1/govind/testtool/jst/classes/core/db/DBException.class /home1/govind/testtool/jst/classes/core/db/DBManager.class /home1/govind/testtool/jst/classes/core/db/DBUtil.class /home1/govind/testtool/jst/classes/core/db/ObjectRelationalMap.class /home1/govind/testtool/jst/classes/core/db/PersistenceFactory.class /home1/govind/testtool/jst/classes/core/db/Persistent.class /home1/govind/testtool/jst/classes/core/db/PersistentObject.class /home1/govind/testtool/jst/classes/core/db/PreparedSQLStatement.class /home1/govind/testtool/jst/classes/core/db/SQLParam.class /home1/govind/testtool/jst/classes/core/db/SQLStatement.class /home1/govind/testtool/jst/classes/core/db/TransactionContext.class 
+tt_all: all
+

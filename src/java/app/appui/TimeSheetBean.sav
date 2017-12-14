@@ -1,0 +1,907 @@
+/*
+ *
+ *
+ * Project Name Project
+ *
+ * Author: Govind Thirumalai
+ */
+package app.appui;
+
+import java.util.*;
+import java.text.SimpleDateFormat;
+import javax.servlet.http.*;
+import core.ui.*;
+import core.appui.*;
+import core.util.*;
+import app.util.*;
+import app.busobj.*;
+import app.businterface.*;
+import app.busimpl.*;
+
+import java.io.InputStream;
+import java.io.IOException;
+import java.io.FileNotFoundException;
+import java.io.ByteArrayInputStream;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.DataInputStream;
+import java.io.File;
+import org.apache.poi.poifs.filesystem.*;
+import org.apache.poi.hssf.usermodel.*;
+import org.apache.poi.hssf.util.HSSFColor;
+
+public class TimeSheetBean implements SpreadSheetInterface {
+    public int timesheetId = 0;
+    public int shiftTypeId = 0;
+    public int departmentId = 0;
+    public int designationId = 0;
+    TimeSheetObject selectedTimeSheetObj = new TimeSheetObject();
+    TimeSheetInterface timeSheetIf = new TimeSheetImpl();
+
+    public TimeSheetBean() {}
+
+    public void getRequestParameters(HttpServletRequest request) throws AppException {
+	HttpSession session = request.getSession();
+	if (session == null)
+	    throw new NullPointerException();
+	Hashtable valuepairs =
+	    (Hashtable)session.getAttribute(Constants.VALUE_PAIR_STR);
+	try {
+	    timesheetId = Integer.parseInt((String)valuepairs.get(AppConstants.TIMESHEET_ID_STR));
+	} catch (NumberFormatException nfe) {
+	    timesheetId = 0;
+	}
+	try {
+	    shiftTypeId = Integer.parseInt((String)valuepairs.get(AppConstants.SHIFT_TYPE_ID_STR));
+	} catch (NumberFormatException nfe) {
+	    shiftTypeId = 0;
+	}
+	try {
+	    departmentId = Integer.parseInt((String)valuepairs.get(AppConstants.DEPARTMENT_ID_STR));
+	} catch (NumberFormatException nfe) {
+	    departmentId = 0;
+	}
+	try {
+	    designationId = Integer.parseInt((String)valuepairs.get(AppConstants.DESIGNATION_ID_STR));
+	} catch (NumberFormatException nfe) {
+	    designationId = 0;
+	}
+	String saveProfile = (String)valuepairs.get(UtilBean.SAVE_PROFILE_FLAG_STR);
+	if ( saveProfile == null ||
+	     Boolean.valueOf(saveProfile).booleanValue() == false ) {
+	    // This is to display the page
+	    if ( timesheetId != 0 ) // Display the selected timesheet
+		selectedTimeSheetObj = timeSheetIf.getTimeSheet(timesheetId);
+	}
+	else {
+	    String inputFileName = (String)valuepairs.get(Constants.UPLOAD_FILE_NAME_STR);
+	    if ( inputFileName == null ) {
+		if ( timesheetId != 0 ) {
+		    String buf = "";
+		    Date date = null;
+		    SimpleDateFormat dateFormatter = new SimpleDateFormat(Constants.DATE_FORMAT_STR);
+		    buf = Util.trim((String)valuepairs.get(AppConstants.TIMESHEET_NAME_STR));
+		    selectedTimeSheetObj.setTimesheetName(buf);
+		    buf = Util.trim((String)valuepairs.get(AppConstants.EMPLOYEE_ID_STR));
+		    selectedTimeSheetObj.setEmployeeId(buf);
+		    buf = Util.trim((String)valuepairs.get(AppConstants.TIMESHEET_DATE_STR));
+		    try {
+			date = dateFormatter.parse(buf);
+		    } catch (java.text.ParseException pe) {
+			throw new AppException("Parse Exception while parsing " + buf);
+		    }
+		    selectedTimeSheetObj.setTimesheetDate(date);
+		    buf = Util.trim((String)valuepairs.get(AppConstants.SHIFT_TYPE_ID_STR));
+		    selectedTimeSheetObj.setShiftTypeId(Integer.parseInt(buf));
+		    buf = Util.trim((String)valuepairs.get(AppConstants.TIME_IN_STR));
+		    try {
+			date = dateFormatter.parse(buf);
+		    } catch (java.text.ParseException pe) {
+			throw new AppException("Parse Exception while parsing " + buf);
+		    }
+		    selectedTimeSheetObj.setTimeIn(date);
+		    buf = Util.trim((String)valuepairs.get(AppConstants.TIME_IN_PERMISSION_STR));
+		    selectedTimeSheetObj.setTimeInPermission(buf);
+		    buf = Util.trim((String)valuepairs.get(AppConstants.TIME_OUT_STR));
+		    try {
+			date = dateFormatter.parse(buf);
+		    } catch (java.text.ParseException pe) {
+			throw new AppException("Parse Exception while parsing " + buf);
+		    }
+		    selectedTimeSheetObj.setTimeOut(date);
+		    buf = Util.trim((String)valuepairs.get(AppConstants.TIME_OUT_PERMISSION_STR));
+		    selectedTimeSheetObj.setTimeOutPermission(buf);
+		    buf = Util.trim((String)valuepairs.get(AppConstants.TIME_OTHERS_STR));
+		    try {
+			date = dateFormatter.parse(buf);
+		    } catch (java.text.ParseException pe) {
+			throw new AppException("Parse Exception while parsing " + buf);
+		    }
+		    selectedTimeSheetObj.setTimeOthers(date);
+		    buf = Util.trim((String)valuepairs.get(AppConstants.SPLOT_STR));
+		    selectedTimeSheetObj.setSplot(buf);
+		    buf = Util.trim((String)valuepairs.get(AppConstants.SHIFT_ID_STR));
+		    selectedTimeSheetObj.setShiftId(buf);
+		    buf = Util.trim((String)valuepairs.get(AppConstants.SHIFT_TIME_STR));
+		    selectedTimeSheetObj.setShiftTime(Integer.parseInt(buf));
+		    buf = Util.trim((String)valuepairs.get(AppConstants.EMPLOYEE_LEAVE_STR));
+		    selectedTimeSheetObj.setEmployeeLeave(buf);
+		    buf = Util.trim((String)valuepairs.get(AppConstants.CP_DATE_STR));
+		    try {
+			date = dateFormatter.parse(buf);
+		    } catch (java.text.ParseException pe) {
+			throw new AppException("Parse Exception while parsing " + buf);
+		    }
+		    selectedTimeSheetObj.setCpDate(date);
+		    buf = Util.trim((String)valuepairs.get(AppConstants.DEPARTMENT_ID_STR));
+		    selectedTimeSheetObj.setDepartmentId(Integer.parseInt(buf));
+		    buf = Util.trim((String)valuepairs.get(AppConstants.DESIGNATION_ID_STR));
+		    selectedTimeSheetObj.setDesignationId(Integer.parseInt(buf));
+		    DebugHandler.debug("Modifying TimeSheet Object " + selectedTimeSheetObj);
+		    timeSheetIf.updateTimeSheet(selectedTimeSheetObj);
+		}
+		else {
+		    String buf = "";
+		    Date date = null;
+		    SimpleDateFormat dateFormatter = new SimpleDateFormat(Constants.DATE_FORMAT_STR);
+		    TimeSheetObject timeSheetObj = new TimeSheetObject();
+		    buf = Util.trim((String)valuepairs.get(AppConstants.TIMESHEET_NAME_STR));
+		    timeSheetObj.setTimesheetName(buf);
+		    buf = Util.trim((String)valuepairs.get(AppConstants.EMPLOYEE_ID_STR));
+		    timeSheetObj.setEmployeeId(buf);
+		    buf = Util.trim((String)valuepairs.get(AppConstants.TIMESHEET_DATE_STR));
+		    try {
+			date = dateFormatter.parse(buf);
+		    } catch (java.text.ParseException pe) {
+			throw new AppException("Parse Exception while parsing " + buf);
+		    }
+		    timeSheetObj.setTimesheetDate(date);
+		    buf = Util.trim((String)valuepairs.get(AppConstants.SHIFT_TYPE_ID_STR));
+		    timeSheetObj.setShiftTypeId(Integer.parseInt(buf));
+		    buf = Util.trim((String)valuepairs.get(AppConstants.TIME_IN_STR));
+		    try {
+			date = dateFormatter.parse(buf);
+		    } catch (java.text.ParseException pe) {
+			throw new AppException("Parse Exception while parsing " + buf);
+		    }
+		    timeSheetObj.setTimeIn(date);
+		    buf = Util.trim((String)valuepairs.get(AppConstants.TIME_IN_PERMISSION_STR));
+		    timeSheetObj.setTimeInPermission(buf);
+		    buf = Util.trim((String)valuepairs.get(AppConstants.TIME_OUT_STR));
+		    try {
+			date = dateFormatter.parse(buf);
+		    } catch (java.text.ParseException pe) {
+			throw new AppException("Parse Exception while parsing " + buf);
+		    }
+		    timeSheetObj.setTimeOut(date);
+		    buf = Util.trim((String)valuepairs.get(AppConstants.TIME_OUT_PERMISSION_STR));
+		    timeSheetObj.setTimeOutPermission(buf);
+		    buf = Util.trim((String)valuepairs.get(AppConstants.TIME_OTHERS_STR));
+		    try {
+			date = dateFormatter.parse(buf);
+		    } catch (java.text.ParseException pe) {
+			throw new AppException("Parse Exception while parsing " + buf);
+		    }
+		    timeSheetObj.setTimeOthers(date);
+		    buf = Util.trim((String)valuepairs.get(AppConstants.SPLOT_STR));
+		    timeSheetObj.setSplot(buf);
+		    buf = Util.trim((String)valuepairs.get(AppConstants.SHIFT_ID_STR));
+		    timeSheetObj.setShiftId(buf);
+		    buf = Util.trim((String)valuepairs.get(AppConstants.SHIFT_TIME_STR));
+		    timeSheetObj.setShiftTime(Integer.parseInt(buf));
+		    buf = Util.trim((String)valuepairs.get(AppConstants.EMPLOYEE_LEAVE_STR));
+		    timeSheetObj.setEmployeeLeave(buf);
+		    buf = Util.trim((String)valuepairs.get(AppConstants.CP_DATE_STR));
+		    try {
+			date = dateFormatter.parse(buf);
+		    } catch (java.text.ParseException pe) {
+			throw new AppException("Parse Exception while parsing " + buf);
+		    }
+		    timeSheetObj.setCpDate(date);
+		    buf = Util.trim((String)valuepairs.get(AppConstants.DEPARTMENT_ID_STR));
+		    timeSheetObj.setDepartmentId(Integer.parseInt(buf));
+		    buf = Util.trim((String)valuepairs.get(AppConstants.DESIGNATION_ID_STR));
+		    timeSheetObj.setDesignationId(Integer.parseInt(buf));
+		    DebugHandler.debug("Adding TimeSheet Object " + timeSheetObj);
+		    timeSheetIf.addTimeSheet(timeSheetObj);
+		}
+	    }
+	    else {
+		String temp = System.getProperty("java.io.tmpdir");
+		inputFileName = temp + File.separatorChar + inputFileName;
+		readFromFile(inputFileName, null);
+	    }
+	}
+    }
+
+    public String getTimeSheetInfo() throws AppException {
+	TableElement te = new TableElement();
+	te.setClass(Constants.BODY_TABLE_STYLE);
+	TableRowElement tr = null;
+	TableDataElement td = null;
+	BoldElement be = null;
+	SelectElement se = null;
+	InputElement ie = null;
+	TextareaElement txt = null;
+	TimeSheetObject timeSheetObj = timeSheetIf.getTimeSheet(timesheetId);
+
+	if ( timeSheetObj == null )
+	    timeSheetObj = new TimeSheetObject();
+	tr = new TableRowElement();
+	be = new BoldElement(AppConstants.CURRENT_TIMESHEET_LABEL);
+	be.setId(Constants.BODY_ROW_STYLE);
+	td = new TableDataElement(be);
+	tr.addElement(td);
+	Vector<String> nameVector = new Vector<String>();
+	Vector<Integer> valueVector = new Vector<Integer>();
+	TimeSheetObject[] timeSheetArr = timeSheetIf.getAllTimeSheets();
+	nameVector.addElement(AppConstants.NEW_TIMESHEET);
+	valueVector.addElement(new Integer(0));
+	for (int iterator = 0; iterator < timeSheetArr.length; iterator++) {
+	    TimeSheetObject timeSheetObject = timeSheetArr[iterator];
+	    if ( timeSheetObject == null )
+		break;
+	    nameVector.addElement(timeSheetObject.getTimesheetName());
+	    valueVector.addElement(new Integer(timeSheetObject.getTimesheetId()));
+	}
+	se = new SelectElement(AppConstants.TIMESHEET_ID_STR, nameVector, valueVector, String.valueOf(timesheetId), 0);
+	se.setOnChange(UtilBean.JS_SUBMIT_FORM);
+	td = new TableDataElement(se);
+	tr.addElement(td);
+	te.addElement(tr);
+
+	tr = new TableRowElement();
+	be = new BoldElement(AppConstants.TIMESHEET_NAME_LABEL);
+	be.setId(Constants.BODY_ROW_STYLE);
+	td = new TableDataElement(be);
+	tr.addElement(td);
+	if ( timesheetId != 0 )
+	    td = new TableDataElement(new InputElement(InputElement.TEXT, AppConstants.TIMESHEET_NAME_STR, selectedTimeSheetObj.getTimesheetName()));
+	else
+	    td = new TableDataElement(new InputElement(InputElement.TEXT, AppConstants.TIMESHEET_NAME_STR, Constants.EMPTY));
+	tr.addElement(td);
+	te.addElement(tr);
+
+	tr = new TableRowElement();
+	be = new BoldElement(AppConstants.EMPLOYEE_ID_LABEL);
+	be.setId(Constants.BODY_ROW_STYLE);
+	td = new TableDataElement(be);
+	tr.addElement(td);
+	if ( timesheetId != 0 )
+	    td = new TableDataElement(new InputElement(InputElement.TEXT, AppConstants.EMPLOYEE_ID_STR, selectedTimeSheetObj.getEmployeeId()));
+	else
+	    td = new TableDataElement(new InputElement(InputElement.TEXT, AppConstants.EMPLOYEE_ID_STR, Constants.EMPTY));
+	tr.addElement(td);
+	te.addElement(tr);
+
+	tr = new TableRowElement();
+	be = new BoldElement(AppConstants.TIMESHEET_DATE_LABEL);
+	be.setId(Constants.BODY_ROW_STYLE);
+	td = new TableDataElement(be);
+	tr.addElement(td);
+	if ( timesheetId != 0 ) {
+		SimpleDateFormat dateFormatter = new SimpleDateFormat(Constants.DATE_FORMAT_STR);
+		String formattedDate = dateFormatter.format(selectedTimeSheetObj.getTimesheetDate());
+		td = new TableDataElement(new InputElement(InputElement.TEXT, AppConstants.TIMESHEET_DATE_STR, formattedDate));
+	}	else
+	    td = new TableDataElement(new InputElement(InputElement.TEXT, AppConstants.TIMESHEET_DATE_STR, Constants.EMPTY));
+	tr.addElement(td);
+	te.addElement(tr);
+
+	tr = new TableRowElement();
+	be = new BoldElement(AppConstants.SHIFT_TYPE_ID_LABEL);
+	be.setId(Constants.BODY_ROW_STYLE);
+	td = new TableDataElement(be);
+	tr.addElement(td);
+	nameVector = new Vector<String>();
+	valueVector = new Vector<Integer>();
+	ShiftTypeInterface shift_typeIf = new ShiftTypeImpl();
+	ShiftTypeObject[] shift_typeRefArr = shift_typeIf.getAllShiftTypes();
+	for (int iterator = 0; iterator < shift_typeRefArr.length; iterator++) {
+	    ShiftTypeObject shift_typeObject = shift_typeRefArr[iterator];
+	    if (shift_typeObject == null)
+		break;
+	    nameVector.addElement(String.valueOf(shift_typeObject.getShiftTypeCode()));
+	    valueVector.addElement(new Integer(shift_typeObject.getShiftTypeId()));
+	}
+	if ( timesheetId != 0 )
+		se = new SelectElement(AppConstants.SHIFT_TYPE_ID_STR, nameVector, valueVector, String.valueOf(selectedTimeSheetObj.getShiftTypeId()), 0);
+	else
+		se = new SelectElement(AppConstants.SHIFT_TYPE_ID_STR, nameVector, valueVector, String.valueOf(shiftTypeId), 0);
+	td = new TableDataElement(se);
+	tr.addElement(td);
+	te.addElement(tr);
+
+	tr = new TableRowElement();
+	be = new BoldElement(AppConstants.TIME_IN_LABEL);
+	be.setId(Constants.BODY_ROW_STYLE);
+	td = new TableDataElement(be);
+	tr.addElement(td);
+	if ( timesheetId != 0 ) {
+		SimpleDateFormat dateFormatter = new SimpleDateFormat(Constants.TIME24_FORMAT_STR);
+		String formattedDate = dateFormatter.format(selectedTimeSheetObj.getTimeIn());
+		td = new TableDataElement(new InputElement(InputElement.TEXT, AppConstants.TIME_IN_STR, formattedDate));
+	}	else
+	    td = new TableDataElement(new InputElement(InputElement.TEXT, AppConstants.TIME_IN_STR, Constants.EMPTY));
+	tr.addElement(td);
+	te.addElement(tr);
+
+	tr = new TableRowElement();
+	be = new BoldElement(AppConstants.TIME_IN_PERMISSION_LABEL);
+	be.setId(Constants.BODY_ROW_STYLE);
+	td = new TableDataElement(be);
+	tr.addElement(td);
+	if ( timesheetId != 0 )
+	    td = new TableDataElement(new InputElement(InputElement.TEXT, AppConstants.TIME_IN_PERMISSION_STR, selectedTimeSheetObj.getTimeInPermission()));
+	else
+	    td = new TableDataElement(new InputElement(InputElement.TEXT, AppConstants.TIME_IN_PERMISSION_STR, Constants.EMPTY));
+	tr.addElement(td);
+	te.addElement(tr);
+
+	tr = new TableRowElement();
+	be = new BoldElement(AppConstants.TIME_OUT_LABEL);
+	be.setId(Constants.BODY_ROW_STYLE);
+	td = new TableDataElement(be);
+	tr.addElement(td);
+	if ( timesheetId != 0 ) {
+		SimpleDateFormat dateFormatter = new SimpleDateFormat(Constants.DATE_FORMAT_STR);
+		String formattedDate = dateFormatter.format(selectedTimeSheetObj.getTimeOut());
+		td = new TableDataElement(new InputElement(InputElement.TEXT, AppConstants.TIME_OUT_STR, formattedDate));
+	}	else
+	    td = new TableDataElement(new InputElement(InputElement.TEXT, AppConstants.TIME_OUT_STR, Constants.EMPTY));
+	tr.addElement(td);
+	te.addElement(tr);
+
+	tr = new TableRowElement();
+	be = new BoldElement(AppConstants.TIME_OUT_PERMISSION_LABEL);
+	be.setId(Constants.BODY_ROW_STYLE);
+	td = new TableDataElement(be);
+	tr.addElement(td);
+	if ( timesheetId != 0 )
+	    td = new TableDataElement(new InputElement(InputElement.TEXT, AppConstants.TIME_OUT_PERMISSION_STR, selectedTimeSheetObj.getTimeOutPermission()));
+	else
+	    td = new TableDataElement(new InputElement(InputElement.TEXT, AppConstants.TIME_OUT_PERMISSION_STR, Constants.EMPTY));
+	tr.addElement(td);
+	te.addElement(tr);
+
+	tr = new TableRowElement();
+	be = new BoldElement(AppConstants.TIME_OTHERS_LABEL);
+	be.setId(Constants.BODY_ROW_STYLE);
+	td = new TableDataElement(be);
+	tr.addElement(td);
+	if ( timesheetId != 0 ) {
+		SimpleDateFormat dateFormatter = new SimpleDateFormat(Constants.DATE_FORMAT_STR);
+		String formattedDate = dateFormatter.format(selectedTimeSheetObj.getTimeOthers());
+		td = new TableDataElement(new InputElement(InputElement.TEXT, AppConstants.TIME_OTHERS_STR, formattedDate));
+	}	else
+	    td = new TableDataElement(new InputElement(InputElement.TEXT, AppConstants.TIME_OTHERS_STR, Constants.EMPTY));
+	tr.addElement(td);
+	te.addElement(tr);
+
+	tr = new TableRowElement();
+	be = new BoldElement(AppConstants.SPLOT_LABEL);
+	be.setId(Constants.BODY_ROW_STYLE);
+	td = new TableDataElement(be);
+	tr.addElement(td);
+	if ( timesheetId != 0 )
+	    td = new TableDataElement(new InputElement(InputElement.TEXT, AppConstants.SPLOT_STR, selectedTimeSheetObj.getSplot()));
+	else
+	    td = new TableDataElement(new InputElement(InputElement.TEXT, AppConstants.SPLOT_STR, Constants.EMPTY));
+	tr.addElement(td);
+	te.addElement(tr);
+
+	tr = new TableRowElement();
+	be = new BoldElement(AppConstants.SHIFT_ID_LABEL);
+	be.setId(Constants.BODY_ROW_STYLE);
+	td = new TableDataElement(be);
+	tr.addElement(td);
+	if ( timesheetId != 0 )
+	    td = new TableDataElement(new InputElement(InputElement.TEXT, AppConstants.SHIFT_ID_STR, selectedTimeSheetObj.getShiftId()));
+	else
+	    td = new TableDataElement(new InputElement(InputElement.TEXT, AppConstants.SHIFT_ID_STR, Constants.EMPTY));
+	tr.addElement(td);
+	te.addElement(tr);
+
+	tr = new TableRowElement();
+	be = new BoldElement(AppConstants.SHIFT_TIME_LABEL);
+	be.setId(Constants.BODY_ROW_STYLE);
+	td = new TableDataElement(be);
+	tr.addElement(td);
+	if ( timesheetId != 0 )
+	    td = new TableDataElement(new InputElement(InputElement.TEXT, AppConstants.SHIFT_TIME_STR, String.valueOf(selectedTimeSheetObj.getShiftTime())));
+	else
+	    td = new TableDataElement(new InputElement(InputElement.TEXT, AppConstants.SHIFT_TIME_STR, Constants.EMPTY));
+	tr.addElement(td);
+	te.addElement(tr);
+
+	tr = new TableRowElement();
+	be = new BoldElement(AppConstants.EMPLOYEE_LEAVE_LABEL);
+	be.setId(Constants.BODY_ROW_STYLE);
+	td = new TableDataElement(be);
+	tr.addElement(td);
+	if ( timesheetId != 0 )
+	    td = new TableDataElement(new InputElement(InputElement.TEXT, AppConstants.EMPLOYEE_LEAVE_STR, selectedTimeSheetObj.getEmployeeLeave()));
+	else
+	    td = new TableDataElement(new InputElement(InputElement.TEXT, AppConstants.EMPLOYEE_LEAVE_STR, Constants.EMPTY));
+	tr.addElement(td);
+	te.addElement(tr);
+
+	tr = new TableRowElement();
+	be = new BoldElement(AppConstants.CP_DATE_LABEL);
+	be.setId(Constants.BODY_ROW_STYLE);
+	td = new TableDataElement(be);
+	tr.addElement(td);
+	if ( timesheetId != 0 ) {
+		SimpleDateFormat dateFormatter = new SimpleDateFormat(Constants.DATE_FORMAT_STR);
+		String formattedDate = dateFormatter.format(selectedTimeSheetObj.getCpDate());
+		td = new TableDataElement(new InputElement(InputElement.TEXT, AppConstants.CP_DATE_STR, formattedDate));
+	}	else
+	    td = new TableDataElement(new InputElement(InputElement.TEXT, AppConstants.CP_DATE_STR, Constants.EMPTY));
+	tr.addElement(td);
+	te.addElement(tr);
+
+	tr = new TableRowElement();
+	be = new BoldElement(AppConstants.DEPARTMENT_ID_LABEL);
+	be.setId(Constants.BODY_ROW_STYLE);
+	td = new TableDataElement(be);
+	tr.addElement(td);
+	if ( timesheetId != 0 )
+		se = new SelectElement(AppConstants.DEPARTMENT_ID_STR, nameVector, valueVector, String.valueOf(selectedTimeSheetObj.getDepartmentId()), 0);
+	else
+		se = new SelectElement(AppConstants.DEPARTMENT_ID_STR, nameVector, valueVector, String.valueOf(departmentId), 0);
+	td = new TableDataElement(se);
+	tr.addElement(td);
+	te.addElement(tr);
+
+	tr = new TableRowElement();
+	be = new BoldElement(AppConstants.DESIGNATION_ID_LABEL);
+	be.setId(Constants.BODY_ROW_STYLE);
+	td = new TableDataElement(be);
+	tr.addElement(td);
+	nameVector = new Vector<String>();
+	valueVector = new Vector<Integer>();
+	DesignationInterface designationIf = new DesignationImpl();
+	DesignationObject[] designationRefArr = designationIf.getAllDesignations();
+	for (int iterator = 0; iterator < designationRefArr.length; iterator++) {
+	    DesignationObject designationObject = designationRefArr[iterator];
+	    if (designationObject == null)
+		break;
+	    nameVector.addElement(String.valueOf(designationObject.getDesignationName()));
+	    valueVector.addElement(new Integer(designationObject.getDesignationId()));
+	}
+	if ( timesheetId != 0 )
+		se = new SelectElement(AppConstants.DESIGNATION_ID_STR, nameVector, valueVector, String.valueOf(selectedTimeSheetObj.getDesignationId()), 0);
+	else
+		se = new SelectElement(AppConstants.DESIGNATION_ID_STR, nameVector, valueVector, String.valueOf(designationId), 0);
+	td = new TableDataElement(se);
+	tr.addElement(td);
+	te.addElement(tr);
+
+
+	tr = new TableRowElement();
+	be = new BoldElement(Constants.UPLOAD_FILE_LABEL);
+	be.setId(Constants.BODY_ROW_STYLE);
+	td = new TableDataElement(be);
+	tr.addElement(td);
+
+	ie = new InputElement(InputElement.FILE, Constants.UPLOAD_FILE_NAME_STR,"");
+	td = new TableDataElement(ie);
+	tr.addElement(td);
+	te.addElement(tr);
+
+	return te.getHTMLTag() + new BreakElement().getHTMLTag() +  new BreakElement().getHTMLTag() + UtilBean.getSubmitButton() + UtilBean.getDownloadButton();
+    }
+
+    public void writeToFile(String outputFileName, Object obj) throws AppException {
+	DebugHandler.fine("writeToFile(" + outputFileName + "," + obj + ")");
+	HSSFWorkbook wb = new HSSFWorkbook();
+	HSSFFont font01Bold = wb.createFont();
+	font01Bold.setFontHeightInPoints((short)12);
+	font01Bold.setFontName("Times New Roman");
+	font01Bold.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
+
+	HSSFFont font01Normal = wb.createFont();
+	font01Normal.setFontHeightInPoints((short)12);
+	font01Normal.setFontName("Times New Roman");
+	font01Normal.setBoldweight(HSSFFont.BOLDWEIGHT_NORMAL);
+
+	// Create style
+	HSSFCellStyle cellstyleTblHdr = wb.createCellStyle();
+	cellstyleTblHdr.setFont(font01Bold);
+	cellstyleTblHdr.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+	cellstyleTblHdr.setWrapText(true);
+	cellstyleTblHdr.setBorderBottom(HSSFCellStyle.BORDER_MEDIUM);
+	cellstyleTblHdr.setBorderLeft(HSSFCellStyle.BORDER_MEDIUM);
+	cellstyleTblHdr.setBorderRight(HSSFCellStyle.BORDER_MEDIUM);
+	cellstyleTblHdr.setBorderTop(HSSFCellStyle.BORDER_MEDIUM);
+	cellstyleTblHdr.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+	cellstyleTblHdr.setFillForegroundColor(HSSFColor.LIGHT_GREEN.index);
+	cellstyleTblHdr.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
+
+	HSSFCellStyle cellstyleTblLeft = wb.createCellStyle();
+	cellstyleTblLeft.setFont(font01Normal);
+	cellstyleTblLeft.setAlignment(HSSFCellStyle.ALIGN_LEFT);
+	cellstyleTblLeft.setWrapText(true);
+	cellstyleTblLeft.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+	cellstyleTblLeft.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+	cellstyleTblLeft.setBorderRight(HSSFCellStyle.BORDER_THIN);
+	cellstyleTblLeft.setVerticalAlignment(HSSFCellStyle.VERTICAL_TOP);
+
+	HSSFSheet sheet = wb.createSheet();
+	FileOutputStream fileOut = null;
+	int rowNum = 0;
+	int col = 0;
+	HSSFRow row = null;
+	HSSFCell cell = null;
+	try {
+	    fileOut = new FileOutputStream(outputFileName);
+	} catch (FileNotFoundException fnf) {
+	    throw new AppException("Unable to find file " + outputFileName);
+	}
+	row = sheet.createRow((short)rowNum);
+	sheet.setColumnWidth((short)col, (short) (0));
+	cell = row.createCell((short)col++);
+	cell.setCellStyle(cellstyleTblHdr);
+	cell.setCellValue(AppConstants.TIMESHEET_ID_LABEL);
+
+	cell = row.createCell((short)col++);
+	cell.setCellStyle(cellstyleTblHdr);
+	cell.setCellValue("DB Operation");
+
+	cell = row.createCell((short)col++);
+	cell.setCellStyle(cellstyleTblHdr);
+	cell.setCellValue(AppConstants.TIMESHEET_NAME_LABEL);
+
+	cell = row.createCell((short)col++);
+	cell.setCellStyle(cellstyleTblHdr);
+	cell.setCellValue(AppConstants.EMPLOYEE_ID_LABEL);
+
+	cell = row.createCell((short)col++);
+	cell.setCellStyle(cellstyleTblHdr);
+	cell.setCellValue(AppConstants.TIMESHEET_DATE_LABEL);
+
+	cell = row.createCell((short)col++);
+	cell.setCellStyle(cellstyleTblHdr);
+	cell.setCellValue(AppConstants.SHIFT_TYPE_ID_LABEL);
+
+	cell = row.createCell((short)col++);
+	cell.setCellStyle(cellstyleTblHdr);
+	cell.setCellValue(AppConstants.TIME_IN_LABEL);
+
+	cell = row.createCell((short)col++);
+	cell.setCellStyle(cellstyleTblHdr);
+	cell.setCellValue(AppConstants.TIME_IN_PERMISSION_LABEL);
+
+	cell = row.createCell((short)col++);
+	cell.setCellStyle(cellstyleTblHdr);
+	cell.setCellValue(AppConstants.TIME_OUT_LABEL);
+
+	cell = row.createCell((short)col++);
+	cell.setCellStyle(cellstyleTblHdr);
+	cell.setCellValue(AppConstants.TIME_OUT_PERMISSION_LABEL);
+
+	cell = row.createCell((short)col++);
+	cell.setCellStyle(cellstyleTblHdr);
+	cell.setCellValue(AppConstants.TIME_OTHERS_LABEL);
+
+	cell = row.createCell((short)col++);
+	cell.setCellStyle(cellstyleTblHdr);
+	cell.setCellValue(AppConstants.SPLOT_LABEL);
+
+	cell = row.createCell((short)col++);
+	cell.setCellStyle(cellstyleTblHdr);
+	cell.setCellValue(AppConstants.SHIFT_ID_LABEL);
+
+	cell = row.createCell((short)col++);
+	cell.setCellStyle(cellstyleTblHdr);
+	cell.setCellValue(AppConstants.SHIFT_TIME_LABEL);
+
+	cell = row.createCell((short)col++);
+	cell.setCellStyle(cellstyleTblHdr);
+	cell.setCellValue(AppConstants.EMPLOYEE_LEAVE_LABEL);
+
+	cell = row.createCell((short)col++);
+	cell.setCellStyle(cellstyleTblHdr);
+	cell.setCellValue(AppConstants.CP_DATE_LABEL);
+
+	cell = row.createCell((short)col++);
+	cell.setCellStyle(cellstyleTblHdr);
+	cell.setCellValue(AppConstants.DEPARTMENT_ID_LABEL);
+
+	cell = row.createCell((short)col++);
+	cell.setCellStyle(cellstyleTblHdr);
+	cell.setCellValue(AppConstants.DESIGNATION_ID_LABEL);
+
+	TimeSheetInterface timesheetIf = new TimeSheetImpl();
+	TimeSheetObject[] timesheetArr = timesheetIf.getAllTimeSheets();
+	if ( timesheetArr != null && timesheetArr.length > 0 ) {
+	    for (int iterator = 0; iterator < timesheetArr.length; iterator++) {
+		TimeSheetObject timesheetObj = timesheetArr[iterator];
+		if ( timesheetObj == null )
+		    break;
+		rowNum++;
+		col = 0;
+		row = sheet.createRow((short)rowNum);
+
+		cell = row.createCell((short)col++);
+		cell.setCellStyle(cellstyleTblLeft);
+		cell.setCellValue(timesheetObj.getTimesheetId());
+
+		cell = row.createCell((short)col++);
+		cell.setCellStyle(cellstyleTblLeft);
+		cell.setCellValue("INFO");
+
+		cell = row.createCell((short)col++);
+		cell.setCellStyle(cellstyleTblLeft);
+		cell.setCellValue(timesheetObj.getTimesheetName());
+
+		cell = row.createCell((short)col++);
+		cell.setCellStyle(cellstyleTblLeft);
+		cell.setCellValue(timesheetObj.getEmployeeId());
+
+		cell = row.createCell((short)col++);
+		cell.setCellStyle(cellstyleTblLeft);
+		cell.setCellValue(timesheetObj.getTimesheetDate());
+
+		cell = row.createCell((short)col++);
+		cell.setCellStyle(cellstyleTblLeft);
+		cell.setCellValue(timesheetObj.getShiftTypeId());
+
+		cell = row.createCell((short)col++);
+		cell.setCellStyle(cellstyleTblLeft);
+		cell.setCellValue(timesheetObj.getTimeIn());
+
+		cell = row.createCell((short)col++);
+		cell.setCellStyle(cellstyleTblLeft);
+		cell.setCellValue(timesheetObj.getTimeInPermission());
+
+		cell = row.createCell((short)col++);
+		cell.setCellStyle(cellstyleTblLeft);
+		cell.setCellValue(timesheetObj.getTimeOut());
+
+		cell = row.createCell((short)col++);
+		cell.setCellStyle(cellstyleTblLeft);
+		cell.setCellValue(timesheetObj.getTimeOutPermission());
+
+		cell = row.createCell((short)col++);
+		cell.setCellStyle(cellstyleTblLeft);
+		cell.setCellValue(timesheetObj.getTimeOthers());
+
+		cell = row.createCell((short)col++);
+		cell.setCellStyle(cellstyleTblLeft);
+		cell.setCellValue(timesheetObj.getSplot());
+
+		cell = row.createCell((short)col++);
+		cell.setCellStyle(cellstyleTblLeft);
+		cell.setCellValue(timesheetObj.getShiftId());
+
+		cell = row.createCell((short)col++);
+		cell.setCellStyle(cellstyleTblLeft);
+		cell.setCellValue(timesheetObj.getShiftTime());
+
+		cell = row.createCell((short)col++);
+		cell.setCellStyle(cellstyleTblLeft);
+		cell.setCellValue(timesheetObj.getEmployeeLeave());
+
+		cell = row.createCell((short)col++);
+		cell.setCellStyle(cellstyleTblLeft);
+		cell.setCellValue(timesheetObj.getCpDate());
+
+		cell = row.createCell((short)col++);
+		cell.setCellStyle(cellstyleTblLeft);
+		cell.setCellValue(timesheetObj.getDepartmentId());
+
+		cell = row.createCell((short)col++);
+		cell.setCellStyle(cellstyleTblLeft);
+		cell.setCellValue(timesheetObj.getDesignationId());
+	    }
+	}
+	try {
+	    wb.write(fileOut);
+	    fileOut.close();
+	} catch (IOException ioe) {
+	    throw new AppException("Exception closing file" + outputFileName);
+	}
+    }
+
+    public void readFromFile(String inputFileName, Object obj) throws AppException {
+	DebugHandler.fine("readFromFile(" + inputFileName + obj + ")");
+	POIFSFileSystem fs = null;
+	HSSFWorkbook wb = null;
+	try {
+	    fs = new POIFSFileSystem(new FileInputStream(inputFileName));
+	} catch (FileNotFoundException fnf) {
+	    throw new AppException("Unable to find file " + inputFileName);
+	} catch (IOException ioe) {
+	    throw new AppException("IOException while opening file " + inputFileName);
+	}
+	try {
+	    wb = new HSSFWorkbook(fs);
+	} catch (IOException ioe) {
+	    throw new AppException("IOException while getting workbook.");
+	}
+	HSSFSheet sheet = wb.getSheetAt(0);
+	FileInputStream fileIn = null;
+	try {
+	    fileIn = new FileInputStream(inputFileName);
+	} catch (FileNotFoundException fnf) {
+	    throw new AppException("Unable to find file " + inputFileName);
+	}
+	int rowNum = 0;
+	int col = 0;
+	HSSFRow row = null;
+	HSSFCell cell = null;
+	String dbOp = null;
+	TimeSheetInterface timesheetIf = new TimeSheetImpl();
+	TimeSheetObject timesheetObject = new TimeSheetObject();
+
+	rowNum = 0;
+	while ( true ) {
+	    row = sheet.getRow(++rowNum);
+	    if ( row == null )
+		break;
+	    timesheetObject = new TimeSheetObject();
+	    cell = row.getCell((short)1);
+	    if ( cell != null )
+		dbOp = Util.trim(cell.getStringCellValue());
+	    else
+		dbOp = null;
+	    DebugHandler.fine("DbOp = |" + dbOp + "|");
+	    if ( dbOp != null &&  dbOp.equalsIgnoreCase("UPDATE") ) {
+		cell = row.getCell((short)0); // Get the first column
+		try {
+		    timesheetObject.setTimesheetId((int)cell.getNumericCellValue());
+		} catch (NumberFormatException nfe) {
+		    throw new AppException("Column A has been changed in " + wb.getSheetName((short)0) + " Current value is Row num " + row + " is : " + cell.getStringCellValue());
+		}
+		timesheetObject = timesheetIf.getTimeSheet(timesheetObject.getTimesheetId());
+		col = 2; // Starting from 3rd Column
+		cell = row.getCell((short)col++);
+		if ( cell != null )
+		    timesheetObject.setTimesheetName(Util.trim(cell.getStringCellValue()));
+		cell = row.getCell((short)col++);
+		if ( cell != null )
+		    timesheetObject.setEmployeeId(Util.trim(cell.getStringCellValue()));
+		cell = row.getCell((short)col++);
+		if ( cell != null )
+		    timesheetObject.setTimesheetDate(cell.getDateCellValue());
+		cell = row.getCell((short)col++);
+		if ( cell != null )
+		try {
+		    timesheetObject.setShiftTypeId((int)cell.getNumericCellValue());
+		} catch (NumberFormatException nfe) {
+		    timesheetObject.setShiftTypeId(0);
+		}
+		cell = row.getCell((short)col++);
+		if ( cell != null )
+		    timesheetObject.setTimeIn(cell.getDateCellValue());
+		cell = row.getCell((short)col++);
+		if ( cell != null )
+		    timesheetObject.setTimeInPermission(Util.trim(cell.getStringCellValue()));
+		cell = row.getCell((short)col++);
+		if ( cell != null )
+		    timesheetObject.setTimeOut(cell.getDateCellValue());
+		cell = row.getCell((short)col++);
+		if ( cell != null )
+		    timesheetObject.setTimeOutPermission(Util.trim(cell.getStringCellValue()));
+		cell = row.getCell((short)col++);
+		if ( cell != null )
+		    timesheetObject.setTimeOthers(cell.getDateCellValue());
+		cell = row.getCell((short)col++);
+		if ( cell != null )
+		    timesheetObject.setSplot(Util.trim(cell.getStringCellValue()));
+		cell = row.getCell((short)col++);
+		if ( cell != null )
+		    timesheetObject.setShiftId(Util.trim(cell.getStringCellValue()));
+		cell = row.getCell((short)col++);
+		if ( cell != null )
+		try {
+		    timesheetObject.setShiftTime((int)cell.getNumericCellValue());
+		} catch (NumberFormatException nfe) {
+		    timesheetObject.setShiftTime(0);
+		}
+		cell = row.getCell((short)col++);
+		if ( cell != null )
+		    timesheetObject.setEmployeeLeave(Util.trim(cell.getStringCellValue()));
+		cell = row.getCell((short)col++);
+		if ( cell != null )
+		    timesheetObject.setCpDate(cell.getDateCellValue());
+		cell = row.getCell((short)col++);
+		if ( cell != null )
+		try {
+		    timesheetObject.setDepartmentId((int)cell.getNumericCellValue());
+		} catch (NumberFormatException nfe) {
+		    timesheetObject.setDepartmentId(0);
+		}
+		cell = row.getCell((short)col++);
+		if ( cell != null )
+		try {
+		    timesheetObject.setDesignationId((int)cell.getNumericCellValue());
+		} catch (NumberFormatException nfe) {
+		    timesheetObject.setDesignationId(0);
+		}
+		DebugHandler.fine("Updating TimeSheet " + timesheetObject);
+		timesheetIf.updateTimeSheet(timesheetObject);
+	    } else if ( dbOp != null && dbOp.equalsIgnoreCase("INSERT") ) {
+		col = 2; // Starting from 3rd Column
+		cell = row.getCell((short)col++);
+		if ( cell != null )
+		    timesheetObject.setTimesheetName(Util.trim(cell.getStringCellValue()));
+		cell = row.getCell((short)col++);
+		if ( cell != null )
+		    timesheetObject.setEmployeeId(Util.trim(cell.getStringCellValue()));
+		cell = row.getCell((short)col++);
+		if ( cell != null )
+		    timesheetObject.setTimesheetDate(cell.getDateCellValue());
+		cell = row.getCell((short)col++);
+		if ( cell != null )
+		try {
+		    timesheetObject.setShiftTypeId((int)cell.getNumericCellValue());
+		} catch (NumberFormatException nfe) {
+		    timesheetObject.setShiftTypeId(0);
+		}
+		cell = row.getCell((short)col++);
+		if ( cell != null )
+		    timesheetObject.setTimeIn(cell.getDateCellValue());
+		cell = row.getCell((short)col++);
+		if ( cell != null )
+		    timesheetObject.setTimeInPermission(Util.trim(cell.getStringCellValue()));
+		cell = row.getCell((short)col++);
+		if ( cell != null )
+		    timesheetObject.setTimeOut(cell.getDateCellValue());
+		cell = row.getCell((short)col++);
+		if ( cell != null )
+		    timesheetObject.setTimeOutPermission(Util.trim(cell.getStringCellValue()));
+		cell = row.getCell((short)col++);
+		if ( cell != null )
+		    timesheetObject.setTimeOthers(cell.getDateCellValue());
+		cell = row.getCell((short)col++);
+		if ( cell != null )
+		    timesheetObject.setSplot(Util.trim(cell.getStringCellValue()));
+		cell = row.getCell((short)col++);
+		if ( cell != null )
+		    timesheetObject.setShiftId(Util.trim(cell.getStringCellValue()));
+		cell = row.getCell((short)col++);
+		if ( cell != null )
+		try {
+		    timesheetObject.setShiftTime((int)cell.getNumericCellValue());
+		} catch (NumberFormatException nfe) {
+		    timesheetObject.setShiftTime(0);
+		}
+		cell = row.getCell((short)col++);
+		if ( cell != null )
+		    timesheetObject.setEmployeeLeave(Util.trim(cell.getStringCellValue()));
+		cell = row.getCell((short)col++);
+		if ( cell != null )
+		    timesheetObject.setCpDate(cell.getDateCellValue());
+		cell = row.getCell((short)col++);
+		if ( cell != null )
+		try {
+		    timesheetObject.setDepartmentId((int)cell.getNumericCellValue());
+		} catch (NumberFormatException nfe) {
+		    timesheetObject.setDepartmentId(0);
+		}
+		cell = row.getCell((short)col++);
+		if ( cell != null )
+		try {
+		    timesheetObject.setDesignationId((int)cell.getNumericCellValue());
+		} catch (NumberFormatException nfe) {
+		    timesheetObject.setDesignationId(0);
+		}
+		DebugHandler.fine("Adding TimeSheet " + timesheetObject);
+		timesheetIf.addTimeSheet(timesheetObject);
+	    } else if ( dbOp != null && dbOp.equalsIgnoreCase("DELETE") ) {
+		cell = row.getCell((short)0); // Get the first column
+		try {
+		    timesheetObject.setTimesheetId((int)cell.getNumericCellValue());
+		} catch (NumberFormatException nfe) {
+		    throw new AppException("Column A has been changed in " + wb.getSheetName((short)0) + " Current value is Row num " + row + " is : " + cell.getStringCellValue());
+		}
+		timesheetObject = timesheetIf.getTimeSheet(timesheetObject.getTimesheetId());
+		timesheetIf.deleteTimeSheet(timesheetObject);
+	    } else if ( dbOp != null && ! dbOp.equalsIgnoreCase("INFO") ) {
+		throw new AppException("Invalid operation " + dbOp + " in Row num: " + rowNum);
+	    }
+	}
+    }
+}

@@ -1,0 +1,17 @@
+tt_default: tt_all
+
+
+../../../../jst/classes/core/appdb/PersistentId.class : PersistentId.java ../../../../jst/classes/core/db/PersistentObject.class ../../../../jst/classes/core/busobj/IdObject.class ../../../../jst/classes/core/db/DBException.class ../../../../jst/classes/core/db/SQLStatement.class
+	$(JAVAC) $(JAVAC_FLAGS) -d ../../../../jst/classes/ $<
+
+# WARNING: [PersistentId.java, 91] import package core.appdb is not in CLASSPATH. Creating pseudo-package.
+# WARNING: [PersistentId.java, 13] declared package java.sql is not in CLASSPATH.
+# WARNING: [PersistentId.java, 14] declared package java.sql is not in CLASSPATH.
+# WARNING: [PersistentId.java, 47] Cannot resolve dependency for possible type Object.class, so none created
+# WARNING: [PersistentId.java, 51] Cannot resolve dependency for possible type String.class, so none created
+# WARNING: [PersistentId.java, 70] Cannot resolve dependency for possible type ResultSet.class, so none created
+# WARNING: [PersistentId.java, 91] Cannot resolve dependency for possible type Exception.class, so none created
+
+TGTS = ../../../../jst/classes/core/appdb/PersistentId.class 
+tt_all: all
+

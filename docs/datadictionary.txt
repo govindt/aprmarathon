@@ -1,0 +1,34 @@
+Registration Types
+
+Individual
+Couple
+Family of 3
+Family of 4
+Family of 5
+Family of 6
+Resident Donor
+Corporate
+Community
+Charity
+Late Registrant Family
+
+Registration Class
+
+Resident Bronze, Resident Silver, Resident Gold, Resident Platinum
+
+Registration Source
+Villa, Corporate, Tower, External
+
+Event Type - Volley Ball, Cricket, 5KM Run, 10KM Run, 
+
+Community Type
+
+Villa
+Tower
+External
+
+Payment_Status
+Pledged,
+
+Payment_Type
+NEFT/Cash

@@ -1,0 +1,198 @@
+#***************************************************************************
+#
+#  Project Name Project - Include Makefile
+#  Author : Govind Thirumalai 
+#
+#***************************************************************************
+
+#***************************************************************************
+#
+#  Section 1: Directories.
+#
+#***************************************************************************
+DEPLOY_DIR	 = $(CATALINA_HOME)/webapps
+CLASS_DIR        = $(JAVA_DEV_ROOT)/jst/classes
+DOC_DIR          = $(JAVA_DEV_ROOT)/jst/docs
+MAKE_DIR         = $(JAVA_DEV_ROOT)/makefiles
+JAR_DIR          = $(JAVA_DEV_ROOT)/jst/jars
+JAR_3RDPARTY_DIR = $(JAVA_DEV_ROOT)/jars
+# servlet.jar is part of tomcat
+# classes.zip is the Oracle's thin driver
+# mail.jar - Java Mail API
+# activation.jar - Java Activation Framework
+
+JARS_3RDPARTY    = 	servlet.jar \
+		   	ojdbc14.jar \
+			mysql-connector-java-5.1.6-bin.jar \
+		  	mailapi.jar \
+		  	smtp.jar \
+		   	activation.jar \
+			poi.jar \
+			httpcore-4.0-beta2.jar \
+			httpclient-4.0-beta1.jar \
+			apache-mime4j-0.4.jar \
+			httpmime-4.0-beta1.jar \
+			commons-lang-2.1.jar \
+			commons-logging.jar \
+			log4j-1.2.12.jar \
+			jcs-1.0-dev.jar \
+			cos.jar \
+
+ifndef JAVA_HOME
+JAVA_HOME		= /usr/java
+endif
+ARCH := $(shell uname -s)
+ifdef JAVA_DEV_LOCAL
+	BUILD_ROOT	 = $(JAVA_DEV_LOCAL)
+	MAKEFILE_DIR	 = $(JAVA_DEV_LOCAL)/makefiles
+else
+	ifeq ($(findstring $$ARCH, CYGWIN_NT),)
+		BUILD_ROOT	 = $(shell cygpath -u $(JAVA_DEV_ROOT))
+		MAKEFILE_DIR	 = $(JAVA_DEV_ROOT)/makefiles
+	else
+		BUILD_ROOT	 = $(JAVA_DEV_ROOT)
+		MAKEFILE_DIR	 = $(JAVA_DEV_ROOT)/makefiles
+	endif
+endif
+
+
+BASEDIR				= $(BUILD_ROOT)/src
+SCRIPTS_DIST_DIR		= $(BUILD_ROOT)/bin
+ifeq ($(findstring $$ARCH, CYGWIN_NT),)
+	SOURCE_DIR			= $(shell cygpath -m $(BASEDIR)/java)
+	DISTDIR				= $(shell cygpath -m $(BUILD_ROOT)/jst)
+
+endif
+LOCAL_CLASS_DIR			= $(DISTDIR)/classes
+DESTINATION			= $(DISTDIR)/classes
+PUBLIC_HTML_DIR			= $(BASEDIR)/public_html
+PUBLIC_HTML_DIST_DIR		= $(DISTDIR)/public_html
+JAVA_BIN			= $(JAVA_HOME)/bin
+DB_DIST_DIR			= $(DESTINATION)/core/db
+UTIL_DIST_DIR			= $(DESTINATION)/core/util
+IMAGEDIR			= $(PUBLIC_HTML_DIST_DIR)/images
+DOC_DIR				= $(DISTDIR)/doc
+EXAMPLEDIR			= $(DISTDIR)/examples
+
+ifeq ($(findstring $$ARCH, CYGWIN_NT),)
+	DEST_DIRS = $(shell cygpath -u \
+		$(DISTDIR) $(DESTINATION) \
+		$(PUBLIC_HTML_DIR) \
+		$(IMAGEDIR) \
+		$(DOC_DIR) \
+		$(DB_DIST_DIR) \
+		$(UTIL_DIST_DIR) \
+		$(LDAP_DIST_DIR) \
+		$(IMPL_DIST_DIR))
+else
+	DEST_DIRS = $(DISTDIR) $(DESTINATION) \
+		$(PUBLIC_HTML_DIR) \
+		$(IMAGEDIR) \
+		$(DOC_DIR) \
+		$(DB_DIST_DIR) \
+		$(UTIL_DIST_DIR) \
+		$(LDAP_DIST_DIR) \
+		$(IMPL_DIST_DIR)
+endif
+
+# Path relative to src
+SOURCE_DIRS = \
+	scripts \
+	public_html \
+	public_html/images \
+	java/core/util \
+	java/core/ui \
+	java/core/ConnectionPool \
+	java/core/busobj \
+	java/core/db \
+	java/core/appdb \
+	java/core/appui \
+	java/app/util \
+	java/app/busobj \
+	java/app/appdb \
+	java/app/businterface \
+	java/app/busimpl \
+	java/app/menu \
+	java/app/appui \
+	java/servlet \
+	java/bin \
+	examples \
+
+#***************************************************************************
+#
+#  Section 2. Tools and options.
+#
+#***************************************************************************
+
+JAVA     = java
+JAVAC    = javac
+JAVAH    = javah
+RMIC     = rmic
+JAR      = jar
+DEBUG    = jdb
+DELETE   = rm -f
+RMDIR    = rm -rf
+COPY     = cp
+MKDIR    = mkdir -p
+JINDENT  = Jindent
+PROFILER = -Xrunhprof
+MAKEDIR  = mkdir -p
+PRINT    = @echo
+JAVADOC  = javadoc
+CHMOD    = chmod -f
+SED      = sed
+MOVE     = mv
+AWK      = awk
+TAR      = tar
+GZIP     = gzip
+
+
+ifeq ($(ARCH), WINNT)
+  JDK := $(subst \,/,$(JAVA_HOME))
+  JAR:=$(JDK)/bin/jar
+  SEP=;
+else
+  ifeq ($(findstring $$ARCH, CYGWIN_NT),)
+    SEP=;
+  else
+    JDK := $(JAVA_HOME)
+    JAR:=$(JAVA_HOME)/bin/jar
+    SEP=:
+  endif
+endif
+
+EMPTY            =
+SPACE            = $(EMPTY) $(EMPTY)
+
+LOCAL_JARTMP     = $(patsubst %,$(JAR_DIR)/%,$(JARS))
+LOCAL_JARLIST    = $(subst $(SPACE),$(SEP),$(LOCAL_JARTMP))
+
+OTHER_JARTMP     = $(patsubst %,$(JAR_3RDPARTY_DIR)/%,$(JARS_3RDPARTY))
+OTHER_JARLIST    = $(subst $(SPACE),$(SEP),$(OTHER_JARTMP))
+
+JRE              = $(subst ${SPACE},\${SPACE},$(JAVA_HOME)/jre/lib/rt.jar)
+
+SOURCEPATH       = $(SOURCE_DIR)
+CLASSPATH        = $(JRE)$(SEP)$(LOCAL_CLASS_DIR)$(SEP)$(CLASS_DIR)$(SEP)$(LOCAL_JARLIST)$(SET)$(OTHER_JARLIST)$(SEP).
+
+JAVAC_OPTIONS    = -Xlint -d $(DESTINATION) -classpath $(CLASSPATH) -sourcepath $(SOURCEPATH) -deprecation
+JAVA_OPTIONS     = -deprecation -classpath $(CLASSPATH) 
+RMIC_OPTIONS     = -d $(CLASS_DIR) -classpath $(CLASSPATH)
+JAR_OPTIONS      = -cvmf
+JINDENT_OPTIONS  = -p $(MAKE_DIR)/style.jin
+PROFILER_OPTIONS = cpu=samples,depth=6
+
+JAVADOC_OPTIONS  = \
+	-d $(DOC_DIR) \
+	-sourcepath $(SOURCE_DIR) \
+	-classpath $(CLASSPATH) \
+	-author \
+	-package \
+	-use \
+	-splitIndex \
+	-version \
+	-windowtitle $(WINDOWTITLE) \
+	-doctitle $(DOCTITLE) \
+	-header $(HEADER) \
+	-bottom $(BOTTOM)
+

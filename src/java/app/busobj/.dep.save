@@ -1,0 +1,74 @@
+tt_default: tt_all
+
+
+../../../../jst/classes/app/busobj/BuildObject.class : BuildObject.java
+	$(JAVAC) $(JAVAC_FLAGS) -d ../../../../jst/classes/ $<
+
+# WARNING: [BuildObject.java, 11] declared package java.util is not in CLASSPATH.
+# WARNING: [BuildObject.java, 24] Cannot resolve dependency for possible type String.class, so none created
+# WARNING: [BuildObject.java, 26] Cannot resolve dependency for possible type Date.class, so none created
+
+../../../../jst/classes/app/busobj/TopologyObject.class : TopologyObject.java
+	$(JAVAC) $(JAVAC_FLAGS) -d ../../../../jst/classes/ $<
+
+# WARNING: [TopologyObject.java, 11] declared package java.util is not in CLASSPATH.
+# WARNING: [TopologyObject.java, 24] Cannot resolve dependency for possible type String.class, so none created
+
+../../../../jst/classes/app/busobj/TestBuildObject.class : TestBuildObject.java ../../../../jst/classes/core/util/Constants.class
+	$(JAVAC) $(JAVAC_FLAGS) -d ../../../../jst/classes/ $<
+
+# WARNING: [TestBuildObject.java, 11] declared package java.util is not in CLASSPATH.
+# WARNING: [TestBuildObject.java, 28] Cannot resolve dependency for possible type String.class, so none created
+
+../../../../jst/classes/app/busobj/TestObject.class : TestObject.java ../../../../jst/classes/core/util/Constants.class
+	$(JAVAC) $(JAVAC_FLAGS) -d ../../../../jst/classes/ $<
+
+# WARNING: [TestObject.java, 11] declared package java.util is not in CLASSPATH.
+# WARNING: [TestObject.java, 14] declared package java.net is not in CLASSPATH.
+# WARNING: [TestObject.java, 15] declared package java.net is not in CLASSPATH.
+# WARNING: [TestObject.java, 16] declared package java.io is not in CLASSPATH.
+# WARNING: [TestObject.java, 27] Cannot resolve dependency for possible type String.class, so none created
+# WARNING: [TestObject.java, 272] Cannot resolve dependency for possible type URLDecoder.class, so none created
+# WARNING: [TestObject.java, 273] Cannot resolve dependency for possible type UnsupportedEncodingException.class, so none created
+# WARNING: [TestObject.java, 274] Cannot resolve dependency for possible type System.err.class, so none created
+
+../../../../jst/classes/app/busobj/TestSuiteObject.class : TestSuiteObject.java
+	$(JAVAC) $(JAVAC_FLAGS) -d ../../../../jst/classes/ $<
+
+# WARNING: [TestSuiteObject.java, 11] declared package java.util is not in CLASSPATH.
+# WARNING: [TestSuiteObject.java, 25] Cannot resolve dependency for possible type String.class, so none created
+
+../../../../jst/classes/app/busobj/UserTblObject.class : UserTblObject.java ../../../../jst/classes/core/util/Constants.class
+	$(JAVAC) $(JAVAC_FLAGS) -d ../../../../jst/classes/ $<
+
+# WARNING: [UserTblObject.java, 11] declared package java.util is not in CLASSPATH.
+# WARNING: [UserTblObject.java, 25] Cannot resolve dependency for possible type String.class, so none created
+
+../../../../jst/classes/app/busobj/TestResultsObject.class : TestResultsObject.java
+	$(JAVAC) $(JAVAC_FLAGS) -d ../../../../jst/classes/ $<
+
+# WARNING: [TestResultsObject.java, 11] declared package java.util is not in CLASSPATH.
+# WARNING: [TestResultsObject.java, 41] Cannot resolve dependency for possible type String.class, so none created
+
+../../../../jst/classes/app/busobj/MachinesObject.class : MachinesObject.java
+	$(JAVAC) $(JAVAC_FLAGS) -d ../../../../jst/classes/ $<
+
+# WARNING: [MachinesObject.java, 11] declared package java.util is not in CLASSPATH.
+# WARNING: [MachinesObject.java, 24] Cannot resolve dependency for possible type String.class, so none created
+# WARNING: [MachinesObject.java, 34] Cannot resolve dependency for possible type Date.class, so none created
+
+../../../../jst/classes/app/busobj/ProductObject.class : ProductObject.java
+	$(JAVAC) $(JAVAC_FLAGS) -d ../../../../jst/classes/ $<
+
+# WARNING: [ProductObject.java, 11] declared package java.util is not in CLASSPATH.
+# WARNING: [ProductObject.java, 24] Cannot resolve dependency for possible type String.class, so none created
+
+../../../../jst/classes/app/busobj/TestTypeObject.class : TestTypeObject.java
+	$(JAVAC) $(JAVAC_FLAGS) -d ../../../../jst/classes/ $<
+
+# WARNING: [TestTypeObject.java, 11] declared package java.util is not in CLASSPATH.
+# WARNING: [TestTypeObject.java, 24] Cannot resolve dependency for possible type String.class, so none created
+
+TGTS = ../../../../jst/classes/app/busobj/BuildObject.class ../../../../jst/classes/app/busobj/TopologyObject.class ../../../../jst/classes/app/busobj/TestBuildObject.class ../../../../jst/classes/app/busobj/TestObject.class ../../../../jst/classes/app/busobj/TestSuiteObject.class ../../../../jst/classes/app/busobj/UserTblObject.class ../../../../jst/classes/app/busobj/TestResultsObject.class ../../../../jst/classes/app/busobj/MachinesObject.class ../../../../jst/classes/app/busobj/ProductObject.class ../../../../jst/classes/app/busobj/TestTypeObject.class 
+tt_all: all
+
