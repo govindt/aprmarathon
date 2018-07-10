@@ -15,19 +15,25 @@ cd ${sdir}
 
 ReplaceText() {
 	src="$1"
-	dst="$2"	
-	for f in `echo $files`; do
-		if [ -n "`grep ${src} $f | grep -v Binary`" ]; then
-			sed -e "sX${src}X${dst}Xg" $f > /tmp/`basename $f`
-			if [ $? -eq 0 ]; then
-				mv /tmp/`basename $f` $f
-			else
-				echo "SRC=$src"
-				echo "DST=$dst"
-				echo "FILE=$f"
+	dst="$2"
+	src_template="$3"
+	dest_file="$4"
+	if [ $# -eq 2 ]; then	
+		for f in `echo $files`; do
+			if [ -n "`grep ${src} $f | grep -v Binary`" ]; then
+				sed -e "sX${src}X${dst}Xg" $f > /tmp/`basename $f`
+				if [ $? -eq 0 ]; then
+					mv /tmp/`basename $f` $f
+				else
+					echo "SRC=$src"
+					echo "DST=$dst"
+					echo "FILE=$f"
+				fi
 			fi
-		fi
-	done
+		done
+	else
+		sed -e "sX${src}X${dst}Xg" ${src_template} > ${dest_file}
+	fi
 }
 
 while ( true ) 
@@ -58,9 +64,12 @@ if [ "${JAVA_DEV_ROOT}" !=  "${MY_JAVA_DEV_ROOT}" ]; then
 	echo "Please make sure that the Environment Variable is set to ${MY_JAVA_DEV_ROOT} and rerun the script"
 fi
 
+cd ${my_dir}
+ReplaceText %SERVLET_PATH% "aprmregistration" web_template.xml web.xml
+ReplaceText %REST_NAME% "APR Marathon Rest" web_template.xml web.xml
+exit
 cd ${WS_DIR}
 files=`find . -type f | grep -v $my_name`
-
 ReplaceText %JAVA_DEV_ROOT% "${JAVA_DEV_ROOT}"
 ReplaceText %AUTHOR% "Govind Thirumalai"
 ReplaceText %PROJECT% "APRMRegistration"
@@ -71,4 +80,6 @@ ReplaceText %BASEURL% "aprmarathon"
 ReplaceText %COMPANY% "APR Charitable Trust"
 ReplaceText %YEAR% "2017"
 mv jakarta-tomcat/webapps/%BASEURL% jakarta-tomcat/webapps/$PROJECT
+
+
 

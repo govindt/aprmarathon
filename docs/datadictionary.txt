@@ -1,11 +1,6 @@
 Registration Types
 
-Individual
-Couple
-Family of 3
-Family of 4
-Family of 5
-Family of 6
+Online Registrant
 Resident Donor
 Corporate
 Community
@@ -14,7 +9,7 @@ Late Registrant Family
 
 Registration Class
 
-Resident Bronze, Resident Silver, Resident Gold, Resident Platinum
+Individual, Couple, Family of *, Resident Bronze, Resident Silver, Resident Gold, Resident Platinum
 
 Registration Source
 Villa, Corporate, Tower, External
@@ -32,3 +27,8 @@ Pledged,
 
 Payment_Type
 NEFT/Cash
+
+
+Select Col3,'MIDDLE_NAME', 'LAST_NAME', Col1, Col15,'PHONE_NUMBER', Col6, 'CITY', 'STATE', 'PINCODE', 'PAN','APR Marathon 2016',    'Resident Donor', Col2, Col4, 'APR General Allocation', 'EMERGENCY_CONTACT', 'EMERGENCY_PHONE', 'TRANSFER_TYPE' , Col7, Col5, 'EXTRA_AMOUNT', 'PAYMENT_DATE', 'RECEIPT_DATE', Col12, Col14, 'REFERENCE_ID', 'TAX', 'FEES' where Col5 <> 0
+Select Col3,'MIDDLE_NAME', 'LAST_NAME', Col1, Col15,'PHONE_NUMBER', Col6, 'CITY', 'STATE', 'PINCODE', 'PAN','APR Marathon 2016', 'Corporate Sponsor', Col2, Col4, 'APR General Allocation', 'EMERGENCY_CONTACT', 'EMERGENCY_PHONE', 'TRANSFER_TYPE' , Col7, Col5, 'EXTRA_AMOUNT', 'PAYMENT_DATE', 'RECEIPT_DATE', Col12, Col14, 'REFERENCE_ID', 'TAX', 'FEES' where Col5 <> 0
+Select Col5, Col6,Col7,Col74, 'ALTERNATE_EMAIL', Col2,Col8,  Col9, Col10, Col12,                      'PAN','APR Marathon 2016', 'Online Registrant', Col40, Col13, Col33,                   Col59,              Col67,            'Payment Gateway', 'Complete', (Col75-Col52), Col52, Col76,    'RECEIPT_DATE', Col3, Col16, Col15 where Col75 <> 0

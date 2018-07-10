@@ -14,6 +14,25 @@ PACKAGE = app.appdb
 
 SOURCE  = \
 	  PersistentUsers.java \
+	PersistentParticipantEvent.java \
+	PersistentRegistrantEvent.java \
+	PersistentAgeCategory.java \
+	PersistentBeneficiary.java \
+	PersistentBloodGroup.java \
+	PersistentEventType.java \
+	PersistentGender.java \
+	PersistentMedal.java \
+	PersistentParticipant.java \
+	PersistentPaymentStatus.java \
+	PersistentPaymentType.java \
+	PersistentRegistrant.java \
+	PersistentRegistrantPayment.java \
+	PersistentRegistrationClass.java \
+	PersistentRegistrationSource.java \
+	PersistentRegistrationType.java \
+	PersistentResult.java \
+	PersistentTShirtSize.java \
+	PersistentEvent.java \
 	  PersistentRole.java \
 	  PersistentMenu.java \
 	  PersistentAcl.java \

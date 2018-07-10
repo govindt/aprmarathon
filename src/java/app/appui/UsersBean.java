@@ -103,34 +103,34 @@ public class UsersBean {
 	    be = new BoldElement(AppConstants.CURRENT_USERS_LABEL);
 	    be.setId(Constants.BODY_ROW_STYLE);
 	    td = new TableDataElement(be);
-	    tr.addElement(td);
+	    tr.add(td);
 	    UsersObject[] userTblArr = utif.getAllUsers();
-	    Vector<String> nameVector = new Vector<String>();
-	    Vector<Integer> valueVector = new Vector<Integer>();
-	    nameVector.addElement(AppConstants.NEW_USER);
-	    valueVector.addElement(new Integer(0));
+	    ArrayList<String> nameArrayList = new ArrayList<String>();
+	    ArrayList<Integer> valueArrayList = new ArrayList<Integer>();
+	    nameArrayList.add(AppConstants.NEW_USER);
+	    valueArrayList.add(new Integer(0));
 	    for (int i = 0; i < userTblArr.length; i++ ) {
 		UsersObject utObj = userTblArr[i];
 		if ( utObj == null )
 		    break;
-		nameVector.addElement(utObj.getUsername());
-		valueVector.addElement(new Integer(utObj.getUsersId()));
+		nameArrayList.add(utObj.getUsername());
+		valueArrayList.add(new Integer(utObj.getUsersId()));
 	    }
 	    SelectElement se = new SelectElement(AppConstants.MODIFY_USER_STR,
-						 nameVector,
-						 valueVector,
+						 nameArrayList,
+						 valueArrayList,
 						 String.valueOf(userId), 0);
 	    
 	    se.setOnChange(UtilBean.JS_SUBMIT_FORM);
 	    td = new TableDataElement(se);
-	    tr.addElement(td);
-	    te.addElement(tr);
+	    tr.add(td);
+	    te.add(tr);
 	    
 	    tr = new TableRowElement();
 	    be = new BoldElement(AppConstants.USER_ID_LABEL);
 	    be.setId(Constants.BODY_ROW_STYLE);
 	    td = new TableDataElement(be);
-	    tr.addElement(td);
+	    tr.add(td);
 	    if ( userId != 0 )
 		td = new TableDataElement(new InputElement(InputElement.TEXT, 
 							   AppConstants.NEW_USERNAME_STR,
@@ -139,28 +139,28 @@ public class UsersBean {
 		td = new TableDataElement(new InputElement(InputElement.TEXT, 
 							   AppConstants.NEW_USERNAME_STR,
 							   Constants.EMPTY));
-	    tr.addElement(td);
-	    te.addElement(tr);
+	    tr.add(td);
+	    te.add(tr);
 
 	    tr = new TableRowElement();
 	    be = new BoldElement(AppConstants.CURRENT_ROLE_LABEL);
 	    be.setId(Constants.BODY_ROW_STYLE);
 	    td = new TableDataElement(be);
-	    tr.addElement(td);
+	    tr.add(td);
 
-	    nameVector = new Vector<String>();
-	    valueVector = new Vector<Integer>();
+	    nameArrayList = new ArrayList<String>();
+	    valueArrayList = new ArrayList<Integer>();
 	    RoleObject[] roleArr = rif.getAllRoles();
 	    for (int iterator = 0; iterator < roleArr.length; iterator++ ) {
 		rObj = roleArr[iterator];
 		if ( rObj == null )
 		    break;
-		nameVector.addElement(rObj.getRoleName());
-		valueVector.addElement(rObj.getRoleId());
+		nameArrayList.add(rObj.getRoleName());
+		valueArrayList.add(rObj.getRoleId());
 	    }
 	    se = new SelectElement(AppConstants.MODIFY_ROLE_STR,
-				   nameVector,
-				   valueVector,
+				   nameArrayList,
+				   valueArrayList,
 				   String.valueOf(selectedUserObj.getRoleId()), 0);
 	    td = new TableDataElement(se);
 	}
@@ -169,20 +169,20 @@ public class UsersBean {
 	    be = new BoldElement(AppConstants.USER_ID_LABEL);
 	    be.setId(Constants.BODY_ROW_STYLE);
 	    td = new TableDataElement(be);
-	    tr.addElement(td);
+	    tr.add(td);
 	    StringElement se = new StringElement(selectedUserObj.getUsername());
 	    td = new TableDataElement(se);
 	    userIdStr = UtilBean.getHiddenField(AppConstants.MODIFY_USER_STR, selectedUserObj.getUsersId() + Constants.EMPTY);
 	    userIdStr += UtilBean.getHiddenField(AppConstants.NEW_USERNAME_STR, selectedUserObj.getUsername());;
 	}
-	tr.addElement(td);	
-	te.addElement(tr);
+	tr.add(td);	
+	te.add(tr);
 	
 	tr = new TableRowElement();
 	be = new BoldElement(AppConstants.EMAIL_LABEL);
 	be.setId(Constants.BODY_ROW_STYLE);
 	td = new TableDataElement(be);
-	tr.addElement(td);
+	tr.add(td);
 	DebugHandler.debug(selectedUserObj);
 	DebugHandler.debug(userId);
 	if ( userId != 0 || loggedUserId != 0 ) {
@@ -195,31 +195,31 @@ public class UsersBean {
 						       AppConstants.EMAIL_STR,
 						       Constants.EMPTY));
 	}
-	tr.addElement(td);
-	te.addElement(tr);
+	tr.add(td);
+	te.add(tr);
 	
 	tr = new TableRowElement();
 	be = new BoldElement(AppConstants.NEW_PASSWORD_LABEL);
 	be.setId(Constants.BODY_ROW_STYLE);
 	td = new TableDataElement(be);
-	tr.addElement(td);
+	tr.add(td);
 
 	td = new TableDataElement(new InputElement(InputElement.PASSWORD, 
 						   AppConstants.NEW_PASSWORD_STR,
 						   Constants.EMPTY));
-	tr.addElement(td);
-	te.addElement(tr);
+	tr.add(td);
+	te.add(tr);
 
 	tr = new TableRowElement();
 	be = new BoldElement(AppConstants.RETYPE_PASSWORD_LABEL);
 	be.setId(Constants.BODY_ROW_STYLE);
 	td = new TableDataElement(be);
-	tr.addElement(td);
+	tr.add(td);
 	td = new TableDataElement(new InputElement(InputElement.PASSWORD, 
 						   AppConstants.RE_PASSWORD_STR,
 						   Constants.EMPTY));
-	tr.addElement(td);
-	te.addElement(tr);
+	tr.add(td);
+	te.add(tr);
 
 	
 	return te.getHTMLTag() + userIdStr +

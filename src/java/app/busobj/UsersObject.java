@@ -11,7 +11,8 @@ package app.busobj;
 import java.util.Date;
 import core.util.DebugHandler;
 import core.util.Util;
-
+import org.codehaus.jettison.json.JSONObject;
+import org.codehaus.jettison.json.JSONException;
 
 /**
  * The implementation of the UsersObject which maps a table
@@ -22,13 +23,30 @@ import core.util.Util;
  */
 
 public class UsersObject implements Cloneable {
-    private int Users_id;
-    private String Username;
-    private String Password;
-    private String Email;
-    private int Role_Id;
-    private String Is_Valid;
+    private int users_id;
+    private String username;
+    private String password;
+    private String email;
+    private int role_id;
+    private String is_valid;
     
+    
+    /**
+    *
+     * Returns the String representation of the UsersObject.
+     *
+     * @return      Returns the String representation of the UsersObject.
+     *
+     */
+    
+    public String toString() {
+        return "users_id : " + users_id + "\n" +
+            "username : " + username + "\n" +
+            "password : ******\n" +
+            "email : " + email + "\n" +
+            "role_Id : " + role_id + "\n" +
+            "is_valid : " + is_valid + "\n";
+    }
     
     /**
      *
@@ -38,16 +56,31 @@ public class UsersObject implements Cloneable {
      *
      */
     
-    public String toString() {
-        return "Users_id : " + Users_id + "\n" +
-            "Username : " + Username + "\n" +
-            "Password : ******\n" +
-            "Email : " + Email + "\n" +
-            "Role_Id : " + Role_Id + "\n" +
-            "Is_Valid : " + Is_Valid + "\n";
+    public JSONObject toJSON() {
+	JSONObject jo = new JSONObject();
+	try {
+            jo.put("users_id", users_id);
+            jo.put("username", username);
+            jo.put("password", password);
+            jo.put("email", email);
+            jo.put("role_id", role_id);
+            jo.put("is_valid", is_valid);
+	} catch (JSONException je) {};
+	return jo;
     }
+
+    /**
+     *
+     * Returns the hashCode representation of the UsersObject.
+     *
+     * @return      Returns the hashCode
+     *
+     */
     
-    
+    public int hashCode() {
+	return users_id;
+    }
+
     /**
      * Constructs the UsersObject
      *
@@ -61,161 +94,187 @@ public class UsersObject implements Cloneable {
         setRoleId(0);
         setIsValid("");
     }
-    
-    
+
     /**
-     *
-     * Sets the <code>Users_id</code> field
-     *
-     * @param Users_id      int
+     * Constructs the UsersObject from JSONObject
      *
      */
     
-    public void setUsersId(int Users_id) {
-        this.Users_id = Users_id;
+    public UsersObject(JSONObject jObject) {
+	try {
+	    users_id = jObject.getInt("users_id");
+	} catch (JSONException je) {}
+	try {
+	    username = Util.trim(jObject.getString("username"));
+	} catch (JSONException je) {}
+        try {
+	    password = Util.trim(jObject.getString("password"));
+	} catch (JSONException je) {}
+        try {
+	    email = Util.trim(jObject.getString("email"));
+	} catch (JSONException je) {}
+        try {
+	    role_id = jObject.getInt("role_id");
+	} catch (JSONException je) {}
+        try {
+	    is_valid = Util.trim(jObject.getString("is_valid"));
+	} catch (JSONException je) {}
     }
     
     
     /**
      *
-     * Gets the <code>Users_id</code> field
+     * Sets the <code>users_id</code> field
      *
-     * @returns Users_id
+     * @param users_id      int
+     *
+     */
+    
+    public void setUsersId(int users_id) {
+        this.users_id = users_id;
+    }
+    
+    
+    /**
+     *
+     * Gets the <code>users_id</code> field
+     *
+     * @returns users_id
      *
      */
     
     public int getUsersId() {
-        return Users_id;
+        return users_id;
     }
 
     
     /**
      *
-     * Sets the <code>Username</code> field
+     * Sets the <code>username</code> field
      *
-     * @param Username      String
+     * @param username      String
      *
      */
     
-    public void setUsername(String Username) {
-        this.Username = Username;
+    public void setUsername(String username) {
+        this.username = username;
     }
     
     
     /**
      *
-     * Gets the <code>Username</code> field
+     * Gets the <code>username</code> field
      *
-     * @returns Username
+     * @returns username
      *
      */
     
     public String getUsername() {
-        return Username;
+        return username;
     }
 
     
     /**
      *
-     * Sets the <code>Password</code> field
+     * Sets the <code>password</code> field
      *
-     * @param Password      String
+     * @param password      String
      *
      */
     
-    public void setPassword(String Password) {
-        this.Password = Password;
+    public void setPassword(String password) {
+        this.password = password;
     }
     
     
     /**
      *
-     * Gets the <code>Password</code> field
+     * Gets the <code>password</code> field
      *
-     * @returns Password
+     * @returns password
      *
      */
     
     public String getPassword() {
-        return Password;
+        return password;
     }
 
     
     /**
      *
-     * Sets the <code>Email</code> field
+     * Sets the <code>email</code> field
      *
-     * @param Email      String
+     * @param email      String
      *
      */
     
-    public void setEmail(String Email) {
-        this.Email = Email;
+    public void setEmail(String email) {
+        this.email = email;
     }
     
     
     /**
      *
-     * Gets the <code>Email</code> field
+     * Gets the <code>email</code> field
      *
-     * @returns Email
+     * @returns email
      *
      */
     
     public String getEmail() {
-        return Email;
+        return email;
     }
 
     
     /**
      *
-     * Sets the <code>Role_Id</code> field
+     * Sets the <code>role_id</code> field
      *
-     * @param Role_Id      int
+     * @param role_id      int
      *
      */
     
-    public void setRoleId(int Role_Id) {
-        this.Role_Id = Role_Id;
+    public void setRoleId(int role_id) {
+        this.role_id = role_id;
     }
     
     
     /**
      *
-     * Gets the <code>Role_Id</code> field
+     * Gets the <code>role_id</code> field
      *
-     * @returns Role_Id
+     * @returns role_id
      *
      */
     
     public int getRoleId() {
-        return Role_Id;
+        return role_id;
     }
 
     
     /**
      *
-     * Sets the <code>Is_Valid</code> field
+     * Sets the <code>is_valid</code> field
      *
-     * @param Is_Valid      String
+     * @param is_valid      String
      *
      */
     
-    public void setIsValid(String Is_Valid) {
-        this.Is_Valid = Is_Valid;
+    public void setIsValid(String is_valid) {
+        this.is_valid = is_valid;
     }
     
     
     /**
      *
-     * Gets the <code>Is_Valid</code> field
+     * Gets the <code>is_valid</code> field
      *
-     * @returns Is_Valid
+     * @returns is_valid
      *
      */
     
     public String getIsValid() {
-        return Is_Valid;
+        return is_valid;
     }
 
     
@@ -232,12 +291,12 @@ public class UsersObject implements Cloneable {
         DebugHandler.finest("This: " + this);
         DebugHandler.finest("Other: " + other);
         return
-            Users_id == other.getUsersId() &&
-            Util.trim(Username).equals(Util.trim(other.getUsername())) &&
-            Util.trim(Password).equals(Util.trim(other.getPassword())) &&
-            Util.trim(Email).equals(Util.trim(other.getEmail())) &&
-            Role_Id == other.getRoleId() &&
-            Util.trim(Is_Valid).equals(Util.trim(other.getIsValid()));
+            users_id == other.getUsersId() &&
+            Util.trim(username).equals(Util.trim(other.getUsername())) &&
+            Util.trim(password).equals(Util.trim(other.getPassword())) &&
+            Util.trim(email).equals(Util.trim(other.getEmail())) &&
+            role_id == other.getRoleId() &&
+            Util.trim(is_valid).equals(Util.trim(other.getIsValid()));
     }
     
     /**

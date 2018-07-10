@@ -290,18 +290,18 @@ public class UtilBean {
 	return ae.getHTMLTag();
     }
 
-    public static String getFromToList(Vector<String> nameVector, Vector<Integer> valueVector) {
+    public static String getFromToList(ArrayList<String> nameArrayList, ArrayList<Integer> valueArrayList) {
 	TableElement te = new TableElement();
 	te.setBorder(0);
 	TableRowElement tr = new TableRowElement();
 	SelectElement se = new SelectElement(Constants.FROM_LIST_STR,
-					     nameVector,
-					     valueVector,
+					     nameArrayList,
+					     valueArrayList,
 					     Constants.EMPTY,
 					     Constants.FROM_LIST_SIZE);
 	se.setMultiple(true);
 	TableDataElement td = new TableDataElement(se);
-	tr.addElement(td);
+	tr.add(td);
 
 	String buttonList = "";
 	BreakElement br = new BreakElement();
@@ -330,17 +330,17 @@ public class UtilBean {
 		      Constants.FROM_LIST_STR + JS_COMMA + Constants.TRUE + JS_FUNCTION_CLOSE);
 	buttonList += ie.getHTMLTag() + br.getHTMLTag();
 	td = new TableDataElement(new StringElement(buttonList));
-	tr.addElement(td);
+	tr.add(td);
 
 	se = new SelectElement(Constants.TO_LIST_STR,
-			       new Vector<String>(),
-			       new Vector<Integer>(),
+			       new ArrayList<String>(),
+			       new ArrayList<Integer>(),
 			       Constants.EMPTY,
 			       Constants.TO_LIST_SIZE);
 	se.setMultiple(true);
 	td = new TableDataElement(se);
-	tr.addElement(td);
-	te.addElement(tr);
+	tr.add(td);
+	te.add(tr);
 
 	return te.getHTMLTag();
     }

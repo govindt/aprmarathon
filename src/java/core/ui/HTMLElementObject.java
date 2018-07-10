@@ -124,7 +124,7 @@ public abstract class HTMLElementObject implements HTMLElement {
      * @param vList             the vector list.
      */
 
-    public void setList(Vector<Integer> vList) {
+    public void setList(ArrayList<Integer> vList) {
     }
 
     /**
@@ -423,7 +423,7 @@ public abstract class HTMLElementObject implements HTMLElement {
      * @param strElement        the elements in string format.
      */
 
-    public void addElement(String strElement) {
+    public void add(String strElement) {
     }
 
     /**
@@ -432,7 +432,7 @@ public abstract class HTMLElementObject implements HTMLElement {
      * @param captionElement    the elements of CaptionElement type.
      */
 
-    public void addElement(CaptionElement captionElement) {
+    public void add(CaptionElement captionElement) {
     }
 
     /**
@@ -441,7 +441,7 @@ public abstract class HTMLElementObject implements HTMLElement {
      * @param tableRowElement   the elements of TableRowElement type.
      */
 
-    public void addElement(TableRowElement tableRowElement) {
+    public void add(TableRowElement tableRowElement) {
     }
 
     /**
@@ -450,7 +450,7 @@ public abstract class HTMLElementObject implements HTMLElement {
      * @param tableDataElement    the elements of TableDataElement type.
      */
 
-    public void addElement(TableDataElement tableDataElement) {
+    public void add(TableDataElement tableDataElement) {
     }
 
     /**
@@ -459,7 +459,7 @@ public abstract class HTMLElementObject implements HTMLElement {
      * @param tableHeadingElement    the elements of TableHeadingElement type.
      */
 
-    public void addElement(TableHeadingElement tableHeadingElement) {
+    public void add(TableHeadingElement tableHeadingElement) {
     }
 
     /**

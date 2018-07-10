@@ -48,14 +48,18 @@ public class AclImpl implements AclInterface  {
 	    return null;
 	for ( int i = 0; i < aclObjectArr.length; i++ ) {
 	    if ( aclObjectArr[i] != null ) {
-		if ( (acl_obj.getAclId() != 0 && acl_obj.getAclId() == aclObjectArr[i].getAclId())
+		if ( acl_obj.getAclId() == Constants.GET_ALL ) {
+		    v.addElement((AclObject)aclObjectArr[i].clone());
+		} else {
+			if ( (acl_obj.getAclId() != 0 && acl_obj.getAclId() == aclObjectArr[i].getAclId())
  || (acl_obj.getAclPage() != null && acl_obj.getAclPage().equals(aclObjectArr[i].getAclPage()))
  || (acl_obj.getIsValid() != null && acl_obj.getIsValid().equals(aclObjectArr[i].getIsValid()))
  || (acl_obj.getRoleId() != 0 && acl_obj.getRoleId() == aclObjectArr[i].getRoleId())
  || (acl_obj.getUsersId() != 0 && acl_obj.getUsersId() == aclObjectArr[i].getUsersId())
  || (acl_obj.getPermission() != 0 && acl_obj.getPermission() == aclObjectArr[i].getPermission())
 ) {
-		    v.addElement((AclObject)aclObjectArr[i].clone());
+			    v.addElement((AclObject)aclObjectArr[i].clone());
+			}
 		}
 	    }
 	}
@@ -234,7 +238,10 @@ public class AclImpl implements AclInterface  {
 			found = true;
 		    }
 		    if ( found ) {
-			aclObjectArr[idx] = aclObjectArr[idx + 1]; // Move the array
+			if ( idx != (aclObjectArr.length - 1) )
+				aclObjectArr[idx] = aclObjectArr[idx + 1]; // Move the array
+			else
+				aclObjectArr[idx] = null;
 		    }
 		    if ( aclObjectArr[idx] == null )
 			break;

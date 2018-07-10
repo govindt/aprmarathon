@@ -10,7 +10,7 @@ package app.appdb;
 
 import java.sql.ResultSet;
 import java.sql.Types;
-import java.util.Vector;
+import java.util.ArrayList;
 import core.db.PersistentObject;
 import core.db.SQLParam;
 import core.db.SQLStatement;
@@ -45,11 +45,11 @@ public class PersistentMenu extends PersistentObject {
     
     
     /**
-     * Returns the Vector of MenuObject.
+     * Returns the ArrayList of MenuObject.
      * It is Usually all the rows in the database.
      * This calls getResultObjects method in the super class.
      *
-     * @return     Vector of MenuObject 
+     * @return     ArrayList of MenuObject 
      *
      * @throws     DBException     If a database error occurs
      *
@@ -58,25 +58,25 @@ public class PersistentMenu extends PersistentObject {
     
     public Object list() throws DBException {
         PreparedSQLStatement sql = new PreparedSQLStatement();
-        String statement = "SELECT menu_id, menu_name, url, menu_order, parent_menu_id, role_id from Menu";
+	String statement = "SELECT menu_id, menu_name, url, menu_order, parent_menu_id, role_id from Menu order by parent_menu_id, menu_order";
         int index = 1;
         sql.setStatement(statement);
         
         setSQLStatement(sql);
         
 	@SuppressWarnings("unchecked")
-        Vector<MenuObject> result = (Vector<MenuObject>) super.list();
+        ArrayList<MenuObject> result = (ArrayList<MenuObject>) super.list();
         
         return result;
     }
     
     
     /**
-     * Returns the Vector of MenuObjects.
+     * Returns the ArrayList of MenuObjects.
      * It is Usually all the rows that match the criteria in the database.
      * This calls getResultObjects method in the super class.
      *
-     * @return     Vector of MenuObject 
+     * @return     ArrayList of MenuObject 
      *
      * @throws     DBException     If a database error occurs
      *
@@ -147,18 +147,18 @@ public class PersistentMenu extends PersistentObject {
         setSQLStatement(sql);
         
 	@SuppressWarnings("unchecked")
-        Vector<MenuObject> result = (Vector<MenuObject>) super.list();
+        ArrayList<MenuObject> result = (ArrayList<MenuObject>) super.list();
         
         return result;
     }
     
     
     /**
-     * Returns the Vector of one MenuObject.
+     * Returns the ArrayList of one MenuObject.
      * It is Usually the row that matches primary key.
      * This calls getResultSetObject method in the super class.
      *
-     * @return     Vector of one MenuObject 
+     * @return     ArrayList of one MenuObject 
      *
      * @throws     DBException     If a database error occurs
      *
@@ -174,7 +174,7 @@ public class PersistentMenu extends PersistentObject {
         setSQLStatement(sql);
 
 	@SuppressWarnings("unchecked")
-        Vector<MenuObject> result = (Vector<MenuObject>) super.fetch();
+        ArrayList<MenuObject> result = (ArrayList<MenuObject>) super.fetch();
         
         return result;
     }
@@ -278,20 +278,20 @@ public class PersistentMenu extends PersistentObject {
     
     /**
      *
-     * Returns a Vector of MenuObject from the ResultSet. The values for 
+     * Returns a ArrayList of MenuObject from the ResultSet. The values for 
      * each object is got from the ResultSet.
      * This is used by the list method.
      *
      * @param rs      the ResultSet.
      *
-     * @return      Returns a Vector of MenuObject from the ResultSet.
+     * @return      Returns a ArrayList of MenuObject from the ResultSet.
      *
      * @see     #list()
      *
      */
     
     public Object getResultObjects(ResultSet rs) {
-        Vector<MenuObject> result = new Vector<MenuObject>();
+        ArrayList<MenuObject> result = new ArrayList<MenuObject>();
         
         try {
             while(rs.next()) {
@@ -303,7 +303,7 @@ public class PersistentMenu extends PersistentObject {
                 f.setMenuOrder(rs.getInt(index++));
                 f.setParentMenuId(rs.getInt(index++));
                 f.setRoleId(rs.getInt(index++));
-                result.addElement(f);
+                result.add(f);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -329,8 +329,8 @@ public class PersistentMenu extends PersistentObject {
     public Object getResultSetObject(ResultSet rs) {
         try {
 	    @SuppressWarnings("unchecked")
-            Vector<MenuObject> result = (Vector<MenuObject>) getResultObjects(rs);
-            return result.elementAt(0);
+            ArrayList<MenuObject> result = (ArrayList<MenuObject>) getResultObjects(rs);
+            return result.get(0);
         } catch (Exception e) {
             return null;
         }

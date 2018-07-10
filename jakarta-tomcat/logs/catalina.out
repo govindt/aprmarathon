@@ -1,0 +1,86 @@
+29-Jan-2018 13:49:47.141 WARNING [main] org.apache.tomcat.util.digester.SetPropertiesRule.begin [SetPropertiesRule]{Server/Service/Engine/Host} Setting property 'liveDeploy' to 'false' did not find a matching property.
+29-Jan-2018 13:49:47.161 WARNING [main] org.apache.tomcat.util.digester.SetPropertiesRule.begin [SetPropertiesRule]{Server/Service/Engine/Host} Setting property 'xmlValidation' to 'false' did not find a matching property.
+29-Jan-2018 13:49:47.161 WARNING [main] org.apache.tomcat.util.digester.SetPropertiesRule.begin [SetPropertiesRule]{Server/Service/Engine/Host} Setting property 'xmlNamespaceAware' to 'false' did not find a matching property.
+29-Jan-2018 13:49:47.181 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Server version:        Apache Tomcat/9.0.1
+29-Jan-2018 13:49:47.181 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Server built:          Sep 27 2017 17:31:52 UTC
+29-Jan-2018 13:49:47.181 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Server number:         9.0.1.0
+29-Jan-2018 13:49:47.181 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log OS Name:               Windows 7
+29-Jan-2018 13:49:47.181 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log OS Version:            6.1
+29-Jan-2018 13:49:47.181 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Architecture:          amd64
+29-Jan-2018 13:49:47.181 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Java Home:             C:\Program Files\Java\jdk1.8.0_102\jre
+29-Jan-2018 13:49:47.181 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log JVM Version:           1.8.0_102-b14
+29-Jan-2018 13:49:47.181 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log JVM Vendor:            Oracle Corporation
+29-Jan-2018 13:49:47.191 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_BASE:         D:\GovindFiles\dev\aprmarathon\jakarta-tomcat
+29-Jan-2018 13:49:47.191 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_HOME:         D:\GovindFiles\dev\aprmarathon\jakarta-tomcat
+29-Jan-2018 13:49:47.191 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.util.logging.config.file=D:/GovindFiles/dev/aprmarathon/jakarta-tomcat/conf/logging.properties
+29-Jan-2018 13:49:47.191 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager
+29-Jan-2018 13:49:47.191 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djdk.tls.ephemeralDHKeySize=2048
+29-Jan-2018 13:49:47.191 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.protocol.handler.pkgs=org.apache.catalina.webresources
+29-Jan-2018 13:49:47.191 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.awt.headless=true
+29-Jan-2018 13:49:47.191 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dfile.encoding=UTF-8
+29-Jan-2018 13:49:47.191 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Xms1536m
+29-Jan-2018 13:49:47.191 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Xmx1536m
+29-Jan-2018 13:49:47.191 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -XX:NewSize=256m
+29-Jan-2018 13:49:47.191 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -XX:MaxNewSize=256m
+29-Jan-2018 13:49:47.191 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -XX:PermSize=256m
+29-Jan-2018 13:49:47.191 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -XX:MaxPermSize=256m
+29-Jan-2018 13:49:47.191 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -XX:+DisableExplicitGC
+29-Jan-2018 13:49:47.191 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dcatalina.base=D:/GovindFiles/dev/aprmarathon/jakarta-tomcat
+29-Jan-2018 13:49:47.191 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dcatalina.home=D:/GovindFiles/dev/aprmarathon/jakarta-tomcat
+29-Jan-2018 13:49:47.191 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.io.tmpdir=D:/GovindFiles/dev/aprmarathon/jakarta-tomcat/temp
+29-Jan-2018 13:49:47.191 INFO [main] org.apache.catalina.core.AprLifecycleListener.lifecycleEvent Loaded APR based Apache Tomcat Native library [1.2.14] using APR version [1.6.2].
+29-Jan-2018 13:49:47.191 INFO [main] org.apache.catalina.core.AprLifecycleListener.lifecycleEvent APR capabilities: IPv6 [true], sendfile [true], accept filters [false], random [true].
+29-Jan-2018 13:49:47.191 INFO [main] org.apache.catalina.core.AprLifecycleListener.lifecycleEvent APR/OpenSSL configuration: useAprConnector [false], useOpenSSL [true]
+29-Jan-2018 13:49:48.231 INFO [main] org.apache.catalina.core.AprLifecycleListener.initializeSSL OpenSSL successfully initialized [OpenSSL 1.0.2l  25 May 2017]
+29-Jan-2018 13:49:48.588 INFO [main] org.apache.coyote.AbstractProtocol.init Initializing ProtocolHandler ["http-nio-9002"]
+29-Jan-2018 13:49:49.648 INFO [main] org.apache.tomcat.util.net.NioSelectorPool.getSharedSelector Using a shared selector for servlet write/read
+29-Jan-2018 13:49:49.663 INFO [main] org.apache.coyote.AbstractProtocol.init Initializing ProtocolHandler ["ajp-nio-9009"]
+29-Jan-2018 13:49:49.666 INFO [main] org.apache.tomcat.util.net.NioSelectorPool.getSharedSelector Using a shared selector for servlet write/read
+29-Jan-2018 13:49:49.666 INFO [main] org.apache.catalina.startup.Catalina.load Initialization processed in 3193 ms
+29-Jan-2018 13:49:49.746 INFO [main] org.apache.catalina.core.StandardService.startInternal Starting service [Catalina]
+29-Jan-2018 13:49:49.746 INFO [main] org.apache.catalina.core.StandardEngine.startInternal Starting Servlet Engine: Apache Tomcat/9.0.1
+29-Jan-2018 13:49:49.768 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory [D:\GovindFiles\dev\aprmarathon\jakarta-tomcat\webapps\aprmarathon]
+29-Jan-2018 13:50:04.884 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [D:\GovindFiles\dev\aprmarathon\jakarta-tomcat\webapps\aprmarathon] has finished in [15,115] ms
+29-Jan-2018 13:50:04.885 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory [D:\GovindFiles\dev\aprmarathon\jakarta-tomcat\webapps\docs]
+29-Jan-2018 13:50:09.171 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [D:\GovindFiles\dev\aprmarathon\jakarta-tomcat\webapps\docs] has finished in [4,286] ms
+29-Jan-2018 13:50:09.171 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory [D:\GovindFiles\dev\aprmarathon\jakarta-tomcat\webapps\examples]
+29-Jan-2018 13:50:13.810 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [D:\GovindFiles\dev\aprmarathon\jakarta-tomcat\webapps\examples] has finished in [4,639] ms
+29-Jan-2018 13:50:13.810 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory [D:\GovindFiles\dev\aprmarathon\jakarta-tomcat\webapps\host-manager]
+29-Jan-2018 13:50:17.238 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [D:\GovindFiles\dev\aprmarathon\jakarta-tomcat\webapps\host-manager] has finished in [3,428] ms
+29-Jan-2018 13:50:17.238 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory [D:\GovindFiles\dev\aprmarathon\jakarta-tomcat\webapps\manager]
+29-Jan-2018 13:50:20.540 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [D:\GovindFiles\dev\aprmarathon\jakarta-tomcat\webapps\manager] has finished in [3,302] ms
+29-Jan-2018 13:50:20.560 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory [D:\GovindFiles\dev\aprmarathon\jakarta-tomcat\webapps\ROOT]
+29-Jan-2018 13:50:23.740 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [D:\GovindFiles\dev\aprmarathon\jakarta-tomcat\webapps\ROOT] has finished in [3,180] ms
+29-Jan-2018 13:50:23.740 INFO [main] org.apache.coyote.AbstractProtocol.start Starting ProtocolHandler ["http-nio-9002"]
+29-Jan-2018 13:50:23.750 INFO [main] org.apache.coyote.AbstractProtocol.start Starting ProtocolHandler ["ajp-nio-9009"]
+29-Jan-2018 13:50:23.760 INFO [main] org.apache.catalina.startup.Catalina.start Server startup in 34076 ms
+29-Jan-2018 14:10:06.273 INFO [ContainerBackgroundProcessor[StandardEngine[Catalina]]] org.apache.catalina.core.StandardContext.reload Reloading Context with name [/aprmarathon] has started
+29-Jan-2018 14:10:11.081 INFO [ContainerBackgroundProcessor[StandardEngine[Catalina]]] org.apache.catalina.core.StandardContext.reload Reloading Context with name [/aprmarathon] is completed
+30-Jan-2018 11:18:13.090 INFO [ContainerBackgroundProcessor[StandardEngine[Catalina]]] org.apache.catalina.core.StandardContext.reload Reloading Context with name [/aprmarathon] has started
+30-Jan-2018 11:18:19.227 INFO [ContainerBackgroundProcessor[StandardEngine[Catalina]]] org.apache.catalina.core.StandardContext.reload Reloading Context with name [/aprmarathon] is completed
+30-Jan-2018 11:27:33.368 INFO [ContainerBackgroundProcessor[StandardEngine[Catalina]]] org.apache.catalina.core.StandardContext.reload Reloading Context with name [/aprmarathon] has started
+30-Jan-2018 11:27:39.252 INFO [ContainerBackgroundProcessor[StandardEngine[Catalina]]] org.apache.catalina.core.StandardContext.reload Reloading Context with name [/aprmarathon] is completed
+30-Jan-2018 11:34:41.993 INFO [ContainerBackgroundProcessor[StandardEngine[Catalina]]] org.apache.catalina.core.StandardContext.reload Reloading Context with name [/aprmarathon] has started
+30-Jan-2018 11:34:47.396 INFO [ContainerBackgroundProcessor[StandardEngine[Catalina]]] org.apache.catalina.core.StandardContext.reload Reloading Context with name [/aprmarathon] is completed
+30-Jan-2018 11:37:38.712 INFO [ContainerBackgroundProcessor[StandardEngine[Catalina]]] org.apache.catalina.core.StandardContext.reload Reloading Context with name [/aprmarathon] has started
+30-Jan-2018 11:37:44.722 INFO [ContainerBackgroundProcessor[StandardEngine[Catalina]]] org.apache.catalina.core.StandardContext.reload Reloading Context with name [/aprmarathon] is completed
+30-Jan-2018 11:37:54.793 INFO [ContainerBackgroundProcessor[StandardEngine[Catalina]]] org.apache.catalina.core.StandardContext.reload Reloading Context with name [/aprmarathon] has started
+30-Jan-2018 11:38:00.069 INFO [ContainerBackgroundProcessor[StandardEngine[Catalina]]] org.apache.catalina.core.StandardContext.reload Reloading Context with name [/aprmarathon] is completed
+30-Jan-2018 11:39:50.807 INFO [ContainerBackgroundProcessor[StandardEngine[Catalina]]] org.apache.catalina.core.StandardContext.reload Reloading Context with name [/aprmarathon] has started
+30-Jan-2018 11:39:56.287 INFO [ContainerBackgroundProcessor[StandardEngine[Catalina]]] org.apache.catalina.core.StandardContext.reload Reloading Context with name [/aprmarathon] is completed
+30-Jan-2018 13:51:19.966 INFO [ContainerBackgroundProcessor[StandardEngine[Catalina]]] org.apache.catalina.core.StandardContext.reload Reloading Context with name [/aprmarathon] has started
+30-Jan-2018 13:51:25.037 INFO [ContainerBackgroundProcessor[StandardEngine[Catalina]]] org.apache.catalina.core.StandardContext.reload Reloading Context with name [/aprmarathon] is completed
+30-Jan-2018 13:51:35.146 INFO [ContainerBackgroundProcessor[StandardEngine[Catalina]]] org.apache.catalina.core.StandardContext.reload Reloading Context with name [/aprmarathon] has started
+30-Jan-2018 13:51:39.368 INFO [ContainerBackgroundProcessor[StandardEngine[Catalina]]] org.apache.catalina.core.StandardContext.reload Reloading Context with name [/aprmarathon] is completed
+30-Jan-2018 13:54:51.120 INFO [ContainerBackgroundProcessor[StandardEngine[Catalina]]] org.apache.catalina.core.StandardContext.reload Reloading Context with name [/aprmarathon] has started
+30-Jan-2018 13:54:55.422 INFO [ContainerBackgroundProcessor[StandardEngine[Catalina]]] org.apache.catalina.core.StandardContext.reload Reloading Context with name [/aprmarathon] is completed
+31-Jan-2018 15:23:12.145 INFO [ContainerBackgroundProcessor[StandardEngine[Catalina]]] org.apache.catalina.core.StandardContext.reload Reloading Context with name [/aprmarathon] has started
+31-Jan-2018 15:23:17.625 INFO [ContainerBackgroundProcessor[StandardEngine[Catalina]]] org.apache.catalina.core.StandardContext.reload Reloading Context with name [/aprmarathon] is completed
+31-Jan-2018 15:25:28.646 INFO [ContainerBackgroundProcessor[StandardEngine[Catalina]]] org.apache.catalina.core.StandardContext.reload Reloading Context with name [/aprmarathon] has started
+31-Jan-2018 15:25:34.809 INFO [ContainerBackgroundProcessor[StandardEngine[Catalina]]] org.apache.catalina.core.StandardContext.reload Reloading Context with name [/aprmarathon] is completed
+31-Jan-2018 15:35:39.524 INFO [ContainerBackgroundProcessor[StandardEngine[Catalina]]] org.apache.catalina.core.StandardContext.reload Reloading Context with name [/aprmarathon] has started
+31-Jan-2018 15:35:45.019 INFO [ContainerBackgroundProcessor[StandardEngine[Catalina]]] org.apache.catalina.core.StandardContext.reload Reloading Context with name [/aprmarathon] is completed
+31-Jan-2018 15:53:13.180 INFO [ContainerBackgroundProcessor[StandardEngine[Catalina]]] org.apache.catalina.core.StandardContext.reload Reloading Context with name [/aprmarathon] has started
+31-Jan-2018 15:53:18.089 INFO [ContainerBackgroundProcessor[StandardEngine[Catalina]]] org.apache.catalina.core.StandardContext.reload Reloading Context with name [/aprmarathon] is completed
+31-Jan-2018 16:54:25.883 INFO [ContainerBackgroundProcessor[StandardEngine[Catalina]]] org.apache.catalina.core.StandardContext.reload Reloading Context with name [/aprmarathon] has started
+31-Jan-2018 16:54:31.947 INFO [ContainerBackgroundProcessor[StandardEngine[Catalina]]] org.apache.catalina.core.StandardContext.reload Reloading Context with name [/aprmarathon] is completed

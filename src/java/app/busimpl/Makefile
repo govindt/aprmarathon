@@ -14,6 +14,25 @@ PACKAGE = app.busimpl
 
 SOURCE  = \
 	UsersImpl.java \
+	ParticipantEventImpl.java \
+	RegistrantEventImpl.java \
+	AgeCategoryImpl.java \
+	BeneficiaryImpl.java \
+	BloodGroupImpl.java \
+	EventTypeImpl.java \
+	GenderImpl.java \
+	MedalImpl.java \
+	ParticipantImpl.java \
+	PaymentStatusImpl.java \
+	PaymentTypeImpl.java \
+	RegistrantImpl.java \
+	RegistrantPaymentImpl.java \
+	RegistrationClassImpl.java \
+	RegistrationSourceImpl.java \
+	RegistrationTypeImpl.java \
+	ResultImpl.java \
+	TShirtSizeImpl.java \
+	EventImpl.java \
 	RoleImpl.java \
 	MenuImpl.java \
 	AclImpl.java \

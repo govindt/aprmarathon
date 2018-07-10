@@ -49,37 +49,12 @@ create table Event(
 
 create table Event_Type(
 	event_type_id int primary key auto_increment,
-	event int references Event(Event_Id),
 	event_type_name varchar(50) not null,
+	event int references Event(Event_Id),
 	event_type_description varchar(750),
 	event_type_start_date datetime not null,
 	event_type_end_date datetime not null,
 	event_type_venue varchar(50) not null
-);
-
-create table Registration_Type(
-	registration_type_id int primary key auto_increment,
-	registration_type_name varchar(50) not null
-);
-
-create table Registration_Class(
-	registration_class_id int primary key auto_increment,
-	registration_class_name varchar(50) not null,
-	registration_type int references RegistrationType(Registration_Type_Id),
-	registration_event int references Event(Event_Id),
-	registration_class_value decimal(30,2) not null,
-	registration_free_tickets int not null
-);
-
-create table Registration_Source(
-	registration_source_id int primary key auto_increment,
-	registration_source_name varchar(50) not null
-);
-
-create table Beneficiary(
-	benefeciary_id int primary key auto_increment,
-	benefeciary_name varchar(50),
-	beneficiary_event int references Event(Event_Id)
 );
 
 create table Gender(
@@ -94,8 +69,8 @@ create table Age_Category(
 
 create table T_Shirt_Size(
 	t_shirt_size_id int primary key auto_increment,
-	t_shirt_gender int references Gender(Gender_Id),
-	t_shirt_size_name varchar(50)
+	t_shirt_size_name varchar(50),
+	t_shirt_gender int references Gender(Gender_Id)
 );
 
 create table Blood_Group(
@@ -109,20 +84,48 @@ create table Payment_Type(
 );
 
 create table Payment_Status(
-	registrant_event int references Event(Event_Id),
 	payment_status_id int primary key auto_increment,
 	payment_status_name varchar(50)
+);
+
+create table Medal(
+	medal_id int primary key auto_increment,
+	medal_name varchar(10),
+	medal_rank int
+);
+
+create table Registration_Type(
+	registration_type_id int primary key auto_increment,
+	registration_type_name varchar(50) not null
+);
+
+create table Registration_Source(
+	registration_source_id int primary key auto_increment,
+	registration_source_name varchar(50) not null
+);
+
+create table Registration_Class(
+	registration_class_id int primary key auto_increment,
+	registration_class_name varchar(50) not null,
+	registration_type int references RegistrationType(Registration_Type_Id),
+	registration_event int references Event(Event_Id),
+	registration_class_value decimal(30,2) not null,
+	registration_free_tickets int not null
+);
+
+create table Beneficiary(
+	beneficiary_id int primary key auto_increment,
+	beneficiary_name varchar(50),
+	beneficiary_event int references Event(Event_Id)
 );
 
 create table Registrant(
 	registrant_id int primary key auto_increment,
 	registrant_name varchar(50) not null,
-	registrant_event int references Event(Event_Id),
-	registrant_type int references RegistrationType(Registration_Type_Id),
-	registrant_source int references Registration_Source(Registration_Source_Id),
-	registrant_class int references Registration_Class(Registration_Class_Id),
-	registrant_beneficiary int references Beneficiary(Beneficiary_Id),
+	registrant_middle_name varchar(50),
+	registrant_last_name varchar(50),
 	registrant_email varchar(75) not null,
+	registrant_additional_email varchar(500),
 	registrant_phone_int varchar(20) not null,
 	registrant_address varchar(200) not null,
 	registrant_city varchar(50) not null,
@@ -131,25 +134,16 @@ create table Registrant(
 	registrant_pan varchar(20)
 );
 
-create table Participant(
-	participant_id int primary key auto_increment,
-	participant_first_name varchar(50) not null,
-	participant_middle_name varchar(50),
-	participant_last_name varchar(50),
-	participant_event int references Event(Event_Id),
-	participant_type int references RegistrationType(Registration_Type_Id),
-	participant_event_type int references EventType(Event_Type_Id),
-	participant_gender int references Gender(Gender_Id),
-	participant_date_of_birth datetime,
-	participant_age_category int references Age_Category(Age_Category_Id),
-	participant_t_shirt_size int references T_Shirt_Size(T_Shirt_Size_Id),
-	participant_blood_group int references Blood_Group(Blood_Group_Id),
-	participant_cell_phone varchar(20) not null,
-	participant_email varchar(75) not null,
-	participant_emergency_contact varchar(50) not null,
-	participant_emergency_phone varchar(20) not null,
-	participant_bib_no varchar(20),
-	participant_group int references Registrant(Registrant_Id)
+create table Registrant_Event(
+	registrant_event_id int primary key auto_increment,
+	registrant_id int references Registrant(Registrant_Id),
+	registrant_event int references Event(Event_Id),
+	registrant_type int references RegistrationType(Registration_Type_Id),
+	registrant_source int references Registration_Source(Registration_Source_Id),
+	registrant_class int references Registration_Class(Registration_Class_Id),
+	registrant_beneficiary int references Beneficiary(Beneficiary_Id),
+	registrant_emergency_contact varchar(50) not null,
+	registrant_emergency_phone varchar(20) not null
 );
 
 create table Registrant_Payment(
@@ -163,13 +157,34 @@ create table Registrant_Payment(
 	payment_date datetime not null,
 	receipt_date datetime not null,
 	payment_details varchar(200) not null,
-	payment_towards varchar(100) not null
+	payment_towards varchar(100) not null,
+	payment_reference_id varchar(100) not null,
+	payment_tax decimal(30,2),
+	payment_fee decimal(30,2)
 );
 
-create table Medal(
-	medal_id int primary key auto_increment,
-	medal_name varchar(10),
-	medal_rank int
+create table Participant(
+	participant_id int primary key auto_increment,
+	participant_first_name varchar(50) not null,
+	participant_middle_name varchar(50),
+	participant_last_name varchar(50),
+	participant_gender int references Gender(Gender_Id),
+	participant_date_of_birth datetime,
+	participant_age_category int references Age_Category(Age_Category_Id),
+	participant_t_shirt_size int references T_Shirt_Size(T_Shirt_Size_Id),
+	participant_blood_group int references Blood_Group(Blood_Group_Id),
+	participant_cell_phone varchar(20) not null,
+	participant_email varchar(75) not null
+);
+
+create table Participant_Event(
+	participant_event_id int primary key auto_increment,
+	participant_id int references Participant(Participant_Id),
+	participant_event int references Event(Event_Id),
+	participant_type int references RegistrationType(Registration_Type_Id),
+	participant_event_type int references EventType(Event_Type_Id),
+	participant_bib_no varchar(20),
+	participant_group int references Registrant(Registrant_Id)
 );
 
 create table Result(
@@ -178,7 +193,7 @@ create table Result(
 	result_event_type int references EventType(Event_Type_Id),
 	result_medal int references Medal(Medal_Id),
 	result_winner int references Participant(Participant_Id),
-	result_winner_registrrant int references Registrant(Registrant_Id),
+	result_winner_registrant int references Registrant(Registrant_Id),
 	result_score varchar(20),
 	result_timing datetime
 );

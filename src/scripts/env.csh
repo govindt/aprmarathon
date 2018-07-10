@@ -13,7 +13,7 @@ if ( "`uname -s | grep CYGWIN_NT`" != "" ) then
 endif
 setenv WS_ROOT ${JAVA_DEV_ROOT}
 setenv JARHOME ${JAVA_DEV_ROOT}/jars
-setenv CLASSPATH ${JARHOME}/../jst/classes:${JARHOME}/jconn2.jar:${JARHOME}/ojdbc14.jar:${JARHOME}/jakarta-regexp-1.2.jar:${JARHOME}/poi.jar:${JARHOME}/mailapi.jar:${JARHOME}/smtp.jar:${JARHOME}/activation.jar:${JARHOME}/mssqlserver.jar:${JARHOME}/msbase.jar:${JARHOME}/msutil.jar:${JARHOME}/jcs-1.0-dev.jar:${JARHOME}/commons-lang-2.1.jar:${JARHOME}/commons-logging.jar:${JARHOME}/log4j-1.2.12.jar:${JARHOME}/httpcore-4.0-beta2.jar:${JARHOME}/httpclient-4.0-beta1.jar:${JARHOME}/httpmime-4.0-beta1.jar:${JARHOME}/apache-mime4j-0.4.jar:${JARHOME}/jettison-1.3.4.jar:${JARHOME}/javax.ws.rs.jar
+setenv CLASSPATH ${JARHOME}/../jst/classes:${JARHOME}/jconn2.jar:${JARHOME}/ojdbc14.jar:${JARHOME}/jakarta-regexp-1.2.jar:${JARHOME}/poi-3.15.jar:${JARHOME}/poi-ooxml-3.15.jar:${JARHOME}/mailapi.jar:${JARHOME}/smtp.jar:${JARHOME}/activation.jar:${JARHOME}/mssqlserver.jar:${JARHOME}/msbase.jar:${JARHOME}/msutil.jar:${JARHOME}/commons-jcs-core-2.2.jar:${JARHOME}/commons-lang-2.1.jar:${JARHOME}/commons-logging.jar:${JARHOME}/log4j-1.2.12.jar:${JARHOME}/httpcore-4.0-beta2.jar:${JARHOME}/httpclient-4.0-beta1.jar:${JARHOME}/httpmime-4.0-beta1.jar:${JARHOME}/apache-mime4j-0.4.jar:${JARHOME}/jettison-1.3.4.jar:${JARHOME}/javax.ws.rs.jar
 
 
 setenv ORACLE_HOME /u01/app/oracle/product/10.1.0/Db_1
@@ -39,6 +39,7 @@ alias abi 'cd ${JAVA_DEV_ROOT}/src/java/app/busimpl'
 alias abif 'cd ${JAVA_DEV_ROOT}/src/java/app/businterface'
 alias aappui 'cd ${JAVA_DEV_ROOT}/src/java/app/appui'
 alias aappdb 'cd ${JAVA_DEV_ROOT}/src/java/app/appdb'
+alias arest 'cd ${JAVA_DEV_ROOT}/src/java/app/restapi'
 alias exam 'cd ${JAVA_DEV_ROOT}/src/examples'
 alias scripts 'cd ${JAVA_DEV_ROOT}/src/scripts'
 alias html 'cd ${JAVA_DEV_ROOT}/src/public_html'

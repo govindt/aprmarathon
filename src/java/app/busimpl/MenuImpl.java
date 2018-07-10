@@ -35,27 +35,31 @@ public class MenuImpl implements MenuInterface  {
      *
      * @param menu_obj	MenuObject
      *
-     * @return      Returns the Vector of MenuObjects
+     * @return      Returns the ArrayList of MenuObjects
      *
      * @throws AppException if the underlying operation fails
      *
      */
     
-    public Vector<MenuObject> getMenus(MenuObject menu_obj) throws AppException{
+    public ArrayList<MenuObject> getMenus(MenuObject menu_obj) throws AppException{
 	MenuObject[] menuObjectArr = getAllMenus();
-	Vector<MenuObject> v = new Vector<MenuObject>();
+	ArrayList<MenuObject> v = new ArrayList<MenuObject>();
 	if ( menuObjectArr == null )
 	    return null;
 	for ( int i = 0; i < menuObjectArr.length; i++ ) {
 	    if ( menuObjectArr[i] != null ) {
-		if ( (menu_obj.getMenuId() != 0 && menu_obj.getMenuId() == menuObjectArr[i].getMenuId())
+		if ( menu_obj.getMenuId() == Constants.GET_ALL ) {
+			v.add((MenuObject)menuObjectArr[i].clone());	
+		} else {
+			if ( (menu_obj.getMenuId() != 0 && menu_obj.getMenuId() == menuObjectArr[i].getMenuId())
  || (menu_obj.getMenuName() != null && menu_obj.getMenuName().equals(menuObjectArr[i].getMenuName()))
- || (menu_obj.getUrl() != null && menu_obj.getUrl().equals(menuObjectArr[i].getUrl()))
+ || (menu_obj.getUrl() != null && menu_obj.getUrl() != "" && menu_obj.getUrl().equals(menuObjectArr[i].getUrl()))
  || (menu_obj.getMenuOrder() != 0 && menu_obj.getMenuOrder() == menuObjectArr[i].getMenuOrder())
  || (menu_obj.getParentMenuId() != 0 && menu_obj.getParentMenuId() == menuObjectArr[i].getParentMenuId())
  || (menu_obj.getRoleId() != 0 && menu_obj.getRoleId() == menuObjectArr[i].getRoleId())
 ) {
-		    v.addElement((MenuObject)menuObjectArr[i].clone());
+			    v.add((MenuObject)menuObjectArr[i].clone());
+			}
 		}
 	    }
 	}
@@ -85,7 +89,7 @@ public class MenuImpl implements MenuInterface  {
 		MenuObject menuObj = new MenuObject();
 		menuObj.setMenuId(menu_id);
 		@SuppressWarnings("unchecked")
-		Vector<MenuObject> v = (Vector)DBUtil.fetch(menuObj);
+		ArrayList<MenuObject> v = (ArrayList)DBUtil.fetch(menuObj);
 		if ( v == null || v.size() == 0 )
 		    return null;
 		else {
@@ -118,13 +122,13 @@ public class MenuImpl implements MenuInterface  {
 	if ( menuObjectArr == null ) {
 	    DebugHandler.info("Getting menu from database");
 	    @SuppressWarnings("unchecked")
-	    Vector<MenuObject> v = (Vector)DBUtil.list(menuObject);
+	    ArrayList<MenuObject> v = (ArrayList)DBUtil.list(menuObject);
 	    DebugHandler.finest(":v: " +  v);
 	    if ( v == null )
 		return null;
 	    menuObjectArr = new MenuObject[v.size()];
 	    for ( int idx = 0; idx < v.size(); idx++ ) {
-		menuObjectArr[idx] = v.elementAt(idx);
+		menuObjectArr[idx] = v.get(idx);
 	    }
 	    Util.putInCache(MENU, menuObjectArr);
 	}
@@ -152,9 +156,9 @@ public class MenuImpl implements MenuInterface  {
 	MenuObject buf = new MenuObject();
 	buf.setMenuName(menuObject.getMenuName());
 	@SuppressWarnings("unchecked")
-	Vector<MenuObject> v = (Vector)DBUtil.list(menuObject, buf);
+	ArrayList<MenuObject> v = (ArrayList)DBUtil.list(menuObject, buf);
 	if ( v != null && v.size() > 0 )
-	    menuObject = v.elementAt(0);
+	    menuObject = v.get(0);
 	MenuObject[] menuObjectArr = getAllMenus();
 	boolean foundSpace = false;
 
@@ -234,7 +238,10 @@ public class MenuImpl implements MenuInterface  {
 			found = true;
 		    }
 		    if ( found ) {
-			menuObjectArr[idx] = menuObjectArr[idx + 1]; // Move the array
+			if ( idx != (menuObjectArr.length - 1) )
+				menuObjectArr[idx] = menuObjectArr[idx + 1]; // Move the array
+			else
+				menuObjectArr[idx] = null;
 		    }
 		    if ( menuObjectArr[idx] == null )
 			break;

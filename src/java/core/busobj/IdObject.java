@@ -38,6 +38,17 @@ public class IdObject {
 
         this.tableName = tableName;
     }
+    /**
+	 *
+	 * Returns the hashCode representation of the EventObject.
+	 *
+	 * @return      Returns the hashCode.
+	 *
+     */
+    
+     public int hashCode() {
+		return (int)id;
+     }
 
     /*
      * The no-argument constructor; prevents no-argument instantiation.

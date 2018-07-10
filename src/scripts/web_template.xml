@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<web-app xmlns="http://java.sun.com/xml/ns/javaee"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+   version="3.0"> 
+
+    <description>
+      App Servlet
+    </description>
+    <display-name>App Servlet</display-name>
+
+    <servlet>
+       	<servlet-name>AppServlet</servlet-name>
+       	<servlet-class>AppServlet</servlet-class>
+       	<init-param>
+      		<param-name>jsp</param-name>
+       		<param-value>Login.jsp</param-value>
+       	</init-param>
+	<init-param>
+        	<param-name>jspBase</param-name>
+ 		<param-value>/jsp/</param-value>
+        </init-param>
+    </servlet>
+    <servlet-mapping>
+        	<servlet-name>AppServlet</servlet-name>
+        	<url-pattern>/%SERVLET_PATH%</url-pattern>
+    </servlet-mapping>
+
+    <servlet>  
+	<servlet-name>DemoServlet</servlet-name>  
+	<servlet-class>DemoServlet</servlet-class>  
+    </servlet>  
+  
+    <servlet-mapping>  
+	<servlet-name>DemoServlet</servlet-name>  
+	<url-pattern>/welcome</url-pattern>  
+    </servlet-mapping>  
+
+    <servlet>
+        <servlet-name>%REST_NAME%</servlet-name>
+            <servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>
+            <load-on-startup>1</load-on-startup>
+            <init-param>
+                <param-name>com.sun.jersey.config.property.packages</param-name>
+                <param-value>app.restapi</param-value>
+            </init-param>
+
+     </servlet>
+     <servlet-mapping>
+            <servlet-name>%REST_NAME%</servlet-name>
+            <url-pattern>/restapi/*</url-pattern>
+     </servlet-mapping>
+     <filter>
+    	<filter-name>AuthenticationFilter</filter-name>
+    	<filter-class>app.rest.RestAuthenticationFilter</filter-class>
+     </filter>
+     <filter-mapping>
+        <filter-name>AuthenticationFilter</filter-name>
+    	<url-pattern>/restapi/*</url-pattern>
+     </filter-mapping>
+</web-app>

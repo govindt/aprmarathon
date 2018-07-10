@@ -72,7 +72,9 @@ ${NAWK} -v app_properties_file=${APP_PROPERTIES_FILE} -v app_constants=${APP_CON
 	printf(" */\n")>>app_bean_file;
 	printf("package %s.appui;\n", proj_name)>>app_bean_file;
 	printf("\n")>>app_bean_file;
-	printf("import java.util.*;\n")>>app_bean_file;
+	printf("import java.util.ArrayList;\n")>>app_bean_file;
+	printf("import java.util.Hashtable;\n")>>app_bean_file;
+	printf("import java.util.Date;\n")>>app_bean_file;
 	printf("import java.text.SimpleDateFormat;\n")>>app_bean_file;
 	printf("import javax.servlet.http.*;\n")>>app_bean_file;
 	printf("import core.ui.*;\n")>>app_bean_file;
@@ -91,9 +93,9 @@ ${NAWK} -v app_properties_file=${APP_PROPERTIES_FILE} -v app_constants=${APP_CON
 	printf("import java.io.FileOutputStream;\n")>>app_bean_file;
 	printf("import java.io.DataInputStream;\n")>>app_bean_file;
 	printf("import java.io.File;\n")>>app_bean_file;
-	printf("import org.apache.poi.poifs.filesystem.*;\n")>>app_bean_file;
-	printf("import org.apache.poi.hssf.usermodel.*;\n")>>app_bean_file;
-	printf("import org.apache.poi.hssf.util.HSSFColor;\n")>>app_bean_file;
+	printf("import org.apache.poi.xssf.usermodel.*;\n")>>app_bean_file;
+	printf("import org.apache.poi.ss.usermodel.*;\n")>>app_bean_file;
+	printf("import org.apache.poi.ss.usermodel.IndexedColors;\n")>>app_bean_file;
 	printf("\n", proj_name)>>app_bean_file;
 	printf("public class %sBean implements SpreadSheetInterface {\n", tmp_file_name)>>app_bean_file;
 	for ( j = 1; j <= i; ++j ) {
@@ -267,9 +269,9 @@ ${NAWK} -v app_properties_file=${APP_PROPERTIES_FILE} -v app_constants=${APP_CON
 	printf("\tbe = new BoldElement(%s.CURRENT_%s_LABEL);\n", app_constants, toupper(tmp_file_name))>>app_bean_file;
 	printf("\tbe.setId(Constants.BODY_ROW_STYLE);\n")>>app_bean_file;
 	printf("\ttd = new TableDataElement(be);\n")>>app_bean_file;
-	printf("\ttr.addElement(td);\n")>>app_bean_file;
-	printf("\tVector<String> nameVector = new Vector<String>();\n")>>app_bean_file;
-	printf("\tVector<Integer> valueVector = new Vector<Integer>();\n")>>app_bean_file;
+	printf("\ttr.add(td);\n")>>app_bean_file;
+	printf("\tArrayList<String> nameArrayList = new ArrayList<String>();\n")>>app_bean_file;
+	printf("\tArrayList<Integer> valueArrayList = new ArrayList<Integer>();\n")>>app_bean_file;
 
 	for ( j = 1; j <= i; ++j ) {
 	    FIRSTCHAR = substr(new_field_names[j],1,1);
@@ -291,24 +293,24 @@ ${NAWK} -v app_properties_file=${APP_PROPERTIES_FILE} -v app_constants=${APP_CON
 		    } else {
 			printf("\t%sObject[] %sArr = %sIf.getAll%ss();\n", tmp_file_name, lower_table_name, lower_table_name, tmp_file_name)>>app_bean_file;
 		    }
-		    printf("\tnameVector.addElement(%s.NEW_%s);\n", app_constants, toupper(tmp_file_name))>>app_bean_file;
-		    printf("\tvalueVector.addElement(new Integer(0));\n")>>app_bean_file;
+		    printf("\tnameArrayList.add(%s.NEW_%s);\n", app_constants, toupper(tmp_file_name))>>app_bean_file;
+		    printf("\tvalueArrayList.add(new Integer(0));\n")>>app_bean_file;
 		    printf("\tfor (int iterator = 0; iterator < %sArr.length; iterator++) {\n", lower_table_name)>>app_bean_file;
 		    printf("\t    %sObject %sObject = %sArr[iterator];\n", tmp_file_name, lower_table_name, lower_table_name)>>app_bean_file;
 		    printf("\t    if ( %sObject == null )\n", lower_table_name)>>app_bean_file;
 		    printf("\t\tbreak;\n", lower_table_name)>>app_bean_file;
 		    
 		    if ( field_types[j+1] == "int" ) 
-			printf("\t    nameVector.addElement(String.valueOf(%sObject.get%s()));\n", lower_table_name, temp_field_names[j+1])>>app_bean_file;
+			printf("\t    nameArrayList.add(String.valueOf(%sObject.get%s()));\n", lower_table_name, temp_field_names[j+1])>>app_bean_file;
 		    else
-			printf("\t    nameVector.addElement(%sObject.get%s());\n", lower_table_name, temp_field_names[j+1])>>app_bean_file;
-		    printf("\t    valueVector.addElement(new Integer(%sObject.get%s()));\n", lower_table_name, temp_field_names[j])>>app_bean_file;
+			printf("\t    nameArrayList.add(%sObject.get%s());\n", lower_table_name, temp_field_names[j+1])>>app_bean_file;
+		    printf("\t    valueArrayList.add(new Integer(%sObject.get%s()));\n", lower_table_name, temp_field_names[j])>>app_bean_file;
 		    printf("\t}\n")>>app_bean_file;
-		    printf("\tse = new SelectElement(%s.%s_STR, nameVector, valueVector, String.valueOf(%s), 0);\n", app_constants, toupper(field_names[j]), new_field_names[j])>>app_bean_file;
+		    printf("\tse = new SelectElement(%s.%s_STR, nameArrayList, valueArrayList, String.valueOf(%s), 0);\n", app_constants, toupper(field_names[j]), new_field_names[j])>>app_bean_file;
 		    printf("\tse.setOnChange(UtilBean.JS_SUBMIT_FORM);\n")>>app_bean_file;
 		    printf("\ttd = new TableDataElement(se);\n")>>app_bean_file;
-		    printf("\ttr.addElement(td);\n")>>app_bean_file;
-		    printf("\tte.addElement(tr);\n")>>app_bean_file;
+		    printf("\ttr.add(td);\n")>>app_bean_file;
+		    printf("\tte.add(tr);\n")>>app_bean_file;
 		    printf("\n")>>app_bean_file;
 		}
 	    }
@@ -379,10 +381,10 @@ ${NAWK} -v app_properties_file=${APP_PROPERTIES_FILE} -v app_constants=${APP_CON
 			printf("\tbe = new BoldElement(%s.%s_LABEL);\n", app_constants, toupper(field_names[j]))>>app_bean_file
 			printf("\tbe.setId(Constants.BODY_ROW_STYLE);\n")>>app_bean_file
 			printf("\ttd = new TableDataElement(be);\n")>>app_bean_file
-			printf("\ttr.addElement(td);\n")>>app_bean_file
+			printf("\ttr.add(td);\n")>>app_bean_file
 			if ( found == 0 ) {
-			    printf("\tnameVector = new Vector<String>();\n")>>app_bean_file;
-			    printf("\tvalueVector = new Vector<Integer>();\n")>>app_bean_file;
+			    printf("\tnameArrayList = new ArrayList<String>();\n")>>app_bean_file;
+			    printf("\tvalueArrayList = new ArrayList<Integer>();\n")>>app_bean_file;
 			    printf("\t%sInterface %sIf = new %sImpl();\n", first_upper_ref_table, tolower(ref_table), first_upper_ref_table)>>app_bean_file;
 			    ref_table_length=length(ref_table);
 			    last_char=substr(ref_table, ref_table_length, 1);
@@ -395,17 +397,17 @@ ${NAWK} -v app_properties_file=${APP_PROPERTIES_FILE} -v app_constants=${APP_CON
 			    printf("\t    %sObject %sObject = %sRefArr[iterator];\n", first_upper_ref_table, tolower(ref_table), tolower(ref_table))>>app_bean_file;
 			    printf("\t    if (%sObject == null)\n", tolower(ref_table))>>app_bean_file;
 			    printf("\t\tbreak;\n")>>app_bean_file;
-			    printf("\t    nameVector.addElement(String.valueOf(%sObject.get%s()));\n", tolower(ref_table), ref_col_name)>>app_bean_file;
-			    printf("\t    valueVector.addElement(new Integer(%sObject.get%s()));\n", tolower(ref_table), ref_table_id)>>app_bean_file;
+			    printf("\t    nameArrayList.add(String.valueOf(%sObject.get%s()));\n", tolower(ref_table), ref_col_name)>>app_bean_file;
+			    printf("\t    valueArrayList.add(new Integer(%sObject.get%s()));\n", tolower(ref_table), ref_table_id)>>app_bean_file;
 			    printf("\t}\n")>>app_bean_file;
 			}
  			printf("\tif ( %s != 0 )\n", new_field_names[1])>>app_bean_file;
-			printf("\t\tse = new SelectElement(%s.%s_STR, nameVector, valueVector, String.valueOf(selected%sObj.get%s()), 0);\n", app_constants, toupper(field_names[j]),  tmp_file_name, temp_field_names[j])>>app_bean_file;
+			printf("\t\tse = new SelectElement(%s.%s_STR, nameArrayList, valueArrayList, String.valueOf(selected%sObj.get%s()), 0);\n", app_constants, toupper(field_names[j]),  tmp_file_name, temp_field_names[j])>>app_bean_file;
                         printf("\telse\n")>>app_bean_file;
-			printf("\t\tse = new SelectElement(%s.%s_STR, nameVector, valueVector, String.valueOf(%s), 0);\n", app_constants, toupper(field_names[j]), new_field_names[j])>>app_bean_file;
+			printf("\t\tse = new SelectElement(%s.%s_STR, nameArrayList, valueArrayList, String.valueOf(%s), 0);\n", app_constants, toupper(field_names[j]), new_field_names[j])>>app_bean_file;
 			printf("\ttd = new TableDataElement(se);\n")>>app_bean_file;
-			printf("\ttr.addElement(td);\n")>>app_bean_file;
-			printf("\tte.addElement(tr);\n")>>app_bean_file;
+			printf("\ttr.add(td);\n")>>app_bean_file;
+			printf("\tte.add(tr);\n")>>app_bean_file;
 			printf("\n")>>app_bean_file;
 		    } # For ints with references
 		    else {
@@ -413,13 +415,13 @@ ${NAWK} -v app_properties_file=${APP_PROPERTIES_FILE} -v app_constants=${APP_CON
 			printf("\tbe = new BoldElement(%s.%s_LABEL);\n", app_constants, toupper(field_names[j]))>>app_bean_file
 			printf("\tbe.setId(Constants.BODY_ROW_STYLE);\n")>>app_bean_file
 			printf("\ttd = new TableDataElement(be);\n")>>app_bean_file
-			printf("\ttr.addElement(td);\n")>>app_bean_file
+			printf("\ttr.add(td);\n")>>app_bean_file
 			printf("\tif ( %s != 0 )\n", new_field_names[1])>>app_bean_file;
 			printf("\t    td = new TableDataElement(new InputElement(InputElement.TEXT, %s.%s_STR, String.valueOf(selected%sObj.get%s())));\n", app_constants, toupper(field_names[j]), tmp_file_name, temp_field_names[j])>>app_bean_file;
 			printf("\telse\n", new_field_names[1])>>app_bean_file;
 			printf("\t    td = new TableDataElement(new InputElement(InputElement.TEXT, %s.%s_STR, Constants.EMPTY));\n", app_constants, toupper(field_names[j]), tmp_file_name)>>app_bean_file;
-			printf("\ttr.addElement(td);\n")>>app_bean_file
-			printf("\tte.addElement(tr);\n\n")>>app_bean_file
+			printf("\ttr.add(td);\n")>>app_bean_file
+			printf("\tte.add(tr);\n\n")>>app_bean_file
 		    }
 		} else { # For Not Ints
 		    printf("\ttr = new TableRowElement();\n")>>app_bean_file
@@ -430,7 +432,7 @@ ${NAWK} -v app_properties_file=${APP_PROPERTIES_FILE} -v app_constants=${APP_CON
 		    }
 		    printf("\tbe.setId(Constants.BODY_ROW_STYLE);\n")>>app_bean_file
 		    printf("\ttd = new TableDataElement(be);\n")>>app_bean_file
-		    printf("\ttr.addElement(td);\n")>>app_bean_file
+		    printf("\ttr.add(td);\n")>>app_bean_file
 		    if ( field_types[j] == "String" ) {
 			printf("\tif ( %s != 0 )\n", new_field_names[1])>>app_bean_file;
 			if ( tolower(field_names[j]) == "is_valid" ) {
@@ -447,8 +449,8 @@ ${NAWK} -v app_properties_file=${APP_PROPERTIES_FILE} -v app_constants=${APP_CON
 			    printf("\telse\n", new_field_names[1])>>app_bean_file;
 			    printf("\t    td = new TableDataElement(new InputElement(InputElement.TEXT, %s.%s_STR, Constants.EMPTY));\n", app_constants, toupper(field_names[j]), tmp_file_name)>>app_bean_file;
 			}
-			printf("\ttr.addElement(td);\n")>>app_bean_file
-			printf("\tte.addElement(tr);\n\n")>>app_bean_file
+			printf("\ttr.add(td);\n")>>app_bean_file
+			printf("\tte.add(tr);\n\n")>>app_bean_file
 		    } else if ( field_types[j] == "Date" ) {
                         printf("\tif ( %s != 0 ) {\n", new_field_names[1])>>app_bean_file;
                         printf("\t\tSimpleDateFormat dateFormatter = new SimpleDateFormat(Constants.DATE_FORMAT_STR);\n")>>app_bean_file;
@@ -457,15 +459,15 @@ ${NAWK} -v app_properties_file=${APP_PROPERTIES_FILE} -v app_constants=${APP_CON
                         printf("\t}")>>app_bean_file;
 			printf("\telse\n", new_field_names[1])>>app_bean_file;
 			printf("\t    td = new TableDataElement(new InputElement(InputElement.TEXT, %s.%s_STR, Constants.EMPTY));\n", app_constants, toupper(field_names[j]), tmp_file_name)>>app_bean_file;
-			printf("\ttr.addElement(td);\n")>>app_bean_file
-			printf("\tte.addElement(tr);\n\n")>>app_bean_file
+			printf("\ttr.add(td);\n")>>app_bean_file
+			printf("\tte.add(tr);\n\n")>>app_bean_file
                     } else {
 			printf("\tif ( %s != 0 )\n", new_field_names[1])>>app_bean_file;
 			printf("\t    td = new TableDataElement(new InputElement(InputElement.TEXT, %s.%s_STR, String.valueOf(selected%sObj.get%s())));\n", app_constants, toupper(field_names[j]), tmp_file_name, temp_field_names[j])>>app_bean_file;
 			printf("\telse\n", new_field_names[1])>>app_bean_file;
 			printf("\t    td = new TableDataElement(new InputElement(InputElement.TEXT, %s.%s_STR, Constants.EMPTY));\n", app_constants, toupper(field_names[j]), tmp_file_name)>>app_bean_file;
-			printf("\ttr.addElement(td);\n")>>app_bean_file
-			printf("\tte.addElement(tr);\n\n")>>app_bean_file
+			printf("\ttr.add(td);\n")>>app_bean_file
+			printf("\tte.add(tr);\n\n")>>app_bean_file
 		    }
 		}
 	    } # End of if for non keys
@@ -475,13 +477,13 @@ ${NAWK} -v app_properties_file=${APP_PROPERTIES_FILE} -v app_constants=${APP_CON
 	printf("\tbe = new BoldElement(Constants.UPLOAD_FILE_LABEL);\n")>>app_bean_file
 	printf("\tbe.setId(Constants.BODY_ROW_STYLE);\n")>>app_bean_file
 	printf("\ttd = new TableDataElement(be);\n")>>app_bean_file
-	printf("\ttr.addElement(td);\n")>>app_bean_file
+	printf("\ttr.add(td);\n")>>app_bean_file
 
 	printf("\n")>>app_bean_file
 	printf("\tie = new InputElement(InputElement.FILE, Constants.UPLOAD_FILE_NAME_STR,\"\");\n")>>app_bean_file
 	printf("\ttd = new TableDataElement(ie);\n")>>app_bean_file
-	printf("\ttr.addElement(td);\n")>>app_bean_file
-	printf("\tte.addElement(tr);\n")>>app_bean_file
+	printf("\ttr.add(td);\n")>>app_bean_file
+	printf("\tte.add(tr);\n")>>app_bean_file
 	printf("\n")>>app_bean_file
 
 	printf("\treturn te.getHTMLTag() + new BreakElement().getHTMLTag() +  new BreakElement().getHTMLTag() + UtilBean.getSubmitButton() + UtilBean.getDownloadButton();\n")>>app_bean_file
@@ -490,49 +492,49 @@ ${NAWK} -v app_properties_file=${APP_PROPERTIES_FILE} -v app_constants=${APP_CON
 	printf("\n")>>app_bean_file;
 	printf("    public void writeToFile(String outputFileName, Object obj) throws AppException {\n")>>app_bean_file;
 	printf("\tDebugHandler.fine(\"writeToFile(\" + outputFileName + \",\" + obj + \")\");\n")>>app_bean_file;
-	printf("\tHSSFWorkbook wb = new HSSFWorkbook();\n")>>app_bean_file;
-	printf("\tHSSFFont font01Bold = wb.createFont();\n")>>app_bean_file;
+	printf("\tXSSFWorkbook wb = new XSSFWorkbook();\n")>>app_bean_file;
+	printf("\tXSSFFont font01Bold = wb.createFont();\n")>>app_bean_file;
 	printf("\tfont01Bold.setFontHeightInPoints((short)12);\n")>>app_bean_file;
 	printf("\tfont01Bold.setFontName(\"Times New Roman\");\n")>>app_bean_file;
-	printf("\tfont01Bold.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);\n")>>app_bean_file;
+	printf("\tfont01Bold.setBold(true);\n")>>app_bean_file;
 	printf("\n")>>app_bean_file;
 
-	printf("\tHSSFFont font01Normal = wb.createFont();\n")>>app_bean_file;
+	printf("\tXSSFFont font01Normal = wb.createFont();\n")>>app_bean_file;
 	printf("\tfont01Normal.setFontHeightInPoints((short)12);\n")>>app_bean_file;
 	printf("\tfont01Normal.setFontName(\"Times New Roman\");\n")>>app_bean_file;
-	printf("\tfont01Normal.setBoldweight(HSSFFont.BOLDWEIGHT_NORMAL);\n")>>app_bean_file;
+	printf("\tfont01Normal.setBold(false);\n")>>app_bean_file;
 	printf("\n")>>app_bean_file;
 
 	printf("\t// Create style\n")>>app_bean_file;
-	printf("\tHSSFCellStyle cellstyleTblHdr = wb.createCellStyle();\n")>>app_bean_file;
+	printf("\tCellStyle cellstyleTblHdr = wb.createCellStyle();\n")>>app_bean_file;
 	printf("\tcellstyleTblHdr.setFont(font01Bold);\n")>>app_bean_file;
-	printf("\tcellstyleTblHdr.setAlignment(HSSFCellStyle.ALIGN_CENTER);\n")>>app_bean_file;
+	printf("\tcellstyleTblHdr.setAlignment(HorizontalAlignment.CENTER);\n")>>app_bean_file;
 	printf("\tcellstyleTblHdr.setWrapText(true);\n")>>app_bean_file;
-	printf("\tcellstyleTblHdr.setBorderBottom(HSSFCellStyle.BORDER_MEDIUM);\n")>>app_bean_file;
-	printf("\tcellstyleTblHdr.setBorderLeft(HSSFCellStyle.BORDER_MEDIUM);\n")>>app_bean_file;
-	printf("\tcellstyleTblHdr.setBorderRight(HSSFCellStyle.BORDER_MEDIUM);\n")>>app_bean_file;
-	printf("\tcellstyleTblHdr.setBorderTop(HSSFCellStyle.BORDER_MEDIUM);\n")>>app_bean_file;
-	printf("\tcellstyleTblHdr.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);\n")>>app_bean_file;
-	printf("\tcellstyleTblHdr.setFillForegroundColor(HSSFColor.LIGHT_GREEN.index);\n")>>app_bean_file;
-	printf("\tcellstyleTblHdr.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);\n")>>app_bean_file;
+	printf("\tcellstyleTblHdr.setBorderBottom(BorderStyle.MEDIUM);\n")>>app_bean_file;
+	printf("\tcellstyleTblHdr.setBorderLeft(BorderStyle.MEDIUM);\n")>>app_bean_file;
+	printf("\tcellstyleTblHdr.setBorderRight(BorderStyle.MEDIUM);\n")>>app_bean_file;
+	printf("\tcellstyleTblHdr.setBorderTop(BorderStyle.MEDIUM);\n")>>app_bean_file;
+	printf("\tcellstyleTblHdr.setVerticalAlignment(VerticalAlignment.CENTER);\n")>>app_bean_file;
+	printf("\tcellstyleTblHdr.setFillForegroundColor(IndexedColors.LIGHT_GREEN.getIndex());\n")>>app_bean_file;
+	printf("\tcellstyleTblHdr.setFillPattern(FillPatternType.SOLID_FOREGROUND);\n")>>app_bean_file;
 	printf("\n")>>app_bean_file;
 
-	printf("\tHSSFCellStyle cellstyleTblLeft = wb.createCellStyle();\n")>>app_bean_file;
+	printf("\tCellStyle cellstyleTblLeft = wb.createCellStyle();\n")>>app_bean_file;
 	printf("\tcellstyleTblLeft.setFont(font01Normal);\n")>>app_bean_file;
-	printf("\tcellstyleTblLeft.setAlignment(HSSFCellStyle.ALIGN_LEFT);\n")>>app_bean_file;
+	printf("\tcellstyleTblLeft.setAlignment(HorizontalAlignment.LEFT);\n")>>app_bean_file;
 	printf("\tcellstyleTblLeft.setWrapText(true);\n")>>app_bean_file;
-	printf("\tcellstyleTblLeft.setBorderBottom(HSSFCellStyle.BORDER_THIN);\n")>>app_bean_file;
-	printf("\tcellstyleTblLeft.setBorderLeft(HSSFCellStyle.BORDER_THIN);\n")>>app_bean_file;
-	printf("\tcellstyleTblLeft.setBorderRight(HSSFCellStyle.BORDER_THIN);\n")>>app_bean_file;
-	printf("\tcellstyleTblLeft.setVerticalAlignment(HSSFCellStyle.VERTICAL_TOP);\n")>>app_bean_file;
+	printf("\tcellstyleTblLeft.setBorderBottom(BorderStyle.THIN);\n")>>app_bean_file;
+	printf("\tcellstyleTblLeft.setBorderLeft(BorderStyle.THIN);\n")>>app_bean_file;
+	printf("\tcellstyleTblLeft.setBorderRight(BorderStyle.THIN);\n")>>app_bean_file;
+	printf("\tcellstyleTblLeft.setVerticalAlignment(VerticalAlignment.TOP);\n")>>app_bean_file;
 	printf("\n")>>app_bean_file;
 
-	printf("\tHSSFSheet sheet = wb.createSheet();\n")>>app_bean_file;
+	printf("\tXSSFSheet sheet = wb.createSheet();\n")>>app_bean_file;
 	printf("\tFileOutputStream fileOut = null;\n")>>app_bean_file;
 	printf("\tint rowNum = 0;\n")>>app_bean_file;
 	printf("\tint col = 0;\n")>>app_bean_file;
-	printf("\tHSSFRow row = null;\n")>>app_bean_file;
-	printf("\tHSSFCell cell = null;\n")>>app_bean_file;
+	printf("\tXSSFRow row = null;\n")>>app_bean_file;
+	printf("\tXSSFCell cell = null;\n")>>app_bean_file;
 	printf("\ttry {\n")>>app_bean_file;
 	printf("\t    fileOut = new FileOutputStream(outputFileName);\n")>>app_bean_file;
 	printf("\t} catch (FileNotFoundException fnf) {\n")>>app_bean_file;
@@ -603,21 +605,19 @@ ${NAWK} -v app_properties_file=${APP_PROPERTIES_FILE} -v app_constants=${APP_CON
 	printf("\n")>>app_bean_file;
 	printf("    public void readFromFile(String inputFileName, Object obj) throws AppException {\n")>>app_bean_file;
 	printf("\tDebugHandler.fine(\"readFromFile(\" + inputFileName + obj + \")\");\n")>>app_bean_file;
-	printf("\tPOIFSFileSystem fs = null;\n")>>app_bean_file;
-	printf("\tHSSFWorkbook wb = null;\n")>>app_bean_file;
+	printf("\tInputStream fs = null;\n")>>app_bean_file;
+	printf("\tXSSFWorkbook wb = null;\n")>>app_bean_file;
 	printf("\ttry {\n")>>app_bean_file;
-	printf("\t    fs = new POIFSFileSystem(new FileInputStream(inputFileName));\n")>>app_bean_file;
-	printf("\t} catch (FileNotFoundException fnf) {\n")>>app_bean_file;
-	printf("\t    throw new AppException(\"Unable to find file \" + inputFileName);\n")>>app_bean_file;
+	printf("\t    fs = new FileInputStream(inputFileName);\n")>>app_bean_file;
 	printf("\t} catch (IOException ioe) {\n")>>app_bean_file;
 	printf("\t    throw new AppException(\"IOException while opening file \" + inputFileName);\n")>>app_bean_file;
 	printf("\t}\n")>>app_bean_file;
 	printf("\ttry {\n")>>app_bean_file;
-	printf("\t    wb = new HSSFWorkbook(fs);\n")>>app_bean_file;
+	printf("\t    wb = new XSSFWorkbook(fs);\n")>>app_bean_file;
 	printf("\t} catch (IOException ioe) {\n")>>app_bean_file;
 	printf("\t    throw new AppException(\"IOException while getting workbook.\");\n")>>app_bean_file;
 	printf("\t}\n")>>app_bean_file;
-	printf("\tHSSFSheet sheet = wb.getSheetAt(0);\n")>>app_bean_file;
+	printf("\tXSSFSheet sheet = wb.getSheetAt(0);\n")>>app_bean_file;
 	printf("\tFileInputStream fileIn = null;\n")>>app_bean_file;
 	printf("\ttry {\n")>>app_bean_file;
 	printf("\t    fileIn = new FileInputStream(inputFileName);\n")>>app_bean_file;
@@ -626,8 +626,8 @@ ${NAWK} -v app_properties_file=${APP_PROPERTIES_FILE} -v app_constants=${APP_CON
 	printf("\t}\n")>>app_bean_file;
 	printf("\tint rowNum = 0;\n")>>app_bean_file;
 	printf("\tint col = 0;\n")>>app_bean_file;
-	printf("\tHSSFRow row = null;\n")>>app_bean_file;
-	printf("\tHSSFCell cell = null;\n")>>app_bean_file;
+	printf("\tXSSFRow row = null;\n")>>app_bean_file;
+	printf("\tXSSFCell cell = null;\n")>>app_bean_file;
 	printf("\tString dbOp = null;\n")>>app_bean_file;
 	printf("\t%sInterface %sIf = new %sImpl();\n", tmp_file_name, lower_table_name, tmp_file_name)>>app_bean_file;
 	printf("\t%sObject %sObject = new %sObject();\n", tmp_file_name, lower_table_name, tmp_file_name)>>app_bean_file;
@@ -828,8 +828,8 @@ ${NAWK} -v app_properties_file=${APP_PROPERTIES_FILE} -v app_constants=${APP_CON
 	printf(" content=\"text/html; charset=ISO-8859-1\">\n", tmp_file_name)>>jsp_filename;
 	printf("  <meta name=\"author\" content=\" Govind Thirumalai\">\n", tmp_file_name)>>jsp_filename;
 	printf("<script>\n", tmp_file_name)>>jsp_filename;
-	printf("<%%@ include file=\"validation.js\" %%>\n", tmp_file_name)>>jsp_filename;
-	printf("<%%@ include file=\"common_utils.js\" %%>\n", tmp_file_name)>>jsp_filename;
+	printf("<%%@ include file=\"js/validation.js\" %%>\n", tmp_file_name)>>jsp_filename;
+	printf("<%%@ include file=\"js/common_utils.js\" %%>\n", tmp_file_name)>>jsp_filename;
 	printf("function validateForm(form) \n", tmp_file_name)>>jsp_filename;
 	printf("{\n")>>jsp_filename;
         for ( j = 1; j <= i; ++j ) {
@@ -856,9 +856,9 @@ ${NAWK} -v app_properties_file=${APP_PROPERTIES_FILE} -v app_constants=${APP_CON
 	printf("}\n", tmp_file_name)>>jsp_filename;
 	printf("</script>\n", tmp_file_name)>>jsp_filename;
 	printf("</head>\n", tmp_file_name)>>jsp_filename;
-	printf("<link href=\"/aprmarathon/jsp/main.css\" rel=\"stylesheet\" type=\"text/css\" />\n", tmp_file_name)>>jsp_filename;
-        printf("<link href=\"/aprmarathon/jsp/dropdown.css\" media=\"screen\" rel=\"stylesheet\" type=\"text/css\" />\n")>>jsp_filename;
-        printf("<link href=\"/aprmarathon/jsp/default.ultimate.css\" media=\"screen\" rel=\"stylesheet\" type=\"text/css\" />\n")>>jsp_filename;
+	printf("<link href=\"/aprmarathon/jsp/css/main.css\" rel=\"stylesheet\" type=\"text/css\" />\n", tmp_file_name)>>jsp_filename;
+        printf("<link href=\"/aprmarathon/jsp/css/dropdown.css\" media=\"screen\" rel=\"stylesheet\" type=\"text/css\" />\n")>>jsp_filename;
+        printf("<link href=\"/aprmarathon/jsp/css/default.ultimate.css\" media=\"screen\" rel=\"stylesheet\" type=\"text/css\" />\n")>>jsp_filename;
 	
 	printf("<body>\n", tmp_file_name)>>jsp_filename;
 	printf("<%%@ include file=\"Navigation.jsp\" %%>\n", tmp_file_name)>>jsp_filename;

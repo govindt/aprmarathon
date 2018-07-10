@@ -22,9 +22,9 @@ import core.util.*;
  * Usage:
  * TableElement tbl = new TableElement();
  * <BR>
- * tbl.addElement("<TR><TD>Test data</TD></TR>");
- * tbl.addElement(new CaptionElement("This is a caption."));
- * tbl.addElement(new TableRowElement());
+ * tbl.add("<TR><TD>Test data</TD></TR>");
+ * tbl.add(new CaptionElement("This is a caption."));
+ * tbl.add(new TableRowElement());
  * tbl.getHTMLTag();
  * <BR><BR>
  *
@@ -44,7 +44,7 @@ public class TableElement extends HTMLElementObject {
     private String heightStr;
     private int cellPadding;
     private int cellSpacing;
-    private Vector<String> vTable;
+    private ArrayList<String> vTable;
     
     /**
      * Constructs this object,
@@ -53,7 +53,7 @@ public class TableElement extends HTMLElementObject {
     
     public TableElement() {
 	
-	vTable = new Vector<String>();
+	vTable = new ArrayList<String>();
     }
     
     /**
@@ -75,7 +75,7 @@ public class TableElement extends HTMLElementObject {
 	this.width = width;
 	this.cellPadding = cellPadding;
 	this.cellSpacing = cellSpacing;
-	vTable = new Vector<String>();
+	vTable = new ArrayList<String>();
 	setHTMLTag();
 	
     }
@@ -99,7 +99,7 @@ public class TableElement extends HTMLElementObject {
 	this.widthStr = widthStr;
 	this.cellPadding = cellPadding;
 	this.cellSpacing = cellSpacing;
-	vTable = new Vector<String>();
+	vTable = new ArrayList<String>();
 	setHTMLTag();
 	
     }
@@ -214,9 +214,9 @@ public class TableElement extends HTMLElementObject {
      * @param strElement	the elements in string format. 
      */
     
-    public final void addElement(String strElement) {
+    public final void add(String strElement) {
 	
-	vTable.addElement(strElement);
+	vTable.add(strElement);
 	setHTMLTag();
     }
     
@@ -226,16 +226,16 @@ public class TableElement extends HTMLElementObject {
      * @param captionElement    the elements of CaptionElement type.
      */
     
-    public final void addElement(CaptionElement captionElement) {
+    public final void add(CaptionElement captionElement) {
 	
-	vTable.addElement(captionElement.getHTMLTag());
+	vTable.add(captionElement.getHTMLTag());
 	setHTMLTag();
         
     }
     
-    public final void addElement(TableRowElement tableRowElement) {
+    public final void add(TableRowElement tableRowElement) {
 	
-	vTable.addElement(tableRowElement.getHTMLTag());
+	vTable.add(tableRowElement.getHTMLTag());
 	setHTMLTag();
 	
     }
@@ -283,10 +283,11 @@ public class TableElement extends HTMLElementObject {
 	}
 	buf.append(">");
 	
-	Enumeration<String> e = vTable.elements();
-	while (e.hasMoreElements()) {
-	    String tableElements = e.nextElement();
+	int i = 0;
+	while (i < vTable.size()) {
+	    String tableElements = vTable.get(i);
 	    buf.append(tableElements);
+	    i++;
 	}
 	
 	buf.append("</TABLE>");

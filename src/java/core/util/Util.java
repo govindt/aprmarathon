@@ -14,10 +14,11 @@ import java.io.*;
 import java.lang.*;
 import java.util.*;
 import java.util.regex.*;
-import org.apache.jcs.JCS;
-import org.apache.jcs.access.exception.CacheException;
+import org.apache.commons.jcs.JCS;
+import org.apache.commons.jcs.access.CacheAccess;
+import org.apache.commons.jcs.access.exception.CacheException;
 import org.apache.commons.lang.exception.*;
-
+import org.apache.commons.jcs.engine.control.CompositeCacheManager;
 /*
  * Singletone class for the whole Application
  *
@@ -35,8 +36,10 @@ public class Util {
     
     private static Properties siteProps = null;
     private static Properties otherProps = new Properties();
+    private static Properties cacheProps = new Properties();
 
-    private static JCS appCache;
+    //private static JCS appCache;
+    private static CacheAccess<String, Object> appCache;
     
     private Util() throws AppException {
 	// Change these later to get from Resource File as Properties
@@ -48,7 +51,7 @@ public class Util {
 	return otherProps;
     }
 
-    public static JCS getAppCache() {
+    public static CacheAccess<String, Object> getAppCache() {
 	return appCache;
     }
 
@@ -62,7 +65,7 @@ public class Util {
 
     public static void removeFromCache(Object key) {
 	try {
-	    appCache.remove(key);
+	    appCache.remove((String)key);
 	} catch (CacheException ce) {
 	    System.err.println("Unable to remove object for " + key);
 	}
@@ -70,7 +73,7 @@ public class Util {
 
     public static void clearCache() {
 	try {
-	    appCache.remove();
+	    appCache.clear();
 	} catch (CacheException ce) {
 	    System.err.println("Unable to clear cache");
 	}
@@ -80,6 +83,7 @@ public class Util {
 	if ( self == null ) {
 	    self = new Util();
 	    loadSiteProperties();
+	    loadCacheProperties();
 	    try {
 		DebugHandler.initialize(Constants.APP_LOG);
 	    } catch (IOException ioe) {
@@ -88,9 +92,12 @@ public class Util {
 		System.exit(1);
 	    }
 	    try {
+		CompositeCacheManager ccm = CompositeCacheManager.getUnconfiguredInstance();
+		ccm.configure(cacheProps);
 		appCache = JCS.getInstance(APP_CACHE);
-	    } catch (NestableException ne) {
+	    } catch (Exception ne) {
 		System.err.println("Unable to initialize cache");
+		ne.printStackTrace();
 	    }
 	}
 	
@@ -99,7 +106,21 @@ public class Util {
 	
 	return self;
     }
-    
+
+    private static Properties loadCacheProperties() throws AppException {
+	String cachePropertiesFile = "core.util.cache";
+	ResourceBundle rb = ResourceBundle.getBundle(cachePropertiesFile);
+	Set<String> set = rb.keySet();
+
+	Iterator<String> iterator = set.iterator();
+
+	while (iterator.hasNext()) {
+	    String key = iterator.next();
+	    cacheProps.put(key, rb.getString(key));
+	} 
+	return cacheProps;
+    }
+
     private static Properties loadSiteProperties() throws AppException {
 	String sitePropertiesFile
 	    = "core.util.site";

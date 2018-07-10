@@ -52,8 +52,8 @@ import core.util.*;
 public class SelectElement extends HTMLElementObject { 
 
     private Hashtable<String,String> hList;   // Name-Value hash-table
-    private Vector<String> nList;      // Name List
-    private Vector<Integer> vList;      // Value List
+    private ArrayList<String> nList;      // Name List
+    private ArrayList<Integer> vList;      // Value List
     private String selectedValue;
     private int size;
 	private boolean multiple = false;
@@ -133,7 +133,7 @@ public class SelectElement extends HTMLElementObject {
      */
 
     public SelectElement(String name,
-                         Vector<Integer> vList) {
+                         ArrayList<Integer> vList) {
 
         this.name = name;
         this.vList = vList;
@@ -152,8 +152,8 @@ public class SelectElement extends HTMLElementObject {
      */
 
     public SelectElement(String name,
-                         Vector<String> nList,
-                         Vector<Integer> vList) {
+                         ArrayList<String> nList,
+                         ArrayList<Integer> vList) {
 
         this.name = name;
         this.nList = nList;
@@ -174,7 +174,7 @@ public class SelectElement extends HTMLElementObject {
      */
 
     public SelectElement(String name,
-                         Vector<Integer> vList,
+                         ArrayList<Integer> vList,
 			 String selectedValue,
 			 int size) {
 
@@ -199,8 +199,8 @@ public class SelectElement extends HTMLElementObject {
      */
 
     public SelectElement(String name,
-                         Vector<String> nList,
-                         Vector<Integer> vList,
+                         ArrayList<String> nList,
+                         ArrayList<Integer> vList,
                          String selectedValue,
                          int size) {
 
@@ -233,7 +233,7 @@ public class SelectElement extends HTMLElementObject {
      * @param vList                     the name of the vector that contains the options
      */
 
-    public final void setList(Vector<Integer> vList) {
+    public final void setList(ArrayList<Integer> vList) {
 
         this.vList = vList;
         setHTMLTag();
@@ -246,7 +246,7 @@ public class SelectElement extends HTMLElementObject {
      * @param vList                     the name of the vector that contains the option values
      */
 
-    public final void setList(Vector<String> nList, Vector<Integer> vList) {
+    public final void setList(ArrayList<String> nList, ArrayList<Integer> vList) {
 
         this.nList = nList;
         this.vList = vList;
@@ -359,7 +359,7 @@ public class SelectElement extends HTMLElementObject {
             	for (int i = 0; i < vList.size(); i++) {
                 	String vElement = null;
 			try {
-				vElement = vList.elementAt(i).toString();
+				vElement = vList.get(i).toString();
 			} catch (NullPointerException npe) {
 				vElement = "";
 			}
@@ -389,7 +389,7 @@ public class SelectElement extends HTMLElementObject {
                     	buf.append(vElement);
                     	buf.append("\">");
                     	try {
-                        	String name = nList.elementAt(i).toString();
+                        	String name = nList.get(i).toString();
                         	buf.append(name);
                     	} catch (NullPointerException npe) {
                         	buf.append(vElement);

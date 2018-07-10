@@ -63,16 +63,16 @@ import core.util.*;
  *
  * Create table data:
  * <BR>
- * tblrow.addElement(new TableHeadingElement(text));
+ * tblrow.add(new TableHeadingElement(text));
  * <BR>
- * tblrow.addElement(new TableHeadingElement(anchor));
+ * tblrow.add(new TableHeadingElement(anchor));
  * <BR><BR>
  *
  * Add elements to the table:
  * <BR>
- * tbl.addElement(new CaptionElement("My Table"));
+ * tbl.add(new CaptionElement("My Table"));
  * <BR>
- * tbl.addElement((TableRowElement)tblrow);
+ * tbl.add((TableRowElement)tblrow);
  * <BR>
  * System.out.println(tbl.getHTMLTag());
  * <BR>
@@ -90,7 +90,7 @@ public class TableHeadingElement extends HTMLElementObject {
     private int colspan;
     private int rowspan;
     private boolean wrap;
-    private Vector<String> vTableHeading;
+    private ArrayList<String> vTableHeading;
     private HTMLElement htmlElement;
 
     public static final String LEFT = "LEFT";
@@ -108,7 +108,7 @@ public class TableHeadingElement extends HTMLElementObject {
 
     public TableHeadingElement() {
 
-        vTableHeading = new Vector<String>();
+        vTableHeading = new ArrayList<String>();
     }
 
     /**
@@ -121,7 +121,7 @@ public class TableHeadingElement extends HTMLElementObject {
     public TableHeadingElement(HTMLElement htmlElement) {
 
         this.htmlElement = htmlElement;
-        vTableHeading = new Vector<String>();
+        vTableHeading = new ArrayList<String>();
         setHTMLTag();
     }
 
@@ -152,7 +152,7 @@ public class TableHeadingElement extends HTMLElementObject {
         this.colspan = colspan;
         this.wrap = wrap;
         this.bgcolor = bgcolor;
-        vTableHeading = new Vector<String>();
+        vTableHeading = new ArrayList<String>();
         setHTMLTag();
 
     }

@@ -1,0 +1,31 @@
+RegistrationSheet
+
+Registrant_Name varchar2(50) not null
+Registrant_Middle_Name varchar2(50)
+Registrant_Last_Name varchar2(50)
+Registrant_Email varchar2(75) not null
+Registrant_Additional_Email varchar2(500)
+Registrant_Phone_Number varchar2(20) not null
+Registrant_Address varchar2(200) not null
+Registrant_City varchar2(50) not null
+Registrant_State varchar2(50) not null
+Registrant_Pincode varchar2(10) not null
+Registrant_PAN varchar2(20)
+Registrant_Event Name varchar2(50)
+Registrant_Type_Name varchar2(50)
+Registrant_Source_Name varchar2(50)
+Registrant_Class_Name varchar2(50)
+Registrant_Beneficiary_Name varchar2(50)
+Registrant_Emergency_Contact varchar2(50) not null
+Registrant_Emergency_Phone varchar2(20) not null
+Registrant_Payment_Type_Name varchar2(50)
+Registrant_Payment_Status_Name varchar2(50)
+Registrant_Payment_Amount double not null
+Registrant_Additional_Amount double not null
+Registrant_Payment_Date timestamp not null
+Registrant_Receipt_Date timestamp not null
+Registrant_Payment_Details varchar2(200) not null
+Registrant_Payment_Towards varchar2(100) not null
+Registrant_Payment_Reference_Id varchar2(100) not null
+Regsitrant_Payment_Tax double
+Registrant_Payment_Fee double

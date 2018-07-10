@@ -153,7 +153,7 @@ ${NAWK} -v QUOTE="'" -v logname=${LOGNAME} -v version=1.0 -v since=1.0 -v proj_n
 	printf("package %s.appdb;\n\n", proj_name)>persistent_filename;
 	printf("import java.sql.ResultSet;\n")>>persistent_filename;
 	printf("import java.sql.Types;\n")>>persistent_filename;
-	printf("import java.util.Vector;\n")>>persistent_filename;
+	printf("import java.util.ArrayList;\n")>>persistent_filename;
 	
 	printf("import core.db.PersistentObject;\n")>>persistent_filename;
 	printf("import core.db.SQLParam;\n")>>persistent_filename;
@@ -205,11 +205,11 @@ ${NAWK} -v QUOTE="'" -v logname=${LOGNAME} -v version=1.0 -v since=1.0 -v proj_n
 
 	# Comments for list method	
 	printf("    \n    /**\n") >> persistent_filename;
-	printf("     * Returns the Vector of %sObject.\n", tmp_file_name) >> persistent_filename;
+	printf("     * Returns the ArrayList of %sObject.\n", tmp_file_name) >> persistent_filename;
 	printf("     * It is Usually all the rows in the database.\n") >> persistent_filename;
 	printf("     * This calls getResultObjects method in the super class.\n") >> persistent_filename;
 	printf("     *\n") >> persistent_filename;
-	printf("     * @return     Vector of %sObject \n", tmp_file_name) >> persistent_filename;
+	printf("     * @return     ArrayList of %sObject \n", tmp_file_name) >> persistent_filename;
 	printf("     *\n") >> persistent_filename;
 	printf("     * @throws     DBException     If a database error occurs\n") >> persistent_filename;
 	printf("     *\n") >> persistent_filename;
@@ -232,18 +232,18 @@ ${NAWK} -v QUOTE="'" -v logname=${LOGNAME} -v version=1.0 -v since=1.0 -v proj_n
 	printf("        setSQLStatement(sql);\n        \n")>>persistent_filename;
 
         printf("        @SuppressWarnings(\"unchecked\")\n")>>persistent_filename;
-	printf("        Vector<%sObject> result = (Vector<%sObject>) super.list();\n        \n", tmp_file_name, tmp_file_name)>>persistent_filename;
+	printf("        ArrayList<%sObject> result = (ArrayList<%sObject>) super.list();\n        \n", tmp_file_name, tmp_file_name)>>persistent_filename;
 	printf("        return result;\n")>>persistent_filename;
 	printf("    }\n    \n")>>persistent_filename;
 	# End - list Method
 
 	# Comments for list overloaded method	
 	printf("    \n    /**\n") >> persistent_filename;
-	printf("     * Returns the Vector of %sObjects.\n", tmp_file_name) >> persistent_filename;
+	printf("     * Returns the ArrayList of %sObjects.\n", tmp_file_name) >> persistent_filename;
 	printf("     * It is Usually all the rows that match the criteria in the database.\n") >> persistent_filename;
 	printf("     * This calls getResultObjects method in the super class.\n") >> persistent_filename;
 	printf("     *\n") >> persistent_filename;
-	printf("     * @return     Vector of %sObject \n", tmp_file_name) >> persistent_filename;
+	printf("     * @return     ArrayList of %sObject \n", tmp_file_name) >> persistent_filename;
 	printf("     *\n") >> persistent_filename;
 	printf("     * @throws     DBException     If a database error occurs\n") >> persistent_filename;
 	printf("     *\n") >> persistent_filename;
@@ -314,18 +314,18 @@ ${NAWK} -v QUOTE="'" -v logname=${LOGNAME} -v version=1.0 -v since=1.0 -v proj_n
 	printf("        setSQLStatement(sql);\n        \n")>>persistent_filename;
 
         printf("        @SuppressWarnings(\"unchecked\")\n")>>persistent_filename;
-	printf("        Vector<%sObject> result = (Vector<%sObject>) super.list();\n        \n", tmp_file_name, tmp_file_name)>>persistent_filename;
+	printf("        ArrayList<%sObject> result = (ArrayList<%sObject>) super.list();\n        \n", tmp_file_name, tmp_file_name)>>persistent_filename;
 	printf("        return result;\n")>>persistent_filename;
 	printf("    }\n    \n")>>persistent_filename;
 	# End - list Method
 
 	# Comments for fetch Method
 	printf("    \n    /**\n") >> persistent_filename;
-	printf("     * Returns the Vector of one %sObject.\n", tmp_file_name) >> persistent_filename;
+	printf("     * Returns the ArrayList of one %sObject.\n", tmp_file_name) >> persistent_filename;
 	printf("     * It is Usually the row that matches primary key.\n") >> persistent_filename;
 	printf("     * This calls getResultSetObject method in the super class.\n") >> persistent_filename;
 	printf("     *\n") >> persistent_filename;
-	printf("     * @return     Vector of one %sObject \n", tmp_file_name) >> persistent_filename;
+	printf("     * @return     ArrayList of one %sObject \n", tmp_file_name) >> persistent_filename;
 	printf("     *\n") >> persistent_filename;
 	printf("     * @throws     DBException     If a database error occurs\n") >> persistent_filename;
 	printf("     *\n") >> persistent_filename;
@@ -380,7 +380,7 @@ ${NAWK} -v QUOTE="'" -v logname=${LOGNAME} -v version=1.0 -v since=1.0 -v proj_n
 	printf("        setSQLStatement(sql);\n        \n")>>persistent_filename;
 
         printf("        @SuppressWarnings(\"unchecked\")\n")>>persistent_filename;
-	printf("        Vector<%sObject> result = (Vector<%sObject>) super.fetch();\n        \n", tmp_file_name, tmp_file_name)>>persistent_filename;
+	printf("        ArrayList<%sObject> result = (ArrayList<%sObject>) super.fetch();\n        \n", tmp_file_name, tmp_file_name)>>persistent_filename;
 	printf("        return result;\n")>>persistent_filename;
 	printf("    }\n    \n")>>persistent_filename;
 	# End - fetch Method
@@ -619,13 +619,13 @@ ${NAWK} -v QUOTE="'" -v logname=${LOGNAME} -v version=1.0 -v since=1.0 -v proj_n
 	# Comments for getResultsObjects Method
 	printf("    \n    /**\n") >> persistent_filename;
 	printf("     *\n") >> persistent_filename;
-	printf("     * Returns a Vector of %sObject from the ResultSet. The values for \n", tmp_file_name) >> persistent_filename;
+	printf("     * Returns a ArrayList of %sObject from the ResultSet. The values for \n", tmp_file_name) >> persistent_filename;
 	printf("     * each object is got from the ResultSet.\n") >> persistent_filename;
 	printf("     * This is used by the list method.\n") >> persistent_filename;
 	printf("     *\n") >> persistent_filename;
 	printf("     * @param rs      the ResultSet.\n") >> persistent_filename;
 	printf("     *\n") >> persistent_filename;
-	printf("     * @return      Returns a Vector of %sObject from the ResultSet.\n", tmp_file_name) >> persistent_filename;
+	printf("     * @return      Returns a ArrayList of %sObject from the ResultSet.\n", tmp_file_name) >> persistent_filename;
 	printf("     *\n") >> persistent_filename;
 	printf("     * @see     #list()\n") >> persistent_filename;
 	printf("     *\n") >> persistent_filename;
@@ -634,7 +634,7 @@ ${NAWK} -v QUOTE="'" -v logname=${LOGNAME} -v version=1.0 -v since=1.0 -v proj_n
 
 	# getResultObjects method
 	printf("    public Object getResultObjects(ResultSet rs) {\n")>>persistent_filename;
-	printf("        Vector<%sObject> result = new Vector<%sObject>();\n        \n", tmp_file_name, tmp_file_name)>>persistent_filename;
+	printf("        ArrayList<%sObject> result = new ArrayList<%sObject>();\n        \n", tmp_file_name, tmp_file_name)>>persistent_filename;
 	printf("        try {\n")>>persistent_filename;
 	printf("            while(rs.next()) {\n")>>persistent_filename;
 	printf("                int index = 1;\n")>>persistent_filename;
@@ -657,7 +657,7 @@ ${NAWK} -v QUOTE="'" -v logname=${LOGNAME} -v version=1.0 -v since=1.0 -v proj_n
 		printf("                f.set%s(rs.getFloat(index++));\n", new_field_names[j])>>persistent_filename;
 	  }
 	}
-	printf("                result.addElement(f);\n")>>persistent_filename;
+	printf("                result.add(f);\n")>>persistent_filename;
 	printf("            }\n")>>persistent_filename;
 	printf("        } catch (Exception e) {\n")>>persistent_filename;
 	printf("            e.printStackTrace();\n")>>persistent_filename;
@@ -686,8 +686,8 @@ ${NAWK} -v QUOTE="'" -v logname=${LOGNAME} -v version=1.0 -v since=1.0 -v proj_n
 	printf("    public Object getResultSetObject(ResultSet rs) {\n")>>persistent_filename;
 	printf("        try {\n")>>persistent_filename;
         printf("        @SuppressWarnings(\"unchecked\")\n")>>persistent_filename;
-	printf("            Vector<%sObject> result = (Vector<%sObject>) getResultObjects(rs);\n", tmp_file_name, tmp_file_name)>>persistent_filename;
-	printf("            return result.elementAt(0);\n")>>persistent_filename;
+	printf("            ArrayList<%sObject> result = (ArrayList<%sObject>) getResultObjects(rs);\n", tmp_file_name, tmp_file_name)>>persistent_filename;
+	printf("            return result.get(0);\n")>>persistent_filename;
 	printf("        } catch (Exception e) {\n")>>persistent_filename;
     printf("            return null;\n")>>persistent_filename;
 	printf("        }\n")>>persistent_filename;
@@ -698,15 +698,150 @@ ${NAWK} -v QUOTE="'" -v logname=${LOGNAME} -v version=1.0 -v since=1.0 -v proj_n
 	close(persistent_filename);
   }
 
+  function write_rest_file() {
+	printf("Generating REST Code for : %s %d\n", table_name, i);
+	printf("package %s.restapi;\n\n", proj_name)>rest_file_name;
+	printf("import java.util.ArrayList;\n")>>rest_file_name;
+	printf("import java.util.Enumeration;\n")>>rest_file_name;
+	printf("import java.io.InputStream;\n")>>rest_file_name;
+	printf("import javax.ws.rs.Consumes;\n")>>rest_file_name;
+	printf("import javax.ws.rs.Produces;\n")>>rest_file_name;
+	printf("import javax.ws.rs.POST;\n")>>rest_file_name;
+	printf("import javax.ws.rs.Path;\n")>>rest_file_name;
+	printf("import javax.ws.rs.core.MediaType;\n")>>rest_file_name;
+	printf("import javax.ws.rs.core.Response;\n")>>rest_file_name;
+	printf("import core.util.Util;\n")>>rest_file_name;
+	printf("import core.util.DebugHandler;\n")>>rest_file_name;
+	printf("import core.util.AppException;\n")>>rest_file_name;
+	printf("import app.busimpl.%sImpl;\n",tmp_file_name)>>rest_file_name;
+	printf("import app.businterface.%sInterface;\n", tmp_file_name)>>rest_file_name;
+	printf("import app.busobj.%sObject;\n", tmp_file_name)>>rest_file_name;
+	printf("import app.util.App;\n")>>rest_file_name;
+	printf("import org.codehaus.jettison.json.JSONObject;\n")>>rest_file_name
+	printf("import org.codehaus.jettison.json.JSONException;\n")>>rest_file_name;
+	printf("import org.codehaus.jettison.json.JSONArray;\n\n")>>rest_file_name;
+
+	# Initial Comments for the Class
+	printf("/**\n") >> rest_file_name;
+	printf(" * The implementation of the Data APIS for %s table\n", tmp_file_name) >> rest_file_name;
+	printf(" * @version %s\n", version) >> rest_file_name;
+	printf(" * @author %s\n", logname) >> rest_file_name;
+	printf(" * @since %s\n", since) >> rest_file_name;
+	printf(" */\n\n") >> rest_file_name;
+	# End - Initial Comments for the Class
+
+	printf("@Path(\"%s\")\n", tolower(tmp_file_name))>>rest_file_name;	
+	printf("public class %sRest {\n", tmp_file_name)>>rest_file_name;
+
+	# Start - getMethod
+	printf("\t@POST\n")>>rest_file_name;	
+	printf("\t@Consumes(MediaType.APPLICATION_JSON)\n")>>rest_file_name;	
+	printf("\t@Produces(MediaType.APPLICATION_JSON)\n")>>rest_file_name;
+	if (last_char == "s") {
+		fname="get" tmp_file_name;
+	} else {
+		fname="get" tmp_file_name "s";
+	}		
+	printf("\t@Path(\"%s\")\n",fname)>>rest_file_name;	
+	printf("\tpublic Response %s(InputStream incomingData) throws AppException, JSONException {\n", fname)>>rest_file_name;	
+
+	printf("\t\tApp.getInstance();\n")>>rest_file_name;
+	printf("\t\tJsonConverter jc = new JsonConverter(incomingData);\n")>>rest_file_name;
+	printf("\t\tJSONObject jObject = jc.getJsonObject();\n\n")>>rest_file_name;
+	printf("\t\t%sInterface %sIf = new %sImpl();\n", tmp_file_name, tolower(tmp_file_name), tmp_file_name)>>rest_file_name;
+	printf("\t\t%sObject %sObject = new %sObject(jObject);\n", tmp_file_name, tolower(tmp_file_name), tmp_file_name)>>rest_file_name;
+	printf("\t\tJSONArray joArr = new JSONArray();\n\n")>>rest_file_name;
+	printf("\t\tDebugHandler.fine(%sObject);\n", tolower(tmp_file_name))>>rest_file_name;
+	printf("\t\tArrayList<%sObject> v = %sIf.%s(%sObject);\n", tmp_file_name, tolower(tmp_file_name), fname, tolower(tmp_file_name))>>rest_file_name;
+	printf("\t\tint i = 0;\n", tmp_file_name)>>rest_file_name;
+	printf("\t\twhile (i < v.size()) {\n")>>rest_file_name;
+	printf("\t\t\t%sObject = v.get(i);\n", tolower(tmp_file_name))>>rest_file_name;
+	printf("\t\t\tJSONObject jo = %sObject.toJSON();\n", tolower(tmp_file_name))>>rest_file_name;
+	printf("\t\t\tjoArr.put(jo);\n", tmp_file_name)>>rest_file_name;
+	printf("\t\t\ti++;\n")>>rest_file_name;
+	printf("\t\t}\n", tmp_file_name)>>rest_file_name;
+	printf("\t\treturn Response.status(200).entity(joArr.toString()).type(MediaType.APPLICATION_JSON).build();\n", tmp_file_name)>>rest_file_name;
+	printf("\t};\n\n")>>rest_file_name; #End of get method
+
+	# Start - addMethod
+	printf("\t@POST\n")>>rest_file_name;	
+	printf("\t@Consumes(MediaType.APPLICATION_JSON)\n")>>rest_file_name;	
+	printf("\t@Produces(MediaType.APPLICATION_JSON)\n")>>rest_file_name;
+	fname="add" tmp_file_name;
+	printf("\t@Path(\"%s\")\n",fname)>>rest_file_name;	
+	printf("\tpublic Response %s(InputStream incomingData) throws AppException, JSONException {\n", fname)>>rest_file_name;	
+	printf("\t\tApp.getInstance();\n")>>rest_file_name;
+	printf("\t\tJsonConverter jc = new JsonConverter(incomingData);\n")>>rest_file_name;
+	printf("\t\tJSONObject jObject = jc.getJsonObject();\n\n")>>rest_file_name;
+	printf("\t\t%sInterface %sIf = new %sImpl();\n", tmp_file_name, tolower(tmp_file_name), tmp_file_name)>>rest_file_name;
+	printf("\t\t%sObject %sObject = new %sObject(jObject);\n", tmp_file_name, tolower(tmp_file_name), tmp_file_name)>>rest_file_name;
+	printf("\t\tDebugHandler.fine(%sObject);\n", tolower(tmp_file_name))>>rest_file_name;
+	printf("\t\tInteger result = %sIf.%s(%sObject);\n", tolower(tmp_file_name), fname, tolower(tmp_file_name))>>rest_file_name;
+	printf("\t\tJSONObject jo = %sObject.toJSON();\n", tolower(tmp_file_name))>>rest_file_name;
+	printf("\t\tjo.put(\"result\", result);\n", tmp_file_name)>>rest_file_name;
+	printf("\t\treturn Response.status(200).entity(jo.toString()).type(MediaType.APPLICATION_JSON).build();\n", tmp_file_name)>>rest_file_name;
+	printf("\t};\n\n")>>rest_file_name; #End of add method
+
+	
+	# Start - updateMethod
+	printf("\t@POST\n")>>rest_file_name;	
+	printf("\t@Consumes(MediaType.APPLICATION_JSON)\n")>>rest_file_name;	
+	printf("\t@Produces(MediaType.APPLICATION_JSON)\n")>>rest_file_name;
+	fname="update" tmp_file_name;
+	printf("\t@Path(\"%s\")\n",fname)>>rest_file_name;	
+	printf("\tpublic Response %s(InputStream incomingData) throws AppException, JSONException {\n", fname)>>rest_file_name;	
+	printf("\t\tApp.getInstance();\n")>>rest_file_name;
+	printf("\t\tJsonConverter jc = new JsonConverter(incomingData);\n")>>rest_file_name;
+	printf("\t\tJSONObject jObject = jc.getJsonObject();\n\n")>>rest_file_name;
+	printf("\t\t%sInterface %sIf = new %sImpl();\n", tmp_file_name, tolower(tmp_file_name), tmp_file_name)>>rest_file_name;
+	printf("\t\t%sObject %sObject = new %sObject(jObject);\n", tmp_file_name, tolower(tmp_file_name), tmp_file_name)>>rest_file_name;
+	printf("\t\tDebugHandler.fine(%sObject);\n", tolower(tmp_file_name))>>rest_file_name;
+	printf("\t\tInteger result = %sIf.%s(%sObject);\n", tolower(tmp_file_name), fname, tolower(tmp_file_name))>>rest_file_name;
+	printf("\t\tJSONObject jo = %sObject.toJSON();\n", tolower(tmp_file_name))>>rest_file_name;
+	printf("\t\tjo.put(\"result\", result);\n", tmp_file_name)>>rest_file_name;
+	printf("\t\treturn Response.status(200).entity(jo.toString()).type(MediaType.APPLICATION_JSON).build();\n", tmp_file_name)>>rest_file_name;
+	printf("\t};\n\n")>>rest_file_name; #End of update method
+
+	
+	# Start - deleteMethod
+	printf("\t@POST\n")>>rest_file_name;	
+	printf("\t@Consumes(MediaType.APPLICATION_JSON)\n")>>rest_file_name;	
+	printf("\t@Produces(MediaType.APPLICATION_JSON)\n")>>rest_file_name;
+	fname="delete" tmp_file_name;
+	printf("\t@Path(\"%s\")\n",fname)>>rest_file_name;	
+	printf("\tpublic Response %s(InputStream incomingData) throws AppException, JSONException {\n", fname)>>rest_file_name;	
+	printf("\t\tApp.getInstance();\n")>>rest_file_name;
+	printf("\t\tJsonConverter jc = new JsonConverter(incomingData);\n")>>rest_file_name;
+	printf("\t\tJSONObject jObject = jc.getJsonObject();\n\n")>>rest_file_name;
+	printf("\t\t%sInterface %sIf = new %sImpl();\n", tmp_file_name, tolower(tmp_file_name), tmp_file_name)>>rest_file_name;
+	printf("\t\t%sObject %sObject = new %sObject(jObject);\n", tmp_file_name, tolower(tmp_file_name), tmp_file_name)>>rest_file_name;
+	printf("\t\tDebugHandler.fine(%sObject);\n", tolower(tmp_file_name))>>rest_file_name;
+	printf("\t\tInteger result = %sIf.%s(%sObject);\n", tolower(tmp_file_name), fname, tolower(tmp_file_name))>>rest_file_name;
+	printf("\t\tJSONObject jo = %sObject.toJSON();\n", tolower(tmp_file_name))>>rest_file_name;
+	printf("\t\tjo.put(\"result\", result);\n", tmp_file_name)>>rest_file_name;
+	printf("\t\treturn Response.status(200).entity(jo.toString()).type(MediaType.APPLICATION_JSON).build();\n", tmp_file_name)>>rest_file_name;
+	printf("\t};\n\n")>>rest_file_name; #End of delete method
+
+	printf("};\n")>>rest_file_name;
+
+	close(rest_file_name);
+  }
+
   function write_file() {
 	printf("Generating Java Code for : %s %d\n", table_name, i);
 	printf("package %s.busobj;\n\n", proj_name)>file_name;
 	printf("import java.util.Date;\n")>>file_name;
 	printf("import core.util.DebugHandler;\n")>>file_name;
-	printf("import core.util.Util;\n\n")>>file_name;
+	printf("import core.util.Util;\n")>>file_name;
+	printf("import core.util.Constants;\n")>>file_name;
+	printf("import java.text.SimpleDateFormat;\n")>>file_name;
+	printf("import java.text.ParseException;\n")>>file_name;
+
+	printf("import org.codehaus.jettison.json.JSONObject;\n")>>file_name;
+	printf("import org.codehaus.jettison.json.JSONException;\n\n")>>file_name;
 
 	# Initial Comments for the Class
-	printf("\n/**\n") >> file_name;
+	printf("/**\n") >> file_name;
 	printf(" * The implementation of the %sObject which maps a table\n", tmp_file_name) >> file_name;
 	printf(" * in the database\n") >> file_name;
 	printf(" * @version %s\n", version) >> file_name;
@@ -718,42 +853,80 @@ ${NAWK} -v QUOTE="'" -v logname=${LOGNAME} -v version=1.0 -v since=1.0 -v proj_n
 	printf("public class %sObject implements Cloneable {\n", tmp_file_name)>>file_name;
 
 	for ( j = 1; j <= i; ++j ) 
-	  printf("    private %s %s;\n", field_types[j], field_names[j])>>file_name;
+	  printf("\tprivate %s %s;\n", field_types[j], field_names[j])>>file_name;
 
-	printf("    \n")>>file_name;
+	printf("\t\n")>>file_name;
 
 	# Comments for toString Method
-	printf("    \n    /**\n") >> file_name;
-	printf("     *\n") >> file_name;
-	printf("     * Returns the String representation of the %sObject.\n", tmp_file_name) >> file_name;
-	printf("     *\n") >> file_name;
-	printf("     * @return      Returns the String representation of the %sObject.\n", tmp_file_name) >> file_name;
-	printf("     *\n") >> file_name;
-	printf("     */\n    \n") >> file_name;
+	printf("\t/**\n") >> file_name;
+	printf("\t *\n") >> file_name;
+	printf("\t * Returns the String representation of the %sObject.\n", tmp_file_name) >> file_name;
+	printf("\t *\n") >> file_name;
+	printf("\t * @return\t Returns the String representation of the %sObject.\n", tmp_file_name) >> file_name;
+	printf("\t *\n") >> file_name;
+	printf("\t */\n    \n") >> file_name;
 	# End - Comments for toString Method
 
 	# toString method	
-	printf("    public String toString() {\n")>>file_name;
-	printf("        return")>>file_name;
+	printf("\tpublic String toString() {\n")>>file_name;
+	printf("\t   return")>>file_name;
 	for ( j = 1; j < i; ++j )
             if ( j == 1 )
-		printf(" \"%s : \" + %s + \"\\n\" +\n", field_names[j], field_names[j])>>file_name;
+		printf("\t\"%s : \" + %s + \"\\n\" +\n", field_names[j], field_names[j])>>file_name;
             else
-                printf("            \"%s : \" + %s + \"\\n\" +\n", field_names[j], field_names[j])>>file_name;
-	printf("            \"%s : \" + %s + \"\\n\";\n", field_names[j], field_names[j])>>file_name;	
-	printf("    }\n    \n")>> file_name;
+                printf("\t\t\"%s : \" + %s + \"\\n\" +\n", field_names[j], field_names[j])>>file_name;
+	printf("\t\t\"%s : \" + %s + \"\\n\";\n", field_names[j], field_names[j])>>file_name;	
+	printf("\t}\n    \n")>> file_name;
 	# End toString method	
 
+	# Comments for toJSON Method
+	printf("\t/**\n") >> file_name;
+	printf("\t *\n") >> file_name;
+	printf("\t * Returns the JSON representation of the %sObject.\n", tmp_file_name) >> file_name;
+	printf("\t *\n") >> file_name;
+	printf("\t * @return      Returns the JSON representation of the %sObject.\n", tmp_file_name) >> file_name;
+	printf("\t *\n") >> file_name;
+	printf("\t */\n    \n") >> file_name;
+	# End - Comments for toString Method
+
+	# toString method	
+	printf("\tpublic JSONObject toJSON() {\n")>>file_name;
+	printf("\t\tJSONObject jo = new JSONObject();\n")>>file_name;
+	printf("\t\ttry {\n")>>file_name;
+	for ( j = 1; j <= i; ++j ) {
+		printf("\t\t\t jo.put(\"%s\", %s);\n", field_names[j], field_names[j])>>file_name;
+	}
+	printf("\t\t} catch (JSONException je) {}\n")>>file_name;
+	printf("\t\treturn jo;\n")>>file_name;
+	printf("\t}\n    \n")>> file_name;
+	# End toJSON method	
+
+	# Comments for hashCode
+	printf("\t/**\n") >> file_name;
+	printf("\t *\n") >> file_name;
+	printf("\t * Returns the hashCode representation of the %sObject.\n", tmp_file_name) >> file_name;
+	printf("\t *\n") >> file_name;
+	printf("\t * @return      Returns the hashCode.\n") >> file_name;
+	printf("\t *\n") >> file_name;
+	printf("\t*/\n    \n") >> file_name;
+	# End - Comments for hashCode Method
+
+	# hashCode method	
+	printf("\tpublic int hashCode() {\n")>>file_name;
+	printf("\t\treturn %s;\n", field_names[1])>> file_name;
+	printf("\t}\n    \n")>> file_name;
+	# End toJSON method
+
 	# Comments for Constructor
-	printf("    \n    /**\n") >> file_name;
-	printf("     * Constructs the %sObject\n", tmp_file_name) >> file_name;
-	printf("     *\n") >> file_name;
-	printf("     */\n    \n") >> file_name;
+	printf("\t/**\n") >> file_name;
+	printf("\t * Constructs the %sObject\n", tmp_file_name) >> file_name;
+	printf("\t *\n") >> file_name;
+	printf("\t */\n    \n") >> file_name;
 	# End - Comments for Constructor
 
 	
 	# Constructor
-	printf("    public %sObject () {\n", tmp_file_name)>>file_name;
+	printf("\tpublic %sObject () {\n", tmp_file_name)>>file_name;
 	for ( j = 1; j <= i; ++j ) {
 	  n=split(field_names[j], a, "_");
 	  FIRSTCHAR = substr(a[1],1,1);
@@ -771,22 +944,80 @@ ${NAWK} -v QUOTE="'" -v logname=${LOGNAME} -v version=1.0 -v since=1.0 -v proj_n
 	  }
 
 	  if (field_types[j]  == "int" ) { 
-		printf("        set%s(0);\n", new_field_names[j])>>file_name;
+		printf("\t\tset%s(0);\n", new_field_names[j])>>file_name;
 	  }
 	  else if (field_types[j]  == "String" )  {
-		printf("        set%s(\"\");\n", new_field_names[j])>>file_name;
+		printf("\t\tset%s(\"\");\n", new_field_names[j])>>file_name;
 	  }
 	  else if (field_types[j]  == "Date" )  {
-		printf("        set%s(null);\n", new_field_names[j])>>file_name;
+		printf("\t\tset%s(null);\n", new_field_names[j])>>file_name;
 	  }
 	  else if (field_types[j]  == "double" )  {
-		printf("        set%s(0.0);\n", new_field_names[j])>>file_name;
+		printf("\t\tset%s(0.0);\n", new_field_names[j])>>file_name;
 	  }
 	  else if (field_types[j]  == "float" )  {
-		printf("        set%s(0.0f);\n", new_field_names[j])>>file_name;
+		printf("\t\tset%s(0.0f);\n", new_field_names[j])>>file_name;
 	  }
 	}
-	printf("    }\n    \n")>>file_name;
+	printf("\t}\n    \n")>>file_name;
+	# End Constructor
+	
+	# Comments for JSON Constructor
+	printf("\t/**\n") >> file_name;
+	printf("\t * Constructs the %sObject from JSONObject\n", tmp_file_name) >> file_name;
+	printf("\t *\n") >> file_name;
+	printf("\t */\n    \n") >> file_name;
+	# End - Comments for JSON Constructor
+	# Constructor
+	printf("\tpublic %sObject (JSONObject jObject) {\n", tmp_file_name)>>file_name;
+	for ( j = 1; j <= i; ++j ) {
+	  printf("\t\ttry {\n") >> file_name;
+	  n=split(field_names[j], a, "_");
+	  FIRSTCHAR = substr(a[1],1,1);
+	  if (CHAR = index(lower, FIRSTCHAR)) {
+		a[1] = substr(upper, CHAR, 1) substr(a[1], 2);
+	  }
+	  new_field_names[j] = a[1];
+
+	  for ( idx = 2; idx <= n; idx++ ) {
+		FIRSTCHAR = substr(a[idx],1,1);
+		if (CHAR = index(lower, FIRSTCHAR)) {
+		  a[idx] = substr(upper, CHAR, 1) substr(a[idx], 2);
+		}
+		new_field_names[j] = new_field_names[j] a[idx];
+	  }
+
+	  if (field_types[j]  == "int" ) { 
+		printf("\t\t\t%s = jObject.getInt(\"%s\");\n", field_names[j], field_names[j])>>file_name;
+	  }
+	  else if ( field_types[j] == "String" ) {
+		printf("\t\t\t%s = jObject.getString(\"%s\");\n", field_names[j], field_names[j])>>file_name;
+	  }
+	  else if ( field_types[j] == "Date" ) {
+		printf("\t\t\ttry {\n")>>file_name;
+		printf("\t\t\t\tSimpleDateFormat dateFormatter = new SimpleDateFormat(Constants.DATE_FORMAT_STR);\n")>>file_name;
+		printf("\t\t\t\t%s = dateFormatter.parse(jObject.getString(\"%s\"));\n", field_names[j], field_names[j])>>file_name;
+		printf("\t\t\t} catch (ParseException e) {\n")>>file_name;
+		printf("\t\t\t\te.printStackTrace();\n")>>file_name;
+		printf("\t\t\t}\n")>>file_name;
+	  }
+	  else if ( field_types[j] == "double" ) {
+		printf("\t\t\ttry {\n")>>file_name;
+		printf("\t\t\t\t%s = Double.parseDouble(jObject.getString(\"%s\"));\n",field_names[j], field_names[j])>>file_name;
+		printf("\t\t\t} catch (NumberFormatException e) {\n")>>file_name;
+		printf("\t\t\t\te.printStackTrace();\n")>>file_name;
+		printf("\t\t\t}\n")>>file_name;
+	  }
+	  else if ( field_types[j] == "float" ) {
+		printf("\t\t\ttry {\n")>>file_name;
+		printf("\t\t\t\t%s = Float.parseFloat(jObject.getString(\"%s\"));\n",field_names[j], field_names[j])>>file_name;
+		printf("\t\t\t} catch (NumberFormatException e) {\n")>>file_name;
+		printf("\t\t\t\te.printStackTrace();\n")>>file_name;
+		printf("\t\t\t}\n")>>file_name;
+	  }
+	  printf("\t\t} catch (JSONException je) {}\n") >> file_name; 
+	}
+	printf("\t}\n    \n")>>file_name;
 	# End Constructor
 	
 
@@ -927,25 +1158,28 @@ ${NAWK} -v QUOTE="'" -v logname=${LOGNAME} -v version=1.0 -v since=1.0 -v proj_n
 	printf("     *\n") >> impl_file_name;
 	printf("     * @param %s_obj\t%sObject\n", tolower(tmp_file_name), tmp_file_name) >> impl_file_name;
 	printf("     *\n") >> impl_file_name;
-	printf("     * @return      Returns the Vector of %sObjects\n", tmp_file_name) >> impl_file_name;
+	printf("     * @return      Returns the ArrayList of %sObjects\n", tmp_file_name) >> impl_file_name;
 	printf("     *\n") >> impl_file_name;
 	printf("     * @throws AppException if the underlying operation fails\n") >> impl_file_name;
 	printf("     *\n") >> impl_file_name;
 	printf("     */\n    \n") >> impl_file_name;
 	# End get Method Comments
 	if (last_char == "s") {
-	    printf("    public Vector<%sObject> get%s(%sObject %s_obj) throws AppException{\n", tmp_file_name, tmp_file_name, tmp_file_name, tolower(tmp_file_name)) >> impl_file_name;
+	    printf("    public ArrayList<%sObject> get%s(%sObject %s_obj) throws AppException{\n", tmp_file_name, tmp_file_name, tmp_file_name, tolower(tmp_file_name)) >> impl_file_name;
 	    printf("\t%sObject[] %sArr = getAll%s();\n",tmp_file_name, tmp, tmp_file_name) >> impl_file_name;
 	} else {
-	    printf("    public Vector<%sObject> get%ss(%sObject %s_obj) throws AppException{\n", tmp_file_name, tmp_file_name, tmp_file_name, tolower(tmp_file_name)) >> impl_file_name;
+	    printf("    public ArrayList<%sObject> get%ss(%sObject %s_obj) throws AppException{\n", tmp_file_name, tmp_file_name, tmp_file_name, tolower(tmp_file_name)) >> impl_file_name;
 	    printf("\t%sObject[] %sArr = getAll%ss();\n",tmp_file_name, tmp, tmp_file_name) >> impl_file_name;
 	}
-	printf("\tVector<%sObject> v = new Vector<%sObject>();\n",tmp_file_name, tmp_file_name) >> impl_file_name;
+	printf("\tArrayList<%sObject> v = new ArrayList<%sObject>();\n",tmp_file_name, tmp_file_name) >> impl_file_name;
 	printf("\tif ( %sArr == null )\n", tmp) >> impl_file_name;
-	printf("\t    return null;\n") >> impl_file_name;
+	printf("\t\treturn null;\n") >> impl_file_name;
 	printf("\tfor ( int i = 0; i < %sArr.length; i++ ) {\n", tmp) >> impl_file_name;
-	printf("\t    if ( %sArr[i] != null ) {\n", tmp) >> impl_file_name;
-	printf("\t\tif ( ")>>impl_file_name; 
+	printf("\t\tif ( %sArr[i] != null ) {\n", tmp) >> impl_file_name;
+	printf("\t\t\tif ( %s_obj.get%s() == Constants.GET_ALL ) {\n", tolower(tmp_file_name), new_field_names[1]) >> impl_file_name;
+	printf("\t\t\t\tv.add((%sObject)%sArr[i].clone());\n", tmp_file_name, tmp)>>impl_file_name;
+	printf("\t\t\t} else {\n") >> impl_file_name;
+	printf("\t\t\t\tif ( ")>>impl_file_name; 
 	for ( j = 1; j <= i; j++ ) {
 	    if ( field_types[j] != "String" && field_types[j]  != "Date" ) {
 		printf("(%s_obj.get%s() != 0 && %s_obj.get%s() == %sArr[i].get%s())\n", tolower(tmp_file_name), new_field_names[j], tolower(tmp_file_name), new_field_names[j], tmp, new_field_names[j])>>impl_file_name; 
@@ -962,9 +1196,10 @@ ${NAWK} -v QUOTE="'" -v logname=${LOGNAME} -v version=1.0 -v since=1.0 -v proj_n
 	    }
 	}
 	printf(") {\n")>>impl_file_name;
-	printf("\t\t    v.addElement((%sObject)%sArr[i].clone());\n", tmp_file_name, tmp)>>impl_file_name;
+	printf("\t\t\t\t\tv.add((%sObject)%sArr[i].clone());\n", tmp_file_name, tmp)>>impl_file_name;
+	printf("\t\t\t\t}\n")>> impl_file_name;
+	printf("\t\t\t}\n")>> impl_file_name;
 	printf("\t\t}\n")>> impl_file_name;
-	printf("\t    }\n")>> impl_file_name;
 	printf("\t}\n")>> impl_file_name;
 	printf("\tDebugHandler.finest(\"v: \" + v);\n",tmp_file_name, tolower(tmp_file_name), tmp_file_name) >> impl_file_name;
 	printf("\treturn v;\n",tmp_file_name, tolower(tmp_file_name), tmp_file_name) >> impl_file_name;
@@ -1004,7 +1239,7 @@ ${NAWK} -v QUOTE="'" -v logname=${LOGNAME} -v version=1.0 -v since=1.0 -v proj_n
 		printf("\t\t%sObject %sObj = new %sObject();\n", tmp_file_name, tolower(tmp_file_name), tmp_file_name) >> impl_file_name;
 		printf("\t\t%sObj.set%s(%s);\n", tolower(tmp_file_name), new_field_names[j], field_names[j]) >> impl_file_name;
 	        printf("\t\t@SuppressWarnings(\"unchecked\")\n") >> impl_file_name;
-		printf("\t\tVector<%sObject> v = (Vector)DBUtil.fetch(%sObj);\n", tmp_file_name, tolower(tmp_file_name))>> impl_file_name;
+		printf("\t\tArrayList<%sObject> v = (ArrayList)DBUtil.fetch(%sObj);\n", tmp_file_name, tolower(tmp_file_name))>> impl_file_name;
 		printf("\t\tif ( v == null || v.size() == 0 )\n")>> impl_file_name;
 		printf("\t\t    return null;\n")>> impl_file_name;
 		printf("\t\telse {\n")>> impl_file_name;
@@ -1049,13 +1284,13 @@ ${NAWK} -v QUOTE="'" -v logname=${LOGNAME} -v version=1.0 -v since=1.0 -v proj_n
 	printf("\tif ( %sArr == null ) {\n", tmp) >> impl_file_name;
 	printf("\t    DebugHandler.info(\"Getting %s from database\");\n", tolower(tmp_file_name)) >> impl_file_name;
 	printf("\t    @SuppressWarnings(\"unchecked\")\n") >> impl_file_name;
-	printf("\t    Vector<%sObject> v = (Vector)DBUtil.list(%s);\n", tmp_file_name, tmp)>> impl_file_name; 
+	printf("\t    ArrayList<%sObject> v = (ArrayList)DBUtil.list(%s);\n", tmp_file_name, tmp)>> impl_file_name; 
 	printf("\t    DebugHandler.finest(\":v: \" +  v);\n")>> impl_file_name;
 	printf("\t    if ( v == null )\n")>> impl_file_name;
 	printf("\t\treturn null;\n")>> impl_file_name;
 	printf("\t    %sArr = new %sObject[v.size()];\n", tmp, tmp_file_name)>> impl_file_name;
 	printf("\t    for ( int idx = 0; idx < v.size(); idx++ ) {\n")>> impl_file_name;
-	printf("\t\t%sArr[idx] = v.elementAt(idx);\n", tmp)>> impl_file_name;
+	printf("\t\t%sArr[idx] = v.get(idx);\n", tmp)>> impl_file_name;
 	printf("\t    }\n")>> impl_file_name;
 	printf("\t    Util.putInCache(%s, %sArr);\n", toupper(tmp_file_name), tmp)>> impl_file_name;
 	printf("\t}\n")>> impl_file_name;
@@ -1086,8 +1321,8 @@ ${NAWK} -v QUOTE="'" -v logname=${LOGNAME} -v version=1.0 -v since=1.0 -v proj_n
 	printf("\t%sObject buf = new %sObject();\n", tmp_file_name, tmp_file_name)>> impl_file_name;
 	printf("\tbuf.set%s(%s.get%s());\n", new_field_names[2], tmp, new_field_names[2])>> impl_file_name;
 	printf("\t@SuppressWarnings(\"unchecked\")\n") >> impl_file_name;
-	printf("\tVector<%sObject> v = (Vector)DBUtil.list(%s, buf);\n", tmp_file_name, tmp)>> impl_file_name;
-	printf("\t\t%s = v.elementAt(0);\n", tmp)>> impl_file_name;
+	printf("\tArrayList<%sObject> v = (ArrayList)DBUtil.list(%s, buf);\n", tmp_file_name, tmp)>> impl_file_name;
+	printf("\t\t%s = v.get(0);\n", tmp)>> impl_file_name;
 	table_length=length(tmp_file_name);
 	last_char=substr(tmp_file_name, table_length, 1);
 	if (last_char == "s") {
@@ -1194,26 +1429,29 @@ ${NAWK} -v QUOTE="'" -v logname=${LOGNAME} -v version=1.0 -v since=1.0 -v proj_n
 	}
 	printf("\tInteger i = new Integer(0);\n")>> impl_file_name;
 	printf("\tif ( %s != null ) {\n", tmp)>> impl_file_name;
-	printf("\t    i = (Integer)DBUtil.delete(%s);\n", tmp)>> impl_file_name;
-	printf("\t    DebugHandler.fine(\"i: \" +  i);\n")>> impl_file_name;
-	printf("\t    boolean found = false;\n")>> impl_file_name;
-	printf("\t    if ( %sArr != null ) {\n", tmp)>> impl_file_name;
-	printf("\t\tfor (int idx = 0; idx < %sArr.length; idx++ ) {\n", tmp)>> impl_file_name;
-	printf("\t\t    if ( %sArr[idx] != null && %sArr[idx].get%s() == %s.get%s() ) {\n", tmp, tmp, new_field_names[1], tmp, new_field_names[1])>> impl_file_name;
-	printf("\t\t\tfound = true;\n")>> impl_file_name;
-	printf("\t\t    }\n")>> impl_file_name;
-	printf("\t\t    if ( found ) {\n")>> impl_file_name;
-	printf("\t\t\t%sArr[idx] = %sArr[idx + 1]; // Move the array\n", tmp, tmp)>> impl_file_name;
-	printf("\t\t    }\n")>> impl_file_name;
-	printf("\t\t    if ( %sArr[idx] == null )\n", tmp)>> impl_file_name;
-	printf("\t\t\tbreak;\n")>> impl_file_name;
+	printf("\t\ti = (Integer)DBUtil.delete(%s);\n", tmp)>> impl_file_name;
+	printf("\t\tDebugHandler.fine(\"i: \" +  i);\n")>> impl_file_name;
+	printf("\t\tboolean found = false;\n")>> impl_file_name;
+	printf("\t\tif ( %sArr != null ) {\n", tmp)>> impl_file_name;
+	printf("\t\t\tfor (int idx = 0; idx < %sArr.length; idx++ ) {\n", tmp)>> impl_file_name;
+	printf("\t\t\t\tif ( %sArr[idx] != null && %sArr[idx].get%s() == %s.get%s() ) {\n", tmp, tmp, new_field_names[1], tmp, new_field_names[1])>> impl_file_name;
+	printf("\t\t\t\t\tfound = true;\n")>> impl_file_name;
+	printf("\t\t\t\t}\n")>> impl_file_name;
+	printf("\t\t\t\tif ( found ) {\n")>> impl_file_name;
+	printf("\t\t\t\t\tif ( idx != (%sArr.length - 1) )\n",tmp)>> impl_file_name;
+	printf("\t\t\t\t\t\t%sArr[idx] = %sArr[idx + 1]; // Move the array\n", tmp, tmp)>> impl_file_name;
+	printf("\t\t\t\t\telse\n",tmp)>> impl_file_name;
+	printf("\t\t\t\t\t\t%sArr[idx] = null;\n",tmp)>> impl_file_name;
+	printf("\t\t\t\t}\n")>> impl_file_name;
+	printf("\t\t\t\tif ( %sArr[idx] == null )\n", tmp)>> impl_file_name;
+	printf("\t\t\t\t\tbreak;\n")>> impl_file_name;
+	printf("\t\t\t}\n")>> impl_file_name;
 	printf("\t\t}\n")>> impl_file_name;
-	printf("\t    }\n")>> impl_file_name;
-	printf("\t    if ( found )\n")>> impl_file_name;
-	printf("\t\tUtil.putInCache(%s, %sArr);\n", toupper(tmp_file_name), tmp)>> impl_file_name;
+	printf("\t\tif ( found )\n")>> impl_file_name;
+	printf("\t\t\tUtil.putInCache(%s, %sArr);\n", toupper(tmp_file_name), tmp)>> impl_file_name;
+	printf("\t\t}\n")>> impl_file_name;
+	printf("\t\treturn i;\n", tmp)>> impl_file_name;
 	printf("\t}\n")>> impl_file_name;
-	printf("\treturn i;\n", tmp)>> impl_file_name;
-	printf("    }\n")>> impl_file_name;
 	# End delete Method
 	printf("}\n")>>impl_file_name; 
 	close(impl_file_name);
@@ -1244,7 +1482,7 @@ ${NAWK} -v QUOTE="'" -v logname=${LOGNAME} -v version=1.0 -v since=1.0 -v proj_n
 	printf("     *\n") >> if_file_name;
 	printf("     * @param %s_obj\t%sObject\n", tolower(tmp_file_name), tmp_file_name) >> if_file_name;
 	printf("     *\n") >> if_file_name;
-	printf("     * @return      Returns the Vector of %sObjects\n", tmp_file_name) >> if_file_name;
+	printf("     * @return      Returns the ArrayList of %sObjects\n", tmp_file_name) >> if_file_name;
 	printf("     *\n") >> if_file_name;
 	printf("     * @throws AppException if the underlying operation fails\n") >> if_file_name;
 	printf("     *\n") >> if_file_name;
@@ -1253,9 +1491,9 @@ ${NAWK} -v QUOTE="'" -v logname=${LOGNAME} -v version=1.0 -v since=1.0 -v proj_n
 	table_length=length(tmp_file_name);
 	last_char=substr(tmp_file_name, table_length, 1);
 	if (last_char == "s") {
-	    printf("    public Vector<%sObject> get%s(%sObject %s_obj) throws AppException;\n", tmp_file_name, tmp_file_name, tmp_file_name, tolower(tmp_file_name)) >> if_file_name;
+	    printf("    public ArrayList<%sObject> get%s(%sObject %s_obj) throws AppException;\n", tmp_file_name, tmp_file_name, tmp_file_name, tolower(tmp_file_name)) >> if_file_name;
 	} else {
-	    printf("    public Vector<%sObject> get%ss(%sObject %s_obj) throws AppException;\n", tmp_file_name, tmp_file_name, tmp_file_name, tolower(tmp_file_name)) >> if_file_name;
+	    printf("    public ArrayList<%sObject> get%ss(%sObject %s_obj) throws AppException;\n", tmp_file_name, tmp_file_name, tmp_file_name, tolower(tmp_file_name)) >> if_file_name;
 	}
 
 	for ( j = 1; j <= i; ++j ) {
@@ -1355,6 +1593,7 @@ ${NAWK} -v QUOTE="'" -v logname=${LOGNAME} -v version=1.0 -v since=1.0 -v proj_n
 	  write_properties_file();
 	  write_if_file();
 	  write_impl_file();
+	  write_rest_file();
     	}
 	write_sql_file();
 	i = 0;
@@ -1365,6 +1604,7 @@ ${NAWK} -v QUOTE="'" -v logname=${LOGNAME} -v version=1.0 -v since=1.0 -v proj_n
 	file_name=tmp_file_name "Object.java"
 	if_file_name=tmp_file_name "Interface.java"
 	impl_file_name=tmp_file_name "Impl.java"
+	rest_file_name=tmp_file_name "Rest.java"
   }
   NF == 2 || NF == 3 || NF == 4{ 
 	i++;
@@ -1400,6 +1640,7 @@ ${NAWK} -v QUOTE="'" -v logname=${LOGNAME} -v version=1.0 -v since=1.0 -v proj_n
 	write_properties_file();
 	write_if_file();
 	write_impl_file();
+	write_rest_file();
 	write_sql_file();
   }' $SCHEMA_FILE
   

@@ -104,32 +104,32 @@ public class LoginBean {
 	    }
 	    td = new TableDataElement(be);
 	    td.setColspan(2);
-	    tr.addElement(td);
-	    te.addElement(tr);
+	    tr.add(td);
+	    te.add(tr);
 	}
 	tr = new TableRowElement();
 	be = new BoldElement(AppConstants.USER_ID_LABEL);
 	be.setId("body_label");
 	td = new TableDataElement(be);
-	tr.addElement(td);
+	tr.add(td);
 
 	td = new TableDataElement(new InputElement(InputElement.TEXT, 
 						   AppConstants.USER_NAME_STR,
 						   userNameStr));
-	tr.addElement(td);
-	te.addElement(tr);
+	tr.add(td);
+	te.add(tr);
 
 	tr = new TableRowElement();
 	be = new BoldElement(AppConstants.PASSWORD_LABEL);
 	be.setId("body_label");
 	td = new TableDataElement(be);
-	tr.addElement(td);
+	tr.add(td);
 
 	td = new TableDataElement(new InputElement(InputElement.PASSWORD, 
 						   AppConstants.PASSWORD_STR,
 						   Constants.EMPTY));
-	tr.addElement(td);
-	te.addElement(tr);
+	tr.add(td);
+	te.add(tr);
 	
 
 	

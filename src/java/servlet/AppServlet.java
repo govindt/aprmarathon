@@ -22,7 +22,10 @@ import app.util.AppConstants;
 import app.util.App;
 import java.io.*;
 import javax.activation.*;
-import com.oreilly.servlet.multipart.*;
+import com.oreilly.servlet.multipart.Part;
+import com.oreilly.servlet.multipart.MultipartParser;
+import com.oreilly.servlet.multipart.ParamPart;
+import com.oreilly.servlet.multipart.FilePart;
 
 /**
  * This the servlet that is the main entry point.
@@ -265,7 +268,7 @@ public class AppServlet extends HttpServlet {
 		if ( doDownload != null && Boolean.valueOf(doDownload).booleanValue() == true ) {
 		    String implName = valuepairs.get(Constants.SS_IMPL_NAME_STR);
 		    String implParamsName = valuepairs.get(Constants.SS_IMPL_PARAMS_NAME_STR);
-		    String downloadFileName = userIdStr + "download.xls";
+		    String downloadFileName = userIdStr + "download.xlsx";
 		    String temp = System.getProperty("java.io.tmpdir") + File.separatorChar + downloadFileName;
 		    writeToFile(temp, implName, implParamsName);
 		    DebugHandler.fine("Downloading..." +  temp);
@@ -292,7 +295,7 @@ public class AppServlet extends HttpServlet {
 	    if ( doDownload != null && Boolean.valueOf(doDownload).booleanValue() == true ) {
 		String implName = valuepairs.get(Constants.SS_IMPL_NAME_STR);
 		String implParamsName = valuepairs.get(Constants.SS_IMPL_PARAMS_NAME_STR);
-		String downloadFileName = userIdStr + "download.xls";
+		String downloadFileName = userIdStr + "download.xlsx";
 		String temp = System.getProperty("java.io.tmpdir") + File.separatorChar + downloadFileName;
 		writeToFile(temp, implName, implParamsName);
 		DebugHandler.fine("Downloading..." +  temp);

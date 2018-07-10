@@ -13,6 +13,25 @@ PACKAGE = app.businterface
 
 SOURCE  = \
 	UsersInterface.java \
+	ParticipantEventInterface.java \
+	RegistrantEventInterface.java \
+	AgeCategoryInterface.java \
+	BeneficiaryInterface.java \
+	BloodGroupInterface.java \
+	EventTypeInterface.java \
+	GenderInterface.java \
+	MedalInterface.java \
+	ParticipantInterface.java \
+	PaymentStatusInterface.java \
+	PaymentTypeInterface.java \
+	RegistrantInterface.java \
+	RegistrantPaymentInterface.java \
+	RegistrationClassInterface.java \
+	RegistrationSourceInterface.java \
+	RegistrationTypeInterface.java \
+	ResultInterface.java \
+	TShirtSizeInterface.java \
+	EventInterface.java \
 	RoleInterface.java \
 	MenuInterface.java \
 	AclInterface.java \

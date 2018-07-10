@@ -63,16 +63,16 @@ import core.util.*;
  *
  * Create table data:
  * <BR>
- * tblrow.addElement(new TableDataElement(text));
+ * tblrow.add(new TableDataElement(text));
  * <BR>
- * tblrow.addElement(new TableDataElement(anchor));
+ * tblrow.add(new TableDataElement(anchor));
  * <BR><BR>
  *
  * Add elements to the table:
  * <BR>
- * tbl.addElement(new CaptionElement("My Table"));
+ * tbl.add(new CaptionElement("My Table"));
  * <BR>
- * tbl.addElement((TableRowElement)tblrow);
+ * tbl.add((TableRowElement)tblrow);
  * <BR>
  * System.out.println(tbl.getHTMLTag());
  * <BR>
@@ -89,7 +89,7 @@ public class TableRowElement extends HTMLElementObject {
     private String valign;
     private String bgcolor;
     private int width;
-    private Vector<String> vTableRow;
+    private ArrayList<String> vTableRow;
 
     public static final String LEFT = "LEFT";
     public static final String RIGHT = "RIGHT";
@@ -106,7 +106,7 @@ public class TableRowElement extends HTMLElementObject {
 
     public TableRowElement() {
 
-        vTableRow = new Vector<String>();
+        vTableRow = new ArrayList<String>();
     }
 
     /**
@@ -126,7 +126,7 @@ public class TableRowElement extends HTMLElementObject {
         this.valign = valign;
         this.bgcolor = bgcolor;
         this.width = width;
-        vTableRow = new Vector<String>();
+        vTableRow = new ArrayList<String>();
         setHTMLTag();
 
     }
@@ -182,9 +182,9 @@ public class TableRowElement extends HTMLElementObject {
      * @param strElement        the elements in string format.
      */
 
-    public final void addElement(String strElement) {
+    public final void add(String strElement) {
 
-        vTableRow.addElement(strElement);
+        vTableRow.add(strElement);
         setHTMLTag();
     }
 
@@ -194,9 +194,9 @@ public class TableRowElement extends HTMLElementObject {
      * @param tableHeadingElement    the elements of TableHeadingElement type.
      */
 
-    public final void addElement(TableHeadingElement tableHeadingElement) {
+    public final void add(TableHeadingElement tableHeadingElement) {
 
-        vTableRow.addElement(tableHeadingElement.getHTMLTag());
+        vTableRow.add(tableHeadingElement.getHTMLTag());
         setHTMLTag();
  
     }
@@ -207,9 +207,9 @@ public class TableRowElement extends HTMLElementObject {
      * @param tableDataElement    the elements of TableDataElement type.
      */
 
-    public final void addElement(TableDataElement tableDataElement) {
+    public final void add(TableDataElement tableDataElement) {
 
-        vTableRow.addElement(tableDataElement.getHTMLTag());
+        vTableRow.add(tableDataElement.getHTMLTag());
         setHTMLTag();
  
     }
@@ -243,9 +243,11 @@ public class TableRowElement extends HTMLElementObject {
         }
         buf.append(">");
 
-        for (Enumeration<String> e = vTableRow.elements(); e.hasMoreElements();) {
-             String tableRowElements = e.nextElement();
+	int i = 0;
+        while (i < vTableRow.size()) {
+             String tableRowElements = vTableRow.get(i);
              buf.append(tableRowElements);
+	     i++;
         }
 
         buf.append("</TR>");

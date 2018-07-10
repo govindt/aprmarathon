@@ -11,7 +11,8 @@ package app.busobj;
 import java.util.Date;
 import core.util.DebugHandler;
 import core.util.Util;
-
+import org.codehaus.jettison.json.JSONObject;
+import org.codehaus.jettison.json.JSONException;
 
 /**
  * The implementation of the RoleObject which maps a table
@@ -40,8 +41,37 @@ public class RoleObject implements Cloneable {
             "role_name : " + role_name + "\n" +
             "is_valid : " + is_valid + "\n";
     }
+
+     /**
+     *
+     * Returns the JSONObject representation of the RoleObject.
+     *
+     * @return      Returns the JSONObject representation of the RoleObject.
+     *
+     */
     
+    public JSONObject toJSON() {
+	JSONObject jo = new JSONObject();
+	try {
+	    jo.put("role_id", role_id);
+	    jo.put("role_name", role_name);
+	    jo.put("is_valid", is_valid);	
+	} catch (JSONException je) {};
+	return jo;
+    }
     
+    /**
+     *
+     * Returns the hashCode representation of the RoleObject.
+     *
+     * @return      Returns the hashCode
+     *
+     */
+    
+    public int hashCode() {
+	return role_id;
+    }    
+
     /**
      * Constructs the RoleObject
      *
@@ -51,6 +81,24 @@ public class RoleObject implements Cloneable {
         setRoleId(0);
         setRoleName("");
         setIsValid("");
+    }
+
+    /**
+     * Constructs the RoleObject from JSONObject
+     *
+     */
+    
+    public RoleObject (JSONObject jObject) {
+	try {
+	    role_id = jObject.getInt("role_id");
+	} catch (JSONException je) {}
+	try {
+	    role_name = Util.trim(jObject.getString("role_name"));
+
+	} catch (JSONException je) {}
+	try {
+	    is_valid = Util.trim(jObject.getString("is_valid"));
+	} catch (JSONException je) {}
     }
     
     

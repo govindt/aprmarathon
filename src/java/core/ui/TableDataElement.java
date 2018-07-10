@@ -63,16 +63,16 @@ import core.util.*;
  *
  * Create table data:
  * <BR>
- * tblrow.addElement(new TableDataElement(text));
+ * tblrow.add(new TableDataElement(text));
  * <BR>
- * tblrow.addElement(new TableDataElement(anchor));
+ * tblrow.add(new TableDataElement(anchor));
  * <BR><BR>
  *
  * Add elements to the table:
  * <BR>
- * tbl.addElement(new CaptionElement("My Table"));
+ * tbl.add(new CaptionElement("My Table"));
  * <BR>
- * tbl.addElement((TableRowElement)tblrow);
+ * tbl.add((TableRowElement)tblrow);
  * <BR>
  * System.out.println(tbl.getHTMLTag());
  * <BR>
@@ -92,7 +92,7 @@ public class TableDataElement extends HTMLElementObject {
     private int width;
     private int height;
     private boolean wrap;
-    private Vector<String> vTableData;
+    private ArrayList<String> vTableData;
     private HTMLElement htmlElement;
 
     public static final String LEFT = "LEFT";
@@ -110,7 +110,7 @@ public class TableDataElement extends HTMLElementObject {
 
     public TableDataElement() {
 
-        vTableData = new Vector<String>();
+        vTableData = new ArrayList<String>();
     }
 
     /**
@@ -123,7 +123,7 @@ public class TableDataElement extends HTMLElementObject {
     public TableDataElement(HTMLElement htmlElement) {
 
         this.htmlElement = htmlElement;
-        vTableData = new Vector<String>();
+        vTableData = new ArrayList<String>();
         setHTMLTag();
     }
 
@@ -159,7 +159,7 @@ public class TableDataElement extends HTMLElementObject {
         this.wrap = wrap;
         this.bgcolor = bgcolor;
         this.width=width;
-        vTableData = new Vector<String>();
+        vTableData = new ArrayList<String>();
         setHTMLTag();
 
     }

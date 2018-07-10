@@ -11,7 +11,8 @@ package app.busobj;
 import java.util.Date;
 import core.util.DebugHandler;
 import core.util.Util;
-
+import org.codehaus.jettison.json.JSONObject;
+import org.codehaus.jettison.json.JSONException;
 
 /**
  * The implementation of the MenuObject which maps a table
@@ -46,7 +47,39 @@ public class MenuObject implements Cloneable {
             "parent_menu_id : " + parent_menu_id + "\n" +
             "role_id : " + role_id + "\n";
     }
+
+     /**
+     *
+     * Returns the JSONObject representation of the MenuObject.
+     *
+     * @return      Returns the JSON representation of the MenuObject.
+     *
+     */
     
+    public JSONObject toJSON() {
+	JSONObject jo = new JSONObject();
+	try {
+            jo.put("menu_id",  menu_id);
+            jo.put("menu_name", menu_name);
+            jo.put("url", url);
+            jo.put("menu_order", menu_order);
+            jo.put("parent_menu_id", parent_menu_id);
+            jo.put("role_id", role_id);
+	} catch (JSONException je) {};
+	return jo;
+    }
+    
+    /**
+     *
+     * Returns the hashCode representation of the MenuObject.
+     *
+     * @return      Returns the hashCode
+     *
+     */
+    
+    public int hashCode() {
+	return menu_id;
+    }
     
     /**
      * Constructs the MenuObject
@@ -60,6 +93,32 @@ public class MenuObject implements Cloneable {
         setMenuOrder(0);
         setParentMenuId(0);
         setRoleId(0);
+    }
+
+    /**
+     * Constructs the MenuObject from JSONObject
+     *
+     */
+    
+    public MenuObject (JSONObject jObject) {
+	try {
+	    menu_id = jObject.getInt("menu_id");
+	} catch (JSONException je) {}
+        try {
+	    menu_name = Util.trim(jObject.getString("menu_name"));
+	} catch (JSONException je) {}
+        try {
+	    url = Util.trim(jObject.getString("url"));
+	} catch (JSONException je) {}
+        try {
+	    menu_order = jObject.getInt("menu_order");
+	} catch (JSONException je) {}
+        try {
+	    parent_menu_id = jObject.getInt("parent_menu_id");
+	} catch (JSONException je) {}
+        try {
+	    role_id = jObject.getInt("role_id");
+	} catch (JSONException je) {}
     }
     
     

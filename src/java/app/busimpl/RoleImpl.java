@@ -48,12 +48,16 @@ public class RoleImpl implements RoleInterface  {
 	    return null;
 	for ( int i = 0; i < roleObjectArr.length; i++ ) {
 	    if ( roleObjectArr[i] != null ) {
-		if ( (role_obj.getRoleId() != 0 && role_obj.getRoleId() == roleObjectArr[i].getRoleId())
+		if ( role_obj.getRoleId() == Constants.GET_ALL ) {
+		    v.addElement((RoleObject)roleObjectArr[i].clone());
+		} else {
+			if ( (role_obj.getRoleId() != 0 && role_obj.getRoleId() == roleObjectArr[i].getRoleId())
  || (role_obj.getRoleName() != null && role_obj.getRoleName().equals(roleObjectArr[i].getRoleName()))
  || (role_obj.getIsValid() != null && role_obj.getIsValid().equals(roleObjectArr[i].getIsValid()))
 ) {
-		    v.addElement((RoleObject)roleObjectArr[i].clone());
-		}
+			    v.addElement((RoleObject)roleObjectArr[i].clone());
+			}
+	    	}
 	    }
 	}
 	DebugHandler.finest("v: " + v);
@@ -113,7 +117,7 @@ public class RoleImpl implements RoleInterface  {
 	RoleObject roleObject = new RoleObject();
 	RoleObject[] roleObjectArr = (RoleObject[])Util.getAppCache().get(ROLE);
 	if ( roleObjectArr == null ) {
-	    DebugHandler.info("Getting role from database");
+	    DebugHandler.debug("Getting role from database");
 	    @SuppressWarnings("unchecked")
 	    Vector<RoleObject> v = (Vector)DBUtil.list(roleObject);
 	    DebugHandler.finest(":v: " +  v);
@@ -231,14 +235,19 @@ public class RoleImpl implements RoleInterface  {
 			found = true;
 		    }
 		    if ( found ) {
-			roleObjectArr[idx] = roleObjectArr[idx + 1]; // Move the array
+			if ( idx != (roleObjectArr.length - 1) )
+				roleObjectArr[idx] = roleObjectArr[idx + 1]; // Move the array
+			else
+				roleObjectArr[idx] = null;
 		    }
 		    if ( roleObjectArr[idx] == null )
 			break;
 		}
 	    }
-	    if ( found )
+	    if ( found ) {
+		DebugHandler.info("Putting back new array in the cache. ");
 		Util.putInCache(ROLE, roleObjectArr);
+	    }
 	}
 	return i;
     }

@@ -26,9 +26,9 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.DataInputStream;
 import java.io.File;
-import org.apache.poi.poifs.filesystem.*;
-import org.apache.poi.hssf.usermodel.*;
-import org.apache.poi.hssf.util.HSSFColor;
+import org.apache.poi.xssf.usermodel.*;
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.ss.usermodel.IndexedColors; 
 
 public class AclBean implements SpreadSheetInterface {
     public int aclId = 0;
@@ -132,159 +132,159 @@ public class AclBean implements SpreadSheetInterface {
 	be = new BoldElement(AppConstants.CURRENT_ACL_LABEL);
 	be.setId(Constants.BODY_ROW_STYLE);
 	td = new TableDataElement(be);
-	tr.addElement(td);
-	Vector<String> nameVector = new Vector<String>();
-	Vector<Integer> valueVector = new Vector<Integer>();
+	tr.add(td);
+	ArrayList<String> nameArrayList = new ArrayList<String>();
+	ArrayList<Integer> valueArrayList = new ArrayList<Integer>();
 	AclObject[] aclArr = aclIf.getAllAcls();
-	nameVector.addElement(AppConstants.NEW_ACL);
-	valueVector.addElement(new Integer(0));
+	nameArrayList.add(AppConstants.NEW_ACL);
+	valueArrayList.add(new Integer(0));
 	for (int iterator = 0; iterator < aclArr.length; iterator++) {
 	    AclObject aclObject = aclArr[iterator];
 	    if ( aclObject == null )
 		break;
-	    nameVector.addElement(aclObject.getAclPage());
-	    valueVector.addElement(new Integer(aclObject.getAclId()));
+	    nameArrayList.add(aclObject.getAclPage());
+	    valueArrayList.add(new Integer(aclObject.getAclId()));
 	}
-	se = new SelectElement(AppConstants.ACL_ID_STR, nameVector, valueVector, String.valueOf(aclId), 0);
+	se = new SelectElement(AppConstants.ACL_ID_STR, nameArrayList, valueArrayList, String.valueOf(aclId), 0);
 	se.setOnChange(UtilBean.JS_SUBMIT_FORM);
 	td = new TableDataElement(se);
-	tr.addElement(td);
-	te.addElement(tr);
+	tr.add(td);
+	te.add(tr);
 
 	tr = new TableRowElement();
 	be = new BoldElement(AppConstants.ACL_PAGE_LABEL);
 	be.setId(Constants.BODY_ROW_STYLE);
 	td = new TableDataElement(be);
-	tr.addElement(td);
+	tr.add(td);
 	if ( aclId != 0 )
 	    td = new TableDataElement(new InputElement(InputElement.TEXT, AppConstants.ACL_PAGE_STR, selectedAclObj.getAclPage()));
 	else
 	    td = new TableDataElement(new InputElement(InputElement.TEXT, AppConstants.ACL_PAGE_STR, Constants.EMPTY));
-	tr.addElement(td);
-	te.addElement(tr);
+	tr.add(td);
+	te.add(tr);
 
 	tr = new TableRowElement();
 	be = new BoldElement(Constants.IS_VALID_LABEL);
 	be.setId(Constants.BODY_ROW_STYLE);
 	td = new TableDataElement(be);
-	tr.addElement(td);
+	tr.add(td);
 	if ( aclId != 0 )
 	    td = new TableDataElement(new StringElement(UtilBean.getYesNoRadio(Constants.IS_VALID_STR, selectedAclObj.getIsValid(), Constants.EMPTY)));
 	else
 	    td = new TableDataElement(new StringElement(UtilBean.getYesNoRadio(Constants.IS_VALID_STR, Constants.YES_STR, Constants.EMPTY)));
-	tr.addElement(td);
-	te.addElement(tr);
+	tr.add(td);
+	te.add(tr);
 
 	tr = new TableRowElement();
 	be = new BoldElement(AppConstants.ROLE_ID_LABEL);
 	be.setId(Constants.BODY_ROW_STYLE);
 	td = new TableDataElement(be);
-	tr.addElement(td);
-	nameVector = new Vector<String>();
-	valueVector = new Vector<Integer>();
+	tr.add(td);
+	nameArrayList = new ArrayList<String>();
+	valueArrayList = new ArrayList<Integer>();
 	RoleInterface roleIf = new RoleImpl();
 	RoleObject[] roleRefArr = roleIf.getAllRoles();
 	for (int iterator = 0; iterator < roleRefArr.length; iterator++) {
 	    RoleObject roleObject = roleRefArr[iterator];
 	    if (roleObject == null)
 		break;
-	    nameVector.addElement(String.valueOf(roleObject.getRoleName()));
-	    valueVector.addElement(new Integer(roleObject.getRoleId()));
+	    nameArrayList.add(String.valueOf(roleObject.getRoleName()));
+	    valueArrayList.add(new Integer(roleObject.getRoleId()));
 	}
-	se = new SelectElement(AppConstants.ROLE_ID_STR, nameVector, valueVector, String.valueOf(roleId), 0);
+	se = new SelectElement(AppConstants.ROLE_ID_STR, nameArrayList, valueArrayList, String.valueOf(roleId), 0);
 	td = new TableDataElement(se);
-	tr.addElement(td);
-	te.addElement(tr);
+	tr.add(td);
+	te.add(tr);
 
 	tr = new TableRowElement();
 	be = new BoldElement(AppConstants.USERS_ID_LABEL);
 	be.setId(Constants.BODY_ROW_STYLE);
 	td = new TableDataElement(be);
-	tr.addElement(td);
-	nameVector = new Vector<String>();
-	valueVector = new Vector<Integer>();
+	tr.add(td);
+	nameArrayList = new ArrayList<String>();
+	valueArrayList = new ArrayList<Integer>();
 	UsersInterface usersIf = new UsersImpl();
 	UsersObject[] usersRefArr = usersIf.getAllUsers();
 	for (int iterator = 0; iterator < usersRefArr.length; iterator++) {
 	    UsersObject usersObject = usersRefArr[iterator];
 	    if (usersObject == null)
 		break;
-	    nameVector.addElement(String.valueOf(usersObject.getUsername()));
-	    valueVector.addElement(new Integer(usersObject.getUsersId()));
+	    nameArrayList.add(String.valueOf(usersObject.getUsername()));
+	    valueArrayList.add(new Integer(usersObject.getUsersId()));
 	}
-	se = new SelectElement(AppConstants.USERS_ID_STR, nameVector, valueVector, String.valueOf(usersId), 0);
+	se = new SelectElement(AppConstants.USERS_ID_STR, nameArrayList, valueArrayList, String.valueOf(usersId), 0);
 	td = new TableDataElement(se);
-	tr.addElement(td);
-	te.addElement(tr);
+	tr.add(td);
+	te.add(tr);
 
 	tr = new TableRowElement();
 	be = new BoldElement(AppConstants.PERMISSION_LABEL);
 	be.setId(Constants.BODY_ROW_STYLE);
 	td = new TableDataElement(be);
-	tr.addElement(td);
+	tr.add(td);
 	if ( aclId != 0 )
 	    td = new TableDataElement(new InputElement(InputElement.TEXT, AppConstants.PERMISSION_STR, String.valueOf(selectedAclObj.getPermission())));
 	else
 	    td = new TableDataElement(new InputElement(InputElement.TEXT, AppConstants.PERMISSION_STR, Constants.EMPTY));
-	tr.addElement(td);
-	te.addElement(tr);
+	tr.add(td);
+	te.add(tr);
 
 
 	tr = new TableRowElement();
 	be = new BoldElement(Constants.UPLOAD_FILE_LABEL);
 	be.setId(Constants.BODY_ROW_STYLE);
 	td = new TableDataElement(be);
-	tr.addElement(td);
+	tr.add(td);
 
 	ie = new InputElement(InputElement.FILE, Constants.UPLOAD_FILE_NAME_STR,"");
 	td = new TableDataElement(ie);
-	tr.addElement(td);
-	te.addElement(tr);
+	tr.add(td);
+	te.add(tr);
 
 	return te.getHTMLTag() + new BreakElement().getHTMLTag() +  new BreakElement().getHTMLTag() + UtilBean.getSubmitButton() + UtilBean.getDownloadButton();
     }
 
     public void writeToFile(String outputFileName, Object obj) throws AppException {
 	DebugHandler.fine("writeToFile(" + outputFileName + "," + obj + ")");
-	HSSFWorkbook wb = new HSSFWorkbook();
-	HSSFFont font01Bold = wb.createFont();
+	XSSFWorkbook wb = new XSSFWorkbook();
+	XSSFFont font01Bold = wb.createFont();
 	font01Bold.setFontHeightInPoints((short)12);
 	font01Bold.setFontName("Times New Roman");
-	font01Bold.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
+	font01Bold.setBold(true);
 
-	HSSFFont font01Normal = wb.createFont();
+	XSSFFont font01Normal = wb.createFont();
 	font01Normal.setFontHeightInPoints((short)12);
 	font01Normal.setFontName("Times New Roman");
-	font01Normal.setBoldweight(HSSFFont.BOLDWEIGHT_NORMAL);
+	font01Normal.setBold(false);
 
 	// Create style
-	HSSFCellStyle cellstyleTblHdr = wb.createCellStyle();
+	CellStyle cellstyleTblHdr = wb.createCellStyle();
 	cellstyleTblHdr.setFont(font01Bold);
-	cellstyleTblHdr.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+	cellstyleTblHdr.setAlignment(HorizontalAlignment.CENTER);
 	cellstyleTblHdr.setWrapText(true);
-	cellstyleTblHdr.setBorderBottom(HSSFCellStyle.BORDER_MEDIUM);
-	cellstyleTblHdr.setBorderLeft(HSSFCellStyle.BORDER_MEDIUM);
-	cellstyleTblHdr.setBorderRight(HSSFCellStyle.BORDER_MEDIUM);
-	cellstyleTblHdr.setBorderTop(HSSFCellStyle.BORDER_MEDIUM);
-	cellstyleTblHdr.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
-	cellstyleTblHdr.setFillForegroundColor(HSSFColor.LIGHT_GREEN.index);
-	cellstyleTblHdr.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
+	cellstyleTblHdr.setBorderBottom(BorderStyle.MEDIUM);
+	cellstyleTblHdr.setBorderLeft(BorderStyle.MEDIUM);
+	cellstyleTblHdr.setBorderRight(BorderStyle.MEDIUM);
+	cellstyleTblHdr.setBorderTop(BorderStyle.MEDIUM);
+	cellstyleTblHdr.setVerticalAlignment(VerticalAlignment.CENTER);
+	cellstyleTblHdr.setFillForegroundColor(IndexedColors.LIGHT_GREEN.getIndex());
+	cellstyleTblHdr.setFillPattern(FillPatternType.SOLID_FOREGROUND);
 
-	HSSFCellStyle cellstyleTblLeft = wb.createCellStyle();
+	CellStyle cellstyleTblLeft = wb.createCellStyle();
 	cellstyleTblLeft.setFont(font01Normal);
-	cellstyleTblLeft.setAlignment(HSSFCellStyle.ALIGN_LEFT);
+	cellstyleTblLeft.setAlignment(HorizontalAlignment.LEFT);
 	cellstyleTblLeft.setWrapText(true);
-	cellstyleTblLeft.setBorderBottom(HSSFCellStyle.BORDER_THIN);
-	cellstyleTblLeft.setBorderLeft(HSSFCellStyle.BORDER_THIN);
-	cellstyleTblLeft.setBorderRight(HSSFCellStyle.BORDER_THIN);
-	cellstyleTblLeft.setVerticalAlignment(HSSFCellStyle.VERTICAL_TOP);
+	cellstyleTblLeft.setBorderBottom(BorderStyle.THIN);
+	cellstyleTblLeft.setBorderLeft(BorderStyle.THIN);
+	cellstyleTblLeft.setBorderRight(BorderStyle.THIN);
+	cellstyleTblLeft.setVerticalAlignment(VerticalAlignment.TOP);
 
-	HSSFSheet sheet = wb.createSheet();
+	XSSFSheet sheet = wb.createSheet();
 	FileOutputStream fileOut = null;
 	int rowNum = 0;
 	int col = 0;
-	HSSFRow row = null;
-	HSSFCell cell = null;
+	XSSFRow row = null;
+	XSSFCell cell = null;
 	try {
 	    fileOut = new FileOutputStream(outputFileName);
 	} catch (FileNotFoundException fnf) {
@@ -370,21 +370,19 @@ public class AclBean implements SpreadSheetInterface {
 
     public void readFromFile(String inputFileName, Object obj) throws AppException {
 	DebugHandler.fine("readFromFile(" + inputFileName + obj + ")");
-	POIFSFileSystem fs = null;
-	HSSFWorkbook wb = null;
+	InputStream fs = null;
+	XSSFWorkbook wb = null;
 	try {
-	    fs = new POIFSFileSystem(new FileInputStream(inputFileName));
+	    fs = new FileInputStream(inputFileName);
 	} catch (FileNotFoundException fnf) {
 	    throw new AppException("Unable to find file " + inputFileName);
-	} catch (IOException ioe) {
-	    throw new AppException("IOException while opening file " + inputFileName);
-	}
+	} 
 	try {
-	    wb = new HSSFWorkbook(fs);
+	    wb = new XSSFWorkbook(fs);
 	} catch (IOException ioe) {
 	    throw new AppException("IOException while getting workbook.");
 	}
-	HSSFSheet sheet = wb.getSheetAt(0);
+	XSSFSheet sheet = wb.getSheetAt(0);
 	FileInputStream fileIn = null;
 	try {
 	    fileIn = new FileInputStream(inputFileName);
@@ -393,8 +391,8 @@ public class AclBean implements SpreadSheetInterface {
 	}
 	int rowNum = 0;
 	int col = 0;
-	HSSFRow row = null;
-	HSSFCell cell = null;
+	XSSFRow row = null;
+	XSSFCell cell = null;
 	String dbOp = null;
 	AclInterface aclIf = new AclImpl();
 	AclObject aclObject = new AclObject();

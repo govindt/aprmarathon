@@ -1,6 +1,6 @@
 #!/bin/sh
 
-TABLES=" role users acl Event Event_Type Registration_Type Registration_Class Registration_Source Beneficiary Gender Age_Category T_Shirt_Size Blood_Group Payment_Type Payment_Status Registrant Participant Registrant_Payment Medal Result"
+TABLES=" role users acl RegistrationSheet"
 TMP_FILE=/tmp/seq.sql
 ORAUSER=${1:-aprm}
 ORAPASS=${2:-aprm}

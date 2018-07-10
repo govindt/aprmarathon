@@ -11,7 +11,8 @@ package app.busobj;
 import java.util.Date;
 import core.util.DebugHandler;
 import core.util.Util;
-
+import org.codehaus.jettison.json.JSONObject;
+import org.codehaus.jettison.json.JSONException;
 
 /**
  * The implementation of the AclObject which maps a table
@@ -46,7 +47,39 @@ public class AclObject implements Cloneable {
             "users_id : " + users_id + "\n" +
             "permission : " + permission + "\n";
     }
+
+    /**
+     *
+     * Returns the JSONObject representation of the AclObject.
+     *
+     * @return      Returns the JSON representation of the AclObject.
+     *
+     */
     
+    public JSONObject toJSON() {
+	JSONObject jo = new JSONObject();
+	try {
+            jo.put("acl_id", acl_id);
+            jo.put("acl_page", acl_page);
+            jo.put("is_valid", is_valid);
+            jo.put("role_id", role_id);
+            jo.put("users_id", users_id);
+            jo.put("permission", permission);
+	} catch (JSONException je) {};
+	return jo;
+    }
+    
+     /**
+     *
+     * Returns the hashCode representation of the AclObject.
+     *
+     * @return      Returns the hashCode
+     *
+     */
+    
+    public int hashCode() {
+	return acl_id;
+    }
     
     /**
      * Constructs the AclObject
@@ -60,6 +93,32 @@ public class AclObject implements Cloneable {
         setRoleId(0);
         setUsersId(0);
         setPermission(0);
+    }
+
+    /**
+     * Constructs the AclObject from JSONObject
+     *
+     */
+    
+    public AclObject (JSONObject jObject) {
+	try {
+	    acl_id = jObject.getInt("acl_id");
+	} catch (JSONException je) {}
+        try {
+	    acl_page = Util.trim(jObject.getString("acl_page"));
+	} catch (JSONException je) {}
+	try {
+	    is_valid = Util.trim(jObject.getString("is_valid"));
+	} catch (JSONException je) {}
+        try {
+	    role_id = jObject.getInt("role_id");
+	} catch (JSONException je) {}
+        try {
+	    users_id = jObject.getInt("users_id");
+	} catch (JSONException je) {}
+        try {
+	    permission = jObject.getInt("permission");
+	} catch (JSONException je) {}
     }
     
     

@@ -14,6 +14,10 @@ package core.db;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import javax.naming.InitialContext;
+import javax.naming.Context;
+import javax.sql.DataSource;
+import javax.naming.NamingException;
 
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
@@ -147,7 +151,20 @@ public class DBManager {
      */
   
     public synchronized Connection getConnection() throws DBException {
-	
+	try {
+		InitialContext initCtx = new InitialContext();
+		Context envCtx = (Context) initCtx.lookup("java:comp/env");
+		DataSource ds = (DataSource)envCtx.lookup("jdbc/aprm");
+		try { 
+			Connection connection = ds.getConnection();
+			return connection;
+		} catch (SQLException sq) {
+			sq.printStackTrace();
+		}
+	} catch (NamingException ne) {
+		DebugHandler.info("Switching to application connection pool");
+	}
+
 	if (connectionPool == null) {
 	    Properties dbProps = new Properties();
 	    
@@ -279,10 +296,17 @@ public class DBManager {
      */
     
     public synchronized void releaseConnection(Connection con) {
-	
 	if (connectionPool != null) {
-	    connectionPool.freeConnection(con);
-	    con = null;
+		connectionPool.freeConnection(con);
+	   	con = null;
+	} else {
+		DebugHandler.debug("Freeing Connections got from application server");
+	    	try {
+			con.close();
+			con = null;
+		} catch (SQLException sqe) {
+			sqe.printStackTrace();
+		}
 	}
     }
     

@@ -12,6 +12,7 @@ import app.util.AppConstants;
 
 public abstract class MenuTag extends TagSupport
 {
+    private static final long serialVersionUID = 1032018418L;
     /**
      * Called when the start of the tag in encountered
      * @return EVAL_BODY_INCLUDE(int) signals the container to evaluate

@@ -15,6 +15,7 @@ pers_file="persistence.properties"
 apputil_files="App.java AppConstants.java app.properties"
 app_bean_files=`echo *Bean.java`
 jsp_files=`echo *.jsp`
+rest_files=$(echo *Rest.java)
 
 login_required_files="`grep login_required ${DESTDIR}/util/app.properties | awk -F= '{print $2}'`"
 
@@ -60,6 +61,12 @@ done
 for f in ${app_bean_files}; do
 	if [ -f "$f" ]; then
 		mv $f ${DESTDIR}/appui
+	fi
+done 
+
+for f in ${rest_files}; do
+	if [ -f "$f" ]; then
+		mv $f ${DESTDIR}/restapi
 	fi
 done 
 if [ -f Makefile.appui ]; then

@@ -147,7 +147,7 @@ public class AppUtilBean {
 	    se = new StringElement(bold.getHTMLTag());
 	    td = new TableDataElement(se);
 	    td.setAlign(Constants.LEFT_STR);
-	    tr.addElement(td);
+	    tr.add(td);
 
 	    if ( roleName.equals(AppConstants.ADMINISTRATOR_STR) ) {
 		bold = new BoldElement(getManageRoleUrl());
@@ -155,14 +155,14 @@ public class AppUtilBean {
 		se = new StringElement(bold.getHTMLTag());
 		td = new TableDataElement(se);
 		td.setAlign(Constants.LEFT_STR);
-		tr.addElement(td);
+		tr.add(td);
 
 		bold = new BoldElement(getManageAclUrl());
 		bold.setId(Constants.HEADER_ROW_STYLE);
 		se = new StringElement(bold.getHTMLTag());
 		td = new TableDataElement(se);
 		td.setAlign(Constants.LEFT_STR);
-		tr.addElement(td);
+		tr.add(td);
 
 	    } 
 	    bold = new BoldElement(getLogoutUrl());
@@ -170,16 +170,16 @@ public class AppUtilBean {
 	    se = new StringElement(bold.getHTMLTag());
 	    td = new TableDataElement(se);
 	    td.setAlign(Constants.LEFT_STR);
-	    tr.addElement(td);
+	    tr.add(td);
 	} else {
 	    bold = new BoldElement(getLoginUrl());
 	    bold.setId(Constants.HEADER_ROW_STYLE);
 	    se = new StringElement(bold.getHTMLTag());
 	    td = new TableDataElement(se);
 	    td.setAlign(Constants.LEFT_STR);
-	    tr.addElement(td);
+	    tr.add(td);
 	}
-	te.addElement(tr);
+	te.add(tr);
 	return te.getHTMLTag();
     }
 }

@@ -17,6 +17,25 @@ SOURCE  = \
 	LoginBean.java \
 	NotesBean.java \
 	UsersBean.java \
+	ParticipantEventBean.java \
+	RegistrantEventBean.java \
+	AgeCategoryBean.java \
+	BeneficiaryBean.java \
+	BloodGroupBean.java \
+	EventBean.java \
+	EventTypeBean.java \
+	GenderBean.java \
+	MedalBean.java \
+	ParticipantBean.java \
+	PaymentStatusBean.java \
+	PaymentTypeBean.java \
+	RegistrantBean.java \
+	RegistrantPaymentBean.java \
+	RegistrationClassBean.java \
+	RegistrationSourceBean.java \
+	RegistrationTypeBean.java \
+	ResultBean.java \
+	TShirtSizeBean.java \
 	RegistrationBean.java \
 	ResetPasswordBean.java \
 	RoleBean.java \

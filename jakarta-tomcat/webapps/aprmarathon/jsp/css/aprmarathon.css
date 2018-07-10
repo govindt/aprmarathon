@@ -1,0 +1,246 @@
+.banner{
+	width: 100%;
+	height: 50;
+}
+
+.ui-li-thumb, .ui-li-icon {
+    left: 1px;
+    max-height: 80px;
+    max-width: 80px;
+    position: absolute;
+    top: 0;
+}
+
+h3 {
+	text-align: center;
+	color: black;
+	font-family: 'san-serif';    
+}
+
+.header_text {
+	text-align: center;
+}
+
+#videologo{
+	display:block;
+	margin:auto;
+	width:80px;
+}
+
+#vidlist li{
+	cursor:pointer;
+}
+
+#vidlist img {
+    	position:absolute;
+    	top:5px;
+    	bottom:5px;
+    	margin:auto;
+	padding: 3px;
+	border:1px solid #ccc;
+}
+
+#vidlist h3{
+	margin-left: 100px;
+}
+
+#showVideo{
+	width:100%;
+	margin: 15px 0 15px 0;
+}
+
+html, body, #map {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+#racetrack, #map-canvas { width: 100%; height: 100%; padding: 0; }
+
+#right-panel {
+        font-family: 'Roboto','sans-serif';
+        line-height: 30px;
+        padding-left: 10px;
+}
+
+#right-panel select, #right-panel input {
+        font-size: 15px;
+}
+
+#right-panel select {
+        width: 100%;
+}
+
+#right-panel i {
+	font-size: 12px;
+}
+#right-panel {
+	height: 100%;
+        float: right;
+        width: 390px;
+        overflow: auto;
+}
+#aprm-li-home-home.ui-btn-active {
+    background:#11ADA4 !important;
+}
+
+#aprm-li-about-about.ui-btn-active {
+    background:#11ADA4 !important;
+}
+
+#aprm-li-contacts-contacts.ui-btn-active {
+    background:#11ADA4 !important;
+}
+
+#aprm-li-channel-channel.ui-btn-active {
+    background:#11ADA4 !important;
+}
+
+#aprm-li-racetrack-racetrack.ui-btn-active {
+    background:#11ADA4 !important;
+}
+
+#controls{
+	font-size: 12px;
+}
+
+#time {
+    display: inline;
+    color: red;
+    font-size: 14px;
+}
+
+#aprm_timer_table {
+    width: 100%;
+    border: 1px solid black;
+}
+
+#aprm_reset_header {
+	text-align: right;
+}
+
+#aprm_map_table {
+	width: 100%;
+}
+
+#aprm_map_td {
+	height: 500px;
+	width: 100%;
+}
+
+#aprm_map_directions_td {
+	height: 15px;
+	width: 100%;
+	color: red;
+}
+
+#aprm_map_footer_td {
+	text-align: center;
+	width: 100%;
+	height: 50px;
+}
+
+#aprm_run_details_header {
+	width: 100%;
+	padding-top: 12px;
+    	padding-bottom: 12px;
+    	text-align: left;
+    	background-color: #11ADA4;
+    	color: white;
+}
+
+#aprm_group_run_details_header {
+	width: 100%;
+	padding-top: 12px;
+    	padding-bottom: 12px;
+    	text-align: left;
+    	background-color: red;
+    	color: white;
+}
+
+
+#aprm_run_details_data_table, #aprm_group_run_details_data_table {
+	width: 100%;
+	padding-top: 12px;
+    	padding-bottom: 12px;
+    	text-align: left;
+    	background-color: white;
+    	color: black;
+}
+
+#start_pause_resume, #reset, #select-race {
+	font-size: 14.5px;
+}
+
+.aprm_bold {
+	font-weight: bold;
+	margin-left:-15px;
+}
+
+.aprm_red_bold {
+	font-weight: bold;
+	color: red;
+	padding-top:10px;
+}
+.gm-style img { max-width: none; }
+.gm-style label { width: auto; display: inline; }
+
+
+/*this block should go in the styles.css file*/
+.ui-panel-inner {
+	padding:0px; /*make the buttons flush edge to edge*/
+}
+
+.ui-controlgroup {
+	margin:0; /*make the buttons flush to the top*/
+}
+
+#vidlist-header {
+	background-color: white;
+	height:50px;
+	border:0px;
+}
+
+#header {
+	background-color: white;
+	height:54px;
+	border:0px;
+}
+
+#bars-button {
+	background-color: white;
+	color: black;
+	margin:7px;
+	border:0px;
+}
+
+#registerToday{
+	background: #00aca4;
+	text-shadow: 2px 2px 2px rgba(0,0,0,0.4);
+	font-family: 'Roboto';    
+	text-align: -webkit-center;
+	color: white;
+	font-size: 1.5em;
+	line-height: 1.1;	
+	text-transform: uppercase;
+}
+
+.raceInfoImgs{
+        border: solid 1px #CCC;
+	-moz-box-shadow: 5px 5px 0px #999;
+	-webkit-box-shadow: 5px 5px 0px #999;
+	box-shadow: 5px 5px 0px #999;
+}
+
+.tblAlignKYP{
+	margin-left:-25px;
+}
+
+.tdAlignCtr{
+	text-align:left;
+	vertical-align:text-top;
+}
+.tdAlignTopImg{
+	vertical-align:top;
+}

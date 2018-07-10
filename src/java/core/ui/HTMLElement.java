@@ -40,7 +40,7 @@ public interface HTMLElement {
      * Sets the select vector list.
      */
 
-    public void setList(Vector<Integer> vList);
+    public void setList(ArrayList<Integer> vList);
 
     /**
      * Sets the html tag name.
@@ -291,15 +291,15 @@ public interface HTMLElement {
      * @param strElement        the elements in string format.
      */
 
-    public void addElement(String strElement);
+    public void add(String strElement);
 
     /**
-     * Adds elements to the table. Allowed: <CAPTION> and <TR> .
+     * Ads delements to the table. Allowed: <CAPTION> and <TR> .
      *
      * @param captionElement    the elements of CaptionElement type.
      */
 
-    public void addElement(CaptionElement captionElement);
+    public void add(CaptionElement captionElement);
 
     /**
      * Adds elements to the table. Allowed: <CAPTION> and <TR> .
@@ -307,7 +307,7 @@ public interface HTMLElement {
      * @param tableRowElement   the elements of TableRowElement type.
      */
 
-    public void addElement(TableRowElement tableRowElement);
+    public void add(TableRowElement tableRowElement);
 
     /**
      * Adds elements to the table. Allowed: <TH> and <TD> .
@@ -315,7 +315,7 @@ public interface HTMLElement {
      * @param tableHeadingElement    the elements of TableHeadingElement type.
      */
 
-    public void addElement(TableHeadingElement tableHeadingElement);
+    public void add(TableHeadingElement tableHeadingElement);
 
     /**
      * Adds elements to the table. Allowed: <TH> and <TD> .
@@ -323,7 +323,7 @@ public interface HTMLElement {
      * @param tableDataElement    the elements of TableDataElement type.
      */
 
-    public void addElement(TableDataElement tableDataElement);
+    public void add(TableDataElement tableDataElement);
 
     /**
      * Sets the table row align attribute.

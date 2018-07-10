@@ -35,6 +35,25 @@ JSP_SOURCE  = \
 	dropdown.css \
 	helper.css \
 	ManageUsers.jsp \
+	ManageParticipantEvent.jsp \
+	ManageRegistrantEvent.jsp \
+	ManageAgeCategory.jsp \
+	ManageBeneficiary.jsp \
+	ManageBloodGroup.jsp \
+	ManageEvent.jsp \
+	ManageEventType.jsp \
+	ManageGender.jsp \
+	ManageMedal.jsp \
+	ManageParticipant.jsp \
+	ManagePaymentStatus.jsp \
+	ManagePaymentType.jsp \
+	ManageRegistrant.jsp \
+	ManageRegistrantPayment.jsp \
+	ManageRegistrationClass.jsp \
+	ManageRegistrationSource.jsp \
+	ManageRegistrationType.jsp \
+	ManageResult.jsp \
+	ManageTShirtSize.jsp \
 	ManageMenu.jsp \
 	ManageAcl.jsp \
 	ManageRole.jsp \

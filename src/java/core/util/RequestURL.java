@@ -68,7 +68,7 @@ public class RequestURL {
         boolean firstTime = true;
         // add parameters if any.
 	@SuppressWarnings("unchecked")
-	Enumeration<String> e = (Enumeration<String>)request.getParameterNames();
+	Enumeration<String> e = request.getParameterNames();
         while (e.hasMoreElements()) {
             String key = e.nextElement();
 	    String value = null;

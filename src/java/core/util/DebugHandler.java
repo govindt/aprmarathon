@@ -25,53 +25,96 @@ import java.io.IOException;
 public class DebugHandler {
     private static Logger logger;
     public static void initialize(String logFile) throws IOException {
-	logger = Logger.getLogger("core.util");
+	logger = Logger.getLogger(DebugHandler.class.getName());
 	FileHandler fHandler = new FileHandler(logFile);
+	fHandler.setFormatter(new ConsoleHandlerFormatter());
 	logger.addHandler(fHandler);
     }
     
     public static void debug(Object msg) {
-	if ( msg != null )
-	    logger.log(Level.FINEST, msg.toString()); 
+	if ( msg != null ) {
+		StackTraceElement[] st = new Throwable().getStackTrace();
+		if ( st.length > 2 )
+			logger.log(Level.FINEST, st[2].getClassName() + " : " + st[1].getMethodName() + " : " + msg.toString());
+		else 	
+			logger.log(Level.FINEST, msg.toString()); 
+	}
     }
 
     public static void log(Level l, Object msg) {
-	if ( msg != null )
-	    logger.log(l, msg.toString()); 
+	if ( msg != null ) {
+		StackTraceElement[] st = new Throwable().getStackTrace();
+		if ( st.length > 2 )
+			logger.log(l, st[2].getClassName() + " : " + st[1].getMethodName() + " : " + msg.toString()); 	
+		else
+			logger.log(l, msg.toString());
+	}
     }
 
     public static void info(Object msg) {
-	if ( msg != null )
-	    logger.info(msg.toString());
+	if ( msg != null ) {
+		StackTraceElement[] st = new Throwable().getStackTrace();
+		if ( st.length > 2 )
+			logger.info(st[2].getClassName() + " : " + st[1].getMethodName() + " : " + msg.toString());
+		else
+			logger.info(msg.toString());
+	}
     }
 
     public static void warning(Object msg) {
-	if ( msg != null )
-	    logger.warning(msg.toString());
+	if ( msg != null ) {
+		StackTraceElement[] st = new Throwable().getStackTrace();
+		logger.warning(st[2].getClassName() + " : " + st[1].getMethodName() + " : " + msg.toString());
+	}
     }
 
     public static void fine(Object msg) {
-	if ( msg != null )
-	    logger.fine(msg.toString());
+	if ( msg != null ) {
+		StackTraceElement[] st = new Throwable().getStackTrace();
+		if ( st.length > 2 )
+			logger.fine(st[2].getClassName() + " : " + st[1].getMethodName() + " : " + msg.toString());
+		else
+			logger.fine(msg.toString());
+	}
     }
 
     public static void finer(Object msg) {
-	if ( msg != null )
-	    logger.finer(msg.toString());
+	if ( msg != null ) {
+		StackTraceElement[] st = new Throwable().getStackTrace();
+		if ( st.length > 2 )
+			logger.finer(st[2].getClassName() + " : " + st[1].getMethodName() + " : " + msg.toString());
+		else
+			logger.finer(msg.toString());
+	}
     }
     
     public static void finest(Object msg) {
-	if ( msg != null )
-	    logger.finest(msg.toString());
+	if ( msg != null ) {
+		StackTraceElement[] st = new Throwable().getStackTrace();
+		if ( st.length > 2 )
+			logger.finest(st[2].getClassName() + " : " + st[1].getMethodName() + " : " + msg.toString());
+		else
+			logger.finest(msg.toString());
+	}
     }
 
     public static void config(Object msg) {
-	if ( msg != null )
-	    logger.config(msg.toString());
+	if ( msg != null ) {
+		StackTraceElement[] st = new Throwable().getStackTrace();
+		if ( st.length > 2 )
+			logger.config(st[2].getClassName() + " : " + st[1].getMethodName() + " : " + msg.toString());
+		else
+			logger.config(msg.toString());
+	}
     }
     
     public static void severe(Object msg) {
-	if ( msg != null )
-	    logger.severe(msg.toString());
+	if ( msg != null ) {
+		StackTraceElement[] st = new Throwable().getStackTrace();
+		if ( st.length > 2 )
+			logger.severe(st[2].getClassName() + " : " + st[1].getMethodName() + " : " + msg.toString());
+		else
+			logger.severe(msg.toString());
+	}
     }
 }

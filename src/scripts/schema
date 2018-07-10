@@ -11,37 +11,12 @@ Event_Changes_Close_Date timestamp not null
 Event_Type
 
 Event_Type_Id int key
-Event int references Event(Event_Id.Event_Name)
 Event_Type_Name varchar2(50) not null
+Event int references Event(Event_Id.Event_Name)
 Event_Type_Description varchar2(750)
 Event_Type_Start_Date timestamp  not null
 Event_Type_End_Date timestamp not null
 Event_Type_Venue varchar2(50) not null
-
-Registration_Type
-
-Registration_Type_Id int key
-Registration_Type_Name varchar2(50) not null
-
-Registration_Class
-
-Registration_Class_Id int key
-Registration_Class_Name varchar2(50) not null
-Registration_Type int references RegistrationType(Registration_Type_Id.Registration_Type_Name
-Registration_Event int references Event(Event_Id.Event_Name)
-Registration_Class_Value double not null
-Registration_Free_Tickets int not null
-
-Registration_Source
-
-Registration_Source_Id int key
-Registration_Source_Name varchar2(50) not null
-
-Beneficiary
-
-Benefeciary_Id int key
-Benefeciary_Name varchar2(50)
-Beneficiary_Event int references Event(Event_Id.Event_Name)
 
 Gender
 
@@ -56,8 +31,8 @@ Age_Category varchar2(50)
 T_Shirt_Size
 
 T_Shirt_Size_Id int key
-T_Shirt_Gender int references Gender(Gender_Id.Gender_Name)
 T_Shirt_Size_Name varchar2(50)
+T_Shirt_Gender int references Gender(Gender_Id.Gender_Name)
 
 Blood_Group
 
@@ -70,20 +45,49 @@ Payment_Type_Id int key
 Payment_Type_Name varchar2(50)
 
 Payment_Status
-Registrant_Event int references Event(Event_Id.Event_Name)
+
 Payment_Status_Id int key
 Payment_Status_Name varchar2(50)
+
+Medal
+
+Medal_Id int key
+Medal_Name varchar2(10)
+Medal_Rank int
+
+Registration_Type
+
+Registration_Type_Id int key
+Registration_Type_Name varchar2(50) not null
+
+Registration_Source
+
+Registration_Source_Id int key
+Registration_Source_Name varchar2(50) not null
+
+Registration_Class
+
+Registration_Class_Id int key
+Registration_Class_Name varchar2(50) not null
+Registration_Type int references RegistrationType(Registration_Type_Id.Registration_Type_Name)
+Registration_Event int references Event(Event_Id.Event_Name)
+Registration_Class_Value double not null
+Registration_Free_Tickets int not null
+
+Beneficiary
+
+Beneficiary_Id int key
+Beneficiary_Name varchar2(50)
+Beneficiary_Event int references Event(Event_Id.Event_Name)
 
 Registrant
 
 Registrant_Id int key
 Registrant_Name varchar2(50) not null
-Registrant_Event int references Event(Event_Id.Event_Name)
-Registrant_Type int references RegistrationType(Registration_Type_Id.Registration_Type_Name)
-Registrant_Source int references Registration_Source(Registration_Source_Id.Registration_Source_Name)
-Registrant_Class int references Registration_Class(Registration_Class_Id.Registration_Class_Name)
-Registrant_Beneficiary int references Beneficiary(Beneficiary_Id.Beneficiary_Name)
+Registrant_Middle_Name varchar2(50)
+Registrant_Last_Name varchar2(50)
 Registrant_Email varchar2(75) not null
+Registrant_Additional_Email varchar2(500)
 Registrant_Phone_Number varchar2(20) not null
 Registrant_Address varchar2(200) not null
 Registrant_City varchar2(50) not null
@@ -91,27 +95,17 @@ Registrant_State varchar2(50) not null
 Registrant_Pincode varchar2(10) not null
 Registrant_PAN varchar2(20)
 
+Registrant_Event
 
-Participant
-
-Participant_Id int key
-Participant_First_Name varchar2(50) not null
-Participant_Middle_Name varchar2(50)
-Participant_Last_Name varchar2(50)
-Participant_Event int references Event(Event_Id.Event_Name)
-Participant_Type int references RegistrationType(Registration_Type_Id.Registration_Type_Name)
-Participant_Event_Type int references EventType(Event_Type_Id.Event_Type_Name)
-Participant_Gender int references Gender(Gender_Id.Gender_Name)
-Participant_Date_Of_Birth timestamp
-Participant_Age_Category int references Age_Category(Age_Category_Id.Age_Category)
-Participant_T_Shirt_Size int references T_Shirt_Size(T_Shirt_Size_Id.T_Shirt_Size_Name)
-Participant_Blood_Group int references Blood_Group(Blood_Group_Id.Blood_Group_Name)
-Participant_Cell_Phone varchar2(20) not null
-Participant_Email varchar2(75) not null
-Participant_Emergency_Contact varchar2(50) not null
-Participant_Emergency_Phone varchar2(20) not null
-Participant_Bib_No varchar2(20)
-Participant_Group int references Registrant(Registrant_Id.Registrant_Name)
+Registrant_Event_Id int key
+Registrant_Id int references Registrant(Registrant_Id.Registrant_Name)
+Registrant_Event int references Event(Event_Id.Event_Name)
+Registrant_Type int references RegistrationType(Registration_Type_Id.Registration_Type_Name)
+Registrant_Source int references Registration_Source(Registration_Source_Id.Registration_Source_Name)
+Registrant_Class int references Registration_Class(Registration_Class_Id.Registration_Class_Name)
+Registrant_Beneficiary int references Beneficiary(Beneficiary_Id.Beneficiary_Name)
+Registrant_Emergency_Contact varchar2(50) not null
+Registrant_Emergency_Phone varchar2(20) not null
 
 Registrant_Payment
 
@@ -126,12 +120,33 @@ Payment_Date timestamp not null
 Receipt_Date timestamp not null
 Payment_Details varchar2(200) not null
 Payment_Towards varchar2(100) not null
+Payment_Reference_Id varchar2(100) not null
+Payment_Tax double
+Payment_Fee double
 
-Medal
+Participant
 
-Medal_Id int key
-Medal_Name varchar2(10)
-Medal_Rank int
+Participant_Id int key
+Participant_First_Name varchar2(50) not null
+Participant_Middle_Name varchar2(50)
+Participant_Last_Name varchar2(50)
+Participant_Gender int references Gender(Gender_Id.Gender_Name)
+Participant_Date_Of_Birth timestamp
+Participant_Age_Category int references Age_Category(Age_Category_Id.Age_Category)
+Participant_T_Shirt_Size int references T_Shirt_Size(T_Shirt_Size_Id.T_Shirt_Size_Name)
+Participant_Blood_Group int references Blood_Group(Blood_Group_Id.Blood_Group_Name)
+Participant_Cell_Phone varchar2(20) not null
+Participant_Email varchar2(75) not null
+
+Participant_Event
+
+Participant_Event_Id int key
+Participant_Id int references Participant(Participant_Id.Participant_First_Name)
+Participant_Event int references Event(Event_Id.Event_Name)
+Participant_Type int references RegistrationType(Registration_Type_Id.Registration_Type_Name)
+Participant_Event_Type int references EventType(Event_Type_Id.Event_Type_Name)
+Participant_Bib_No varchar2(20)
+Participant_Group int references Registrant(Registrant_Id.Registrant_Name)
 
 
 Result
@@ -140,8 +155,8 @@ Result_Id int key
 Result_Event int references Event(Event_Id.Event_Name)
 Result_Event_Type int references EventType(Event_Type_Id.Event_Type_Name)
 Result_Medal int references Medal(Medal_Id.Medal_Name)
-Result_Winner int references Participant(Participant_Id.Participant_Name)
-Result_Winner_Registrrant int references Registrant(Registrant_Id.Registrant_Name)
+Result_Winner int references Participant(Participant_Id.Participant_First_Name)
+Result_Winner_Registrant int references Registrant(Registrant_Id.Registrant_Name)
 Result_Score varchar2(20)
 Result_Timing timestamp
 

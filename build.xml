@@ -25,6 +25,8 @@
 	<property name="aprmarathon.scriptsrc" value="${aprmarathon}/src/scripts" />
 	<property name="aprmarathon.jspsrc" value="${aprmarathon}/src/public_html" />
 	<property name="aprmarathon.imagesrc" value="${aprmarathon.jspsrc}/images" />
+	<property name="aprmarathon.csssrc" value="${aprmarathon.jspsrc}/css" />
+	<property name="aprmarathon.jssrc" value="${aprmarathon.jspsrc}/js" />
 	<property name="aprmarathon.jsrc" value="${aprmarathon}/src/java" />
 	<property name="aprmarathon.coresrc" value="${aprmarathon.jsrc}/core" />
 	<property name="aprmarathon.appsrc" value="${aprmarathon.jsrc}/app" />
@@ -35,6 +37,8 @@
 	<property name="aprmarathon.classes" value="${aprmarathon}/jst/classes" />
 	<property name="aprmarathon.jsp" value="${aprmarathon}/jst/public_html" />
 	<property name="aprmarathon.image" value="${aprmarathon.jsp}/images" />
+	<property name="aprmarathon.css" value="${aprmarathon.jsp}/css" />
+	<property name="aprmarathon.js" value="${aprmarathon.jsp}/js" />
 	<property name="aprmarathon.jars" value="${aprmarathon}/jars" />
         <property name="deploy.basedir" value="${aprmarathon}/jakarta-tomcat/webapps"/>
         <property name="deploy.jspdir" value="${deploy.basedir}/aprmarathon/jsp"/>
@@ -46,10 +50,10 @@
     	</path>
         <target name="deploy">
                 <copy todir="${deploy.jspdir}" verbose="true" overwrite="true">
-   			<fileset dir="${aprmarathon.jsp}" includes="**/*.jsp,**/*.css,**/*.js, images/**/*" excludes="Makefile" />
+   			<fileset dir="${aprmarathon.jsp}" includes="**/*.jsp, **/*.html css/**/*.css, js/**/*.js, images/**/*" excludes="Makefile" />
 		</copy>
                 <copy todir="${deploy.webclasses}" verbose="true" overwrite="true">
-   			<fileset dir="${aprmarathon.classes}" includes="**/*.class,**/*.properties,**/*.tld,**/*.ccf" />
+   			<fileset dir="${aprmarathon.classes}" includes="**/*.class,**/*.properties,**/*.tld,**/*.ccf,**/*.json" />
 		</copy>
                 <copy todir="${deploy.weblib}" verbose="true" overwrite="true">
    			<fileset dir="${aprmarathon.classes}" includes="**/aprmarathon.jar, **/core.jar" />
@@ -83,19 +87,29 @@
         </target>
         <target name="compile-images" depends="clean-images">
                 <copy todir="${aprmarathon.image}" verbose="false" overwrite="true">
-   			<fileset dir="${aprmarathon.imagesrc}" includes="**/*.gif" />
+   			<fileset dir="${aprmarathon.imagesrc}" includes="**/*.gif,**/*.png" />
+                </copy>
+        </target>
+	<target name="compile-css" depends="clean-css">
+                <copy todir="${aprmarathon.css}" verbose="false" overwrite="true">
+   			<fileset dir="${aprmarathon.csssrc}" includes="**/*.css" />
+                </copy>
+        </target>
+	<target name="compile-js" depends="clean-js">
+                <copy todir="${aprmarathon.js}" verbose="false" overwrite="true">
+   			<fileset dir="${aprmarathon.jssrc}" includes="**/*.js" />
                 </copy>
         </target>
         <target name="compile-jsps" depends="clean-jsps">
                 <copy todir="${aprmarathon.jsp}" verbose="false" overwrite="true">
-   			<fileset dir="${aprmarathon.jspsrc}" includes="**/*.jsp,**/*.css,**/*.js" />
+   			<fileset dir="${aprmarathon.jspsrc}" includes="**/*.jsp,**/*.html" />
 		</copy>
         </target>
 
 	<target name="compile" depends="init,compile-core-util,compile-core-ui,compile-core-connectionpool,compile-core-busobj,compile-core-db,compile-core-appdb,compile-core-appui,compile-app-util,compile-app-busobj,compile-app-appdb,compile-app-businterface,compile-app-busimpl,compile-app-appui,compile-app-menu,compile-app-restapi,compile-servlet,compile-examples,compile-bins" description="compile the source " >
     		
   	</target>
-        <target name="dist" depends="clean,init,compile-scripts,compile-jsps,compile-images,compile" description="generate the distribution" >
+        <target name="dist" depends="clean,init,compile-scripts,compile-jsps,compile-images,compile-css,compile-js,compile" description="generate the distribution" >
     		<jar jarfile="${aprmarathon.classes}/aprmarathon.jar" basedir="${aprmarathon.classes}"/>
   	</target>
         <target name="compile-core-util">
@@ -105,7 +119,7 @@
                         <compilerarg value="${compile.compilerarg}"/>
                 </javac>
                 <copy todir="${aprmarathon.classes}/core/util">
-   			<fileset dir="${aprmarathon.coresrc}/util" includes="**/*.properties"/>
+   			<fileset dir="${aprmarathon.coresrc}/util" includes="**/*.properties, **/*.json"/>
 		</copy>
         </target>
         <target name="compile-core-ui">
@@ -246,6 +260,12 @@
         <target name="clean-images">
 		<delete dir="${aprmarathon.image}"/>
         </target>
+	<target name="clean-css">
+		<delete dir="${aprmarathon.css}"/>
+        </target>
+	<target name="clean-js">
+		<delete dir="${aprmarathon.js}"/>
+        </target>
         <target name="clean-jsps">
 		<delete quiet="true">
                        <fileset dir="${aprmarathon.jsp}"> 
@@ -253,6 +273,6 @@
                        </fileset>
                 </delete>
 	</target>
-        <target name="clean" depends="clean-classes,clean-bin,clean-images,clean-jsps">
+        <target name="clean" depends="clean-classes,clean-bin,clean-images,clean-css,clean-js,clean-jsps">
         </target>
 </project>

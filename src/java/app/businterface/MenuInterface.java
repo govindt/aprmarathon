@@ -29,13 +29,13 @@ public interface MenuInterface {
      *
      * @param menu_obj	MenuObject
      *
-     * @return      Returns the Vector of MenuObjects
+     * @return      Returns the ArrayList of MenuObjects
      *
      * @throws AppException if the underlying operation fails
      *
      */
     
-    public Vector<MenuObject> getMenus(MenuObject menu_obj) throws AppException;
+    public ArrayList<MenuObject> getMenus(MenuObject menu_obj) throws AppException;
     
     /**
      *

@@ -22,7 +22,7 @@ public class AppMenuBuilder implements MenuBuilder
 {
     private int coord=0;
     private int usersId = 0;
-    public static int TOP_PARENT_ID = -1;
+    public static int TOP_PARENT_ID = -100;
     private ArrayList<CompositeMenu> topMenus = new ArrayList<CompositeMenu>();
 
     public AppMenuBuilder(int usersId)
@@ -50,10 +50,10 @@ public class AppMenuBuilder implements MenuBuilder
 		MenuObject mObj = new MenuObject();
 		mObj.setRoleId(usersObj.getRoleId());
 		DebugHandler.debug("Menu Object " + mObj);
-		Vector<MenuObject> v = mif.getMenus(mObj);
-		DebugHandler.debug("Menu Vector " + v);
+		ArrayList<MenuObject> v = mif.getMenus(mObj);
+		DebugHandler.debug("Menu ArrayList " + v);
 		for ( int i = 0; i < v.size(); i++) {
-		    mObj = v.elementAt(i);
+		    mObj = v.get(i);
 		    if ( mObj.getParentMenuId() == TOP_PARENT_ID ) {
 			CompositeMenu aTopMenu = new CompositeMenu(Constants.EMPTY + mObj.getMenuId(), mObj.getMenuName(), mObj.getUrl());
 			topMenus.add(aTopMenu);
@@ -70,6 +70,7 @@ public class AppMenuBuilder implements MenuBuilder
         for (int i=0;i<topMenus.size();i++)
         {
 	    CompositeMenu menu = topMenus.get(i);
+	    DebugHandler.debug("TopMenu : " + menu.getMenuName());
 	    menu.setLevelCoord(Integer.toString(j));
 	    j++;
 	    buildMenu(menu.getMenuId(), menu);
@@ -82,13 +83,14 @@ public class AppMenuBuilder implements MenuBuilder
     private boolean isLeaf(String menuId)throws MenuException
     {
 	MenuObject mObj = new MenuObject();
-        DebugHandler.debug("MenuId " + menuId);
+        DebugHandler.debug("isLeaf:menuId : " + menuId);
         boolean isLeaf = false;
 	MenuInterface mIf = new MenuImpl();
 	mObj.setParentMenuId(Integer.parseInt(menuId));
 	try {
-	    Vector<MenuObject> v = mIf.getMenus(mObj);
-	    if ( v != null && v.size() == 0 )
+	    ArrayList<MenuObject> v = mIf.getMenus(mObj);
+	    DebugHandler.debug("isLeaf:v : " + v);
+	    if ( v == null || v.size() == 0 )
 		isLeaf = true;
 	} catch (AppException ae) {
 	    DebugHandler.debug("AppException from menu while checking isLeaf");
@@ -98,25 +100,26 @@ public class AppMenuBuilder implements MenuBuilder
 
     private void buildMenu(String menuId, CompositeMenu comSrc) throws MenuException
     {
-        DebugHandler.debug(menuId);
+	DebugHandler.debug("Menu Id : " + menuId);
 	MenuInterface mIf = new MenuImpl();
 	MenuObject mObj = new MenuObject();
 	mObj.setParentMenuId(Integer.parseInt(menuId));
 	try {
-	    Vector<MenuObject> v = mIf.getMenus(mObj);
+	    ArrayList<MenuObject> v = mIf.getMenus(mObj);
 	    for (int i = 0; i < v.size(); i++ ) { 
-		mObj = v.elementAt(i);
+		mObj = v.get(i);
 		String childMenuId = mObj.getMenuId() + Constants.EMPTY;
 		String menuName = mObj.getMenuName();
 		String href = mObj.getUrl();
 		String parentId = mObj.getParentMenuId() + Constants.EMPTY;
 		DebugHandler.debug(childMenuId + " " + menuName + " " + parentId + " " + href);
 		if (isLeaf(childMenuId)) { //simple menu 
+		    DebugHandler.debug("Leaf : " + menuName);
 		    SimpleMenu sm = new SimpleMenu(childMenuId , menuName, href);
 		    comSrc.add(sm);
 		}
 		else {
-		    DebugHandler.debug("inside submenu" + childMenuId);
+		    DebugHandler.debug("Inside submenu " + menuName);
 		    CompositeMenu aParentMenu = new CompositeMenu(childMenuId, menuName);
 		    comSrc.add(aParentMenu);
 		    buildMenu(childMenuId, aParentMenu);
@@ -131,6 +134,7 @@ public class AppMenuBuilder implements MenuBuilder
 
     public static void main(String argv[]) throws Exception
     {
+	app.util.App.getInstance();
         AppMenuBuilder builder = new AppMenuBuilder(1);
         builder.renderMenu();
     }

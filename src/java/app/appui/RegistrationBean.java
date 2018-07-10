@@ -115,32 +115,32 @@ public class RegistrationBean {
 	    }
 	    td = new TableDataElement(be);
 	    td.setColspan(2);
-	    tr.addElement(td);
-	    te.addElement(tr);
+	    tr.add(td);
+	    te.add(tr);
 	}
 	tr = new TableRowElement();
 	be = new BoldElement(AppConstants.USER_ID_LABEL);
 	be.setId(Constants.BODY_ROW_STYLE);
 	td = new TableDataElement(be);
-	tr.addElement(td);
+	tr.add(td);
 	td = new TableDataElement(new InputElement(InputElement.TEXT, 
 						   AppConstants.NEW_USERNAME_STR,
 						   Constants.EMPTY));
-	tr.addElement(td);	
-	te.addElement(tr);
+	tr.add(td);	
+	te.add(tr);
 
 	
 	tr = new TableRowElement();
 	be = new BoldElement(AppConstants.EMAIL_LABEL);
 	be.setId(Constants.BODY_ROW_STYLE);
 	td = new TableDataElement(be);
-	tr.addElement(td);
+	tr.add(td);
 
 	td = new TableDataElement(new InputElement(InputElement.TEXT, 
 						   AppConstants.EMAIL_STR,
 						   Constants.EMPTY));
-	tr.addElement(td);
-	te.addElement(tr);
+	tr.add(td);
+	te.add(tr);
 
 	return te.getHTMLTag() + new BreakElement().getHTMLTag() + 
 	    new BreakElement().getHTMLTag() + 

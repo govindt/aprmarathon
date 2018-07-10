@@ -351,7 +351,10 @@ public class UsersImpl implements UsersInterface  {
 			found = true;
 		    }
 		    if (found) {
-			usersArr[idx] = usersArr[idx + 1]; // Move the array
+			if ( idx != (usersArr.length - 1) )
+				usersArr[idx] = usersArr[idx + 1]; // Move the array
+			else
+				usersArr[idx] = null;
 		    }
 		    if ( usersArr[idx] == null )
 			break;
