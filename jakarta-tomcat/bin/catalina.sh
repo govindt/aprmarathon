@@ -284,7 +284,7 @@ fi
 JDK_JAVA_OPTIONS="$JDK_JAVA_OPTIONS --add-opens=java.base/java.lang=ALL-UNNAMED"
 JDK_JAVA_OPTIONS="$JDK_JAVA_OPTIONS --add-opens=java.rmi/sun.rmi.transport=ALL-UNNAMED"
 export JDK_JAVA_OPTIONS
-export CATALINA_OPTS="-Djava.awt.headless=true -Dfile.encoding=UTF-8 -server -Xms1536m -Xmx1536m -XX:NewSize=256m -XX:MaxNewSize=256m -XX:PermSize=256m -XX:MaxPermSize=256m -XX:+DisableExplicitGC"
+export CATALINA_OPTS="-Djava.awt.headless=true -Dfile.encoding=UTF-8 -server -XX:NewSize=256m -XX:MaxNewSize=256m -XX:+DisableExplicitGC"
 
 # ----- Execute The Requested Command -----------------------------------------
 
