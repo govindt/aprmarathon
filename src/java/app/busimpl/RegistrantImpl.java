@@ -57,7 +57,7 @@ public class RegistrantImpl implements RegistrantInterface  {
  || (registrant_obj.getRegistrantLastName() != null && registrant_obj.getRegistrantLastName().equals(registrantObjectArr[i].getRegistrantLastName()))
  || (registrant_obj.getRegistrantEmail() != null && registrant_obj.getRegistrantEmail().equals(registrantObjectArr[i].getRegistrantEmail()))
  || (registrant_obj.getRegistrantAdditionalEmail() != null && registrant_obj.getRegistrantAdditionalEmail().equals(registrantObjectArr[i].getRegistrantAdditionalEmail()))
- || (registrant_obj.getRegistrantPhoneNumber() != null && registrant_obj.getRegistrantPhoneNumber().equals(registrantObjectArr[i].getRegistrantPhoneNumber()))
+ || (registrant_obj.getRegistrantPhone() != null && registrant_obj.getRegistrantPhone().equals(registrantObjectArr[i].getRegistrantPhone()))
  || (registrant_obj.getRegistrantAddress() != null && registrant_obj.getRegistrantAddress().equals(registrantObjectArr[i].getRegistrantAddress()))
  || (registrant_obj.getRegistrantCity() != null && registrant_obj.getRegistrantCity().equals(registrantObjectArr[i].getRegistrantCity()))
  || (registrant_obj.getRegistrantState() != null && registrant_obj.getRegistrantState().equals(registrantObjectArr[i].getRegistrantState()))

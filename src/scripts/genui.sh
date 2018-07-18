@@ -23,6 +23,7 @@ cp /dev/null ${APP_PROPERTIES_FILE}
 
 ######################################################################################################
 CreateMakefileEntry() {
+    return;
     module_name=$1
     file_types="$2"
     dest_dir=$3

@@ -58,7 +58,7 @@ public class PersistentRegistrant extends PersistentObject {
     
     public Object list() throws DBException {
         PreparedSQLStatement sql = new PreparedSQLStatement();
-        String statement = "SELECT registrant_id, registrant_name, registrant_middle_name, registrant_last_name, registrant_email, registrant_additional_email, registrant_phone_number, registrant_address, registrant_city, registrant_state, registrant_pincode, registrant_pan from Registrant";
+        String statement = "SELECT registrant_id, registrant_name, registrant_middle_name, registrant_last_name, registrant_email, registrant_additional_email, registrant_phone, registrant_address, registrant_city, registrant_state, registrant_pincode, registrant_pan from Registrant";
         int index = 1;
         sql.setStatement(statement);
         
@@ -85,7 +85,7 @@ public class PersistentRegistrant extends PersistentObject {
     
     public Object list(Object args) throws DBException {
         PreparedSQLStatement sql = new PreparedSQLStatement();
-        String statement = "SELECT registrant_id, registrant_name, registrant_middle_name, registrant_last_name, registrant_email, registrant_additional_email, registrant_phone_number, registrant_address, registrant_city, registrant_state, registrant_pincode, registrant_pan from Registrant";
+        String statement = "SELECT registrant_id, registrant_name, registrant_middle_name, registrant_last_name, registrant_email, registrant_additional_email, registrant_phone, registrant_address, registrant_city, registrant_state, registrant_pincode, registrant_pan from Registrant";
         int index = 1;
         RegistrantObject passedRegistrantObject = (RegistrantObject)args;
         boolean whereSpecified = false;
@@ -141,14 +141,14 @@ public class PersistentRegistrant extends PersistentObject {
 	    sql.setStatement(statement);
 	    sql.setInParams(new SQLParam(index++,  passedRegistrantObject.getRegistrantAdditionalEmail(), Types.VARCHAR));
 	}
-        if ( ! passedRegistrantObject.getRegistrantPhoneNumber().equals("") ) {
+        if ( ! passedRegistrantObject.getRegistrantPhone().equals("") ) {
 	    if ( ! whereSpecified ) {
-		statement += " where registrant_phone_number = ?";
+		statement += " where registrant_phone = ?";
 		whereSpecified = true;
 	    } else
-		statement += " and registrant_phone_number = ?";
+		statement += " and registrant_phone = ?";
 	    sql.setStatement(statement);
-	    sql.setInParams(new SQLParam(index++,  passedRegistrantObject.getRegistrantPhoneNumber(), Types.VARCHAR));
+	    sql.setInParams(new SQLParam(index++,  passedRegistrantObject.getRegistrantPhone(), Types.VARCHAR));
 	}
         if ( ! passedRegistrantObject.getRegistrantAddress().equals("") ) {
 	    if ( ! whereSpecified ) {
@@ -221,7 +221,7 @@ public class PersistentRegistrant extends PersistentObject {
     
     public Object fetch() throws DBException {
         PreparedSQLStatement sql = new PreparedSQLStatement();
-        String statement = "SELECT registrant_id, registrant_name, registrant_middle_name, registrant_last_name, registrant_email, registrant_additional_email, registrant_phone_number, registrant_address, registrant_city, registrant_state, registrant_pincode, registrant_pan from Registrant where registrant_id = ? ";
+        String statement = "SELECT registrant_id, registrant_name, registrant_middle_name, registrant_last_name, registrant_email, registrant_additional_email, registrant_phone, registrant_address, registrant_city, registrant_state, registrant_pincode, registrant_pan from Registrant where registrant_id = ? ";
         int index = 1;
         sql.setStatement(statement);
         sql.setInParams(new SQLParam(index++, new Integer(registrantObject.getRegistrantId()), Types.INTEGER));
@@ -252,11 +252,11 @@ public class PersistentRegistrant extends PersistentObject {
         int index = 1;
 
         if ( AppConstants.DB_TYPE.equalsIgnoreCase(Constants.ORACLE) ) {
-            statement = "INSERT INTO Registrant (registrant_id, registrant_name, registrant_middle_name, registrant_last_name, registrant_email, registrant_additional_email, registrant_phone_number, registrant_address, registrant_city, registrant_state, registrant_pincode, registrant_pan) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ";
+            statement = "INSERT INTO Registrant (registrant_id, registrant_name, registrant_middle_name, registrant_last_name, registrant_email, registrant_additional_email, registrant_phone, registrant_address, registrant_city, registrant_state, registrant_pincode, registrant_pan) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ";
             sql.setStatement(statement);
             sql.setInParams(new SQLParam(index++, new Integer(registrantObject.getRegistrantId()), Types.INTEGER));
         } else {
-            statement = "INSERT INTO Registrant (registrant_name, registrant_middle_name, registrant_last_name, registrant_email, registrant_additional_email, registrant_phone_number, registrant_address, registrant_city, registrant_state, registrant_pincode, registrant_pan) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ";
+            statement = "INSERT INTO Registrant (registrant_name, registrant_middle_name, registrant_last_name, registrant_email, registrant_additional_email, registrant_phone, registrant_address, registrant_city, registrant_state, registrant_pincode, registrant_pan) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ";
             sql.setStatement(statement);
         }
         sql.setInParams(new SQLParam(index++,  registrantObject.getRegistrantName(), Types.VARCHAR));
@@ -264,7 +264,7 @@ public class PersistentRegistrant extends PersistentObject {
         sql.setInParams(new SQLParam(index++,  registrantObject.getRegistrantLastName(), Types.VARCHAR));
         sql.setInParams(new SQLParam(index++,  registrantObject.getRegistrantEmail(), Types.VARCHAR));
         sql.setInParams(new SQLParam(index++,  registrantObject.getRegistrantAdditionalEmail(), Types.VARCHAR));
-        sql.setInParams(new SQLParam(index++,  registrantObject.getRegistrantPhoneNumber(), Types.VARCHAR));
+        sql.setInParams(new SQLParam(index++,  registrantObject.getRegistrantPhone(), Types.VARCHAR));
         sql.setInParams(new SQLParam(index++,  registrantObject.getRegistrantAddress(), Types.VARCHAR));
         sql.setInParams(new SQLParam(index++,  registrantObject.getRegistrantCity(), Types.VARCHAR));
         sql.setInParams(new SQLParam(index++,  registrantObject.getRegistrantState(), Types.VARCHAR));
@@ -318,7 +318,7 @@ public class PersistentRegistrant extends PersistentObject {
     
     public Object update() throws DBException {
         PreparedSQLStatement sql = new PreparedSQLStatement();
-        String statement = "UPDATE Registrant SET registrant_id = ?, registrant_name = ?, registrant_middle_name = ?, registrant_last_name = ?, registrant_email = ?, registrant_additional_email = ?, registrant_phone_number = ?, registrant_address = ?, registrant_city = ?, registrant_state = ?, registrant_pincode = ?, registrant_pan = ? where registrant_id = ? ";
+        String statement = "UPDATE Registrant SET registrant_id = ?, registrant_name = ?, registrant_middle_name = ?, registrant_last_name = ?, registrant_email = ?, registrant_additional_email = ?, registrant_phone = ?, registrant_address = ?, registrant_city = ?, registrant_state = ?, registrant_pincode = ?, registrant_pan = ? where registrant_id = ? ";
         int index = 1;
         sql.setStatement(statement);
         sql.setInParams(new SQLParam(index++, new Integer(registrantObject.getRegistrantId()), Types.INTEGER));
@@ -327,7 +327,7 @@ public class PersistentRegistrant extends PersistentObject {
         sql.setInParams(new SQLParam(index++,  registrantObject.getRegistrantLastName(), Types.VARCHAR));
         sql.setInParams(new SQLParam(index++,  registrantObject.getRegistrantEmail(), Types.VARCHAR));
         sql.setInParams(new SQLParam(index++,  registrantObject.getRegistrantAdditionalEmail(), Types.VARCHAR));
-        sql.setInParams(new SQLParam(index++,  registrantObject.getRegistrantPhoneNumber(), Types.VARCHAR));
+        sql.setInParams(new SQLParam(index++,  registrantObject.getRegistrantPhone(), Types.VARCHAR));
         sql.setInParams(new SQLParam(index++,  registrantObject.getRegistrantAddress(), Types.VARCHAR));
         sql.setInParams(new SQLParam(index++,  registrantObject.getRegistrantCity(), Types.VARCHAR));
         sql.setInParams(new SQLParam(index++,  registrantObject.getRegistrantState(), Types.VARCHAR));
@@ -369,7 +369,7 @@ public class PersistentRegistrant extends PersistentObject {
                 f.setRegistrantLastName(rs.getString(index++));
                 f.setRegistrantEmail(rs.getString(index++));
                 f.setRegistrantAdditionalEmail(rs.getString(index++));
-                f.setRegistrantPhoneNumber(rs.getString(index++));
+                f.setRegistrantPhone(rs.getString(index++));
                 f.setRegistrantAddress(rs.getString(index++));
                 f.setRegistrantCity(rs.getString(index++));
                 f.setRegistrantState(rs.getString(index++));

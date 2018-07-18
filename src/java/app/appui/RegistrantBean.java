@@ -75,8 +75,8 @@ public class RegistrantBean implements SpreadSheetInterface {
 		    selectedRegistrantObj.setRegistrantEmail(buf);
 		    buf = Util.trim(valuepairs.get(AppConstants.REGISTRANT_ADDITIONAL_EMAIL_STR));
 		    selectedRegistrantObj.setRegistrantAdditionalEmail(buf);
-		    buf = Util.trim(valuepairs.get(AppConstants.REGISTRANT_PHONE_NUMBER_STR));
-		    selectedRegistrantObj.setRegistrantPhoneNumber(buf);
+		    buf = Util.trim(valuepairs.get(AppConstants.REGISTRANT_PHONE_STR));
+		    selectedRegistrantObj.setRegistrantPhone(buf);
 		    buf = Util.trim(valuepairs.get(AppConstants.REGISTRANT_ADDRESS_STR));
 		    selectedRegistrantObj.setRegistrantAddress(buf);
 		    buf = Util.trim(valuepairs.get(AppConstants.REGISTRANT_CITY_STR));
@@ -105,8 +105,8 @@ public class RegistrantBean implements SpreadSheetInterface {
 		    registrantObj.setRegistrantEmail(buf);
 		    buf = Util.trim(valuepairs.get(AppConstants.REGISTRANT_ADDITIONAL_EMAIL_STR));
 		    registrantObj.setRegistrantAdditionalEmail(buf);
-		    buf = Util.trim(valuepairs.get(AppConstants.REGISTRANT_PHONE_NUMBER_STR));
-		    registrantObj.setRegistrantPhoneNumber(buf);
+		    buf = Util.trim(valuepairs.get(AppConstants.REGISTRANT_PHONE_STR));
+		    registrantObj.setRegistrantPhone(buf);
 		    buf = Util.trim(valuepairs.get(AppConstants.REGISTRANT_ADDRESS_STR));
 		    registrantObj.setRegistrantAddress(buf);
 		    buf = Util.trim(valuepairs.get(AppConstants.REGISTRANT_CITY_STR));
@@ -226,14 +226,14 @@ public class RegistrantBean implements SpreadSheetInterface {
 	te.add(tr);
 
 	tr = new TableRowElement();
-	be = new BoldElement(AppConstants.REGISTRANT_PHONE_NUMBER_LABEL);
+	be = new BoldElement(AppConstants.REGISTRANT_PHONE_LABEL);
 	be.setId(Constants.BODY_ROW_STYLE);
 	td = new TableDataElement(be);
 	tr.add(td);
 	if ( registrantId != 0 )
-	    td = new TableDataElement(new InputElement(InputElement.TEXT, AppConstants.REGISTRANT_PHONE_NUMBER_STR, selectedRegistrantObj.getRegistrantPhoneNumber()));
+	    td = new TableDataElement(new InputElement(InputElement.TEXT, AppConstants.REGISTRANT_PHONE_STR, selectedRegistrantObj.getRegistrantPhone()));
 	else
-	    td = new TableDataElement(new InputElement(InputElement.TEXT, AppConstants.REGISTRANT_PHONE_NUMBER_STR, Constants.EMPTY));
+	    td = new TableDataElement(new InputElement(InputElement.TEXT, AppConstants.REGISTRANT_PHONE_STR, Constants.EMPTY));
 	tr.add(td);
 	te.add(tr);
 
@@ -390,7 +390,7 @@ public class RegistrantBean implements SpreadSheetInterface {
 
 	cell = row.createCell((short)col++);
 	cell.setCellStyle(cellstyleTblHdr);
-	cell.setCellValue(AppConstants.REGISTRANT_PHONE_NUMBER_LABEL);
+	cell.setCellValue(AppConstants.REGISTRANT_PHONE_LABEL);
 
 	cell = row.createCell((short)col++);
 	cell.setCellStyle(cellstyleTblHdr);
@@ -453,7 +453,7 @@ public class RegistrantBean implements SpreadSheetInterface {
 
 		cell = row.createCell((short)col++);
 		cell.setCellStyle(cellstyleTblLeft);
-		cell.setCellValue(registrantObj.getRegistrantPhoneNumber());
+		cell.setCellValue(registrantObj.getRegistrantPhone());
 
 		cell = row.createCell((short)col++);
 		cell.setCellStyle(cellstyleTblLeft);
@@ -551,7 +551,7 @@ public class RegistrantBean implements SpreadSheetInterface {
 		    registrantObject.setRegistrantAdditionalEmail(Util.trim(cell.getStringCellValue()));
 		cell = row.getCell((short)col++);
 		if ( cell != null )
-		    registrantObject.setRegistrantPhoneNumber(Util.trim(cell.getStringCellValue()));
+		    registrantObject.setRegistrantPhone(Util.trim(cell.getStringCellValue()));
 		cell = row.getCell((short)col++);
 		if ( cell != null )
 		    registrantObject.setRegistrantAddress(Util.trim(cell.getStringCellValue()));
@@ -588,7 +588,7 @@ public class RegistrantBean implements SpreadSheetInterface {
 		    registrantObject.setRegistrantAdditionalEmail(Util.trim(cell.getStringCellValue()));
 		cell = row.getCell((short)col++);
 		if ( cell != null )
-		    registrantObject.setRegistrantPhoneNumber(Util.trim(cell.getStringCellValue()));
+		    registrantObject.setRegistrantPhone(Util.trim(cell.getStringCellValue()));
 		cell = row.getCell((short)col++);
 		if ( cell != null )
 		    registrantObject.setRegistrantAddress(Util.trim(cell.getStringCellValue()));

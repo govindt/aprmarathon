@@ -32,13 +32,13 @@ function validateForm(form)
 		alert("<%= AppConstants.REGISTRANT_EMAIL_LABEL %> length cannot be greater than 75");
 		return false;
 	}
-	var tmp = form.<%= AppConstants.REGISTRANT_PHONE_NUMBER_STR%>.value;
+	var tmp = form.<%= AppConstants.REGISTRANT_PHONE_STR%>.value;
 	if ( isEmpty(tmp) ) {
-		alert("<%= AppConstants.REGISTRANT_PHONE_NUMBER_LABEL %> cannot be empty");
+		alert("<%= AppConstants.REGISTRANT_PHONE_LABEL %> cannot be empty");
 		return false;
 	}
 	if ( tmp.length > 20 ) {
-		alert("<%= AppConstants.REGISTRANT_PHONE_NUMBER_LABEL %> length cannot be greater than 20");
+		alert("<%= AppConstants.REGISTRANT_PHONE_LABEL %> length cannot be greater than 20");
 		return false;
 	}
 	var tmp = form.<%= AppConstants.REGISTRANT_ADDRESS_STR%>.value;

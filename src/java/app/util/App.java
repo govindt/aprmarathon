@@ -113,6 +113,7 @@ public class App {
     AppConstants.DB_TYPE = siteProps.getProperty("app.dbtype");
 
 	// INSERT GENERATED CODE
+    AppConstants.REGISTRANT_PHONE_LABEL = siteProps.getProperty("app.registrant_phone_label");
     AppConstants.CURRENT_REGISTRANTEVENT_LABEL = siteProps.getProperty("app.current_registrantevent_label");
     AppConstants.NEW_REGISTRANTEVENT = siteProps.getProperty("app.new_registrantevent");
     AppConstants.REGISTRANT_EVENT_ID_LABEL = siteProps.getProperty("app.registrant_event_id_label");

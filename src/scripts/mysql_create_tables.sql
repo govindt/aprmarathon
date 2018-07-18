@@ -126,7 +126,7 @@ create table Registrant(
 	registrant_last_name varchar(50),
 	registrant_email varchar(75) not null,
 	registrant_additional_email varchar(500),
-	registrant_phone_int varchar(20) not null,
+	registrant_phone varchar(20) not null,
 	registrant_address varchar(200) not null,
 	registrant_city varchar(50) not null,
 	registrant_state varchar(50) not null,

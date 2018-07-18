@@ -88,7 +88,7 @@ Registrant_Middle_Name varchar2(50)
 Registrant_Last_Name varchar2(50)
 Registrant_Email varchar2(75) not null
 Registrant_Additional_Email varchar2(500)
-Registrant_Phone_Number varchar2(20) not null
+Registrant_Phone varchar2(20) not null
 Registrant_Address varchar2(200) not null
 Registrant_City varchar2(50) not null
 Registrant_State varchar2(50) not null

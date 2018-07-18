@@ -13,6 +13,7 @@ if [ ! -f ${SCHEMA_FILE} ]; then
 fi
 ######################################################################################################
 CreateMakefileEntry() {
+    return;
     module_name=$1
     file_types="$2"
     dest_dir=$3

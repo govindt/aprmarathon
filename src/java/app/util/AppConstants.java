@@ -20,6 +20,8 @@ import java.util.*;
  */
 
 public class AppConstants {
+    public static String REGISTRANT_PHONE_LABEL;
+    public static String REGISTRANT_PHONE_STR = "registrantPhone";
     public static String CURRENT_PARTICIPANTEVENT_LABEL;
     public static String CURRENT_REGISTRANTEVENT_LABEL;
     public static String MANAGE_PARTICIPANTEVENT_JSP_STR = "ManageParticipantEvent.jsp";

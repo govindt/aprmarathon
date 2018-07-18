@@ -32,7 +32,7 @@ public class RegistrantObject implements Cloneable {
 	private String registrant_last_name;
 	private String registrant_email;
 	private String registrant_additional_email;
-	private String registrant_phone_number;
+	private String registrant_phone;
 	private String registrant_address;
 	private String registrant_city;
 	private String registrant_state;
@@ -54,7 +54,7 @@ public class RegistrantObject implements Cloneable {
 		"registrant_last_name : " + registrant_last_name + "\n" +
 		"registrant_email : " + registrant_email + "\n" +
 		"registrant_additional_email : " + registrant_additional_email + "\n" +
-		"registrant_phone_number : " + registrant_phone_number + "\n" +
+		"registrant_phone : " + registrant_phone + "\n" +
 		"registrant_address : " + registrant_address + "\n" +
 		"registrant_city : " + registrant_city + "\n" +
 		"registrant_state : " + registrant_state + "\n" +
@@ -79,7 +79,7 @@ public class RegistrantObject implements Cloneable {
 			 jo.put("registrant_last_name", registrant_last_name);
 			 jo.put("registrant_email", registrant_email);
 			 jo.put("registrant_additional_email", registrant_additional_email);
-			 jo.put("registrant_phone_number", registrant_phone_number);
+			 jo.put("registrant_phone", registrant_phone);
 			 jo.put("registrant_address", registrant_address);
 			 jo.put("registrant_city", registrant_city);
 			 jo.put("registrant_state", registrant_state);
@@ -113,7 +113,7 @@ public class RegistrantObject implements Cloneable {
 		setRegistrantLastName("");
 		setRegistrantEmail("");
 		setRegistrantAdditionalEmail("");
-		setRegistrantPhoneNumber("");
+		setRegistrantPhone("");
 		setRegistrantAddress("");
 		setRegistrantCity("");
 		setRegistrantState("");
@@ -146,7 +146,7 @@ public class RegistrantObject implements Cloneable {
 			registrant_additional_email = jObject.getString("registrant_additional_email");
 		} catch (JSONException je) {}
 		try {
-			registrant_phone_number = jObject.getString("registrant_phone_number");
+			registrant_phone = jObject.getString("registrant_phone");
 		} catch (JSONException je) {}
 		try {
 			registrant_address = jObject.getString("registrant_address");
@@ -324,27 +324,27 @@ public class RegistrantObject implements Cloneable {
     
     /**
      *
-     * Sets the <code>registrant_phone_number</code> field
+     * Sets the <code>registrant_phone</code> field
      *
-     * @param registrant_phone_number      String
+     * @param registrant_phone      String
      *
      */
     
-    public void setRegistrantPhoneNumber(String registrant_phone_number) {
-        this.registrant_phone_number = registrant_phone_number;
+    public void setRegistrantPhone(String registrant_phone) {
+        this.registrant_phone = registrant_phone;
     }
     
     
     /**
      *
-     * Gets the <code>registrant_phone_number</code> field
+     * Gets the <code>registrant_phone</code> field
      *
-     * @returns registrant_phone_number
+     * @returns registrant_phone
      *
      */
     
-    public String getRegistrantPhoneNumber() {
-        return registrant_phone_number;
+    public String getRegistrantPhone() {
+        return registrant_phone;
     }
 
     
@@ -497,7 +497,7 @@ public class RegistrantObject implements Cloneable {
             Util.trim(registrant_last_name).equals(Util.trim(other.getRegistrantLastName())) &&
             Util.trim(registrant_email).equals(Util.trim(other.getRegistrantEmail())) &&
             Util.trim(registrant_additional_email).equals(Util.trim(other.getRegistrantAdditionalEmail())) &&
-            Util.trim(registrant_phone_number).equals(Util.trim(other.getRegistrantPhoneNumber())) &&
+            Util.trim(registrant_phone).equals(Util.trim(other.getRegistrantPhone())) &&
             Util.trim(registrant_address).equals(Util.trim(other.getRegistrantAddress())) &&
             Util.trim(registrant_city).equals(Util.trim(other.getRegistrantCity())) &&
             Util.trim(registrant_state).equals(Util.trim(other.getRegistrantState())) &&
