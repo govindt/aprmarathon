@@ -82,20 +82,20 @@ public class RegistrationTypeImpl implements RegistrationTypeInterface  {
 	    return null;
 	for ( int i = 0; i < registrationTypeObjectArr.length; i++ ) {
 	    if ( registrationTypeObjectArr[i] == null ) { // Try database and add to cache if found.
-		RegistrationTypeObject registrationtypeObj = new RegistrationTypeObject();
-		registrationtypeObj.setRegistrationTypeId(registration_type_id);
-		@SuppressWarnings("unchecked")
-		ArrayList<RegistrationTypeObject> v = (ArrayList)DBUtil.fetch(registrationtypeObj);
-		if ( v == null || v.size() == 0 )
-		    return null;
-		else {
-		    registrationTypeObjectArr[i] = (RegistrationTypeObject)registrationtypeObj.clone();
-		    Util.putInCache(REGISTRATIONTYPE, registrationTypeObjectArr);
-		}
+		    RegistrationTypeObject registrationtypeObj = new RegistrationTypeObject();
+		    registrationtypeObj.setRegistrationTypeId(registration_type_id);
+		    @SuppressWarnings("unchecked")
+		    ArrayList<RegistrationTypeObject> v = (ArrayList)DBUtil.fetch(registrationtypeObj);
+		    if ( v == null || v.size() == 0 )
+			    return null;
+		    else {
+			    registrationTypeObjectArr[i] = (RegistrationTypeObject)registrationtypeObj.clone();
+			    Util.putInCache(REGISTRATIONTYPE, registrationTypeObjectArr);
+		    }
 	    }
 	    if ( registrationTypeObjectArr[i].getRegistrationTypeId() == registration_type_id ) {
-		DebugHandler.debug("Returning " + registrationTypeObjectArr[i]);
-		return (RegistrationTypeObject)registrationTypeObjectArr[i].clone();
+		    DebugHandler.debug("Returning " + registrationTypeObjectArr[i]);
+		    return (RegistrationTypeObject)registrationTypeObjectArr[i].clone();
 	    }
 	}
 	return null;
@@ -113,22 +113,22 @@ public class RegistrationTypeImpl implements RegistrationTypeInterface  {
      */
     
     public RegistrationTypeObject[] getAllRegistrationTypes() throws AppException{
-	RegistrationTypeObject registrationTypeObject = new RegistrationTypeObject();
-	RegistrationTypeObject[] registrationTypeObjectArr = (RegistrationTypeObject[])Util.getAppCache().get(REGISTRATIONTYPE);
-	if ( registrationTypeObjectArr == null ) {
-	    DebugHandler.info("Getting registrationtype from database");
-	    @SuppressWarnings("unchecked")
-	    ArrayList<RegistrationTypeObject> v = (ArrayList)DBUtil.list(registrationTypeObject);
-	    DebugHandler.finest(":v: " +  v);
-	    if ( v == null )
-		return null;
-	    registrationTypeObjectArr = new RegistrationTypeObject[v.size()];
-	    for ( int idx = 0; idx < v.size(); idx++ ) {
-		registrationTypeObjectArr[idx] = v.get(idx);
-	    }
-	    Util.putInCache(REGISTRATIONTYPE, registrationTypeObjectArr);
-	}
-	return registrationTypeObjectArr;
+		RegistrationTypeObject registrationTypeObject = new RegistrationTypeObject();
+		RegistrationTypeObject[] registrationTypeObjectArr = (RegistrationTypeObject[])Util.getAppCache().get(REGISTRATIONTYPE);
+		if ( registrationTypeObjectArr == null ) {
+		    DebugHandler.info("Getting registrationtype from database");
+		    @SuppressWarnings("unchecked")
+		    ArrayList<RegistrationTypeObject> v = (ArrayList)DBUtil.list(registrationTypeObject);
+		    DebugHandler.finest(":v: " +  v);
+		    if ( v == null )
+			    return null;
+		    registrationTypeObjectArr = new RegistrationTypeObject[v.size()];
+		    for ( int idx = 0; idx < v.size(); idx++ ) {
+			    registrationTypeObjectArr[idx] = v.get(idx);
+		    }
+		    Util.putInCache(REGISTRATIONTYPE, registrationTypeObjectArr);
+		}
+		return registrationTypeObjectArr;
     }
     
     
@@ -143,41 +143,46 @@ public class RegistrationTypeImpl implements RegistrationTypeInterface  {
      */
     
     public Integer addRegistrationType(RegistrationTypeObject registrationTypeObject) throws AppException{
-	if ( AppConstants.DB_TYPE.equalsIgnoreCase(Constants.ORACLE) ) {
-		long l = DBUtil.getNextId("Registration_Type_seq");
-		registrationTypeObject.setRegistrationTypeId((int)l);
-	}
-	Integer i = (Integer)DBUtil.insert(registrationTypeObject);
-	DebugHandler.fine("i: " +  i);
-	RegistrationTypeObject buf = new RegistrationTypeObject();
-	buf.setRegistrationTypeName(registrationTypeObject.getRegistrationTypeName());
-	@SuppressWarnings("unchecked")
-	ArrayList<RegistrationTypeObject> v = (ArrayList)DBUtil.list(registrationTypeObject, buf);
+		if ( AppConstants.DB_TYPE.equalsIgnoreCase(Constants.ORACLE) ) {
+			long l = DBUtil.getNextId("Registration_Type_seq");
+			registrationTypeObject.setRegistrationTypeId((int)l);
+		}
+		Integer i = (Integer)DBUtil.insert(registrationTypeObject);
+		DebugHandler.fine("i: " +  i);
+		// Do for Non Oracle where there is auto increment
+		if ( ! AppConstants.DB_TYPE.equalsIgnoreCase(Constants.ORACLE) ) {
+			registrationTypeObject.setRegistrationTypeId(i.intValue());
+			DebugHandler.fine(registrationTypeObject);
+		}
+		RegistrationTypeObject buf = new RegistrationTypeObject();
+		buf.setRegistrationTypeId(registrationTypeObject.getRegistrationTypeId());
+		@SuppressWarnings("unchecked")
+		ArrayList<RegistrationTypeObject> v = (ArrayList)DBUtil.list(registrationTypeObject, buf);
 		registrationTypeObject = v.get(0);
-	RegistrationTypeObject[] registrationTypeObjectArr = getAllRegistrationTypes();
-	boolean foundSpace = false;
+		RegistrationTypeObject[] registrationTypeObjectArr = getAllRegistrationTypes();
+		boolean foundSpace = false;
 
-	for ( int idx = 0; idx < registrationTypeObjectArr.length; idx++ ) {
-	    if ( registrationTypeObjectArr[idx] == null ) {
-		registrationTypeObjectArr[idx] = (RegistrationTypeObject)registrationTypeObject.clone();
-		foundSpace = true;
-		break;
-	    }
+		for ( int idx = 0; idx < registrationTypeObjectArr.length; idx++ ) {
+			if ( registrationTypeObjectArr[idx] == null ) {
+				registrationTypeObjectArr[idx] = (RegistrationTypeObject)registrationTypeObject.clone();
+				foundSpace = true;
+				break;
+			}
+		}
+		if ( foundSpace == false ) {
+			RegistrationTypeObject[] newregistrationTypeObjectArr = new RegistrationTypeObject[registrationTypeObjectArr.length + 1];
+			int idx = 0;
+			for ( idx = 0; idx < registrationTypeObjectArr.length; idx++ ) {
+				newregistrationTypeObjectArr[idx] = (RegistrationTypeObject)registrationTypeObjectArr[idx].clone();
+			}
+			newregistrationTypeObjectArr[idx] = (RegistrationTypeObject)registrationTypeObject.clone();
+			Util.putInCache(REGISTRATIONTYPE, newregistrationTypeObjectArr);
+		} else {
+			Util.putInCache(REGISTRATIONTYPE, registrationTypeObjectArr);
+		}
+		return i;
 	}
-	if ( foundSpace == false ) {
-	    RegistrationTypeObject[] newregistrationTypeObjectArr = new RegistrationTypeObject[registrationTypeObjectArr.length + 1];
-	    int idx = 0;
-	    for ( idx = 0; idx < registrationTypeObjectArr.length; idx++ ) {
-		newregistrationTypeObjectArr[idx] = (RegistrationTypeObject)registrationTypeObjectArr[idx].clone();
-	    }
-	    newregistrationTypeObjectArr[idx] = (RegistrationTypeObject)registrationTypeObject.clone();
-	    Util.putInCache(REGISTRATIONTYPE, newregistrationTypeObjectArr);
-	} else {
-	    Util.putInCache(REGISTRATIONTYPE, registrationTypeObjectArr);
-	}
-	return i;
-    }
-    
+	
     
     /**
      *
@@ -189,24 +194,24 @@ public class RegistrationTypeImpl implements RegistrationTypeInterface  {
      *
      */
     
-    public Integer updateRegistrationType(RegistrationTypeObject registrationTypeObject) throws AppException{
-	RegistrationTypeObject newRegistrationTypeObject = getRegistrationType(registrationTypeObject.getRegistrationTypeId()); // This call will make sure cache/db are in sync
-	Integer i = (Integer)DBUtil.update(registrationTypeObject);
-	DebugHandler.fine("i: " +  i);
-	RegistrationTypeObject[] registrationTypeObjectArr = getAllRegistrationTypes();
-	if ( registrationTypeObjectArr == null )
-	    return null;
-	for ( int idx = 0; idx < registrationTypeObjectArr.length; idx++ ) {
-	    if ( registrationTypeObjectArr[idx] != null ) {
-		if ( registrationTypeObjectArr[idx].getRegistrationTypeId() == registrationTypeObject.getRegistrationTypeId() ) {
-		    DebugHandler.debug("Found RegistrationType " + registrationTypeObject.getRegistrationTypeId());
-		    registrationTypeObjectArr[idx] = (RegistrationTypeObject)registrationTypeObject.clone();
-		    Util.putInCache(REGISTRATIONTYPE, registrationTypeObjectArr);
+	public Integer updateRegistrationType(RegistrationTypeObject registrationTypeObject) throws AppException{
+		RegistrationTypeObject newRegistrationTypeObject = getRegistrationType(registrationTypeObject.getRegistrationTypeId()); // This call will make sure cache/db are in sync
+		Integer i = (Integer)DBUtil.update(registrationTypeObject);
+		DebugHandler.fine("i: " +  i);
+		RegistrationTypeObject[] registrationTypeObjectArr = getAllRegistrationTypes();
+		if ( registrationTypeObjectArr == null )
+			return null;
+		for ( int idx = 0; idx < registrationTypeObjectArr.length; idx++ ) {
+			if ( registrationTypeObjectArr[idx] != null ) {
+				if ( registrationTypeObjectArr[idx].getRegistrationTypeId() == registrationTypeObject.getRegistrationTypeId() ) {
+					DebugHandler.debug("Found RegistrationType " + registrationTypeObject.getRegistrationTypeId());
+					registrationTypeObjectArr[idx] = (RegistrationTypeObject)registrationTypeObject.clone();
+					Util.putInCache(REGISTRATIONTYPE, registrationTypeObjectArr);
+				}
+			}
 		}
-	    }
+		return i;
 	}
-	return i;
-    }
     
     
     /**

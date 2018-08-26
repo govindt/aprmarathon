@@ -127,9 +127,6 @@ public class Constants {
     public static String SUBJECT_STR;
     public static String SORT_STR;
     public static String APP_LOG;
-    public static String SMTP_HOST;
-    public static String SMTP_FROM;
-    
     
     public static String DELETE_STR;
     public static String CHANGE_ALL_STR;

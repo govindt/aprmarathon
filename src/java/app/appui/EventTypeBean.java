@@ -93,6 +93,8 @@ public class EventTypeBean implements SpreadSheetInterface {
 		    selectedEventTypeObj.setEventTypeEndDate(date);
 		    buf = Util.trim(valuepairs.get(AppConstants.EVENT_TYPE_VENUE_STR));
 		    selectedEventTypeObj.setEventTypeVenue(buf);
+		    buf = Util.trim(valuepairs.get(AppConstants.ONLINE_REGISTRATION_ONLY_STR));
+		    selectedEventTypeObj.setOnlineRegistrationOnly(buf);
 		    DebugHandler.debug("Modifying EventType Object " + selectedEventTypeObj);
 		    eventTypeIf.updateEventType(selectedEventTypeObj);
 		}
@@ -123,6 +125,8 @@ public class EventTypeBean implements SpreadSheetInterface {
 		    eventTypeObj.setEventTypeEndDate(date);
 		    buf = Util.trim(valuepairs.get(AppConstants.EVENT_TYPE_VENUE_STR));
 		    eventTypeObj.setEventTypeVenue(buf);
+		    buf = Util.trim(valuepairs.get(AppConstants.ONLINE_REGISTRATION_ONLY_STR));
+		    eventTypeObj.setOnlineRegistrationOnly(buf);
 		    DebugHandler.debug("Adding EventType Object " + eventTypeObj);
 		    eventTypeIf.addEventType(eventTypeObj);
 		}
@@ -260,6 +264,18 @@ public class EventTypeBean implements SpreadSheetInterface {
 	tr.add(td);
 	te.add(tr);
 
+	tr = new TableRowElement();
+	be = new BoldElement(AppConstants.ONLINE_REGISTRATION_ONLY_LABEL);
+	be.setId(Constants.BODY_ROW_STYLE);
+	td = new TableDataElement(be);
+	tr.add(td);
+	if ( eventTypeId != 0 )
+	    td = new TableDataElement(new InputElement(InputElement.TEXT, AppConstants.ONLINE_REGISTRATION_ONLY_STR, selectedEventTypeObj.getOnlineRegistrationOnly()));
+	else
+	    td = new TableDataElement(new InputElement(InputElement.TEXT, AppConstants.ONLINE_REGISTRATION_ONLY_STR, Constants.EMPTY));
+	tr.add(td);
+	te.add(tr);
+
 
 	tr = new TableRowElement();
 	be = new BoldElement(Constants.UPLOAD_FILE_LABEL);
@@ -355,6 +371,10 @@ public class EventTypeBean implements SpreadSheetInterface {
 	cell.setCellStyle(cellstyleTblHdr);
 	cell.setCellValue(AppConstants.EVENT_TYPE_VENUE_LABEL);
 
+	cell = row.createCell((short)col++);
+	cell.setCellStyle(cellstyleTblHdr);
+	cell.setCellValue(AppConstants.ONLINE_REGISTRATION_ONLY_LABEL);
+
 	EventTypeInterface eventtypeIf = new EventTypeImpl();
 	EventTypeObject[] eventtypeArr = eventtypeIf.getAllEventTypes();
 	if ( eventtypeArr != null && eventtypeArr.length > 0 ) {
@@ -397,6 +417,10 @@ public class EventTypeBean implements SpreadSheetInterface {
 		cell = row.createCell((short)col++);
 		cell.setCellStyle(cellstyleTblLeft);
 		cell.setCellValue(eventtypeObj.getEventTypeVenue());
+
+		cell = row.createCell((short)col++);
+		cell.setCellStyle(cellstyleTblLeft);
+		cell.setCellValue(eventtypeObj.getOnlineRegistrationOnly());
 	    }
 	}
 	try {
@@ -479,6 +503,9 @@ public class EventTypeBean implements SpreadSheetInterface {
 		cell = row.getCell((short)col++);
 		if ( cell != null )
 		    eventtypeObject.setEventTypeVenue(Util.trim(cell.getStringCellValue()));
+		cell = row.getCell((short)col++);
+		if ( cell != null )
+		    eventtypeObject.setOnlineRegistrationOnly(Util.trim(cell.getStringCellValue()));
 		DebugHandler.fine("Updating EventType " + eventtypeObject);
 		eventtypeIf.updateEventType(eventtypeObject);
 	    } else if ( dbOp != null && dbOp.equalsIgnoreCase("INSERT") ) {
@@ -505,6 +532,9 @@ public class EventTypeBean implements SpreadSheetInterface {
 		cell = row.getCell((short)col++);
 		if ( cell != null )
 		    eventtypeObject.setEventTypeVenue(Util.trim(cell.getStringCellValue()));
+		cell = row.getCell((short)col++);
+		if ( cell != null )
+		    eventtypeObject.setOnlineRegistrationOnly(Util.trim(cell.getStringCellValue()));
 		DebugHandler.fine("Adding EventType " + eventtypeObject);
 		eventtypeIf.addEventType(eventtypeObject);
 	    } else if ( dbOp != null && dbOp.equalsIgnoreCase("DELETE") ) {

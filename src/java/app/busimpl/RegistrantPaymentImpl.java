@@ -94,20 +94,20 @@ public class RegistrantPaymentImpl implements RegistrantPaymentInterface  {
 	    return null;
 	for ( int i = 0; i < registrantPaymentObjectArr.length; i++ ) {
 	    if ( registrantPaymentObjectArr[i] == null ) { // Try database and add to cache if found.
-		RegistrantPaymentObject registrantpaymentObj = new RegistrantPaymentObject();
-		registrantpaymentObj.setRegistrantPaymentId(registrant_payment_id);
-		@SuppressWarnings("unchecked")
-		ArrayList<RegistrantPaymentObject> v = (ArrayList)DBUtil.fetch(registrantpaymentObj);
-		if ( v == null || v.size() == 0 )
-		    return null;
-		else {
-		    registrantPaymentObjectArr[i] = (RegistrantPaymentObject)registrantpaymentObj.clone();
-		    Util.putInCache(REGISTRANTPAYMENT, registrantPaymentObjectArr);
-		}
+		    RegistrantPaymentObject registrantpaymentObj = new RegistrantPaymentObject();
+		    registrantpaymentObj.setRegistrantPaymentId(registrant_payment_id);
+		    @SuppressWarnings("unchecked")
+		    ArrayList<RegistrantPaymentObject> v = (ArrayList)DBUtil.fetch(registrantpaymentObj);
+		    if ( v == null || v.size() == 0 )
+			    return null;
+		    else {
+			    registrantPaymentObjectArr[i] = (RegistrantPaymentObject)registrantpaymentObj.clone();
+			    Util.putInCache(REGISTRANTPAYMENT, registrantPaymentObjectArr);
+		    }
 	    }
 	    if ( registrantPaymentObjectArr[i].getRegistrantPaymentId() == registrant_payment_id ) {
-		DebugHandler.debug("Returning " + registrantPaymentObjectArr[i]);
-		return (RegistrantPaymentObject)registrantPaymentObjectArr[i].clone();
+		    DebugHandler.debug("Returning " + registrantPaymentObjectArr[i]);
+		    return (RegistrantPaymentObject)registrantPaymentObjectArr[i].clone();
 	    }
 	}
 	return null;
@@ -125,22 +125,22 @@ public class RegistrantPaymentImpl implements RegistrantPaymentInterface  {
      */
     
     public RegistrantPaymentObject[] getAllRegistrantPayments() throws AppException{
-	RegistrantPaymentObject registrantPaymentObject = new RegistrantPaymentObject();
-	RegistrantPaymentObject[] registrantPaymentObjectArr = (RegistrantPaymentObject[])Util.getAppCache().get(REGISTRANTPAYMENT);
-	if ( registrantPaymentObjectArr == null ) {
-	    DebugHandler.info("Getting registrantpayment from database");
-	    @SuppressWarnings("unchecked")
-	    ArrayList<RegistrantPaymentObject> v = (ArrayList)DBUtil.list(registrantPaymentObject);
-	    DebugHandler.finest(":v: " +  v);
-	    if ( v == null )
-		return null;
-	    registrantPaymentObjectArr = new RegistrantPaymentObject[v.size()];
-	    for ( int idx = 0; idx < v.size(); idx++ ) {
-		registrantPaymentObjectArr[idx] = v.get(idx);
-	    }
-	    Util.putInCache(REGISTRANTPAYMENT, registrantPaymentObjectArr);
-	}
-	return registrantPaymentObjectArr;
+		RegistrantPaymentObject registrantPaymentObject = new RegistrantPaymentObject();
+		RegistrantPaymentObject[] registrantPaymentObjectArr = (RegistrantPaymentObject[])Util.getAppCache().get(REGISTRANTPAYMENT);
+		if ( registrantPaymentObjectArr == null ) {
+		    DebugHandler.info("Getting registrantpayment from database");
+		    @SuppressWarnings("unchecked")
+		    ArrayList<RegistrantPaymentObject> v = (ArrayList)DBUtil.list(registrantPaymentObject);
+		    DebugHandler.finest(":v: " +  v);
+		    if ( v == null )
+			    return null;
+		    registrantPaymentObjectArr = new RegistrantPaymentObject[v.size()];
+		    for ( int idx = 0; idx < v.size(); idx++ ) {
+			    registrantPaymentObjectArr[idx] = v.get(idx);
+		    }
+		    Util.putInCache(REGISTRANTPAYMENT, registrantPaymentObjectArr);
+		}
+		return registrantPaymentObjectArr;
     }
     
     
@@ -155,41 +155,46 @@ public class RegistrantPaymentImpl implements RegistrantPaymentInterface  {
      */
     
     public Integer addRegistrantPayment(RegistrantPaymentObject registrantPaymentObject) throws AppException{
-	if ( AppConstants.DB_TYPE.equalsIgnoreCase(Constants.ORACLE) ) {
-		long l = DBUtil.getNextId("Registrant_Payment_seq");
-		registrantPaymentObject.setRegistrantPaymentId((int)l);
-	}
-	Integer i = (Integer)DBUtil.insert(registrantPaymentObject);
-	DebugHandler.fine("i: " +  i);
-	RegistrantPaymentObject buf = new RegistrantPaymentObject();
-	buf.setRegistrantEvent(registrantPaymentObject.getRegistrantEvent());
-	@SuppressWarnings("unchecked")
-	ArrayList<RegistrantPaymentObject> v = (ArrayList)DBUtil.list(registrantPaymentObject, buf);
+		if ( AppConstants.DB_TYPE.equalsIgnoreCase(Constants.ORACLE) ) {
+			long l = DBUtil.getNextId("Registrant_Payment_seq");
+			registrantPaymentObject.setRegistrantPaymentId((int)l);
+		}
+		Integer i = (Integer)DBUtil.insert(registrantPaymentObject);
+		DebugHandler.fine("i: " +  i);
+		// Do for Non Oracle where there is auto increment
+		if ( ! AppConstants.DB_TYPE.equalsIgnoreCase(Constants.ORACLE) ) {
+			registrantPaymentObject.setRegistrantPaymentId(i.intValue());
+			DebugHandler.fine(registrantPaymentObject);
+		}
+		RegistrantPaymentObject buf = new RegistrantPaymentObject();
+		buf.setRegistrantPaymentId(registrantPaymentObject.getRegistrantPaymentId());
+		@SuppressWarnings("unchecked")
+		ArrayList<RegistrantPaymentObject> v = (ArrayList)DBUtil.list(registrantPaymentObject, buf);
 		registrantPaymentObject = v.get(0);
-	RegistrantPaymentObject[] registrantPaymentObjectArr = getAllRegistrantPayments();
-	boolean foundSpace = false;
+		RegistrantPaymentObject[] registrantPaymentObjectArr = getAllRegistrantPayments();
+		boolean foundSpace = false;
 
-	for ( int idx = 0; idx < registrantPaymentObjectArr.length; idx++ ) {
-	    if ( registrantPaymentObjectArr[idx] == null ) {
-		registrantPaymentObjectArr[idx] = (RegistrantPaymentObject)registrantPaymentObject.clone();
-		foundSpace = true;
-		break;
-	    }
+		for ( int idx = 0; idx < registrantPaymentObjectArr.length; idx++ ) {
+			if ( registrantPaymentObjectArr[idx] == null ) {
+				registrantPaymentObjectArr[idx] = (RegistrantPaymentObject)registrantPaymentObject.clone();
+				foundSpace = true;
+				break;
+			}
+		}
+		if ( foundSpace == false ) {
+			RegistrantPaymentObject[] newregistrantPaymentObjectArr = new RegistrantPaymentObject[registrantPaymentObjectArr.length + 1];
+			int idx = 0;
+			for ( idx = 0; idx < registrantPaymentObjectArr.length; idx++ ) {
+				newregistrantPaymentObjectArr[idx] = (RegistrantPaymentObject)registrantPaymentObjectArr[idx].clone();
+			}
+			newregistrantPaymentObjectArr[idx] = (RegistrantPaymentObject)registrantPaymentObject.clone();
+			Util.putInCache(REGISTRANTPAYMENT, newregistrantPaymentObjectArr);
+		} else {
+			Util.putInCache(REGISTRANTPAYMENT, registrantPaymentObjectArr);
+		}
+		return i;
 	}
-	if ( foundSpace == false ) {
-	    RegistrantPaymentObject[] newregistrantPaymentObjectArr = new RegistrantPaymentObject[registrantPaymentObjectArr.length + 1];
-	    int idx = 0;
-	    for ( idx = 0; idx < registrantPaymentObjectArr.length; idx++ ) {
-		newregistrantPaymentObjectArr[idx] = (RegistrantPaymentObject)registrantPaymentObjectArr[idx].clone();
-	    }
-	    newregistrantPaymentObjectArr[idx] = (RegistrantPaymentObject)registrantPaymentObject.clone();
-	    Util.putInCache(REGISTRANTPAYMENT, newregistrantPaymentObjectArr);
-	} else {
-	    Util.putInCache(REGISTRANTPAYMENT, registrantPaymentObjectArr);
-	}
-	return i;
-    }
-    
+	
     
     /**
      *
@@ -201,24 +206,24 @@ public class RegistrantPaymentImpl implements RegistrantPaymentInterface  {
      *
      */
     
-    public Integer updateRegistrantPayment(RegistrantPaymentObject registrantPaymentObject) throws AppException{
-	RegistrantPaymentObject newRegistrantPaymentObject = getRegistrantPayment(registrantPaymentObject.getRegistrantPaymentId()); // This call will make sure cache/db are in sync
-	Integer i = (Integer)DBUtil.update(registrantPaymentObject);
-	DebugHandler.fine("i: " +  i);
-	RegistrantPaymentObject[] registrantPaymentObjectArr = getAllRegistrantPayments();
-	if ( registrantPaymentObjectArr == null )
-	    return null;
-	for ( int idx = 0; idx < registrantPaymentObjectArr.length; idx++ ) {
-	    if ( registrantPaymentObjectArr[idx] != null ) {
-		if ( registrantPaymentObjectArr[idx].getRegistrantPaymentId() == registrantPaymentObject.getRegistrantPaymentId() ) {
-		    DebugHandler.debug("Found RegistrantPayment " + registrantPaymentObject.getRegistrantPaymentId());
-		    registrantPaymentObjectArr[idx] = (RegistrantPaymentObject)registrantPaymentObject.clone();
-		    Util.putInCache(REGISTRANTPAYMENT, registrantPaymentObjectArr);
+	public Integer updateRegistrantPayment(RegistrantPaymentObject registrantPaymentObject) throws AppException{
+		RegistrantPaymentObject newRegistrantPaymentObject = getRegistrantPayment(registrantPaymentObject.getRegistrantPaymentId()); // This call will make sure cache/db are in sync
+		Integer i = (Integer)DBUtil.update(registrantPaymentObject);
+		DebugHandler.fine("i: " +  i);
+		RegistrantPaymentObject[] registrantPaymentObjectArr = getAllRegistrantPayments();
+		if ( registrantPaymentObjectArr == null )
+			return null;
+		for ( int idx = 0; idx < registrantPaymentObjectArr.length; idx++ ) {
+			if ( registrantPaymentObjectArr[idx] != null ) {
+				if ( registrantPaymentObjectArr[idx].getRegistrantPaymentId() == registrantPaymentObject.getRegistrantPaymentId() ) {
+					DebugHandler.debug("Found RegistrantPayment " + registrantPaymentObject.getRegistrantPaymentId());
+					registrantPaymentObjectArr[idx] = (RegistrantPaymentObject)registrantPaymentObject.clone();
+					Util.putInCache(REGISTRANTPAYMENT, registrantPaymentObjectArr);
+				}
+			}
 		}
-	    }
+		return i;
 	}
-	return i;
-    }
     
     
     /**

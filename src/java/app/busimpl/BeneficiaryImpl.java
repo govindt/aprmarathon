@@ -83,20 +83,20 @@ public class BeneficiaryImpl implements BeneficiaryInterface  {
 	    return null;
 	for ( int i = 0; i < beneficiaryObjectArr.length; i++ ) {
 	    if ( beneficiaryObjectArr[i] == null ) { // Try database and add to cache if found.
-		BeneficiaryObject beneficiaryObj = new BeneficiaryObject();
-		beneficiaryObj.setBeneficiaryId(beneficiary_id);
-		@SuppressWarnings("unchecked")
-		ArrayList<BeneficiaryObject> v = (ArrayList)DBUtil.fetch(beneficiaryObj);
-		if ( v == null || v.size() == 0 )
-		    return null;
-		else {
-		    beneficiaryObjectArr[i] = (BeneficiaryObject)beneficiaryObj.clone();
-		    Util.putInCache(BENEFICIARY, beneficiaryObjectArr);
-		}
+		    BeneficiaryObject beneficiaryObj = new BeneficiaryObject();
+		    beneficiaryObj.setBeneficiaryId(beneficiary_id);
+		    @SuppressWarnings("unchecked")
+		    ArrayList<BeneficiaryObject> v = (ArrayList)DBUtil.fetch(beneficiaryObj);
+		    if ( v == null || v.size() == 0 )
+			    return null;
+		    else {
+			    beneficiaryObjectArr[i] = (BeneficiaryObject)beneficiaryObj.clone();
+			    Util.putInCache(BENEFICIARY, beneficiaryObjectArr);
+		    }
 	    }
 	    if ( beneficiaryObjectArr[i].getBeneficiaryId() == beneficiary_id ) {
-		DebugHandler.debug("Returning " + beneficiaryObjectArr[i]);
-		return (BeneficiaryObject)beneficiaryObjectArr[i].clone();
+		    DebugHandler.debug("Returning " + beneficiaryObjectArr[i]);
+		    return (BeneficiaryObject)beneficiaryObjectArr[i].clone();
 	    }
 	}
 	return null;
@@ -114,22 +114,22 @@ public class BeneficiaryImpl implements BeneficiaryInterface  {
      */
     
     public BeneficiaryObject[] getAllBeneficiarys() throws AppException{
-	BeneficiaryObject beneficiaryObject = new BeneficiaryObject();
-	BeneficiaryObject[] beneficiaryObjectArr = (BeneficiaryObject[])Util.getAppCache().get(BENEFICIARY);
-	if ( beneficiaryObjectArr == null ) {
-	    DebugHandler.info("Getting beneficiary from database");
-	    @SuppressWarnings("unchecked")
-	    ArrayList<BeneficiaryObject> v = (ArrayList)DBUtil.list(beneficiaryObject);
-	    DebugHandler.finest(":v: " +  v);
-	    if ( v == null )
-		return null;
-	    beneficiaryObjectArr = new BeneficiaryObject[v.size()];
-	    for ( int idx = 0; idx < v.size(); idx++ ) {
-		beneficiaryObjectArr[idx] = v.get(idx);
-	    }
-	    Util.putInCache(BENEFICIARY, beneficiaryObjectArr);
-	}
-	return beneficiaryObjectArr;
+		BeneficiaryObject beneficiaryObject = new BeneficiaryObject();
+		BeneficiaryObject[] beneficiaryObjectArr = (BeneficiaryObject[])Util.getAppCache().get(BENEFICIARY);
+		if ( beneficiaryObjectArr == null ) {
+		    DebugHandler.info("Getting beneficiary from database");
+		    @SuppressWarnings("unchecked")
+		    ArrayList<BeneficiaryObject> v = (ArrayList)DBUtil.list(beneficiaryObject);
+		    DebugHandler.finest(":v: " +  v);
+		    if ( v == null )
+			    return null;
+		    beneficiaryObjectArr = new BeneficiaryObject[v.size()];
+		    for ( int idx = 0; idx < v.size(); idx++ ) {
+			    beneficiaryObjectArr[idx] = v.get(idx);
+		    }
+		    Util.putInCache(BENEFICIARY, beneficiaryObjectArr);
+		}
+		return beneficiaryObjectArr;
     }
     
     
@@ -144,41 +144,46 @@ public class BeneficiaryImpl implements BeneficiaryInterface  {
      */
     
     public Integer addBeneficiary(BeneficiaryObject beneficiaryObject) throws AppException{
-	if ( AppConstants.DB_TYPE.equalsIgnoreCase(Constants.ORACLE) ) {
-		long l = DBUtil.getNextId("Beneficiary_seq");
-		beneficiaryObject.setBeneficiaryId((int)l);
-	}
-	Integer i = (Integer)DBUtil.insert(beneficiaryObject);
-	DebugHandler.fine("i: " +  i);
-	BeneficiaryObject buf = new BeneficiaryObject();
-	buf.setBeneficiaryName(beneficiaryObject.getBeneficiaryName());
-	@SuppressWarnings("unchecked")
-	ArrayList<BeneficiaryObject> v = (ArrayList)DBUtil.list(beneficiaryObject, buf);
+		if ( AppConstants.DB_TYPE.equalsIgnoreCase(Constants.ORACLE) ) {
+			long l = DBUtil.getNextId("Beneficiary_seq");
+			beneficiaryObject.setBeneficiaryId((int)l);
+		}
+		Integer i = (Integer)DBUtil.insert(beneficiaryObject);
+		DebugHandler.fine("i: " +  i);
+		// Do for Non Oracle where there is auto increment
+		if ( ! AppConstants.DB_TYPE.equalsIgnoreCase(Constants.ORACLE) ) {
+			beneficiaryObject.setBeneficiaryId(i.intValue());
+			DebugHandler.fine(beneficiaryObject);
+		}
+		BeneficiaryObject buf = new BeneficiaryObject();
+		buf.setBeneficiaryId(beneficiaryObject.getBeneficiaryId());
+		@SuppressWarnings("unchecked")
+		ArrayList<BeneficiaryObject> v = (ArrayList)DBUtil.list(beneficiaryObject, buf);
 		beneficiaryObject = v.get(0);
-	BeneficiaryObject[] beneficiaryObjectArr = getAllBeneficiarys();
-	boolean foundSpace = false;
+		BeneficiaryObject[] beneficiaryObjectArr = getAllBeneficiarys();
+		boolean foundSpace = false;
 
-	for ( int idx = 0; idx < beneficiaryObjectArr.length; idx++ ) {
-	    if ( beneficiaryObjectArr[idx] == null ) {
-		beneficiaryObjectArr[idx] = (BeneficiaryObject)beneficiaryObject.clone();
-		foundSpace = true;
-		break;
-	    }
+		for ( int idx = 0; idx < beneficiaryObjectArr.length; idx++ ) {
+			if ( beneficiaryObjectArr[idx] == null ) {
+				beneficiaryObjectArr[idx] = (BeneficiaryObject)beneficiaryObject.clone();
+				foundSpace = true;
+				break;
+			}
+		}
+		if ( foundSpace == false ) {
+			BeneficiaryObject[] newbeneficiaryObjectArr = new BeneficiaryObject[beneficiaryObjectArr.length + 1];
+			int idx = 0;
+			for ( idx = 0; idx < beneficiaryObjectArr.length; idx++ ) {
+				newbeneficiaryObjectArr[idx] = (BeneficiaryObject)beneficiaryObjectArr[idx].clone();
+			}
+			newbeneficiaryObjectArr[idx] = (BeneficiaryObject)beneficiaryObject.clone();
+			Util.putInCache(BENEFICIARY, newbeneficiaryObjectArr);
+		} else {
+			Util.putInCache(BENEFICIARY, beneficiaryObjectArr);
+		}
+		return i;
 	}
-	if ( foundSpace == false ) {
-	    BeneficiaryObject[] newbeneficiaryObjectArr = new BeneficiaryObject[beneficiaryObjectArr.length + 1];
-	    int idx = 0;
-	    for ( idx = 0; idx < beneficiaryObjectArr.length; idx++ ) {
-		newbeneficiaryObjectArr[idx] = (BeneficiaryObject)beneficiaryObjectArr[idx].clone();
-	    }
-	    newbeneficiaryObjectArr[idx] = (BeneficiaryObject)beneficiaryObject.clone();
-	    Util.putInCache(BENEFICIARY, newbeneficiaryObjectArr);
-	} else {
-	    Util.putInCache(BENEFICIARY, beneficiaryObjectArr);
-	}
-	return i;
-    }
-    
+	
     
     /**
      *
@@ -190,24 +195,24 @@ public class BeneficiaryImpl implements BeneficiaryInterface  {
      *
      */
     
-    public Integer updateBeneficiary(BeneficiaryObject beneficiaryObject) throws AppException{
-	BeneficiaryObject newBeneficiaryObject = getBeneficiary(beneficiaryObject.getBeneficiaryId()); // This call will make sure cache/db are in sync
-	Integer i = (Integer)DBUtil.update(beneficiaryObject);
-	DebugHandler.fine("i: " +  i);
-	BeneficiaryObject[] beneficiaryObjectArr = getAllBeneficiarys();
-	if ( beneficiaryObjectArr == null )
-	    return null;
-	for ( int idx = 0; idx < beneficiaryObjectArr.length; idx++ ) {
-	    if ( beneficiaryObjectArr[idx] != null ) {
-		if ( beneficiaryObjectArr[idx].getBeneficiaryId() == beneficiaryObject.getBeneficiaryId() ) {
-		    DebugHandler.debug("Found Beneficiary " + beneficiaryObject.getBeneficiaryId());
-		    beneficiaryObjectArr[idx] = (BeneficiaryObject)beneficiaryObject.clone();
-		    Util.putInCache(BENEFICIARY, beneficiaryObjectArr);
+	public Integer updateBeneficiary(BeneficiaryObject beneficiaryObject) throws AppException{
+		BeneficiaryObject newBeneficiaryObject = getBeneficiary(beneficiaryObject.getBeneficiaryId()); // This call will make sure cache/db are in sync
+		Integer i = (Integer)DBUtil.update(beneficiaryObject);
+		DebugHandler.fine("i: " +  i);
+		BeneficiaryObject[] beneficiaryObjectArr = getAllBeneficiarys();
+		if ( beneficiaryObjectArr == null )
+			return null;
+		for ( int idx = 0; idx < beneficiaryObjectArr.length; idx++ ) {
+			if ( beneficiaryObjectArr[idx] != null ) {
+				if ( beneficiaryObjectArr[idx].getBeneficiaryId() == beneficiaryObject.getBeneficiaryId() ) {
+					DebugHandler.debug("Found Beneficiary " + beneficiaryObject.getBeneficiaryId());
+					beneficiaryObjectArr[idx] = (BeneficiaryObject)beneficiaryObject.clone();
+					Util.putInCache(BENEFICIARY, beneficiaryObjectArr);
+				}
+			}
 		}
-	    }
+		return i;
 	}
-	return i;
-    }
     
     
     /**

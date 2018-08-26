@@ -83,20 +83,20 @@ public class TShirtSizeImpl implements TShirtSizeInterface  {
 	    return null;
 	for ( int i = 0; i < tShirtSizeObjectArr.length; i++ ) {
 	    if ( tShirtSizeObjectArr[i] == null ) { // Try database and add to cache if found.
-		TShirtSizeObject tshirtsizeObj = new TShirtSizeObject();
-		tshirtsizeObj.setTShirtSizeId(t_shirt_size_id);
-		@SuppressWarnings("unchecked")
-		ArrayList<TShirtSizeObject> v = (ArrayList)DBUtil.fetch(tshirtsizeObj);
-		if ( v == null || v.size() == 0 )
-		    return null;
-		else {
-		    tShirtSizeObjectArr[i] = (TShirtSizeObject)tshirtsizeObj.clone();
-		    Util.putInCache(TSHIRTSIZE, tShirtSizeObjectArr);
-		}
+		    TShirtSizeObject tshirtsizeObj = new TShirtSizeObject();
+		    tshirtsizeObj.setTShirtSizeId(t_shirt_size_id);
+		    @SuppressWarnings("unchecked")
+		    ArrayList<TShirtSizeObject> v = (ArrayList)DBUtil.fetch(tshirtsizeObj);
+		    if ( v == null || v.size() == 0 )
+			    return null;
+		    else {
+			    tShirtSizeObjectArr[i] = (TShirtSizeObject)tshirtsizeObj.clone();
+			    Util.putInCache(TSHIRTSIZE, tShirtSizeObjectArr);
+		    }
 	    }
 	    if ( tShirtSizeObjectArr[i].getTShirtSizeId() == t_shirt_size_id ) {
-		DebugHandler.debug("Returning " + tShirtSizeObjectArr[i]);
-		return (TShirtSizeObject)tShirtSizeObjectArr[i].clone();
+		    DebugHandler.debug("Returning " + tShirtSizeObjectArr[i]);
+		    return (TShirtSizeObject)tShirtSizeObjectArr[i].clone();
 	    }
 	}
 	return null;
@@ -114,22 +114,22 @@ public class TShirtSizeImpl implements TShirtSizeInterface  {
      */
     
     public TShirtSizeObject[] getAllTShirtSizes() throws AppException{
-	TShirtSizeObject tShirtSizeObject = new TShirtSizeObject();
-	TShirtSizeObject[] tShirtSizeObjectArr = (TShirtSizeObject[])Util.getAppCache().get(TSHIRTSIZE);
-	if ( tShirtSizeObjectArr == null ) {
-	    DebugHandler.info("Getting tshirtsize from database");
-	    @SuppressWarnings("unchecked")
-	    ArrayList<TShirtSizeObject> v = (ArrayList)DBUtil.list(tShirtSizeObject);
-	    DebugHandler.finest(":v: " +  v);
-	    if ( v == null )
-		return null;
-	    tShirtSizeObjectArr = new TShirtSizeObject[v.size()];
-	    for ( int idx = 0; idx < v.size(); idx++ ) {
-		tShirtSizeObjectArr[idx] = v.get(idx);
-	    }
-	    Util.putInCache(TSHIRTSIZE, tShirtSizeObjectArr);
-	}
-	return tShirtSizeObjectArr;
+		TShirtSizeObject tShirtSizeObject = new TShirtSizeObject();
+		TShirtSizeObject[] tShirtSizeObjectArr = (TShirtSizeObject[])Util.getAppCache().get(TSHIRTSIZE);
+		if ( tShirtSizeObjectArr == null ) {
+		    DebugHandler.info("Getting tshirtsize from database");
+		    @SuppressWarnings("unchecked")
+		    ArrayList<TShirtSizeObject> v = (ArrayList)DBUtil.list(tShirtSizeObject);
+		    DebugHandler.finest(":v: " +  v);
+		    if ( v == null )
+			    return null;
+		    tShirtSizeObjectArr = new TShirtSizeObject[v.size()];
+		    for ( int idx = 0; idx < v.size(); idx++ ) {
+			    tShirtSizeObjectArr[idx] = v.get(idx);
+		    }
+		    Util.putInCache(TSHIRTSIZE, tShirtSizeObjectArr);
+		}
+		return tShirtSizeObjectArr;
     }
     
     
@@ -144,41 +144,46 @@ public class TShirtSizeImpl implements TShirtSizeInterface  {
      */
     
     public Integer addTShirtSize(TShirtSizeObject tShirtSizeObject) throws AppException{
-	if ( AppConstants.DB_TYPE.equalsIgnoreCase(Constants.ORACLE) ) {
-		long l = DBUtil.getNextId("T_Shirt_Size_seq");
-		tShirtSizeObject.setTShirtSizeId((int)l);
-	}
-	Integer i = (Integer)DBUtil.insert(tShirtSizeObject);
-	DebugHandler.fine("i: " +  i);
-	TShirtSizeObject buf = new TShirtSizeObject();
-	buf.setTShirtSizeName(tShirtSizeObject.getTShirtSizeName());
-	@SuppressWarnings("unchecked")
-	ArrayList<TShirtSizeObject> v = (ArrayList)DBUtil.list(tShirtSizeObject, buf);
+		if ( AppConstants.DB_TYPE.equalsIgnoreCase(Constants.ORACLE) ) {
+			long l = DBUtil.getNextId("T_Shirt_Size_seq");
+			tShirtSizeObject.setTShirtSizeId((int)l);
+		}
+		Integer i = (Integer)DBUtil.insert(tShirtSizeObject);
+		DebugHandler.fine("i: " +  i);
+		// Do for Non Oracle where there is auto increment
+		if ( ! AppConstants.DB_TYPE.equalsIgnoreCase(Constants.ORACLE) ) {
+			tShirtSizeObject.setTShirtSizeId(i.intValue());
+			DebugHandler.fine(tShirtSizeObject);
+		}
+		TShirtSizeObject buf = new TShirtSizeObject();
+		buf.setTShirtSizeId(tShirtSizeObject.getTShirtSizeId());
+		@SuppressWarnings("unchecked")
+		ArrayList<TShirtSizeObject> v = (ArrayList)DBUtil.list(tShirtSizeObject, buf);
 		tShirtSizeObject = v.get(0);
-	TShirtSizeObject[] tShirtSizeObjectArr = getAllTShirtSizes();
-	boolean foundSpace = false;
+		TShirtSizeObject[] tShirtSizeObjectArr = getAllTShirtSizes();
+		boolean foundSpace = false;
 
-	for ( int idx = 0; idx < tShirtSizeObjectArr.length; idx++ ) {
-	    if ( tShirtSizeObjectArr[idx] == null ) {
-		tShirtSizeObjectArr[idx] = (TShirtSizeObject)tShirtSizeObject.clone();
-		foundSpace = true;
-		break;
-	    }
+		for ( int idx = 0; idx < tShirtSizeObjectArr.length; idx++ ) {
+			if ( tShirtSizeObjectArr[idx] == null ) {
+				tShirtSizeObjectArr[idx] = (TShirtSizeObject)tShirtSizeObject.clone();
+				foundSpace = true;
+				break;
+			}
+		}
+		if ( foundSpace == false ) {
+			TShirtSizeObject[] newtShirtSizeObjectArr = new TShirtSizeObject[tShirtSizeObjectArr.length + 1];
+			int idx = 0;
+			for ( idx = 0; idx < tShirtSizeObjectArr.length; idx++ ) {
+				newtShirtSizeObjectArr[idx] = (TShirtSizeObject)tShirtSizeObjectArr[idx].clone();
+			}
+			newtShirtSizeObjectArr[idx] = (TShirtSizeObject)tShirtSizeObject.clone();
+			Util.putInCache(TSHIRTSIZE, newtShirtSizeObjectArr);
+		} else {
+			Util.putInCache(TSHIRTSIZE, tShirtSizeObjectArr);
+		}
+		return i;
 	}
-	if ( foundSpace == false ) {
-	    TShirtSizeObject[] newtShirtSizeObjectArr = new TShirtSizeObject[tShirtSizeObjectArr.length + 1];
-	    int idx = 0;
-	    for ( idx = 0; idx < tShirtSizeObjectArr.length; idx++ ) {
-		newtShirtSizeObjectArr[idx] = (TShirtSizeObject)tShirtSizeObjectArr[idx].clone();
-	    }
-	    newtShirtSizeObjectArr[idx] = (TShirtSizeObject)tShirtSizeObject.clone();
-	    Util.putInCache(TSHIRTSIZE, newtShirtSizeObjectArr);
-	} else {
-	    Util.putInCache(TSHIRTSIZE, tShirtSizeObjectArr);
-	}
-	return i;
-    }
-    
+	
     
     /**
      *
@@ -190,24 +195,24 @@ public class TShirtSizeImpl implements TShirtSizeInterface  {
      *
      */
     
-    public Integer updateTShirtSize(TShirtSizeObject tShirtSizeObject) throws AppException{
-	TShirtSizeObject newTShirtSizeObject = getTShirtSize(tShirtSizeObject.getTShirtSizeId()); // This call will make sure cache/db are in sync
-	Integer i = (Integer)DBUtil.update(tShirtSizeObject);
-	DebugHandler.fine("i: " +  i);
-	TShirtSizeObject[] tShirtSizeObjectArr = getAllTShirtSizes();
-	if ( tShirtSizeObjectArr == null )
-	    return null;
-	for ( int idx = 0; idx < tShirtSizeObjectArr.length; idx++ ) {
-	    if ( tShirtSizeObjectArr[idx] != null ) {
-		if ( tShirtSizeObjectArr[idx].getTShirtSizeId() == tShirtSizeObject.getTShirtSizeId() ) {
-		    DebugHandler.debug("Found TShirtSize " + tShirtSizeObject.getTShirtSizeId());
-		    tShirtSizeObjectArr[idx] = (TShirtSizeObject)tShirtSizeObject.clone();
-		    Util.putInCache(TSHIRTSIZE, tShirtSizeObjectArr);
+	public Integer updateTShirtSize(TShirtSizeObject tShirtSizeObject) throws AppException{
+		TShirtSizeObject newTShirtSizeObject = getTShirtSize(tShirtSizeObject.getTShirtSizeId()); // This call will make sure cache/db are in sync
+		Integer i = (Integer)DBUtil.update(tShirtSizeObject);
+		DebugHandler.fine("i: " +  i);
+		TShirtSizeObject[] tShirtSizeObjectArr = getAllTShirtSizes();
+		if ( tShirtSizeObjectArr == null )
+			return null;
+		for ( int idx = 0; idx < tShirtSizeObjectArr.length; idx++ ) {
+			if ( tShirtSizeObjectArr[idx] != null ) {
+				if ( tShirtSizeObjectArr[idx].getTShirtSizeId() == tShirtSizeObject.getTShirtSizeId() ) {
+					DebugHandler.debug("Found TShirtSize " + tShirtSizeObject.getTShirtSizeId());
+					tShirtSizeObjectArr[idx] = (TShirtSizeObject)tShirtSizeObject.clone();
+					Util.putInCache(TSHIRTSIZE, tShirtSizeObjectArr);
+				}
+			}
 		}
-	    }
+		return i;
 	}
-	return i;
-    }
     
     
     /**

@@ -296,6 +296,12 @@ public class SQLStatement {
             count = (s instanceof PreparedStatement) ?
                             ((PreparedStatement) s).executeUpdate() :
                             s.executeUpdate(getStatement());
+			
+			ResultSet rs = s.getGeneratedKeys();
+			if(rs.next()){
+				count = rs.getInt(1);
+				DebugHandler.fine("ID " + count);
+			}
         } catch (SQLException se) {
             throw new DBException(se);
         }

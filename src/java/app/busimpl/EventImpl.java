@@ -87,20 +87,20 @@ public class EventImpl implements EventInterface  {
 	    return null;
 	for ( int i = 0; i < eventObjectArr.length; i++ ) {
 	    if ( eventObjectArr[i] == null ) { // Try database and add to cache if found.
-		EventObject eventObj = new EventObject();
-		eventObj.setEventId(event_id);
-		@SuppressWarnings("unchecked")
-		ArrayList<EventObject> v = (ArrayList)DBUtil.fetch(eventObj);
-		if ( v == null || v.size() == 0 )
-		    return null;
-		else {
-		    eventObjectArr[i] = (EventObject)eventObj.clone();
-		    Util.putInCache(EVENT, eventObjectArr);
-		}
+		    EventObject eventObj = new EventObject();
+		    eventObj.setEventId(event_id);
+		    @SuppressWarnings("unchecked")
+		    ArrayList<EventObject> v = (ArrayList)DBUtil.fetch(eventObj);
+		    if ( v == null || v.size() == 0 )
+			    return null;
+		    else {
+			    eventObjectArr[i] = (EventObject)eventObj.clone();
+			    Util.putInCache(EVENT, eventObjectArr);
+		    }
 	    }
 	    if ( eventObjectArr[i].getEventId() == event_id ) {
-		DebugHandler.debug("Returning " + eventObjectArr[i]);
-		return (EventObject)eventObjectArr[i].clone();
+		    DebugHandler.debug("Returning " + eventObjectArr[i]);
+		    return (EventObject)eventObjectArr[i].clone();
 	    }
 	}
 	return null;
@@ -118,22 +118,22 @@ public class EventImpl implements EventInterface  {
      */
     
     public EventObject[] getAllEvents() throws AppException{
-	EventObject eventObject = new EventObject();
-	EventObject[] eventObjectArr = (EventObject[])Util.getAppCache().get(EVENT);
-	if ( eventObjectArr == null ) {
-	    DebugHandler.info("Getting event from database");
-	    @SuppressWarnings("unchecked")
-	    ArrayList<EventObject> v = (ArrayList)DBUtil.list(eventObject);
-	    DebugHandler.finest(":v: " +  v);
-	    if ( v == null )
-		return null;
-	    eventObjectArr = new EventObject[v.size()];
-	    for ( int idx = 0; idx < v.size(); idx++ ) {
-		eventObjectArr[idx] = v.get(idx);
-	    }
-	    Util.putInCache(EVENT, eventObjectArr);
-	}
-	return eventObjectArr;
+		EventObject eventObject = new EventObject();
+		EventObject[] eventObjectArr = (EventObject[])Util.getAppCache().get(EVENT);
+		if ( eventObjectArr == null ) {
+		    DebugHandler.info("Getting event from database");
+		    @SuppressWarnings("unchecked")
+		    ArrayList<EventObject> v = (ArrayList)DBUtil.list(eventObject);
+		    DebugHandler.finest(":v: " +  v);
+		    if ( v == null )
+			    return null;
+		    eventObjectArr = new EventObject[v.size()];
+		    for ( int idx = 0; idx < v.size(); idx++ ) {
+			    eventObjectArr[idx] = v.get(idx);
+		    }
+		    Util.putInCache(EVENT, eventObjectArr);
+		}
+		return eventObjectArr;
     }
     
     
@@ -148,41 +148,46 @@ public class EventImpl implements EventInterface  {
      */
     
     public Integer addEvent(EventObject eventObject) throws AppException{
-	if ( AppConstants.DB_TYPE.equalsIgnoreCase(Constants.ORACLE) ) {
-		long l = DBUtil.getNextId("Event_seq");
-		eventObject.setEventId((int)l);
-	}
-	Integer i = (Integer)DBUtil.insert(eventObject);
-	DebugHandler.fine("i: " +  i);
-	EventObject buf = new EventObject();
-	buf.setEventName(eventObject.getEventName());
-	@SuppressWarnings("unchecked")
-	ArrayList<EventObject> v = (ArrayList)DBUtil.list(eventObject, buf);
+		if ( AppConstants.DB_TYPE.equalsIgnoreCase(Constants.ORACLE) ) {
+			long l = DBUtil.getNextId("Event_seq");
+			eventObject.setEventId((int)l);
+		}
+		Integer i = (Integer)DBUtil.insert(eventObject);
+		DebugHandler.fine("i: " +  i);
+		// Do for Non Oracle where there is auto increment
+		if ( ! AppConstants.DB_TYPE.equalsIgnoreCase(Constants.ORACLE) ) {
+			eventObject.setEventId(i.intValue());
+			DebugHandler.fine(eventObject);
+		}
+		EventObject buf = new EventObject();
+		buf.setEventId(eventObject.getEventId());
+		@SuppressWarnings("unchecked")
+		ArrayList<EventObject> v = (ArrayList)DBUtil.list(eventObject, buf);
 		eventObject = v.get(0);
-	EventObject[] eventObjectArr = getAllEvents();
-	boolean foundSpace = false;
+		EventObject[] eventObjectArr = getAllEvents();
+		boolean foundSpace = false;
 
-	for ( int idx = 0; idx < eventObjectArr.length; idx++ ) {
-	    if ( eventObjectArr[idx] == null ) {
-		eventObjectArr[idx] = (EventObject)eventObject.clone();
-		foundSpace = true;
-		break;
-	    }
+		for ( int idx = 0; idx < eventObjectArr.length; idx++ ) {
+			if ( eventObjectArr[idx] == null ) {
+				eventObjectArr[idx] = (EventObject)eventObject.clone();
+				foundSpace = true;
+				break;
+			}
+		}
+		if ( foundSpace == false ) {
+			EventObject[] neweventObjectArr = new EventObject[eventObjectArr.length + 1];
+			int idx = 0;
+			for ( idx = 0; idx < eventObjectArr.length; idx++ ) {
+				neweventObjectArr[idx] = (EventObject)eventObjectArr[idx].clone();
+			}
+			neweventObjectArr[idx] = (EventObject)eventObject.clone();
+			Util.putInCache(EVENT, neweventObjectArr);
+		} else {
+			Util.putInCache(EVENT, eventObjectArr);
+		}
+		return i;
 	}
-	if ( foundSpace == false ) {
-	    EventObject[] neweventObjectArr = new EventObject[eventObjectArr.length + 1];
-	    int idx = 0;
-	    for ( idx = 0; idx < eventObjectArr.length; idx++ ) {
-		neweventObjectArr[idx] = (EventObject)eventObjectArr[idx].clone();
-	    }
-	    neweventObjectArr[idx] = (EventObject)eventObject.clone();
-	    Util.putInCache(EVENT, neweventObjectArr);
-	} else {
-	    Util.putInCache(EVENT, eventObjectArr);
-	}
-	return i;
-    }
-    
+	
     
     /**
      *
@@ -194,24 +199,24 @@ public class EventImpl implements EventInterface  {
      *
      */
     
-    public Integer updateEvent(EventObject eventObject) throws AppException{
-	EventObject newEventObject = getEvent(eventObject.getEventId()); // This call will make sure cache/db are in sync
-	Integer i = (Integer)DBUtil.update(eventObject);
-	DebugHandler.fine("i: " +  i);
-	EventObject[] eventObjectArr = getAllEvents();
-	if ( eventObjectArr == null )
-	    return null;
-	for ( int idx = 0; idx < eventObjectArr.length; idx++ ) {
-	    if ( eventObjectArr[idx] != null ) {
-		if ( eventObjectArr[idx].getEventId() == eventObject.getEventId() ) {
-		    DebugHandler.debug("Found Event " + eventObject.getEventId());
-		    eventObjectArr[idx] = (EventObject)eventObject.clone();
-		    Util.putInCache(EVENT, eventObjectArr);
+	public Integer updateEvent(EventObject eventObject) throws AppException{
+		EventObject newEventObject = getEvent(eventObject.getEventId()); // This call will make sure cache/db are in sync
+		Integer i = (Integer)DBUtil.update(eventObject);
+		DebugHandler.fine("i: " +  i);
+		EventObject[] eventObjectArr = getAllEvents();
+		if ( eventObjectArr == null )
+			return null;
+		for ( int idx = 0; idx < eventObjectArr.length; idx++ ) {
+			if ( eventObjectArr[idx] != null ) {
+				if ( eventObjectArr[idx].getEventId() == eventObject.getEventId() ) {
+					DebugHandler.debug("Found Event " + eventObject.getEventId());
+					eventObjectArr[idx] = (EventObject)eventObject.clone();
+					Util.putInCache(EVENT, eventObjectArr);
+				}
+			}
 		}
-	    }
+		return i;
 	}
-	return i;
-    }
     
     
     /**

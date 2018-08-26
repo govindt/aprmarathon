@@ -54,7 +54,8 @@ create table Event_Type(
 	event_type_description varchar(750),
 	event_type_start_date datetime not null,
 	event_type_end_date datetime not null,
-	event_type_venue varchar(50) not null
+	event_type_venue varchar(50) not null,
+	online_registration_only varchar(1)
 );
 
 create table Gender(
@@ -184,7 +185,7 @@ create table Participant_Event(
 	participant_type int references RegistrationType(Registration_Type_Id),
 	participant_event_type int references EventType(Event_Type_Id),
 	participant_bib_no varchar(20),
-	participant_group int references Registrant(Registrant_Id)
+	participant_group int references Registrant_Event(Registrant_Event_Id)
 );
 
 create table Result(

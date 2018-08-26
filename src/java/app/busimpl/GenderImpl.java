@@ -82,20 +82,20 @@ public class GenderImpl implements GenderInterface  {
 	    return null;
 	for ( int i = 0; i < genderObjectArr.length; i++ ) {
 	    if ( genderObjectArr[i] == null ) { // Try database and add to cache if found.
-		GenderObject genderObj = new GenderObject();
-		genderObj.setGenderId(gender_id);
-		@SuppressWarnings("unchecked")
-		ArrayList<GenderObject> v = (ArrayList)DBUtil.fetch(genderObj);
-		if ( v == null || v.size() == 0 )
-		    return null;
-		else {
-		    genderObjectArr[i] = (GenderObject)genderObj.clone();
-		    Util.putInCache(GENDER, genderObjectArr);
-		}
+		    GenderObject genderObj = new GenderObject();
+		    genderObj.setGenderId(gender_id);
+		    @SuppressWarnings("unchecked")
+		    ArrayList<GenderObject> v = (ArrayList)DBUtil.fetch(genderObj);
+		    if ( v == null || v.size() == 0 )
+			    return null;
+		    else {
+			    genderObjectArr[i] = (GenderObject)genderObj.clone();
+			    Util.putInCache(GENDER, genderObjectArr);
+		    }
 	    }
 	    if ( genderObjectArr[i].getGenderId() == gender_id ) {
-		DebugHandler.debug("Returning " + genderObjectArr[i]);
-		return (GenderObject)genderObjectArr[i].clone();
+		    DebugHandler.debug("Returning " + genderObjectArr[i]);
+		    return (GenderObject)genderObjectArr[i].clone();
 	    }
 	}
 	return null;
@@ -113,22 +113,22 @@ public class GenderImpl implements GenderInterface  {
      */
     
     public GenderObject[] getAllGenders() throws AppException{
-	GenderObject genderObject = new GenderObject();
-	GenderObject[] genderObjectArr = (GenderObject[])Util.getAppCache().get(GENDER);
-	if ( genderObjectArr == null ) {
-	    DebugHandler.info("Getting gender from database");
-	    @SuppressWarnings("unchecked")
-	    ArrayList<GenderObject> v = (ArrayList)DBUtil.list(genderObject);
-	    DebugHandler.finest(":v: " +  v);
-	    if ( v == null )
-		return null;
-	    genderObjectArr = new GenderObject[v.size()];
-	    for ( int idx = 0; idx < v.size(); idx++ ) {
-		genderObjectArr[idx] = v.get(idx);
-	    }
-	    Util.putInCache(GENDER, genderObjectArr);
-	}
-	return genderObjectArr;
+		GenderObject genderObject = new GenderObject();
+		GenderObject[] genderObjectArr = (GenderObject[])Util.getAppCache().get(GENDER);
+		if ( genderObjectArr == null ) {
+		    DebugHandler.info("Getting gender from database");
+		    @SuppressWarnings("unchecked")
+		    ArrayList<GenderObject> v = (ArrayList)DBUtil.list(genderObject);
+		    DebugHandler.finest(":v: " +  v);
+		    if ( v == null )
+			    return null;
+		    genderObjectArr = new GenderObject[v.size()];
+		    for ( int idx = 0; idx < v.size(); idx++ ) {
+			    genderObjectArr[idx] = v.get(idx);
+		    }
+		    Util.putInCache(GENDER, genderObjectArr);
+		}
+		return genderObjectArr;
     }
     
     
@@ -143,41 +143,46 @@ public class GenderImpl implements GenderInterface  {
      */
     
     public Integer addGender(GenderObject genderObject) throws AppException{
-	if ( AppConstants.DB_TYPE.equalsIgnoreCase(Constants.ORACLE) ) {
-		long l = DBUtil.getNextId("Gender_seq");
-		genderObject.setGenderId((int)l);
-	}
-	Integer i = (Integer)DBUtil.insert(genderObject);
-	DebugHandler.fine("i: " +  i);
-	GenderObject buf = new GenderObject();
-	buf.setGenderName(genderObject.getGenderName());
-	@SuppressWarnings("unchecked")
-	ArrayList<GenderObject> v = (ArrayList)DBUtil.list(genderObject, buf);
+		if ( AppConstants.DB_TYPE.equalsIgnoreCase(Constants.ORACLE) ) {
+			long l = DBUtil.getNextId("Gender_seq");
+			genderObject.setGenderId((int)l);
+		}
+		Integer i = (Integer)DBUtil.insert(genderObject);
+		DebugHandler.fine("i: " +  i);
+		// Do for Non Oracle where there is auto increment
+		if ( ! AppConstants.DB_TYPE.equalsIgnoreCase(Constants.ORACLE) ) {
+			genderObject.setGenderId(i.intValue());
+			DebugHandler.fine(genderObject);
+		}
+		GenderObject buf = new GenderObject();
+		buf.setGenderId(genderObject.getGenderId());
+		@SuppressWarnings("unchecked")
+		ArrayList<GenderObject> v = (ArrayList)DBUtil.list(genderObject, buf);
 		genderObject = v.get(0);
-	GenderObject[] genderObjectArr = getAllGenders();
-	boolean foundSpace = false;
+		GenderObject[] genderObjectArr = getAllGenders();
+		boolean foundSpace = false;
 
-	for ( int idx = 0; idx < genderObjectArr.length; idx++ ) {
-	    if ( genderObjectArr[idx] == null ) {
-		genderObjectArr[idx] = (GenderObject)genderObject.clone();
-		foundSpace = true;
-		break;
-	    }
+		for ( int idx = 0; idx < genderObjectArr.length; idx++ ) {
+			if ( genderObjectArr[idx] == null ) {
+				genderObjectArr[idx] = (GenderObject)genderObject.clone();
+				foundSpace = true;
+				break;
+			}
+		}
+		if ( foundSpace == false ) {
+			GenderObject[] newgenderObjectArr = new GenderObject[genderObjectArr.length + 1];
+			int idx = 0;
+			for ( idx = 0; idx < genderObjectArr.length; idx++ ) {
+				newgenderObjectArr[idx] = (GenderObject)genderObjectArr[idx].clone();
+			}
+			newgenderObjectArr[idx] = (GenderObject)genderObject.clone();
+			Util.putInCache(GENDER, newgenderObjectArr);
+		} else {
+			Util.putInCache(GENDER, genderObjectArr);
+		}
+		return i;
 	}
-	if ( foundSpace == false ) {
-	    GenderObject[] newgenderObjectArr = new GenderObject[genderObjectArr.length + 1];
-	    int idx = 0;
-	    for ( idx = 0; idx < genderObjectArr.length; idx++ ) {
-		newgenderObjectArr[idx] = (GenderObject)genderObjectArr[idx].clone();
-	    }
-	    newgenderObjectArr[idx] = (GenderObject)genderObject.clone();
-	    Util.putInCache(GENDER, newgenderObjectArr);
-	} else {
-	    Util.putInCache(GENDER, genderObjectArr);
-	}
-	return i;
-    }
-    
+	
     
     /**
      *
@@ -189,24 +194,24 @@ public class GenderImpl implements GenderInterface  {
      *
      */
     
-    public Integer updateGender(GenderObject genderObject) throws AppException{
-	GenderObject newGenderObject = getGender(genderObject.getGenderId()); // This call will make sure cache/db are in sync
-	Integer i = (Integer)DBUtil.update(genderObject);
-	DebugHandler.fine("i: " +  i);
-	GenderObject[] genderObjectArr = getAllGenders();
-	if ( genderObjectArr == null )
-	    return null;
-	for ( int idx = 0; idx < genderObjectArr.length; idx++ ) {
-	    if ( genderObjectArr[idx] != null ) {
-		if ( genderObjectArr[idx].getGenderId() == genderObject.getGenderId() ) {
-		    DebugHandler.debug("Found Gender " + genderObject.getGenderId());
-		    genderObjectArr[idx] = (GenderObject)genderObject.clone();
-		    Util.putInCache(GENDER, genderObjectArr);
+	public Integer updateGender(GenderObject genderObject) throws AppException{
+		GenderObject newGenderObject = getGender(genderObject.getGenderId()); // This call will make sure cache/db are in sync
+		Integer i = (Integer)DBUtil.update(genderObject);
+		DebugHandler.fine("i: " +  i);
+		GenderObject[] genderObjectArr = getAllGenders();
+		if ( genderObjectArr == null )
+			return null;
+		for ( int idx = 0; idx < genderObjectArr.length; idx++ ) {
+			if ( genderObjectArr[idx] != null ) {
+				if ( genderObjectArr[idx].getGenderId() == genderObject.getGenderId() ) {
+					DebugHandler.debug("Found Gender " + genderObject.getGenderId());
+					genderObjectArr[idx] = (GenderObject)genderObject.clone();
+					Util.putInCache(GENDER, genderObjectArr);
+				}
+			}
 		}
-	    }
+		return i;
 	}
-	return i;
-    }
     
     
     /**

@@ -87,20 +87,20 @@ public class ParticipantEventImpl implements ParticipantEventInterface  {
 	    return null;
 	for ( int i = 0; i < participantEventObjectArr.length; i++ ) {
 	    if ( participantEventObjectArr[i] == null ) { // Try database and add to cache if found.
-		ParticipantEventObject participanteventObj = new ParticipantEventObject();
-		participanteventObj.setParticipantEventId(participant_event_id);
-		@SuppressWarnings("unchecked")
-		ArrayList<ParticipantEventObject> v = (ArrayList)DBUtil.fetch(participanteventObj);
-		if ( v == null || v.size() == 0 )
-		    return null;
-		else {
-		    participantEventObjectArr[i] = (ParticipantEventObject)participanteventObj.clone();
-		    Util.putInCache(PARTICIPANTEVENT, participantEventObjectArr);
-		}
+		    ParticipantEventObject participanteventObj = new ParticipantEventObject();
+		    participanteventObj.setParticipantEventId(participant_event_id);
+		    @SuppressWarnings("unchecked")
+		    ArrayList<ParticipantEventObject> v = (ArrayList)DBUtil.fetch(participanteventObj);
+		    if ( v == null || v.size() == 0 )
+			    return null;
+		    else {
+			    participantEventObjectArr[i] = (ParticipantEventObject)participanteventObj.clone();
+			    Util.putInCache(PARTICIPANTEVENT, participantEventObjectArr);
+		    }
 	    }
 	    if ( participantEventObjectArr[i].getParticipantEventId() == participant_event_id ) {
-		DebugHandler.debug("Returning " + participantEventObjectArr[i]);
-		return (ParticipantEventObject)participantEventObjectArr[i].clone();
+		    DebugHandler.debug("Returning " + participantEventObjectArr[i]);
+		    return (ParticipantEventObject)participantEventObjectArr[i].clone();
 	    }
 	}
 	return null;
@@ -118,22 +118,22 @@ public class ParticipantEventImpl implements ParticipantEventInterface  {
      */
     
     public ParticipantEventObject[] getAllParticipantEvents() throws AppException{
-	ParticipantEventObject participantEventObject = new ParticipantEventObject();
-	ParticipantEventObject[] participantEventObjectArr = (ParticipantEventObject[])Util.getAppCache().get(PARTICIPANTEVENT);
-	if ( participantEventObjectArr == null ) {
-	    DebugHandler.info("Getting participantevent from database");
-	    @SuppressWarnings("unchecked")
-	    ArrayList<ParticipantEventObject> v = (ArrayList)DBUtil.list(participantEventObject);
-	    DebugHandler.finest(":v: " +  v);
-	    if ( v == null )
-		return null;
-	    participantEventObjectArr = new ParticipantEventObject[v.size()];
-	    for ( int idx = 0; idx < v.size(); idx++ ) {
-		participantEventObjectArr[idx] = v.get(idx);
-	    }
-	    Util.putInCache(PARTICIPANTEVENT, participantEventObjectArr);
-	}
-	return participantEventObjectArr;
+		ParticipantEventObject participantEventObject = new ParticipantEventObject();
+		ParticipantEventObject[] participantEventObjectArr = (ParticipantEventObject[])Util.getAppCache().get(PARTICIPANTEVENT);
+		if ( participantEventObjectArr == null ) {
+		    DebugHandler.info("Getting participantevent from database");
+		    @SuppressWarnings("unchecked")
+		    ArrayList<ParticipantEventObject> v = (ArrayList)DBUtil.list(participantEventObject);
+		    DebugHandler.finest(":v: " +  v);
+		    if ( v == null )
+			    return null;
+		    participantEventObjectArr = new ParticipantEventObject[v.size()];
+		    for ( int idx = 0; idx < v.size(); idx++ ) {
+			    participantEventObjectArr[idx] = v.get(idx);
+		    }
+		    Util.putInCache(PARTICIPANTEVENT, participantEventObjectArr);
+		}
+		return participantEventObjectArr;
     }
     
     
@@ -148,41 +148,46 @@ public class ParticipantEventImpl implements ParticipantEventInterface  {
      */
     
     public Integer addParticipantEvent(ParticipantEventObject participantEventObject) throws AppException{
-	if ( AppConstants.DB_TYPE.equalsIgnoreCase(Constants.ORACLE) ) {
-		long l = DBUtil.getNextId("Participant_Event_seq");
-		participantEventObject.setParticipantEventId((int)l);
-	}
-	Integer i = (Integer)DBUtil.insert(participantEventObject);
-	DebugHandler.fine("i: " +  i);
-	ParticipantEventObject buf = new ParticipantEventObject();
-	buf.setParticipantId(participantEventObject.getParticipantId());
-	@SuppressWarnings("unchecked")
-	ArrayList<ParticipantEventObject> v = (ArrayList)DBUtil.list(participantEventObject, buf);
+		if ( AppConstants.DB_TYPE.equalsIgnoreCase(Constants.ORACLE) ) {
+			long l = DBUtil.getNextId("Participant_Event_seq");
+			participantEventObject.setParticipantEventId((int)l);
+		}
+		Integer i = (Integer)DBUtil.insert(participantEventObject);
+		DebugHandler.fine("i: " +  i);
+		// Do for Non Oracle where there is auto increment
+		if ( ! AppConstants.DB_TYPE.equalsIgnoreCase(Constants.ORACLE) ) {
+			participantEventObject.setParticipantEventId(i.intValue());
+			DebugHandler.fine(participantEventObject);
+		}
+		ParticipantEventObject buf = new ParticipantEventObject();
+		buf.setParticipantEventId(participantEventObject.getParticipantEventId());
+		@SuppressWarnings("unchecked")
+		ArrayList<ParticipantEventObject> v = (ArrayList)DBUtil.list(participantEventObject, buf);
 		participantEventObject = v.get(0);
-	ParticipantEventObject[] participantEventObjectArr = getAllParticipantEvents();
-	boolean foundSpace = false;
+		ParticipantEventObject[] participantEventObjectArr = getAllParticipantEvents();
+		boolean foundSpace = false;
 
-	for ( int idx = 0; idx < participantEventObjectArr.length; idx++ ) {
-	    if ( participantEventObjectArr[idx] == null ) {
-		participantEventObjectArr[idx] = (ParticipantEventObject)participantEventObject.clone();
-		foundSpace = true;
-		break;
-	    }
+		for ( int idx = 0; idx < participantEventObjectArr.length; idx++ ) {
+			if ( participantEventObjectArr[idx] == null ) {
+				participantEventObjectArr[idx] = (ParticipantEventObject)participantEventObject.clone();
+				foundSpace = true;
+				break;
+			}
+		}
+		if ( foundSpace == false ) {
+			ParticipantEventObject[] newparticipantEventObjectArr = new ParticipantEventObject[participantEventObjectArr.length + 1];
+			int idx = 0;
+			for ( idx = 0; idx < participantEventObjectArr.length; idx++ ) {
+				newparticipantEventObjectArr[idx] = (ParticipantEventObject)participantEventObjectArr[idx].clone();
+			}
+			newparticipantEventObjectArr[idx] = (ParticipantEventObject)participantEventObject.clone();
+			Util.putInCache(PARTICIPANTEVENT, newparticipantEventObjectArr);
+		} else {
+			Util.putInCache(PARTICIPANTEVENT, participantEventObjectArr);
+		}
+		return i;
 	}
-	if ( foundSpace == false ) {
-	    ParticipantEventObject[] newparticipantEventObjectArr = new ParticipantEventObject[participantEventObjectArr.length + 1];
-	    int idx = 0;
-	    for ( idx = 0; idx < participantEventObjectArr.length; idx++ ) {
-		newparticipantEventObjectArr[idx] = (ParticipantEventObject)participantEventObjectArr[idx].clone();
-	    }
-	    newparticipantEventObjectArr[idx] = (ParticipantEventObject)participantEventObject.clone();
-	    Util.putInCache(PARTICIPANTEVENT, newparticipantEventObjectArr);
-	} else {
-	    Util.putInCache(PARTICIPANTEVENT, participantEventObjectArr);
-	}
-	return i;
-    }
-    
+	
     
     /**
      *
@@ -194,24 +199,24 @@ public class ParticipantEventImpl implements ParticipantEventInterface  {
      *
      */
     
-    public Integer updateParticipantEvent(ParticipantEventObject participantEventObject) throws AppException{
-	ParticipantEventObject newParticipantEventObject = getParticipantEvent(participantEventObject.getParticipantEventId()); // This call will make sure cache/db are in sync
-	Integer i = (Integer)DBUtil.update(participantEventObject);
-	DebugHandler.fine("i: " +  i);
-	ParticipantEventObject[] participantEventObjectArr = getAllParticipantEvents();
-	if ( participantEventObjectArr == null )
-	    return null;
-	for ( int idx = 0; idx < participantEventObjectArr.length; idx++ ) {
-	    if ( participantEventObjectArr[idx] != null ) {
-		if ( participantEventObjectArr[idx].getParticipantEventId() == participantEventObject.getParticipantEventId() ) {
-		    DebugHandler.debug("Found ParticipantEvent " + participantEventObject.getParticipantEventId());
-		    participantEventObjectArr[idx] = (ParticipantEventObject)participantEventObject.clone();
-		    Util.putInCache(PARTICIPANTEVENT, participantEventObjectArr);
+	public Integer updateParticipantEvent(ParticipantEventObject participantEventObject) throws AppException{
+		ParticipantEventObject newParticipantEventObject = getParticipantEvent(participantEventObject.getParticipantEventId()); // This call will make sure cache/db are in sync
+		Integer i = (Integer)DBUtil.update(participantEventObject);
+		DebugHandler.fine("i: " +  i);
+		ParticipantEventObject[] participantEventObjectArr = getAllParticipantEvents();
+		if ( participantEventObjectArr == null )
+			return null;
+		for ( int idx = 0; idx < participantEventObjectArr.length; idx++ ) {
+			if ( participantEventObjectArr[idx] != null ) {
+				if ( participantEventObjectArr[idx].getParticipantEventId() == participantEventObject.getParticipantEventId() ) {
+					DebugHandler.debug("Found ParticipantEvent " + participantEventObject.getParticipantEventId());
+					participantEventObjectArr[idx] = (ParticipantEventObject)participantEventObject.clone();
+					Util.putInCache(PARTICIPANTEVENT, participantEventObjectArr);
+				}
+			}
 		}
-	    }
+		return i;
 	}
-	return i;
-    }
     
     
     /**

@@ -17,6 +17,7 @@ Event_Type_Description varchar2(750)
 Event_Type_Start_Date timestamp  not null
 Event_Type_End_Date timestamp not null
 Event_Type_Venue varchar2(50) not null
+Online_Registration_Only varchar2(1)
 
 Gender
 
@@ -146,7 +147,7 @@ Participant_Event int references Event(Event_Id.Event_Name)
 Participant_Type int references RegistrationType(Registration_Type_Id.Registration_Type_Name)
 Participant_Event_Type int references EventType(Event_Type_Id.Event_Type_Name)
 Participant_Bib_No varchar2(20)
-Participant_Group int references Registrant(Registrant_Id.Registrant_Name)
+Participant_Group int references Registrant_Event(Registrant_Event_Id.Registrant_Id)
 
 
 Result

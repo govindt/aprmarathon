@@ -26,12 +26,16 @@ import org.codehaus.jettison.json.JSONException;
  */
 
 public class SendMailObject implements Cloneable {
-	public static int EMAIL_BEFORE_PAYMENT = 1;
-	public static int EMAIL_RECEIPT = 2;
+	public static int GENERAL_EMAIL = 0;
+	public static int RECEIPT_EMAIL = 1;
 	private String subject;
 	private String body;
+	private String to;
+	private String cc;
 	private String registrant_id;
 	private String receipt_date;
+	private String receipt_year;
+	private String receipt_no;
 	private String registrant_name;
 	private String registrant_last_name;
 	private String receipt_address;
@@ -40,7 +44,7 @@ public class SendMailObject implements Cloneable {
 	private String transfer_details;
 	private String towards;
 	private String amount;
-	private int email_type = EMAIL_BEFORE_PAYMENT;
+	private int email_type = GENERAL_EMAIL;
 	
 	/**
 	 *
@@ -53,8 +57,12 @@ public class SendMailObject implements Cloneable {
 	public String toString() {
 	   return	"subject : " + subject + "\n" +
 		"body : " + body + "\n" +
+		"to : " + to + "\n" +
+		"cc : " + cc + "\n" +
 		"registrant_id : " + registrant_id + "\n" +
 		"receipt_date : " + receipt_date + "\n" +
+		"receipt_year : " + receipt_year + "\n" +
+		"receipt_no : " + receipt_no + "\n" +
 		"registrant_name : " + registrant_name + "\n" +
 		"registrant_last_name : " + registrant_last_name + "\n" +
 		"receipt_address : " + receipt_address + "\n" +
@@ -79,8 +87,12 @@ public class SendMailObject implements Cloneable {
 		try {
 			jo.put("subject", subject);
 			jo.put("body", body);
+			jo.put("to", to);
+			jo.put("cc", cc);
 			jo.put("registrant_id", registrant_id);
 			jo.put("receipt_date", receipt_date);
+			jo.put("receipt_year", receipt_year);
+			jo.put("receipt_no", receipt_no);
 			jo.put("registrant_name", registrant_name);
 			jo.put("registrant_last_name", registrant_last_name);
 			jo.put("receipt_address", receipt_address);
@@ -114,8 +126,12 @@ public class SendMailObject implements Cloneable {
 	public SendMailObject () {
 		setSubject("");
 		setBody("");
+		setTo("");
+		setCc("");
 		setRegistrantId("");
 		setReceiptDate("");
+		setReceiptYear("");
+		setReceiptNo("");
 		setRegistrantName("");
 		setRegistrantLastName("");
 		setReceiptAddress("");
@@ -124,7 +140,7 @@ public class SendMailObject implements Cloneable {
 		setTransferDetails("");
 		setTowards("");
 		setAmount("");
-		setEmailType(EMAIL_BEFORE_PAYMENT);
+		setEmailType(GENERAL_EMAIL);
 	}
     
 	/**
@@ -140,10 +156,22 @@ public class SendMailObject implements Cloneable {
 			body = jObject.getString("body");
 		} catch (JSONException je) {}
 		try {
+			to = jObject.getString("to");
+		} catch (JSONException je) {}
+		try {
+			cc = jObject.getString("cc");
+		} catch (JSONException je) {}
+		try {
 			registrant_id = jObject.getString("registrant_id");
 		} catch (JSONException je) {}
 		try {
 			receipt_date = jObject.getString("receipt_date");
+		} catch (JSONException je) {}
+		try {
+			receipt_year = jObject.getString("receipt_year");
+		} catch (JSONException je) {}
+		try {
+			receipt_no = jObject.getString("receipt_no");
 		} catch (JSONException je) {}
 		try {
 			registrant_name = jObject.getString("registrant_name");
@@ -158,6 +186,9 @@ public class SendMailObject implements Cloneable {
 			transfer_type = jObject.getString("transfer_type");
 		} catch (JSONException je) {}
 		try {
+			transfer_date = jObject.getString("transfer_date");
+		} catch (JSONException je) {}
+		try {
 			transfer_details = jObject.getString("transfer_details");
 		} catch (JSONException je) {}
 		try {
@@ -167,7 +198,7 @@ public class SendMailObject implements Cloneable {
 			amount = jObject.getString("amount");
 		} catch (JSONException je) {}
 		try {
-			email_type = Integer.parseInt(jObject.getString("transfer_details"));
+			email_type = Integer.parseInt(jObject.getString("email_type"));
 		} catch (JSONException je) {}
 	}
     
@@ -221,8 +252,57 @@ public class SendMailObject implements Cloneable {
     public String getBody() {
         return body;
     }
-
+	
+	/**
+     *
+     * Sets the <code>to</code> field
+     *
+     * @param to      String
+     *
+     */
     
+    public void setTo(String to) {
+        this.to = to;
+    }
+    
+    
+    /**
+     *
+     * Gets the <code>to</code> field
+     *
+     * @returns to
+     *
+     */
+    
+    public String getTo() {
+        return to;
+    }
+
+    /**
+     *
+     * Sets the <code>cc</code> field
+     *
+     * @param cc      String
+     *
+     */
+    
+    public void setCc(String cc) {
+        this.cc = cc;
+    }
+    
+    
+    /**
+     *
+     * Gets the <code>cc</code> field
+     *
+     * @returns cc
+     *
+     */
+    
+    public String getCc() {
+        return cc;
+    }
+	
     /**
      *
      * Sets the <code>registrant_id</code> field
@@ -276,6 +356,57 @@ public class SendMailObject implements Cloneable {
 
 	/**
      *
+     * Sets the <code>receipt_year</code> field
+     *
+     * @param receipt_year     String
+     *
+     */
+    
+    public void setReceiptYear(String receipt_year) {
+        this.receipt_year = receipt_year;
+    }
+    
+    
+    /**
+     *
+     * Gets the <code>receipt_year</code> field
+     *
+     * @returns receipt_year
+     *
+     */
+    
+    public String getReceiptYear() {
+        return receipt_year;
+    }
+	
+	/**
+     *
+     * Sets the <code>receipt_no</code> field
+     *
+     * @param receipt_no     String
+     *
+     */
+    
+    public void setReceiptNo(String receipt_no) {
+        this.receipt_no = receipt_no;
+    }
+    
+    
+    /**
+     *
+     * Gets the <code>receipt_no</code> field
+     *
+     * @returns receipt_no
+     *
+     */
+    
+    public String getReceiptNo() {
+        return receipt_no;
+    }
+
+	
+	/**
+     *
      * Sets the <code>registrant_name</code> field
      *
      * @param registrant_name      String
@@ -307,8 +438,8 @@ public class SendMailObject implements Cloneable {
      *
      */
     
-    public void setRegistrantLastName(String registrant_name) {
-        this.registrant_name = registrant_last_name;
+    public void setRegistrantLastName(String registrant_last_name) {
+        this.registrant_last_name = registrant_last_name;
     }
     
     
@@ -382,7 +513,7 @@ public class SendMailObject implements Cloneable {
      *
      */
     
-    public void setTransferDetails(String receipt_address) {
+    public void setTransferDetails(String transfer_details) {
         this.transfer_details = transfer_details;
     }
     
@@ -458,7 +589,7 @@ public class SendMailObject implements Cloneable {
      */
     
     public void setAmount(String amount) {
-        this.towards = towards;
+        this.amount = amount;
     }
     
     
@@ -483,7 +614,7 @@ public class SendMailObject implements Cloneable {
      */
     
     public void setEmailType(int email_type) {
-        this.towards = towards;
+        this.email_type = email_type;
     }
     
     
@@ -514,8 +645,12 @@ public class SendMailObject implements Cloneable {
         return
             Util.trim(subject).equals(Util.trim(other.getSubject())) &&
             Util.trim(body) == other.getBody() &&
+			Util.trim(to) == other.getTo() &&
+			Util.trim(cc) == other.getCc() &&
             Util.trim(registrant_id).equals(Util.trim(other.getRegistrantId())) &&
 			Util.trim(receipt_date).equals(Util.trim(other.getReceiptDate())) &&
+			Util.trim(receipt_year).equals(Util.trim(other.getReceiptYear())) &&
+			Util.trim(receipt_no).equals(Util.trim(other.getReceiptNo())) &&
             Util.trim(registrant_name).equals(Util.trim(other.getRegistrantName())) &&
             Util.trim(registrant_last_name).equals(Util.trim(other.getRegistrantLastName())) &&
 			Util.trim(receipt_address).equals(Util.trim(other.getReceiptAddress())) &&

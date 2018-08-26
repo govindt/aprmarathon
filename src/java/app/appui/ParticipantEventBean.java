@@ -290,14 +290,14 @@ public class ParticipantEventBean implements SpreadSheetInterface {
 	tr.add(td);
 	nameArrayList = new ArrayList<String>();
 	valueArrayList = new ArrayList<Integer>();
-	RegistrantInterface registrantIf = new RegistrantImpl();
-	RegistrantObject[] registrantRefArr = registrantIf.getAllRegistrants();
-	for (int iterator = 0; iterator < registrantRefArr.length; iterator++) {
-	    RegistrantObject registrantObject = registrantRefArr[iterator];
-	    if (registrantObject == null)
+	RegistrantEventInterface registrant_eventIf = new RegistrantEventImpl();
+	RegistrantEventObject[] registrant_eventRefArr = registrant_eventIf.getAllRegistrantEvents();
+	for (int iterator = 0; iterator < registrant_eventRefArr.length; iterator++) {
+	    RegistrantEventObject registrant_eventObject = registrant_eventRefArr[iterator];
+	    if (registrant_eventObject == null)
 		break;
-	    nameArrayList.add(String.valueOf(registrantObject.getRegistrantName()));
-	    valueArrayList.add(new Integer(registrantObject.getRegistrantId()));
+	    nameArrayList.add(String.valueOf(registrant_eventObject.getRegistrantId()));
+	    valueArrayList.add(new Integer(registrant_eventObject.getRegistrantEventId()));
 	}
 	if ( participantEventId != 0 )
 		se = new SelectElement(AppConstants.PARTICIPANT_GROUP_STR, nameArrayList, valueArrayList, String.valueOf(selectedParticipantEventObj.getParticipantGroup()), 0);

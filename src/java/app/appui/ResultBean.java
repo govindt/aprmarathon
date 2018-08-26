@@ -290,6 +290,17 @@ public class ResultBean implements SpreadSheetInterface {
 	be.setId(Constants.BODY_ROW_STYLE);
 	td = new TableDataElement(be);
 	tr.add(td);
+	nameArrayList = new ArrayList<String>();
+	valueArrayList = new ArrayList<Integer>();
+	RegistrantInterface registrantIf = new RegistrantImpl();
+	RegistrantObject[] registrantRefArr = registrantIf.getAllRegistrants();
+	for (int iterator = 0; iterator < registrantRefArr.length; iterator++) {
+	    RegistrantObject registrantObject = registrantRefArr[iterator];
+	    if (registrantObject == null)
+		break;
+	    nameArrayList.add(String.valueOf(registrantObject.getRegistrantName()));
+	    valueArrayList.add(new Integer(registrantObject.getRegistrantId()));
+	}
 	if ( resultId != 0 )
 		se = new SelectElement(AppConstants.RESULT_WINNER_REGISTRANT_STR, nameArrayList, valueArrayList, String.valueOf(selectedResultObj.getResultWinnerRegistrant()), 0);
 	else

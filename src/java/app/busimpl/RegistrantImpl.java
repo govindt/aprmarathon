@@ -92,20 +92,20 @@ public class RegistrantImpl implements RegistrantInterface  {
 	    return null;
 	for ( int i = 0; i < registrantObjectArr.length; i++ ) {
 	    if ( registrantObjectArr[i] == null ) { // Try database and add to cache if found.
-		RegistrantObject registrantObj = new RegistrantObject();
-		registrantObj.setRegistrantId(registrant_id);
-		@SuppressWarnings("unchecked")
-		ArrayList<RegistrantObject> v = (ArrayList)DBUtil.fetch(registrantObj);
-		if ( v == null || v.size() == 0 )
-		    return null;
-		else {
-		    registrantObjectArr[i] = (RegistrantObject)registrantObj.clone();
-		    Util.putInCache(REGISTRANT, registrantObjectArr);
-		}
+		    RegistrantObject registrantObj = new RegistrantObject();
+		    registrantObj.setRegistrantId(registrant_id);
+		    @SuppressWarnings("unchecked")
+		    ArrayList<RegistrantObject> v = (ArrayList)DBUtil.fetch(registrantObj);
+		    if ( v == null || v.size() == 0 )
+			    return null;
+		    else {
+			    registrantObjectArr[i] = (RegistrantObject)registrantObj.clone();
+			    Util.putInCache(REGISTRANT, registrantObjectArr);
+		    }
 	    }
 	    if ( registrantObjectArr[i].getRegistrantId() == registrant_id ) {
-		DebugHandler.debug("Returning " + registrantObjectArr[i]);
-		return (RegistrantObject)registrantObjectArr[i].clone();
+		    DebugHandler.debug("Returning " + registrantObjectArr[i]);
+		    return (RegistrantObject)registrantObjectArr[i].clone();
 	    }
 	}
 	return null;
@@ -123,22 +123,22 @@ public class RegistrantImpl implements RegistrantInterface  {
      */
     
     public RegistrantObject[] getAllRegistrants() throws AppException{
-	RegistrantObject registrantObject = new RegistrantObject();
-	RegistrantObject[] registrantObjectArr = (RegistrantObject[])Util.getAppCache().get(REGISTRANT);
-	if ( registrantObjectArr == null ) {
-	    DebugHandler.info("Getting registrant from database");
-	    @SuppressWarnings("unchecked")
-	    ArrayList<RegistrantObject> v = (ArrayList)DBUtil.list(registrantObject);
-	    DebugHandler.finest(":v: " +  v);
-	    if ( v == null )
-		return null;
-	    registrantObjectArr = new RegistrantObject[v.size()];
-	    for ( int idx = 0; idx < v.size(); idx++ ) {
-		registrantObjectArr[idx] = v.get(idx);
-	    }
-	    Util.putInCache(REGISTRANT, registrantObjectArr);
-	}
-	return registrantObjectArr;
+		RegistrantObject registrantObject = new RegistrantObject();
+		RegistrantObject[] registrantObjectArr = (RegistrantObject[])Util.getAppCache().get(REGISTRANT);
+		if ( registrantObjectArr == null ) {
+		    DebugHandler.info("Getting registrant from database");
+		    @SuppressWarnings("unchecked")
+		    ArrayList<RegistrantObject> v = (ArrayList)DBUtil.list(registrantObject);
+		    DebugHandler.finest(":v: " +  v);
+		    if ( v == null )
+			    return null;
+		    registrantObjectArr = new RegistrantObject[v.size()];
+		    for ( int idx = 0; idx < v.size(); idx++ ) {
+			    registrantObjectArr[idx] = v.get(idx);
+		    }
+		    Util.putInCache(REGISTRANT, registrantObjectArr);
+		}
+		return registrantObjectArr;
     }
     
     
@@ -153,41 +153,46 @@ public class RegistrantImpl implements RegistrantInterface  {
      */
     
     public Integer addRegistrant(RegistrantObject registrantObject) throws AppException{
-	if ( AppConstants.DB_TYPE.equalsIgnoreCase(Constants.ORACLE) ) {
-		long l = DBUtil.getNextId("Registrant_seq");
-		registrantObject.setRegistrantId((int)l);
-	}
-	Integer i = (Integer)DBUtil.insert(registrantObject);
-	DebugHandler.fine("i: " +  i);
-	RegistrantObject buf = new RegistrantObject();
-	buf.setRegistrantName(registrantObject.getRegistrantName());
-	@SuppressWarnings("unchecked")
-	ArrayList<RegistrantObject> v = (ArrayList)DBUtil.list(registrantObject, buf);
+		if ( AppConstants.DB_TYPE.equalsIgnoreCase(Constants.ORACLE) ) {
+			long l = DBUtil.getNextId("Registrant_seq");
+			registrantObject.setRegistrantId((int)l);
+		}
+		Integer i = (Integer)DBUtil.insert(registrantObject);
+		DebugHandler.fine("i: " +  i);
+		// Do for Non Oracle where there is auto increment
+		if ( ! AppConstants.DB_TYPE.equalsIgnoreCase(Constants.ORACLE) ) {
+			registrantObject.setRegistrantId(i.intValue());
+			DebugHandler.fine(registrantObject);
+		}
+		RegistrantObject buf = new RegistrantObject();
+		buf.setRegistrantId(registrantObject.getRegistrantId());
+		@SuppressWarnings("unchecked")
+		ArrayList<RegistrantObject> v = (ArrayList)DBUtil.list(registrantObject, buf);
 		registrantObject = v.get(0);
-	RegistrantObject[] registrantObjectArr = getAllRegistrants();
-	boolean foundSpace = false;
+		RegistrantObject[] registrantObjectArr = getAllRegistrants();
+		boolean foundSpace = false;
 
-	for ( int idx = 0; idx < registrantObjectArr.length; idx++ ) {
-	    if ( registrantObjectArr[idx] == null ) {
-		registrantObjectArr[idx] = (RegistrantObject)registrantObject.clone();
-		foundSpace = true;
-		break;
-	    }
+		for ( int idx = 0; idx < registrantObjectArr.length; idx++ ) {
+			if ( registrantObjectArr[idx] == null ) {
+				registrantObjectArr[idx] = (RegistrantObject)registrantObject.clone();
+				foundSpace = true;
+				break;
+			}
+		}
+		if ( foundSpace == false ) {
+			RegistrantObject[] newregistrantObjectArr = new RegistrantObject[registrantObjectArr.length + 1];
+			int idx = 0;
+			for ( idx = 0; idx < registrantObjectArr.length; idx++ ) {
+				newregistrantObjectArr[idx] = (RegistrantObject)registrantObjectArr[idx].clone();
+			}
+			newregistrantObjectArr[idx] = (RegistrantObject)registrantObject.clone();
+			Util.putInCache(REGISTRANT, newregistrantObjectArr);
+		} else {
+			Util.putInCache(REGISTRANT, registrantObjectArr);
+		}
+		return i;
 	}
-	if ( foundSpace == false ) {
-	    RegistrantObject[] newregistrantObjectArr = new RegistrantObject[registrantObjectArr.length + 1];
-	    int idx = 0;
-	    for ( idx = 0; idx < registrantObjectArr.length; idx++ ) {
-		newregistrantObjectArr[idx] = (RegistrantObject)registrantObjectArr[idx].clone();
-	    }
-	    newregistrantObjectArr[idx] = (RegistrantObject)registrantObject.clone();
-	    Util.putInCache(REGISTRANT, newregistrantObjectArr);
-	} else {
-	    Util.putInCache(REGISTRANT, registrantObjectArr);
-	}
-	return i;
-    }
-    
+	
     
     /**
      *
@@ -199,24 +204,24 @@ public class RegistrantImpl implements RegistrantInterface  {
      *
      */
     
-    public Integer updateRegistrant(RegistrantObject registrantObject) throws AppException{
-	RegistrantObject newRegistrantObject = getRegistrant(registrantObject.getRegistrantId()); // This call will make sure cache/db are in sync
-	Integer i = (Integer)DBUtil.update(registrantObject);
-	DebugHandler.fine("i: " +  i);
-	RegistrantObject[] registrantObjectArr = getAllRegistrants();
-	if ( registrantObjectArr == null )
-	    return null;
-	for ( int idx = 0; idx < registrantObjectArr.length; idx++ ) {
-	    if ( registrantObjectArr[idx] != null ) {
-		if ( registrantObjectArr[idx].getRegistrantId() == registrantObject.getRegistrantId() ) {
-		    DebugHandler.debug("Found Registrant " + registrantObject.getRegistrantId());
-		    registrantObjectArr[idx] = (RegistrantObject)registrantObject.clone();
-		    Util.putInCache(REGISTRANT, registrantObjectArr);
+	public Integer updateRegistrant(RegistrantObject registrantObject) throws AppException{
+		RegistrantObject newRegistrantObject = getRegistrant(registrantObject.getRegistrantId()); // This call will make sure cache/db are in sync
+		Integer i = (Integer)DBUtil.update(registrantObject);
+		DebugHandler.fine("i: " +  i);
+		RegistrantObject[] registrantObjectArr = getAllRegistrants();
+		if ( registrantObjectArr == null )
+			return null;
+		for ( int idx = 0; idx < registrantObjectArr.length; idx++ ) {
+			if ( registrantObjectArr[idx] != null ) {
+				if ( registrantObjectArr[idx].getRegistrantId() == registrantObject.getRegistrantId() ) {
+					DebugHandler.debug("Found Registrant " + registrantObject.getRegistrantId());
+					registrantObjectArr[idx] = (RegistrantObject)registrantObject.clone();
+					Util.putInCache(REGISTRANT, registrantObjectArr);
+				}
+			}
 		}
-	    }
+		return i;
 	}
-	return i;
-    }
     
     
     /**

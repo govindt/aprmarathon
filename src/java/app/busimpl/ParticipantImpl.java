@@ -91,20 +91,20 @@ public class ParticipantImpl implements ParticipantInterface  {
 	    return null;
 	for ( int i = 0; i < participantObjectArr.length; i++ ) {
 	    if ( participantObjectArr[i] == null ) { // Try database and add to cache if found.
-		ParticipantObject participantObj = new ParticipantObject();
-		participantObj.setParticipantId(participant_id);
-		@SuppressWarnings("unchecked")
-		ArrayList<ParticipantObject> v = (ArrayList)DBUtil.fetch(participantObj);
-		if ( v == null || v.size() == 0 )
-		    return null;
-		else {
-		    participantObjectArr[i] = (ParticipantObject)participantObj.clone();
-		    Util.putInCache(PARTICIPANT, participantObjectArr);
-		}
+		    ParticipantObject participantObj = new ParticipantObject();
+		    participantObj.setParticipantId(participant_id);
+		    @SuppressWarnings("unchecked")
+		    ArrayList<ParticipantObject> v = (ArrayList)DBUtil.fetch(participantObj);
+		    if ( v == null || v.size() == 0 )
+			    return null;
+		    else {
+			    participantObjectArr[i] = (ParticipantObject)participantObj.clone();
+			    Util.putInCache(PARTICIPANT, participantObjectArr);
+		    }
 	    }
 	    if ( participantObjectArr[i].getParticipantId() == participant_id ) {
-		DebugHandler.debug("Returning " + participantObjectArr[i]);
-		return (ParticipantObject)participantObjectArr[i].clone();
+		    DebugHandler.debug("Returning " + participantObjectArr[i]);
+		    return (ParticipantObject)participantObjectArr[i].clone();
 	    }
 	}
 	return null;
@@ -122,22 +122,22 @@ public class ParticipantImpl implements ParticipantInterface  {
      */
     
     public ParticipantObject[] getAllParticipants() throws AppException{
-	ParticipantObject participantObject = new ParticipantObject();
-	ParticipantObject[] participantObjectArr = (ParticipantObject[])Util.getAppCache().get(PARTICIPANT);
-	if ( participantObjectArr == null ) {
-	    DebugHandler.info("Getting participant from database");
-	    @SuppressWarnings("unchecked")
-	    ArrayList<ParticipantObject> v = (ArrayList)DBUtil.list(participantObject);
-	    DebugHandler.finest(":v: " +  v);
-	    if ( v == null )
-		return null;
-	    participantObjectArr = new ParticipantObject[v.size()];
-	    for ( int idx = 0; idx < v.size(); idx++ ) {
-		participantObjectArr[idx] = v.get(idx);
-	    }
-	    Util.putInCache(PARTICIPANT, participantObjectArr);
-	}
-	return participantObjectArr;
+		ParticipantObject participantObject = new ParticipantObject();
+		ParticipantObject[] participantObjectArr = (ParticipantObject[])Util.getAppCache().get(PARTICIPANT);
+		if ( participantObjectArr == null ) {
+		    DebugHandler.info("Getting participant from database");
+		    @SuppressWarnings("unchecked")
+		    ArrayList<ParticipantObject> v = (ArrayList)DBUtil.list(participantObject);
+		    DebugHandler.finest(":v: " +  v);
+		    if ( v == null )
+			    return null;
+		    participantObjectArr = new ParticipantObject[v.size()];
+		    for ( int idx = 0; idx < v.size(); idx++ ) {
+			    participantObjectArr[idx] = v.get(idx);
+		    }
+		    Util.putInCache(PARTICIPANT, participantObjectArr);
+		}
+		return participantObjectArr;
     }
     
     
@@ -152,41 +152,46 @@ public class ParticipantImpl implements ParticipantInterface  {
      */
     
     public Integer addParticipant(ParticipantObject participantObject) throws AppException{
-	if ( AppConstants.DB_TYPE.equalsIgnoreCase(Constants.ORACLE) ) {
-		long l = DBUtil.getNextId("Participant_seq");
-		participantObject.setParticipantId((int)l);
-	}
-	Integer i = (Integer)DBUtil.insert(participantObject);
-	DebugHandler.fine("i: " +  i);
-	ParticipantObject buf = new ParticipantObject();
-	buf.setParticipantFirstName(participantObject.getParticipantFirstName());
-	@SuppressWarnings("unchecked")
-	ArrayList<ParticipantObject> v = (ArrayList)DBUtil.list(participantObject, buf);
+		if ( AppConstants.DB_TYPE.equalsIgnoreCase(Constants.ORACLE) ) {
+			long l = DBUtil.getNextId("Participant_seq");
+			participantObject.setParticipantId((int)l);
+		}
+		Integer i = (Integer)DBUtil.insert(participantObject);
+		DebugHandler.fine("i: " +  i);
+		// Do for Non Oracle where there is auto increment
+		if ( ! AppConstants.DB_TYPE.equalsIgnoreCase(Constants.ORACLE) ) {
+			participantObject.setParticipantId(i.intValue());
+			DebugHandler.fine(participantObject);
+		}
+		ParticipantObject buf = new ParticipantObject();
+		buf.setParticipantId(participantObject.getParticipantId());
+		@SuppressWarnings("unchecked")
+		ArrayList<ParticipantObject> v = (ArrayList)DBUtil.list(participantObject, buf);
 		participantObject = v.get(0);
-	ParticipantObject[] participantObjectArr = getAllParticipants();
-	boolean foundSpace = false;
+		ParticipantObject[] participantObjectArr = getAllParticipants();
+		boolean foundSpace = false;
 
-	for ( int idx = 0; idx < participantObjectArr.length; idx++ ) {
-	    if ( participantObjectArr[idx] == null ) {
-		participantObjectArr[idx] = (ParticipantObject)participantObject.clone();
-		foundSpace = true;
-		break;
-	    }
+		for ( int idx = 0; idx < participantObjectArr.length; idx++ ) {
+			if ( participantObjectArr[idx] == null ) {
+				participantObjectArr[idx] = (ParticipantObject)participantObject.clone();
+				foundSpace = true;
+				break;
+			}
+		}
+		if ( foundSpace == false ) {
+			ParticipantObject[] newparticipantObjectArr = new ParticipantObject[participantObjectArr.length + 1];
+			int idx = 0;
+			for ( idx = 0; idx < participantObjectArr.length; idx++ ) {
+				newparticipantObjectArr[idx] = (ParticipantObject)participantObjectArr[idx].clone();
+			}
+			newparticipantObjectArr[idx] = (ParticipantObject)participantObject.clone();
+			Util.putInCache(PARTICIPANT, newparticipantObjectArr);
+		} else {
+			Util.putInCache(PARTICIPANT, participantObjectArr);
+		}
+		return i;
 	}
-	if ( foundSpace == false ) {
-	    ParticipantObject[] newparticipantObjectArr = new ParticipantObject[participantObjectArr.length + 1];
-	    int idx = 0;
-	    for ( idx = 0; idx < participantObjectArr.length; idx++ ) {
-		newparticipantObjectArr[idx] = (ParticipantObject)participantObjectArr[idx].clone();
-	    }
-	    newparticipantObjectArr[idx] = (ParticipantObject)participantObject.clone();
-	    Util.putInCache(PARTICIPANT, newparticipantObjectArr);
-	} else {
-	    Util.putInCache(PARTICIPANT, participantObjectArr);
-	}
-	return i;
-    }
-    
+	
     
     /**
      *
@@ -198,24 +203,24 @@ public class ParticipantImpl implements ParticipantInterface  {
      *
      */
     
-    public Integer updateParticipant(ParticipantObject participantObject) throws AppException{
-	ParticipantObject newParticipantObject = getParticipant(participantObject.getParticipantId()); // This call will make sure cache/db are in sync
-	Integer i = (Integer)DBUtil.update(participantObject);
-	DebugHandler.fine("i: " +  i);
-	ParticipantObject[] participantObjectArr = getAllParticipants();
-	if ( participantObjectArr == null )
-	    return null;
-	for ( int idx = 0; idx < participantObjectArr.length; idx++ ) {
-	    if ( participantObjectArr[idx] != null ) {
-		if ( participantObjectArr[idx].getParticipantId() == participantObject.getParticipantId() ) {
-		    DebugHandler.debug("Found Participant " + participantObject.getParticipantId());
-		    participantObjectArr[idx] = (ParticipantObject)participantObject.clone();
-		    Util.putInCache(PARTICIPANT, participantObjectArr);
+	public Integer updateParticipant(ParticipantObject participantObject) throws AppException{
+		ParticipantObject newParticipantObject = getParticipant(participantObject.getParticipantId()); // This call will make sure cache/db are in sync
+		Integer i = (Integer)DBUtil.update(participantObject);
+		DebugHandler.fine("i: " +  i);
+		ParticipantObject[] participantObjectArr = getAllParticipants();
+		if ( participantObjectArr == null )
+			return null;
+		for ( int idx = 0; idx < participantObjectArr.length; idx++ ) {
+			if ( participantObjectArr[idx] != null ) {
+				if ( participantObjectArr[idx].getParticipantId() == participantObject.getParticipantId() ) {
+					DebugHandler.debug("Found Participant " + participantObject.getParticipantId());
+					participantObjectArr[idx] = (ParticipantObject)participantObject.clone();
+					Util.putInCache(PARTICIPANT, participantObjectArr);
+				}
+			}
 		}
-	    }
+		return i;
 	}
-	return i;
-    }
     
     
     /**

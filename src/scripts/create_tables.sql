@@ -60,7 +60,8 @@ create table Event_Type(
 	event_type_description varchar2(750),
 	event_type_start_date timestamp not null,
 	event_type_end_date timestamp not null,
-	event_type_venue varchar2(50) not null
+	event_type_venue varchar2(50) not null,
+	online_registration_only varchar2(1)
 );
 
 create sequence gender_seq start with 1 increment by 1;
@@ -206,7 +207,7 @@ create table Participant_Event(
 	participant_type number references RegistrationType(Registration_Type_Id),
 	participant_event_type number references EventType(Event_Type_Id),
 	participant_bib_no varchar2(20),
-	participant_group number references Registrant(Registrant_Id)
+	participant_group number references Registrant_Event(Registrant_Event_Id)
 );
 
 create sequence result_seq start with 1 increment by 1;

@@ -82,20 +82,20 @@ public class AgeCategoryImpl implements AgeCategoryInterface  {
 	    return null;
 	for ( int i = 0; i < ageCategoryObjectArr.length; i++ ) {
 	    if ( ageCategoryObjectArr[i] == null ) { // Try database and add to cache if found.
-		AgeCategoryObject agecategoryObj = new AgeCategoryObject();
-		agecategoryObj.setAgeCategoryId(age_category_id);
-		@SuppressWarnings("unchecked")
-		ArrayList<AgeCategoryObject> v = (ArrayList)DBUtil.fetch(agecategoryObj);
-		if ( v == null || v.size() == 0 )
-		    return null;
-		else {
-		    ageCategoryObjectArr[i] = (AgeCategoryObject)agecategoryObj.clone();
-		    Util.putInCache(AGECATEGORY, ageCategoryObjectArr);
-		}
+		    AgeCategoryObject agecategoryObj = new AgeCategoryObject();
+		    agecategoryObj.setAgeCategoryId(age_category_id);
+		    @SuppressWarnings("unchecked")
+		    ArrayList<AgeCategoryObject> v = (ArrayList)DBUtil.fetch(agecategoryObj);
+		    if ( v == null || v.size() == 0 )
+			    return null;
+		    else {
+			    ageCategoryObjectArr[i] = (AgeCategoryObject)agecategoryObj.clone();
+			    Util.putInCache(AGECATEGORY, ageCategoryObjectArr);
+		    }
 	    }
 	    if ( ageCategoryObjectArr[i].getAgeCategoryId() == age_category_id ) {
-		DebugHandler.debug("Returning " + ageCategoryObjectArr[i]);
-		return (AgeCategoryObject)ageCategoryObjectArr[i].clone();
+		    DebugHandler.debug("Returning " + ageCategoryObjectArr[i]);
+		    return (AgeCategoryObject)ageCategoryObjectArr[i].clone();
 	    }
 	}
 	return null;
@@ -113,22 +113,22 @@ public class AgeCategoryImpl implements AgeCategoryInterface  {
      */
     
     public AgeCategoryObject[] getAllAgeCategorys() throws AppException{
-	AgeCategoryObject ageCategoryObject = new AgeCategoryObject();
-	AgeCategoryObject[] ageCategoryObjectArr = (AgeCategoryObject[])Util.getAppCache().get(AGECATEGORY);
-	if ( ageCategoryObjectArr == null ) {
-	    DebugHandler.info("Getting agecategory from database");
-	    @SuppressWarnings("unchecked")
-	    ArrayList<AgeCategoryObject> v = (ArrayList)DBUtil.list(ageCategoryObject);
-	    DebugHandler.finest(":v: " +  v);
-	    if ( v == null )
-		return null;
-	    ageCategoryObjectArr = new AgeCategoryObject[v.size()];
-	    for ( int idx = 0; idx < v.size(); idx++ ) {
-		ageCategoryObjectArr[idx] = v.get(idx);
-	    }
-	    Util.putInCache(AGECATEGORY, ageCategoryObjectArr);
-	}
-	return ageCategoryObjectArr;
+		AgeCategoryObject ageCategoryObject = new AgeCategoryObject();
+		AgeCategoryObject[] ageCategoryObjectArr = (AgeCategoryObject[])Util.getAppCache().get(AGECATEGORY);
+		if ( ageCategoryObjectArr == null ) {
+		    DebugHandler.info("Getting agecategory from database");
+		    @SuppressWarnings("unchecked")
+		    ArrayList<AgeCategoryObject> v = (ArrayList)DBUtil.list(ageCategoryObject);
+		    DebugHandler.finest(":v: " +  v);
+		    if ( v == null )
+			    return null;
+		    ageCategoryObjectArr = new AgeCategoryObject[v.size()];
+		    for ( int idx = 0; idx < v.size(); idx++ ) {
+			    ageCategoryObjectArr[idx] = v.get(idx);
+		    }
+		    Util.putInCache(AGECATEGORY, ageCategoryObjectArr);
+		}
+		return ageCategoryObjectArr;
     }
     
     
@@ -143,41 +143,46 @@ public class AgeCategoryImpl implements AgeCategoryInterface  {
      */
     
     public Integer addAgeCategory(AgeCategoryObject ageCategoryObject) throws AppException{
-	if ( AppConstants.DB_TYPE.equalsIgnoreCase(Constants.ORACLE) ) {
-		long l = DBUtil.getNextId("Age_Category_seq");
-		ageCategoryObject.setAgeCategoryId((int)l);
-	}
-	Integer i = (Integer)DBUtil.insert(ageCategoryObject);
-	DebugHandler.fine("i: " +  i);
-	AgeCategoryObject buf = new AgeCategoryObject();
-	buf.setAgeCategory(ageCategoryObject.getAgeCategory());
-	@SuppressWarnings("unchecked")
-	ArrayList<AgeCategoryObject> v = (ArrayList)DBUtil.list(ageCategoryObject, buf);
+		if ( AppConstants.DB_TYPE.equalsIgnoreCase(Constants.ORACLE) ) {
+			long l = DBUtil.getNextId("Age_Category_seq");
+			ageCategoryObject.setAgeCategoryId((int)l);
+		}
+		Integer i = (Integer)DBUtil.insert(ageCategoryObject);
+		DebugHandler.fine("i: " +  i);
+		// Do for Non Oracle where there is auto increment
+		if ( ! AppConstants.DB_TYPE.equalsIgnoreCase(Constants.ORACLE) ) {
+			ageCategoryObject.setAgeCategoryId(i.intValue());
+			DebugHandler.fine(ageCategoryObject);
+		}
+		AgeCategoryObject buf = new AgeCategoryObject();
+		buf.setAgeCategoryId(ageCategoryObject.getAgeCategoryId());
+		@SuppressWarnings("unchecked")
+		ArrayList<AgeCategoryObject> v = (ArrayList)DBUtil.list(ageCategoryObject, buf);
 		ageCategoryObject = v.get(0);
-	AgeCategoryObject[] ageCategoryObjectArr = getAllAgeCategorys();
-	boolean foundSpace = false;
+		AgeCategoryObject[] ageCategoryObjectArr = getAllAgeCategorys();
+		boolean foundSpace = false;
 
-	for ( int idx = 0; idx < ageCategoryObjectArr.length; idx++ ) {
-	    if ( ageCategoryObjectArr[idx] == null ) {
-		ageCategoryObjectArr[idx] = (AgeCategoryObject)ageCategoryObject.clone();
-		foundSpace = true;
-		break;
-	    }
+		for ( int idx = 0; idx < ageCategoryObjectArr.length; idx++ ) {
+			if ( ageCategoryObjectArr[idx] == null ) {
+				ageCategoryObjectArr[idx] = (AgeCategoryObject)ageCategoryObject.clone();
+				foundSpace = true;
+				break;
+			}
+		}
+		if ( foundSpace == false ) {
+			AgeCategoryObject[] newageCategoryObjectArr = new AgeCategoryObject[ageCategoryObjectArr.length + 1];
+			int idx = 0;
+			for ( idx = 0; idx < ageCategoryObjectArr.length; idx++ ) {
+				newageCategoryObjectArr[idx] = (AgeCategoryObject)ageCategoryObjectArr[idx].clone();
+			}
+			newageCategoryObjectArr[idx] = (AgeCategoryObject)ageCategoryObject.clone();
+			Util.putInCache(AGECATEGORY, newageCategoryObjectArr);
+		} else {
+			Util.putInCache(AGECATEGORY, ageCategoryObjectArr);
+		}
+		return i;
 	}
-	if ( foundSpace == false ) {
-	    AgeCategoryObject[] newageCategoryObjectArr = new AgeCategoryObject[ageCategoryObjectArr.length + 1];
-	    int idx = 0;
-	    for ( idx = 0; idx < ageCategoryObjectArr.length; idx++ ) {
-		newageCategoryObjectArr[idx] = (AgeCategoryObject)ageCategoryObjectArr[idx].clone();
-	    }
-	    newageCategoryObjectArr[idx] = (AgeCategoryObject)ageCategoryObject.clone();
-	    Util.putInCache(AGECATEGORY, newageCategoryObjectArr);
-	} else {
-	    Util.putInCache(AGECATEGORY, ageCategoryObjectArr);
-	}
-	return i;
-    }
-    
+	
     
     /**
      *
@@ -189,24 +194,24 @@ public class AgeCategoryImpl implements AgeCategoryInterface  {
      *
      */
     
-    public Integer updateAgeCategory(AgeCategoryObject ageCategoryObject) throws AppException{
-	AgeCategoryObject newAgeCategoryObject = getAgeCategory(ageCategoryObject.getAgeCategoryId()); // This call will make sure cache/db are in sync
-	Integer i = (Integer)DBUtil.update(ageCategoryObject);
-	DebugHandler.fine("i: " +  i);
-	AgeCategoryObject[] ageCategoryObjectArr = getAllAgeCategorys();
-	if ( ageCategoryObjectArr == null )
-	    return null;
-	for ( int idx = 0; idx < ageCategoryObjectArr.length; idx++ ) {
-	    if ( ageCategoryObjectArr[idx] != null ) {
-		if ( ageCategoryObjectArr[idx].getAgeCategoryId() == ageCategoryObject.getAgeCategoryId() ) {
-		    DebugHandler.debug("Found AgeCategory " + ageCategoryObject.getAgeCategoryId());
-		    ageCategoryObjectArr[idx] = (AgeCategoryObject)ageCategoryObject.clone();
-		    Util.putInCache(AGECATEGORY, ageCategoryObjectArr);
+	public Integer updateAgeCategory(AgeCategoryObject ageCategoryObject) throws AppException{
+		AgeCategoryObject newAgeCategoryObject = getAgeCategory(ageCategoryObject.getAgeCategoryId()); // This call will make sure cache/db are in sync
+		Integer i = (Integer)DBUtil.update(ageCategoryObject);
+		DebugHandler.fine("i: " +  i);
+		AgeCategoryObject[] ageCategoryObjectArr = getAllAgeCategorys();
+		if ( ageCategoryObjectArr == null )
+			return null;
+		for ( int idx = 0; idx < ageCategoryObjectArr.length; idx++ ) {
+			if ( ageCategoryObjectArr[idx] != null ) {
+				if ( ageCategoryObjectArr[idx].getAgeCategoryId() == ageCategoryObject.getAgeCategoryId() ) {
+					DebugHandler.debug("Found AgeCategory " + ageCategoryObject.getAgeCategoryId());
+					ageCategoryObjectArr[idx] = (AgeCategoryObject)ageCategoryObject.clone();
+					Util.putInCache(AGECATEGORY, ageCategoryObjectArr);
+				}
+			}
 		}
-	    }
+		return i;
 	}
-	return i;
-    }
     
     
     /**

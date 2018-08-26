@@ -82,20 +82,20 @@ public class RegistrationSourceImpl implements RegistrationSourceInterface  {
 	    return null;
 	for ( int i = 0; i < registrationSourceObjectArr.length; i++ ) {
 	    if ( registrationSourceObjectArr[i] == null ) { // Try database and add to cache if found.
-		RegistrationSourceObject registrationsourceObj = new RegistrationSourceObject();
-		registrationsourceObj.setRegistrationSourceId(registration_source_id);
-		@SuppressWarnings("unchecked")
-		ArrayList<RegistrationSourceObject> v = (ArrayList)DBUtil.fetch(registrationsourceObj);
-		if ( v == null || v.size() == 0 )
-		    return null;
-		else {
-		    registrationSourceObjectArr[i] = (RegistrationSourceObject)registrationsourceObj.clone();
-		    Util.putInCache(REGISTRATIONSOURCE, registrationSourceObjectArr);
-		}
+		    RegistrationSourceObject registrationsourceObj = new RegistrationSourceObject();
+		    registrationsourceObj.setRegistrationSourceId(registration_source_id);
+		    @SuppressWarnings("unchecked")
+		    ArrayList<RegistrationSourceObject> v = (ArrayList)DBUtil.fetch(registrationsourceObj);
+		    if ( v == null || v.size() == 0 )
+			    return null;
+		    else {
+			    registrationSourceObjectArr[i] = (RegistrationSourceObject)registrationsourceObj.clone();
+			    Util.putInCache(REGISTRATIONSOURCE, registrationSourceObjectArr);
+		    }
 	    }
 	    if ( registrationSourceObjectArr[i].getRegistrationSourceId() == registration_source_id ) {
-		DebugHandler.debug("Returning " + registrationSourceObjectArr[i]);
-		return (RegistrationSourceObject)registrationSourceObjectArr[i].clone();
+		    DebugHandler.debug("Returning " + registrationSourceObjectArr[i]);
+		    return (RegistrationSourceObject)registrationSourceObjectArr[i].clone();
 	    }
 	}
 	return null;
@@ -113,22 +113,22 @@ public class RegistrationSourceImpl implements RegistrationSourceInterface  {
      */
     
     public RegistrationSourceObject[] getAllRegistrationSources() throws AppException{
-	RegistrationSourceObject registrationSourceObject = new RegistrationSourceObject();
-	RegistrationSourceObject[] registrationSourceObjectArr = (RegistrationSourceObject[])Util.getAppCache().get(REGISTRATIONSOURCE);
-	if ( registrationSourceObjectArr == null ) {
-	    DebugHandler.info("Getting registrationsource from database");
-	    @SuppressWarnings("unchecked")
-	    ArrayList<RegistrationSourceObject> v = (ArrayList)DBUtil.list(registrationSourceObject);
-	    DebugHandler.finest(":v: " +  v);
-	    if ( v == null )
-		return null;
-	    registrationSourceObjectArr = new RegistrationSourceObject[v.size()];
-	    for ( int idx = 0; idx < v.size(); idx++ ) {
-		registrationSourceObjectArr[idx] = v.get(idx);
-	    }
-	    Util.putInCache(REGISTRATIONSOURCE, registrationSourceObjectArr);
-	}
-	return registrationSourceObjectArr;
+		RegistrationSourceObject registrationSourceObject = new RegistrationSourceObject();
+		RegistrationSourceObject[] registrationSourceObjectArr = (RegistrationSourceObject[])Util.getAppCache().get(REGISTRATIONSOURCE);
+		if ( registrationSourceObjectArr == null ) {
+		    DebugHandler.info("Getting registrationsource from database");
+		    @SuppressWarnings("unchecked")
+		    ArrayList<RegistrationSourceObject> v = (ArrayList)DBUtil.list(registrationSourceObject);
+		    DebugHandler.finest(":v: " +  v);
+		    if ( v == null )
+			    return null;
+		    registrationSourceObjectArr = new RegistrationSourceObject[v.size()];
+		    for ( int idx = 0; idx < v.size(); idx++ ) {
+			    registrationSourceObjectArr[idx] = v.get(idx);
+		    }
+		    Util.putInCache(REGISTRATIONSOURCE, registrationSourceObjectArr);
+		}
+		return registrationSourceObjectArr;
     }
     
     
@@ -143,41 +143,46 @@ public class RegistrationSourceImpl implements RegistrationSourceInterface  {
      */
     
     public Integer addRegistrationSource(RegistrationSourceObject registrationSourceObject) throws AppException{
-	if ( AppConstants.DB_TYPE.equalsIgnoreCase(Constants.ORACLE) ) {
-		long l = DBUtil.getNextId("Registration_Source_seq");
-		registrationSourceObject.setRegistrationSourceId((int)l);
-	}
-	Integer i = (Integer)DBUtil.insert(registrationSourceObject);
-	DebugHandler.fine("i: " +  i);
-	RegistrationSourceObject buf = new RegistrationSourceObject();
-	buf.setRegistrationSourceName(registrationSourceObject.getRegistrationSourceName());
-	@SuppressWarnings("unchecked")
-	ArrayList<RegistrationSourceObject> v = (ArrayList)DBUtil.list(registrationSourceObject, buf);
+		if ( AppConstants.DB_TYPE.equalsIgnoreCase(Constants.ORACLE) ) {
+			long l = DBUtil.getNextId("Registration_Source_seq");
+			registrationSourceObject.setRegistrationSourceId((int)l);
+		}
+		Integer i = (Integer)DBUtil.insert(registrationSourceObject);
+		DebugHandler.fine("i: " +  i);
+		// Do for Non Oracle where there is auto increment
+		if ( ! AppConstants.DB_TYPE.equalsIgnoreCase(Constants.ORACLE) ) {
+			registrationSourceObject.setRegistrationSourceId(i.intValue());
+			DebugHandler.fine(registrationSourceObject);
+		}
+		RegistrationSourceObject buf = new RegistrationSourceObject();
+		buf.setRegistrationSourceId(registrationSourceObject.getRegistrationSourceId());
+		@SuppressWarnings("unchecked")
+		ArrayList<RegistrationSourceObject> v = (ArrayList)DBUtil.list(registrationSourceObject, buf);
 		registrationSourceObject = v.get(0);
-	RegistrationSourceObject[] registrationSourceObjectArr = getAllRegistrationSources();
-	boolean foundSpace = false;
+		RegistrationSourceObject[] registrationSourceObjectArr = getAllRegistrationSources();
+		boolean foundSpace = false;
 
-	for ( int idx = 0; idx < registrationSourceObjectArr.length; idx++ ) {
-	    if ( registrationSourceObjectArr[idx] == null ) {
-		registrationSourceObjectArr[idx] = (RegistrationSourceObject)registrationSourceObject.clone();
-		foundSpace = true;
-		break;
-	    }
+		for ( int idx = 0; idx < registrationSourceObjectArr.length; idx++ ) {
+			if ( registrationSourceObjectArr[idx] == null ) {
+				registrationSourceObjectArr[idx] = (RegistrationSourceObject)registrationSourceObject.clone();
+				foundSpace = true;
+				break;
+			}
+		}
+		if ( foundSpace == false ) {
+			RegistrationSourceObject[] newregistrationSourceObjectArr = new RegistrationSourceObject[registrationSourceObjectArr.length + 1];
+			int idx = 0;
+			for ( idx = 0; idx < registrationSourceObjectArr.length; idx++ ) {
+				newregistrationSourceObjectArr[idx] = (RegistrationSourceObject)registrationSourceObjectArr[idx].clone();
+			}
+			newregistrationSourceObjectArr[idx] = (RegistrationSourceObject)registrationSourceObject.clone();
+			Util.putInCache(REGISTRATIONSOURCE, newregistrationSourceObjectArr);
+		} else {
+			Util.putInCache(REGISTRATIONSOURCE, registrationSourceObjectArr);
+		}
+		return i;
 	}
-	if ( foundSpace == false ) {
-	    RegistrationSourceObject[] newregistrationSourceObjectArr = new RegistrationSourceObject[registrationSourceObjectArr.length + 1];
-	    int idx = 0;
-	    for ( idx = 0; idx < registrationSourceObjectArr.length; idx++ ) {
-		newregistrationSourceObjectArr[idx] = (RegistrationSourceObject)registrationSourceObjectArr[idx].clone();
-	    }
-	    newregistrationSourceObjectArr[idx] = (RegistrationSourceObject)registrationSourceObject.clone();
-	    Util.putInCache(REGISTRATIONSOURCE, newregistrationSourceObjectArr);
-	} else {
-	    Util.putInCache(REGISTRATIONSOURCE, registrationSourceObjectArr);
-	}
-	return i;
-    }
-    
+	
     
     /**
      *
@@ -189,24 +194,24 @@ public class RegistrationSourceImpl implements RegistrationSourceInterface  {
      *
      */
     
-    public Integer updateRegistrationSource(RegistrationSourceObject registrationSourceObject) throws AppException{
-	RegistrationSourceObject newRegistrationSourceObject = getRegistrationSource(registrationSourceObject.getRegistrationSourceId()); // This call will make sure cache/db are in sync
-	Integer i = (Integer)DBUtil.update(registrationSourceObject);
-	DebugHandler.fine("i: " +  i);
-	RegistrationSourceObject[] registrationSourceObjectArr = getAllRegistrationSources();
-	if ( registrationSourceObjectArr == null )
-	    return null;
-	for ( int idx = 0; idx < registrationSourceObjectArr.length; idx++ ) {
-	    if ( registrationSourceObjectArr[idx] != null ) {
-		if ( registrationSourceObjectArr[idx].getRegistrationSourceId() == registrationSourceObject.getRegistrationSourceId() ) {
-		    DebugHandler.debug("Found RegistrationSource " + registrationSourceObject.getRegistrationSourceId());
-		    registrationSourceObjectArr[idx] = (RegistrationSourceObject)registrationSourceObject.clone();
-		    Util.putInCache(REGISTRATIONSOURCE, registrationSourceObjectArr);
+	public Integer updateRegistrationSource(RegistrationSourceObject registrationSourceObject) throws AppException{
+		RegistrationSourceObject newRegistrationSourceObject = getRegistrationSource(registrationSourceObject.getRegistrationSourceId()); // This call will make sure cache/db are in sync
+		Integer i = (Integer)DBUtil.update(registrationSourceObject);
+		DebugHandler.fine("i: " +  i);
+		RegistrationSourceObject[] registrationSourceObjectArr = getAllRegistrationSources();
+		if ( registrationSourceObjectArr == null )
+			return null;
+		for ( int idx = 0; idx < registrationSourceObjectArr.length; idx++ ) {
+			if ( registrationSourceObjectArr[idx] != null ) {
+				if ( registrationSourceObjectArr[idx].getRegistrationSourceId() == registrationSourceObject.getRegistrationSourceId() ) {
+					DebugHandler.debug("Found RegistrationSource " + registrationSourceObject.getRegistrationSourceId());
+					registrationSourceObjectArr[idx] = (RegistrationSourceObject)registrationSourceObject.clone();
+					Util.putInCache(REGISTRATIONSOURCE, registrationSourceObjectArr);
+				}
+			}
 		}
-	    }
+		return i;
 	}
-	return i;
-    }
     
     
     /**

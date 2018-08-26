@@ -111,8 +111,16 @@ public class App {
 
     AppConstants.POST_URL = siteProps.getProperty("app.post_url");
     AppConstants.DB_TYPE = siteProps.getProperty("app.dbtype");
+	
+	AppConstants.SMTP_HOST = siteProps.getProperty("app.smtp_host");
+	AppConstants.SMTP_DEBUG = Boolean.parseBoolean(siteProps.getProperty("app.smtp_debug"));
+	AppConstants.EMAIL_FROM = siteProps.getProperty("app.email_from");
+	AppConstants.EMAIL_USERNAMES = siteProps.getProperty("app.email_usernames");
+	AppConstants.RECEIPT_NO_PREFIX = siteProps.getProperty("app.receipt_no_prefix");
+	AppConstants.RECEIPT_TEMPLATE = siteProps.getProperty("app.receipt_template");
 
 	// INSERT GENERATED CODE
+    AppConstants.ONLINE_REGISTRATION_ONLY_LABEL = siteProps.getProperty("app.online_registration_only_label");
     AppConstants.REGISTRANT_PHONE_LABEL = siteProps.getProperty("app.registrant_phone_label");
     AppConstants.CURRENT_REGISTRANTEVENT_LABEL = siteProps.getProperty("app.current_registrantevent_label");
     AppConstants.NEW_REGISTRANTEVENT = siteProps.getProperty("app.new_registrantevent");

@@ -82,20 +82,20 @@ public class BloodGroupImpl implements BloodGroupInterface  {
 	    return null;
 	for ( int i = 0; i < bloodGroupObjectArr.length; i++ ) {
 	    if ( bloodGroupObjectArr[i] == null ) { // Try database and add to cache if found.
-		BloodGroupObject bloodgroupObj = new BloodGroupObject();
-		bloodgroupObj.setBloodGroupId(blood_group_id);
-		@SuppressWarnings("unchecked")
-		ArrayList<BloodGroupObject> v = (ArrayList)DBUtil.fetch(bloodgroupObj);
-		if ( v == null || v.size() == 0 )
-		    return null;
-		else {
-		    bloodGroupObjectArr[i] = (BloodGroupObject)bloodgroupObj.clone();
-		    Util.putInCache(BLOODGROUP, bloodGroupObjectArr);
-		}
+		    BloodGroupObject bloodgroupObj = new BloodGroupObject();
+		    bloodgroupObj.setBloodGroupId(blood_group_id);
+		    @SuppressWarnings("unchecked")
+		    ArrayList<BloodGroupObject> v = (ArrayList)DBUtil.fetch(bloodgroupObj);
+		    if ( v == null || v.size() == 0 )
+			    return null;
+		    else {
+			    bloodGroupObjectArr[i] = (BloodGroupObject)bloodgroupObj.clone();
+			    Util.putInCache(BLOODGROUP, bloodGroupObjectArr);
+		    }
 	    }
 	    if ( bloodGroupObjectArr[i].getBloodGroupId() == blood_group_id ) {
-		DebugHandler.debug("Returning " + bloodGroupObjectArr[i]);
-		return (BloodGroupObject)bloodGroupObjectArr[i].clone();
+		    DebugHandler.debug("Returning " + bloodGroupObjectArr[i]);
+		    return (BloodGroupObject)bloodGroupObjectArr[i].clone();
 	    }
 	}
 	return null;
@@ -113,22 +113,22 @@ public class BloodGroupImpl implements BloodGroupInterface  {
      */
     
     public BloodGroupObject[] getAllBloodGroups() throws AppException{
-	BloodGroupObject bloodGroupObject = new BloodGroupObject();
-	BloodGroupObject[] bloodGroupObjectArr = (BloodGroupObject[])Util.getAppCache().get(BLOODGROUP);
-	if ( bloodGroupObjectArr == null ) {
-	    DebugHandler.info("Getting bloodgroup from database");
-	    @SuppressWarnings("unchecked")
-	    ArrayList<BloodGroupObject> v = (ArrayList)DBUtil.list(bloodGroupObject);
-	    DebugHandler.finest(":v: " +  v);
-	    if ( v == null )
-		return null;
-	    bloodGroupObjectArr = new BloodGroupObject[v.size()];
-	    for ( int idx = 0; idx < v.size(); idx++ ) {
-		bloodGroupObjectArr[idx] = v.get(idx);
-	    }
-	    Util.putInCache(BLOODGROUP, bloodGroupObjectArr);
-	}
-	return bloodGroupObjectArr;
+		BloodGroupObject bloodGroupObject = new BloodGroupObject();
+		BloodGroupObject[] bloodGroupObjectArr = (BloodGroupObject[])Util.getAppCache().get(BLOODGROUP);
+		if ( bloodGroupObjectArr == null ) {
+		    DebugHandler.info("Getting bloodgroup from database");
+		    @SuppressWarnings("unchecked")
+		    ArrayList<BloodGroupObject> v = (ArrayList)DBUtil.list(bloodGroupObject);
+		    DebugHandler.finest(":v: " +  v);
+		    if ( v == null )
+			    return null;
+		    bloodGroupObjectArr = new BloodGroupObject[v.size()];
+		    for ( int idx = 0; idx < v.size(); idx++ ) {
+			    bloodGroupObjectArr[idx] = v.get(idx);
+		    }
+		    Util.putInCache(BLOODGROUP, bloodGroupObjectArr);
+		}
+		return bloodGroupObjectArr;
     }
     
     
@@ -143,41 +143,46 @@ public class BloodGroupImpl implements BloodGroupInterface  {
      */
     
     public Integer addBloodGroup(BloodGroupObject bloodGroupObject) throws AppException{
-	if ( AppConstants.DB_TYPE.equalsIgnoreCase(Constants.ORACLE) ) {
-		long l = DBUtil.getNextId("Blood_Group_seq");
-		bloodGroupObject.setBloodGroupId((int)l);
-	}
-	Integer i = (Integer)DBUtil.insert(bloodGroupObject);
-	DebugHandler.fine("i: " +  i);
-	BloodGroupObject buf = new BloodGroupObject();
-	buf.setBloodGroupName(bloodGroupObject.getBloodGroupName());
-	@SuppressWarnings("unchecked")
-	ArrayList<BloodGroupObject> v = (ArrayList)DBUtil.list(bloodGroupObject, buf);
+		if ( AppConstants.DB_TYPE.equalsIgnoreCase(Constants.ORACLE) ) {
+			long l = DBUtil.getNextId("Blood_Group_seq");
+			bloodGroupObject.setBloodGroupId((int)l);
+		}
+		Integer i = (Integer)DBUtil.insert(bloodGroupObject);
+		DebugHandler.fine("i: " +  i);
+		// Do for Non Oracle where there is auto increment
+		if ( ! AppConstants.DB_TYPE.equalsIgnoreCase(Constants.ORACLE) ) {
+			bloodGroupObject.setBloodGroupId(i.intValue());
+			DebugHandler.fine(bloodGroupObject);
+		}
+		BloodGroupObject buf = new BloodGroupObject();
+		buf.setBloodGroupId(bloodGroupObject.getBloodGroupId());
+		@SuppressWarnings("unchecked")
+		ArrayList<BloodGroupObject> v = (ArrayList)DBUtil.list(bloodGroupObject, buf);
 		bloodGroupObject = v.get(0);
-	BloodGroupObject[] bloodGroupObjectArr = getAllBloodGroups();
-	boolean foundSpace = false;
+		BloodGroupObject[] bloodGroupObjectArr = getAllBloodGroups();
+		boolean foundSpace = false;
 
-	for ( int idx = 0; idx < bloodGroupObjectArr.length; idx++ ) {
-	    if ( bloodGroupObjectArr[idx] == null ) {
-		bloodGroupObjectArr[idx] = (BloodGroupObject)bloodGroupObject.clone();
-		foundSpace = true;
-		break;
-	    }
+		for ( int idx = 0; idx < bloodGroupObjectArr.length; idx++ ) {
+			if ( bloodGroupObjectArr[idx] == null ) {
+				bloodGroupObjectArr[idx] = (BloodGroupObject)bloodGroupObject.clone();
+				foundSpace = true;
+				break;
+			}
+		}
+		if ( foundSpace == false ) {
+			BloodGroupObject[] newbloodGroupObjectArr = new BloodGroupObject[bloodGroupObjectArr.length + 1];
+			int idx = 0;
+			for ( idx = 0; idx < bloodGroupObjectArr.length; idx++ ) {
+				newbloodGroupObjectArr[idx] = (BloodGroupObject)bloodGroupObjectArr[idx].clone();
+			}
+			newbloodGroupObjectArr[idx] = (BloodGroupObject)bloodGroupObject.clone();
+			Util.putInCache(BLOODGROUP, newbloodGroupObjectArr);
+		} else {
+			Util.putInCache(BLOODGROUP, bloodGroupObjectArr);
+		}
+		return i;
 	}
-	if ( foundSpace == false ) {
-	    BloodGroupObject[] newbloodGroupObjectArr = new BloodGroupObject[bloodGroupObjectArr.length + 1];
-	    int idx = 0;
-	    for ( idx = 0; idx < bloodGroupObjectArr.length; idx++ ) {
-		newbloodGroupObjectArr[idx] = (BloodGroupObject)bloodGroupObjectArr[idx].clone();
-	    }
-	    newbloodGroupObjectArr[idx] = (BloodGroupObject)bloodGroupObject.clone();
-	    Util.putInCache(BLOODGROUP, newbloodGroupObjectArr);
-	} else {
-	    Util.putInCache(BLOODGROUP, bloodGroupObjectArr);
-	}
-	return i;
-    }
-    
+	
     
     /**
      *
@@ -189,24 +194,24 @@ public class BloodGroupImpl implements BloodGroupInterface  {
      *
      */
     
-    public Integer updateBloodGroup(BloodGroupObject bloodGroupObject) throws AppException{
-	BloodGroupObject newBloodGroupObject = getBloodGroup(bloodGroupObject.getBloodGroupId()); // This call will make sure cache/db are in sync
-	Integer i = (Integer)DBUtil.update(bloodGroupObject);
-	DebugHandler.fine("i: " +  i);
-	BloodGroupObject[] bloodGroupObjectArr = getAllBloodGroups();
-	if ( bloodGroupObjectArr == null )
-	    return null;
-	for ( int idx = 0; idx < bloodGroupObjectArr.length; idx++ ) {
-	    if ( bloodGroupObjectArr[idx] != null ) {
-		if ( bloodGroupObjectArr[idx].getBloodGroupId() == bloodGroupObject.getBloodGroupId() ) {
-		    DebugHandler.debug("Found BloodGroup " + bloodGroupObject.getBloodGroupId());
-		    bloodGroupObjectArr[idx] = (BloodGroupObject)bloodGroupObject.clone();
-		    Util.putInCache(BLOODGROUP, bloodGroupObjectArr);
+	public Integer updateBloodGroup(BloodGroupObject bloodGroupObject) throws AppException{
+		BloodGroupObject newBloodGroupObject = getBloodGroup(bloodGroupObject.getBloodGroupId()); // This call will make sure cache/db are in sync
+		Integer i = (Integer)DBUtil.update(bloodGroupObject);
+		DebugHandler.fine("i: " +  i);
+		BloodGroupObject[] bloodGroupObjectArr = getAllBloodGroups();
+		if ( bloodGroupObjectArr == null )
+			return null;
+		for ( int idx = 0; idx < bloodGroupObjectArr.length; idx++ ) {
+			if ( bloodGroupObjectArr[idx] != null ) {
+				if ( bloodGroupObjectArr[idx].getBloodGroupId() == bloodGroupObject.getBloodGroupId() ) {
+					DebugHandler.debug("Found BloodGroup " + bloodGroupObject.getBloodGroupId());
+					bloodGroupObjectArr[idx] = (BloodGroupObject)bloodGroupObject.clone();
+					Util.putInCache(BLOODGROUP, bloodGroupObjectArr);
+				}
+			}
 		}
-	    }
+		return i;
 	}
-	return i;
-    }
     
     
     /**

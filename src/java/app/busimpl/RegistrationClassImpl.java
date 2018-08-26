@@ -86,20 +86,20 @@ public class RegistrationClassImpl implements RegistrationClassInterface  {
 	    return null;
 	for ( int i = 0; i < registrationClassObjectArr.length; i++ ) {
 	    if ( registrationClassObjectArr[i] == null ) { // Try database and add to cache if found.
-		RegistrationClassObject registrationclassObj = new RegistrationClassObject();
-		registrationclassObj.setRegistrationClassId(registration_class_id);
-		@SuppressWarnings("unchecked")
-		ArrayList<RegistrationClassObject> v = (ArrayList)DBUtil.fetch(registrationclassObj);
-		if ( v == null || v.size() == 0 )
-		    return null;
-		else {
-		    registrationClassObjectArr[i] = (RegistrationClassObject)registrationclassObj.clone();
-		    Util.putInCache(REGISTRATIONCLASS, registrationClassObjectArr);
-		}
+		    RegistrationClassObject registrationclassObj = new RegistrationClassObject();
+		    registrationclassObj.setRegistrationClassId(registration_class_id);
+		    @SuppressWarnings("unchecked")
+		    ArrayList<RegistrationClassObject> v = (ArrayList)DBUtil.fetch(registrationclassObj);
+		    if ( v == null || v.size() == 0 )
+			    return null;
+		    else {
+			    registrationClassObjectArr[i] = (RegistrationClassObject)registrationclassObj.clone();
+			    Util.putInCache(REGISTRATIONCLASS, registrationClassObjectArr);
+		    }
 	    }
 	    if ( registrationClassObjectArr[i].getRegistrationClassId() == registration_class_id ) {
-		DebugHandler.debug("Returning " + registrationClassObjectArr[i]);
-		return (RegistrationClassObject)registrationClassObjectArr[i].clone();
+		    DebugHandler.debug("Returning " + registrationClassObjectArr[i]);
+		    return (RegistrationClassObject)registrationClassObjectArr[i].clone();
 	    }
 	}
 	return null;
@@ -117,22 +117,22 @@ public class RegistrationClassImpl implements RegistrationClassInterface  {
      */
     
     public RegistrationClassObject[] getAllRegistrationClass() throws AppException{
-	RegistrationClassObject registrationClassObject = new RegistrationClassObject();
-	RegistrationClassObject[] registrationClassObjectArr = (RegistrationClassObject[])Util.getAppCache().get(REGISTRATIONCLASS);
-	if ( registrationClassObjectArr == null ) {
-	    DebugHandler.info("Getting registrationclass from database");
-	    @SuppressWarnings("unchecked")
-	    ArrayList<RegistrationClassObject> v = (ArrayList)DBUtil.list(registrationClassObject);
-	    DebugHandler.finest(":v: " +  v);
-	    if ( v == null )
-		return null;
-	    registrationClassObjectArr = new RegistrationClassObject[v.size()];
-	    for ( int idx = 0; idx < v.size(); idx++ ) {
-		registrationClassObjectArr[idx] = v.get(idx);
-	    }
-	    Util.putInCache(REGISTRATIONCLASS, registrationClassObjectArr);
-	}
-	return registrationClassObjectArr;
+		RegistrationClassObject registrationClassObject = new RegistrationClassObject();
+		RegistrationClassObject[] registrationClassObjectArr = (RegistrationClassObject[])Util.getAppCache().get(REGISTRATIONCLASS);
+		if ( registrationClassObjectArr == null ) {
+		    DebugHandler.info("Getting registrationclass from database");
+		    @SuppressWarnings("unchecked")
+		    ArrayList<RegistrationClassObject> v = (ArrayList)DBUtil.list(registrationClassObject);
+		    DebugHandler.finest(":v: " +  v);
+		    if ( v == null )
+			    return null;
+		    registrationClassObjectArr = new RegistrationClassObject[v.size()];
+		    for ( int idx = 0; idx < v.size(); idx++ ) {
+			    registrationClassObjectArr[idx] = v.get(idx);
+		    }
+		    Util.putInCache(REGISTRATIONCLASS, registrationClassObjectArr);
+		}
+		return registrationClassObjectArr;
     }
     
     
@@ -147,41 +147,46 @@ public class RegistrationClassImpl implements RegistrationClassInterface  {
      */
     
     public Integer addRegistrationClass(RegistrationClassObject registrationClassObject) throws AppException{
-	if ( AppConstants.DB_TYPE.equalsIgnoreCase(Constants.ORACLE) ) {
-		long l = DBUtil.getNextId("Registration_Class_seq");
-		registrationClassObject.setRegistrationClassId((int)l);
-	}
-	Integer i = (Integer)DBUtil.insert(registrationClassObject);
-	DebugHandler.fine("i: " +  i);
-	RegistrationClassObject buf = new RegistrationClassObject();
-	buf.setRegistrationClassName(registrationClassObject.getRegistrationClassName());
-	@SuppressWarnings("unchecked")
-	ArrayList<RegistrationClassObject> v = (ArrayList)DBUtil.list(registrationClassObject, buf);
+		if ( AppConstants.DB_TYPE.equalsIgnoreCase(Constants.ORACLE) ) {
+			long l = DBUtil.getNextId("Registration_Class_seq");
+			registrationClassObject.setRegistrationClassId((int)l);
+		}
+		Integer i = (Integer)DBUtil.insert(registrationClassObject);
+		DebugHandler.fine("i: " +  i);
+		// Do for Non Oracle where there is auto increment
+		if ( ! AppConstants.DB_TYPE.equalsIgnoreCase(Constants.ORACLE) ) {
+			registrationClassObject.setRegistrationClassId(i.intValue());
+			DebugHandler.fine(registrationClassObject);
+		}
+		RegistrationClassObject buf = new RegistrationClassObject();
+		buf.setRegistrationClassId(registrationClassObject.getRegistrationClassId());
+		@SuppressWarnings("unchecked")
+		ArrayList<RegistrationClassObject> v = (ArrayList)DBUtil.list(registrationClassObject, buf);
 		registrationClassObject = v.get(0);
-	RegistrationClassObject[] registrationClassObjectArr = getAllRegistrationClass();
-	boolean foundSpace = false;
+		RegistrationClassObject[] registrationClassObjectArr = getAllRegistrationClass();
+		boolean foundSpace = false;
 
-	for ( int idx = 0; idx < registrationClassObjectArr.length; idx++ ) {
-	    if ( registrationClassObjectArr[idx] == null ) {
-		registrationClassObjectArr[idx] = (RegistrationClassObject)registrationClassObject.clone();
-		foundSpace = true;
-		break;
-	    }
+		for ( int idx = 0; idx < registrationClassObjectArr.length; idx++ ) {
+			if ( registrationClassObjectArr[idx] == null ) {
+				registrationClassObjectArr[idx] = (RegistrationClassObject)registrationClassObject.clone();
+				foundSpace = true;
+				break;
+			}
+		}
+		if ( foundSpace == false ) {
+			RegistrationClassObject[] newregistrationClassObjectArr = new RegistrationClassObject[registrationClassObjectArr.length + 1];
+			int idx = 0;
+			for ( idx = 0; idx < registrationClassObjectArr.length; idx++ ) {
+				newregistrationClassObjectArr[idx] = (RegistrationClassObject)registrationClassObjectArr[idx].clone();
+			}
+			newregistrationClassObjectArr[idx] = (RegistrationClassObject)registrationClassObject.clone();
+			Util.putInCache(REGISTRATIONCLASS, newregistrationClassObjectArr);
+		} else {
+			Util.putInCache(REGISTRATIONCLASS, registrationClassObjectArr);
+		}
+		return i;
 	}
-	if ( foundSpace == false ) {
-	    RegistrationClassObject[] newregistrationClassObjectArr = new RegistrationClassObject[registrationClassObjectArr.length + 1];
-	    int idx = 0;
-	    for ( idx = 0; idx < registrationClassObjectArr.length; idx++ ) {
-		newregistrationClassObjectArr[idx] = (RegistrationClassObject)registrationClassObjectArr[idx].clone();
-	    }
-	    newregistrationClassObjectArr[idx] = (RegistrationClassObject)registrationClassObject.clone();
-	    Util.putInCache(REGISTRATIONCLASS, newregistrationClassObjectArr);
-	} else {
-	    Util.putInCache(REGISTRATIONCLASS, registrationClassObjectArr);
-	}
-	return i;
-    }
-    
+	
     
     /**
      *
@@ -193,24 +198,24 @@ public class RegistrationClassImpl implements RegistrationClassInterface  {
      *
      */
     
-    public Integer updateRegistrationClass(RegistrationClassObject registrationClassObject) throws AppException{
-	RegistrationClassObject newRegistrationClassObject = getRegistrationClas(registrationClassObject.getRegistrationClassId()); // This call will make sure cache/db are in sync
-	Integer i = (Integer)DBUtil.update(registrationClassObject);
-	DebugHandler.fine("i: " +  i);
-	RegistrationClassObject[] registrationClassObjectArr = getAllRegistrationClass();
-	if ( registrationClassObjectArr == null )
-	    return null;
-	for ( int idx = 0; idx < registrationClassObjectArr.length; idx++ ) {
-	    if ( registrationClassObjectArr[idx] != null ) {
-		if ( registrationClassObjectArr[idx].getRegistrationClassId() == registrationClassObject.getRegistrationClassId() ) {
-		    DebugHandler.debug("Found RegistrationClass " + registrationClassObject.getRegistrationClassId());
-		    registrationClassObjectArr[idx] = (RegistrationClassObject)registrationClassObject.clone();
-		    Util.putInCache(REGISTRATIONCLASS, registrationClassObjectArr);
+	public Integer updateRegistrationClass(RegistrationClassObject registrationClassObject) throws AppException{
+		RegistrationClassObject newRegistrationClassObject = getRegistrationClas(registrationClassObject.getRegistrationClassId()); // This call will make sure cache/db are in sync
+		Integer i = (Integer)DBUtil.update(registrationClassObject);
+		DebugHandler.fine("i: " +  i);
+		RegistrationClassObject[] registrationClassObjectArr = getAllRegistrationClass();
+		if ( registrationClassObjectArr == null )
+			return null;
+		for ( int idx = 0; idx < registrationClassObjectArr.length; idx++ ) {
+			if ( registrationClassObjectArr[idx] != null ) {
+				if ( registrationClassObjectArr[idx].getRegistrationClassId() == registrationClassObject.getRegistrationClassId() ) {
+					DebugHandler.debug("Found RegistrationClass " + registrationClassObject.getRegistrationClassId());
+					registrationClassObjectArr[idx] = (RegistrationClassObject)registrationClassObject.clone();
+					Util.putInCache(REGISTRATIONCLASS, registrationClassObjectArr);
+				}
+			}
 		}
-	    }
+		return i;
 	}
-	return i;
-    }
     
     
     /**

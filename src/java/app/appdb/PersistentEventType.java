@@ -58,7 +58,7 @@ public class PersistentEventType extends PersistentObject {
     
     public Object list() throws DBException {
         PreparedSQLStatement sql = new PreparedSQLStatement();
-        String statement = "SELECT event_type_id, event_type_name, event, event_type_description, event_type_start_date, event_type_end_date, event_type_venue from Event_Type";
+        String statement = "SELECT event_type_id, event_type_name, event, event_type_description, event_type_start_date, event_type_end_date, event_type_venue, online_registration_only from Event_Type";
         int index = 1;
         sql.setStatement(statement);
         
@@ -85,7 +85,7 @@ public class PersistentEventType extends PersistentObject {
     
     public Object list(Object args) throws DBException {
         PreparedSQLStatement sql = new PreparedSQLStatement();
-        String statement = "SELECT event_type_id, event_type_name, event, event_type_description, event_type_start_date, event_type_end_date, event_type_venue from Event_Type";
+        String statement = "SELECT event_type_id, event_type_name, event, event_type_description, event_type_start_date, event_type_end_date, event_type_venue, online_registration_only from Event_Type";
         int index = 1;
         EventTypeObject passedEventTypeObject = (EventTypeObject)args;
         boolean whereSpecified = false;
@@ -150,6 +150,15 @@ public class PersistentEventType extends PersistentObject {
 	    sql.setStatement(statement);
 	    sql.setInParams(new SQLParam(index++,  passedEventTypeObject.getEventTypeVenue(), Types.VARCHAR));
 	}
+        if ( ! passedEventTypeObject.getOnlineRegistrationOnly().equals("") ) {
+	    if ( ! whereSpecified ) {
+		statement += " where online_registration_only = ?";
+		whereSpecified = true;
+	    } else
+		statement += " and online_registration_only = ?";
+	    sql.setStatement(statement);
+	    sql.setInParams(new SQLParam(index++,  passedEventTypeObject.getOnlineRegistrationOnly(), Types.VARCHAR));
+	}
         sql.setStatement(statement);
         
         DebugHandler.debug(statement);
@@ -176,7 +185,7 @@ public class PersistentEventType extends PersistentObject {
     
     public Object fetch() throws DBException {
         PreparedSQLStatement sql = new PreparedSQLStatement();
-        String statement = "SELECT event_type_id, event_type_name, event, event_type_description, event_type_start_date, event_type_end_date, event_type_venue from Event_Type where event_type_id = ? ";
+        String statement = "SELECT event_type_id, event_type_name, event, event_type_description, event_type_start_date, event_type_end_date, event_type_venue, online_registration_only from Event_Type where event_type_id = ? ";
         int index = 1;
         sql.setStatement(statement);
         sql.setInParams(new SQLParam(index++, new Integer(eventTypeObject.getEventTypeId()), Types.INTEGER));
@@ -207,11 +216,11 @@ public class PersistentEventType extends PersistentObject {
         int index = 1;
 
         if ( AppConstants.DB_TYPE.equalsIgnoreCase(Constants.ORACLE) ) {
-            statement = "INSERT INTO Event_Type (event_type_id, event_type_name, event, event_type_description, event_type_start_date, event_type_end_date, event_type_venue) VALUES(?, ?, ?, ?, ?, ?, ?) ";
+            statement = "INSERT INTO Event_Type (event_type_id, event_type_name, event, event_type_description, event_type_start_date, event_type_end_date, event_type_venue, online_registration_only) VALUES(?, ?, ?, ?, ?, ?, ?, ?) ";
             sql.setStatement(statement);
             sql.setInParams(new SQLParam(index++, new Integer(eventTypeObject.getEventTypeId()), Types.INTEGER));
         } else {
-            statement = "INSERT INTO Event_Type (event_type_name, event, event_type_description, event_type_start_date, event_type_end_date, event_type_venue) VALUES(?, ?, ?, ?, ?, ?) ";
+            statement = "INSERT INTO Event_Type (event_type_name, event, event_type_description, event_type_start_date, event_type_end_date, event_type_venue, online_registration_only) VALUES(?, ?, ?, ?, ?, ?, ?) ";
             sql.setStatement(statement);
         }
         sql.setInParams(new SQLParam(index++,  eventTypeObject.getEventTypeName(), Types.VARCHAR));
@@ -220,6 +229,7 @@ public class PersistentEventType extends PersistentObject {
         sql.setInParams(new SQLParam(index++,  eventTypeObject.getEventTypeStartDate(), Types.TIMESTAMP));
         sql.setInParams(new SQLParam(index++,  eventTypeObject.getEventTypeEndDate(), Types.TIMESTAMP));
         sql.setInParams(new SQLParam(index++,  eventTypeObject.getEventTypeVenue(), Types.VARCHAR));
+        sql.setInParams(new SQLParam(index++,  eventTypeObject.getOnlineRegistrationOnly(), Types.VARCHAR));
         setSQLStatement(sql);
         
         Integer result = (Integer) super.insert();
@@ -268,7 +278,7 @@ public class PersistentEventType extends PersistentObject {
     
     public Object update() throws DBException {
         PreparedSQLStatement sql = new PreparedSQLStatement();
-        String statement = "UPDATE Event_Type SET event_type_id = ?, event_type_name = ?, event = ?, event_type_description = ?, event_type_start_date = ?, event_type_end_date = ?, event_type_venue = ? where event_type_id = ? ";
+        String statement = "UPDATE Event_Type SET event_type_id = ?, event_type_name = ?, event = ?, event_type_description = ?, event_type_start_date = ?, event_type_end_date = ?, event_type_venue = ?, online_registration_only = ? where event_type_id = ? ";
         int index = 1;
         sql.setStatement(statement);
         sql.setInParams(new SQLParam(index++, new Integer(eventTypeObject.getEventTypeId()), Types.INTEGER));
@@ -278,6 +288,7 @@ public class PersistentEventType extends PersistentObject {
         sql.setInParams(new SQLParam(index++,  eventTypeObject.getEventTypeStartDate(), Types.TIMESTAMP));
         sql.setInParams(new SQLParam(index++,  eventTypeObject.getEventTypeEndDate(), Types.TIMESTAMP));
         sql.setInParams(new SQLParam(index++,  eventTypeObject.getEventTypeVenue(), Types.VARCHAR));
+        sql.setInParams(new SQLParam(index++,  eventTypeObject.getOnlineRegistrationOnly(), Types.VARCHAR));
         sql.setInParams(new SQLParam(index++, new Integer(eventTypeObject.getEventTypeId()), Types.INTEGER));
         setSQLStatement(sql);
         
@@ -315,6 +326,7 @@ public class PersistentEventType extends PersistentObject {
                 f.setEventTypeStartDate(rs.getDate(index++));
                 f.setEventTypeEndDate(rs.getDate(index++));
                 f.setEventTypeVenue(rs.getString(index++));
+                f.setOnlineRegistrationOnly(rs.getString(index++));
                 result.add(f);
             }
         } catch (Exception e) {

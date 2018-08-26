@@ -33,6 +33,7 @@ public class EventTypeObject implements Cloneable {
 	private Date event_type_start_date;
 	private Date event_type_end_date;
 	private String event_type_venue;
+	private String online_registration_only;
 	
 	/**
 	 *
@@ -49,7 +50,8 @@ public class EventTypeObject implements Cloneable {
 		"event_type_description : " + event_type_description + "\n" +
 		"event_type_start_date : " + event_type_start_date + "\n" +
 		"event_type_end_date : " + event_type_end_date + "\n" +
-		"event_type_venue : " + event_type_venue + "\n";
+		"event_type_venue : " + event_type_venue + "\n" +
+		"online_registration_only : " + online_registration_only + "\n";
 	}
     
 	/**
@@ -70,6 +72,7 @@ public class EventTypeObject implements Cloneable {
 			 jo.put("event_type_start_date", event_type_start_date);
 			 jo.put("event_type_end_date", event_type_end_date);
 			 jo.put("event_type_venue", event_type_venue);
+			 jo.put("online_registration_only", online_registration_only);
 		} catch (JSONException je) {}
 		return jo;
 	}
@@ -99,6 +102,7 @@ public class EventTypeObject implements Cloneable {
 		setEventTypeStartDate(null);
 		setEventTypeEndDate(null);
 		setEventTypeVenue("");
+		setOnlineRegistrationOnly("");
 	}
     
 	/**
@@ -137,6 +141,9 @@ public class EventTypeObject implements Cloneable {
 		} catch (JSONException je) {}
 		try {
 			event_type_venue = jObject.getString("event_type_venue");
+		} catch (JSONException je) {}
+		try {
+			online_registration_only = jObject.getString("online_registration_only");
 		} catch (JSONException je) {}
 	}
     
@@ -325,6 +332,32 @@ public class EventTypeObject implements Cloneable {
     
     /**
      *
+     * Sets the <code>online_registration_only</code> field
+     *
+     * @param online_registration_only      String
+     *
+     */
+    
+    public void setOnlineRegistrationOnly(String online_registration_only) {
+        this.online_registration_only = online_registration_only;
+    }
+    
+    
+    /**
+     *
+     * Gets the <code>online_registration_only</code> field
+     *
+     * @returns online_registration_only
+     *
+     */
+    
+    public String getOnlineRegistrationOnly() {
+        return online_registration_only;
+    }
+
+    
+    /**
+     *
      * Tests if this object equals <code>obj</code>
      *
      * @returns true if equals
@@ -342,7 +375,8 @@ public class EventTypeObject implements Cloneable {
             Util.trim(event_type_description).equals(Util.trim(other.getEventTypeDescription())) &&
             event_type_start_date.equals(other.getEventTypeStartDate()) &&
             event_type_end_date.equals(other.getEventTypeEndDate()) &&
-            Util.trim(event_type_venue).equals(Util.trim(other.getEventTypeVenue()));
+            Util.trim(event_type_venue).equals(Util.trim(other.getEventTypeVenue())) &&
+            Util.trim(online_registration_only).equals(Util.trim(other.getOnlineRegistrationOnly()));
     }
     
     /**

@@ -82,20 +82,20 @@ public class PaymentStatusImpl implements PaymentStatusInterface  {
 	    return null;
 	for ( int i = 0; i < paymentStatusObjectArr.length; i++ ) {
 	    if ( paymentStatusObjectArr[i] == null ) { // Try database and add to cache if found.
-		PaymentStatusObject paymentstatusObj = new PaymentStatusObject();
-		paymentstatusObj.setPaymentStatusId(payment_status_id);
-		@SuppressWarnings("unchecked")
-		ArrayList<PaymentStatusObject> v = (ArrayList)DBUtil.fetch(paymentstatusObj);
-		if ( v == null || v.size() == 0 )
-		    return null;
-		else {
-		    paymentStatusObjectArr[i] = (PaymentStatusObject)paymentstatusObj.clone();
-		    Util.putInCache(PAYMENTSTATUS, paymentStatusObjectArr);
-		}
+		    PaymentStatusObject paymentstatusObj = new PaymentStatusObject();
+		    paymentstatusObj.setPaymentStatusId(payment_status_id);
+		    @SuppressWarnings("unchecked")
+		    ArrayList<PaymentStatusObject> v = (ArrayList)DBUtil.fetch(paymentstatusObj);
+		    if ( v == null || v.size() == 0 )
+			    return null;
+		    else {
+			    paymentStatusObjectArr[i] = (PaymentStatusObject)paymentstatusObj.clone();
+			    Util.putInCache(PAYMENTSTATUS, paymentStatusObjectArr);
+		    }
 	    }
 	    if ( paymentStatusObjectArr[i].getPaymentStatusId() == payment_status_id ) {
-		DebugHandler.debug("Returning " + paymentStatusObjectArr[i]);
-		return (PaymentStatusObject)paymentStatusObjectArr[i].clone();
+		    DebugHandler.debug("Returning " + paymentStatusObjectArr[i]);
+		    return (PaymentStatusObject)paymentStatusObjectArr[i].clone();
 	    }
 	}
 	return null;
@@ -113,22 +113,22 @@ public class PaymentStatusImpl implements PaymentStatusInterface  {
      */
     
     public PaymentStatusObject[] getAllPaymentStatus() throws AppException{
-	PaymentStatusObject paymentStatusObject = new PaymentStatusObject();
-	PaymentStatusObject[] paymentStatusObjectArr = (PaymentStatusObject[])Util.getAppCache().get(PAYMENTSTATUS);
-	if ( paymentStatusObjectArr == null ) {
-	    DebugHandler.info("Getting paymentstatus from database");
-	    @SuppressWarnings("unchecked")
-	    ArrayList<PaymentStatusObject> v = (ArrayList)DBUtil.list(paymentStatusObject);
-	    DebugHandler.finest(":v: " +  v);
-	    if ( v == null )
-		return null;
-	    paymentStatusObjectArr = new PaymentStatusObject[v.size()];
-	    for ( int idx = 0; idx < v.size(); idx++ ) {
-		paymentStatusObjectArr[idx] = v.get(idx);
-	    }
-	    Util.putInCache(PAYMENTSTATUS, paymentStatusObjectArr);
-	}
-	return paymentStatusObjectArr;
+		PaymentStatusObject paymentStatusObject = new PaymentStatusObject();
+		PaymentStatusObject[] paymentStatusObjectArr = (PaymentStatusObject[])Util.getAppCache().get(PAYMENTSTATUS);
+		if ( paymentStatusObjectArr == null ) {
+		    DebugHandler.info("Getting paymentstatus from database");
+		    @SuppressWarnings("unchecked")
+		    ArrayList<PaymentStatusObject> v = (ArrayList)DBUtil.list(paymentStatusObject);
+		    DebugHandler.finest(":v: " +  v);
+		    if ( v == null )
+			    return null;
+		    paymentStatusObjectArr = new PaymentStatusObject[v.size()];
+		    for ( int idx = 0; idx < v.size(); idx++ ) {
+			    paymentStatusObjectArr[idx] = v.get(idx);
+		    }
+		    Util.putInCache(PAYMENTSTATUS, paymentStatusObjectArr);
+		}
+		return paymentStatusObjectArr;
     }
     
     
@@ -143,41 +143,46 @@ public class PaymentStatusImpl implements PaymentStatusInterface  {
      */
     
     public Integer addPaymentStatus(PaymentStatusObject paymentStatusObject) throws AppException{
-	if ( AppConstants.DB_TYPE.equalsIgnoreCase(Constants.ORACLE) ) {
-		long l = DBUtil.getNextId("Payment_Status_seq");
-		paymentStatusObject.setPaymentStatusId((int)l);
-	}
-	Integer i = (Integer)DBUtil.insert(paymentStatusObject);
-	DebugHandler.fine("i: " +  i);
-	PaymentStatusObject buf = new PaymentStatusObject();
-	buf.setPaymentStatusName(paymentStatusObject.getPaymentStatusName());
-	@SuppressWarnings("unchecked")
-	ArrayList<PaymentStatusObject> v = (ArrayList)DBUtil.list(paymentStatusObject, buf);
+		if ( AppConstants.DB_TYPE.equalsIgnoreCase(Constants.ORACLE) ) {
+			long l = DBUtil.getNextId("Payment_Status_seq");
+			paymentStatusObject.setPaymentStatusId((int)l);
+		}
+		Integer i = (Integer)DBUtil.insert(paymentStatusObject);
+		DebugHandler.fine("i: " +  i);
+		// Do for Non Oracle where there is auto increment
+		if ( ! AppConstants.DB_TYPE.equalsIgnoreCase(Constants.ORACLE) ) {
+			paymentStatusObject.setPaymentStatusId(i.intValue());
+			DebugHandler.fine(paymentStatusObject);
+		}
+		PaymentStatusObject buf = new PaymentStatusObject();
+		buf.setPaymentStatusId(paymentStatusObject.getPaymentStatusId());
+		@SuppressWarnings("unchecked")
+		ArrayList<PaymentStatusObject> v = (ArrayList)DBUtil.list(paymentStatusObject, buf);
 		paymentStatusObject = v.get(0);
-	PaymentStatusObject[] paymentStatusObjectArr = getAllPaymentStatus();
-	boolean foundSpace = false;
+		PaymentStatusObject[] paymentStatusObjectArr = getAllPaymentStatus();
+		boolean foundSpace = false;
 
-	for ( int idx = 0; idx < paymentStatusObjectArr.length; idx++ ) {
-	    if ( paymentStatusObjectArr[idx] == null ) {
-		paymentStatusObjectArr[idx] = (PaymentStatusObject)paymentStatusObject.clone();
-		foundSpace = true;
-		break;
-	    }
+		for ( int idx = 0; idx < paymentStatusObjectArr.length; idx++ ) {
+			if ( paymentStatusObjectArr[idx] == null ) {
+				paymentStatusObjectArr[idx] = (PaymentStatusObject)paymentStatusObject.clone();
+				foundSpace = true;
+				break;
+			}
+		}
+		if ( foundSpace == false ) {
+			PaymentStatusObject[] newpaymentStatusObjectArr = new PaymentStatusObject[paymentStatusObjectArr.length + 1];
+			int idx = 0;
+			for ( idx = 0; idx < paymentStatusObjectArr.length; idx++ ) {
+				newpaymentStatusObjectArr[idx] = (PaymentStatusObject)paymentStatusObjectArr[idx].clone();
+			}
+			newpaymentStatusObjectArr[idx] = (PaymentStatusObject)paymentStatusObject.clone();
+			Util.putInCache(PAYMENTSTATUS, newpaymentStatusObjectArr);
+		} else {
+			Util.putInCache(PAYMENTSTATUS, paymentStatusObjectArr);
+		}
+		return i;
 	}
-	if ( foundSpace == false ) {
-	    PaymentStatusObject[] newpaymentStatusObjectArr = new PaymentStatusObject[paymentStatusObjectArr.length + 1];
-	    int idx = 0;
-	    for ( idx = 0; idx < paymentStatusObjectArr.length; idx++ ) {
-		newpaymentStatusObjectArr[idx] = (PaymentStatusObject)paymentStatusObjectArr[idx].clone();
-	    }
-	    newpaymentStatusObjectArr[idx] = (PaymentStatusObject)paymentStatusObject.clone();
-	    Util.putInCache(PAYMENTSTATUS, newpaymentStatusObjectArr);
-	} else {
-	    Util.putInCache(PAYMENTSTATUS, paymentStatusObjectArr);
-	}
-	return i;
-    }
-    
+	
     
     /**
      *
@@ -189,24 +194,24 @@ public class PaymentStatusImpl implements PaymentStatusInterface  {
      *
      */
     
-    public Integer updatePaymentStatus(PaymentStatusObject paymentStatusObject) throws AppException{
-	PaymentStatusObject newPaymentStatusObject = getPaymentStatu(paymentStatusObject.getPaymentStatusId()); // This call will make sure cache/db are in sync
-	Integer i = (Integer)DBUtil.update(paymentStatusObject);
-	DebugHandler.fine("i: " +  i);
-	PaymentStatusObject[] paymentStatusObjectArr = getAllPaymentStatus();
-	if ( paymentStatusObjectArr == null )
-	    return null;
-	for ( int idx = 0; idx < paymentStatusObjectArr.length; idx++ ) {
-	    if ( paymentStatusObjectArr[idx] != null ) {
-		if ( paymentStatusObjectArr[idx].getPaymentStatusId() == paymentStatusObject.getPaymentStatusId() ) {
-		    DebugHandler.debug("Found PaymentStatus " + paymentStatusObject.getPaymentStatusId());
-		    paymentStatusObjectArr[idx] = (PaymentStatusObject)paymentStatusObject.clone();
-		    Util.putInCache(PAYMENTSTATUS, paymentStatusObjectArr);
+	public Integer updatePaymentStatus(PaymentStatusObject paymentStatusObject) throws AppException{
+		PaymentStatusObject newPaymentStatusObject = getPaymentStatu(paymentStatusObject.getPaymentStatusId()); // This call will make sure cache/db are in sync
+		Integer i = (Integer)DBUtil.update(paymentStatusObject);
+		DebugHandler.fine("i: " +  i);
+		PaymentStatusObject[] paymentStatusObjectArr = getAllPaymentStatus();
+		if ( paymentStatusObjectArr == null )
+			return null;
+		for ( int idx = 0; idx < paymentStatusObjectArr.length; idx++ ) {
+			if ( paymentStatusObjectArr[idx] != null ) {
+				if ( paymentStatusObjectArr[idx].getPaymentStatusId() == paymentStatusObject.getPaymentStatusId() ) {
+					DebugHandler.debug("Found PaymentStatus " + paymentStatusObject.getPaymentStatusId());
+					paymentStatusObjectArr[idx] = (PaymentStatusObject)paymentStatusObject.clone();
+					Util.putInCache(PAYMENTSTATUS, paymentStatusObjectArr);
+				}
+			}
 		}
-	    }
+		return i;
 	}
-	return i;
-    }
     
     
     /**

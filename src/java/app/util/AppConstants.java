@@ -20,6 +20,8 @@ import java.util.*;
  */
 
 public class AppConstants {
+    public static String ONLINE_REGISTRATION_ONLY_LABEL;
+    public static String ONLINE_REGISTRATION_ONLY_STR = "onlineRegistrationOnly";
     public static String REGISTRANT_PHONE_LABEL;
     public static String REGISTRANT_PHONE_STR = "registrantPhone";
     public static String CURRENT_PARTICIPANTEVENT_LABEL;
@@ -424,5 +426,11 @@ public class AppConstants {
     public static String POST_URL;
     public static String DB_TYPE;
 
+	public static String SMTP_HOST;
+	public static boolean SMTP_DEBUG;
+	public static String EMAIL_FROM;
+	public static String EMAIL_USERNAMES;
+	public static String RECEIPT_NO_PREFIX;
+	public static String RECEIPT_TEMPLATE;
 };
 

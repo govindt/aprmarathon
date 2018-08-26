@@ -89,20 +89,20 @@ public class RegistrantEventImpl implements RegistrantEventInterface  {
 	    return null;
 	for ( int i = 0; i < registrantEventObjectArr.length; i++ ) {
 	    if ( registrantEventObjectArr[i] == null ) { // Try database and add to cache if found.
-		RegistrantEventObject registranteventObj = new RegistrantEventObject();
-		registranteventObj.setRegistrantEventId(registrant_event_id);
-		@SuppressWarnings("unchecked")
-		ArrayList<RegistrantEventObject> v = (ArrayList)DBUtil.fetch(registranteventObj);
-		if ( v == null || v.size() == 0 )
-		    return null;
-		else {
-		    registrantEventObjectArr[i] = (RegistrantEventObject)registranteventObj.clone();
-		    Util.putInCache(REGISTRANTEVENT, registrantEventObjectArr);
-		}
+		    RegistrantEventObject registranteventObj = new RegistrantEventObject();
+		    registranteventObj.setRegistrantEventId(registrant_event_id);
+		    @SuppressWarnings("unchecked")
+		    ArrayList<RegistrantEventObject> v = (ArrayList)DBUtil.fetch(registranteventObj);
+		    if ( v == null || v.size() == 0 )
+			    return null;
+		    else {
+			    registrantEventObjectArr[i] = (RegistrantEventObject)registranteventObj.clone();
+			    Util.putInCache(REGISTRANTEVENT, registrantEventObjectArr);
+		    }
 	    }
 	    if ( registrantEventObjectArr[i].getRegistrantEventId() == registrant_event_id ) {
-		DebugHandler.debug("Returning " + registrantEventObjectArr[i]);
-		return (RegistrantEventObject)registrantEventObjectArr[i].clone();
+		    DebugHandler.debug("Returning " + registrantEventObjectArr[i]);
+		    return (RegistrantEventObject)registrantEventObjectArr[i].clone();
 	    }
 	}
 	return null;
@@ -120,22 +120,22 @@ public class RegistrantEventImpl implements RegistrantEventInterface  {
      */
     
     public RegistrantEventObject[] getAllRegistrantEvents() throws AppException{
-	RegistrantEventObject registrantEventObject = new RegistrantEventObject();
-	RegistrantEventObject[] registrantEventObjectArr = (RegistrantEventObject[])Util.getAppCache().get(REGISTRANTEVENT);
-	if ( registrantEventObjectArr == null ) {
-	    DebugHandler.info("Getting registrantevent from database");
-	    @SuppressWarnings("unchecked")
-	    ArrayList<RegistrantEventObject> v = (ArrayList)DBUtil.list(registrantEventObject);
-	    DebugHandler.finest(":v: " +  v);
-	    if ( v == null )
-		return null;
-	    registrantEventObjectArr = new RegistrantEventObject[v.size()];
-	    for ( int idx = 0; idx < v.size(); idx++ ) {
-		registrantEventObjectArr[idx] = v.get(idx);
-	    }
-	    Util.putInCache(REGISTRANTEVENT, registrantEventObjectArr);
-	}
-	return registrantEventObjectArr;
+		RegistrantEventObject registrantEventObject = new RegistrantEventObject();
+		RegistrantEventObject[] registrantEventObjectArr = (RegistrantEventObject[])Util.getAppCache().get(REGISTRANTEVENT);
+		if ( registrantEventObjectArr == null ) {
+		    DebugHandler.info("Getting registrantevent from database");
+		    @SuppressWarnings("unchecked")
+		    ArrayList<RegistrantEventObject> v = (ArrayList)DBUtil.list(registrantEventObject);
+		    DebugHandler.finest(":v: " +  v);
+		    if ( v == null )
+			    return null;
+		    registrantEventObjectArr = new RegistrantEventObject[v.size()];
+		    for ( int idx = 0; idx < v.size(); idx++ ) {
+			    registrantEventObjectArr[idx] = v.get(idx);
+		    }
+		    Util.putInCache(REGISTRANTEVENT, registrantEventObjectArr);
+		}
+		return registrantEventObjectArr;
     }
     
     
@@ -150,41 +150,46 @@ public class RegistrantEventImpl implements RegistrantEventInterface  {
      */
     
     public Integer addRegistrantEvent(RegistrantEventObject registrantEventObject) throws AppException{
-	if ( AppConstants.DB_TYPE.equalsIgnoreCase(Constants.ORACLE) ) {
-		long l = DBUtil.getNextId("Registrant_Event_seq");
-		registrantEventObject.setRegistrantEventId((int)l);
-	}
-	Integer i = (Integer)DBUtil.insert(registrantEventObject);
-	DebugHandler.fine("i: " +  i);
-	RegistrantEventObject buf = new RegistrantEventObject();
-	buf.setRegistrantId(registrantEventObject.getRegistrantId());
-	@SuppressWarnings("unchecked")
-	ArrayList<RegistrantEventObject> v = (ArrayList)DBUtil.list(registrantEventObject, buf);
+		if ( AppConstants.DB_TYPE.equalsIgnoreCase(Constants.ORACLE) ) {
+			long l = DBUtil.getNextId("Registrant_Event_seq");
+			registrantEventObject.setRegistrantEventId((int)l);
+		}
+		Integer i = (Integer)DBUtil.insert(registrantEventObject);
+		DebugHandler.fine("i: " +  i);
+		// Do for Non Oracle where there is auto increment
+		if ( ! AppConstants.DB_TYPE.equalsIgnoreCase(Constants.ORACLE) ) {
+			registrantEventObject.setRegistrantEventId(i.intValue());
+			DebugHandler.fine(registrantEventObject);
+		}
+		RegistrantEventObject buf = new RegistrantEventObject();
+		buf.setRegistrantEventId(registrantEventObject.getRegistrantEventId());
+		@SuppressWarnings("unchecked")
+		ArrayList<RegistrantEventObject> v = (ArrayList)DBUtil.list(registrantEventObject, buf);
 		registrantEventObject = v.get(0);
-	RegistrantEventObject[] registrantEventObjectArr = getAllRegistrantEvents();
-	boolean foundSpace = false;
+		RegistrantEventObject[] registrantEventObjectArr = getAllRegistrantEvents();
+		boolean foundSpace = false;
 
-	for ( int idx = 0; idx < registrantEventObjectArr.length; idx++ ) {
-	    if ( registrantEventObjectArr[idx] == null ) {
-		registrantEventObjectArr[idx] = (RegistrantEventObject)registrantEventObject.clone();
-		foundSpace = true;
-		break;
-	    }
+		for ( int idx = 0; idx < registrantEventObjectArr.length; idx++ ) {
+			if ( registrantEventObjectArr[idx] == null ) {
+				registrantEventObjectArr[idx] = (RegistrantEventObject)registrantEventObject.clone();
+				foundSpace = true;
+				break;
+			}
+		}
+		if ( foundSpace == false ) {
+			RegistrantEventObject[] newregistrantEventObjectArr = new RegistrantEventObject[registrantEventObjectArr.length + 1];
+			int idx = 0;
+			for ( idx = 0; idx < registrantEventObjectArr.length; idx++ ) {
+				newregistrantEventObjectArr[idx] = (RegistrantEventObject)registrantEventObjectArr[idx].clone();
+			}
+			newregistrantEventObjectArr[idx] = (RegistrantEventObject)registrantEventObject.clone();
+			Util.putInCache(REGISTRANTEVENT, newregistrantEventObjectArr);
+		} else {
+			Util.putInCache(REGISTRANTEVENT, registrantEventObjectArr);
+		}
+		return i;
 	}
-	if ( foundSpace == false ) {
-	    RegistrantEventObject[] newregistrantEventObjectArr = new RegistrantEventObject[registrantEventObjectArr.length + 1];
-	    int idx = 0;
-	    for ( idx = 0; idx < registrantEventObjectArr.length; idx++ ) {
-		newregistrantEventObjectArr[idx] = (RegistrantEventObject)registrantEventObjectArr[idx].clone();
-	    }
-	    newregistrantEventObjectArr[idx] = (RegistrantEventObject)registrantEventObject.clone();
-	    Util.putInCache(REGISTRANTEVENT, newregistrantEventObjectArr);
-	} else {
-	    Util.putInCache(REGISTRANTEVENT, registrantEventObjectArr);
-	}
-	return i;
-    }
-    
+	
     
     /**
      *
@@ -196,24 +201,24 @@ public class RegistrantEventImpl implements RegistrantEventInterface  {
      *
      */
     
-    public Integer updateRegistrantEvent(RegistrantEventObject registrantEventObject) throws AppException{
-	RegistrantEventObject newRegistrantEventObject = getRegistrantEvent(registrantEventObject.getRegistrantEventId()); // This call will make sure cache/db are in sync
-	Integer i = (Integer)DBUtil.update(registrantEventObject);
-	DebugHandler.fine("i: " +  i);
-	RegistrantEventObject[] registrantEventObjectArr = getAllRegistrantEvents();
-	if ( registrantEventObjectArr == null )
-	    return null;
-	for ( int idx = 0; idx < registrantEventObjectArr.length; idx++ ) {
-	    if ( registrantEventObjectArr[idx] != null ) {
-		if ( registrantEventObjectArr[idx].getRegistrantEventId() == registrantEventObject.getRegistrantEventId() ) {
-		    DebugHandler.debug("Found RegistrantEvent " + registrantEventObject.getRegistrantEventId());
-		    registrantEventObjectArr[idx] = (RegistrantEventObject)registrantEventObject.clone();
-		    Util.putInCache(REGISTRANTEVENT, registrantEventObjectArr);
+	public Integer updateRegistrantEvent(RegistrantEventObject registrantEventObject) throws AppException{
+		RegistrantEventObject newRegistrantEventObject = getRegistrantEvent(registrantEventObject.getRegistrantEventId()); // This call will make sure cache/db are in sync
+		Integer i = (Integer)DBUtil.update(registrantEventObject);
+		DebugHandler.fine("i: " +  i);
+		RegistrantEventObject[] registrantEventObjectArr = getAllRegistrantEvents();
+		if ( registrantEventObjectArr == null )
+			return null;
+		for ( int idx = 0; idx < registrantEventObjectArr.length; idx++ ) {
+			if ( registrantEventObjectArr[idx] != null ) {
+				if ( registrantEventObjectArr[idx].getRegistrantEventId() == registrantEventObject.getRegistrantEventId() ) {
+					DebugHandler.debug("Found RegistrantEvent " + registrantEventObject.getRegistrantEventId());
+					registrantEventObjectArr[idx] = (RegistrantEventObject)registrantEventObject.clone();
+					Util.putInCache(REGISTRANTEVENT, registrantEventObjectArr);
+				}
+			}
 		}
-	    }
+		return i;
 	}
-	return i;
-    }
     
     
     /**

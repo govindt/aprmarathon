@@ -82,20 +82,20 @@ public class PaymentTypeImpl implements PaymentTypeInterface  {
 	    return null;
 	for ( int i = 0; i < paymentTypeObjectArr.length; i++ ) {
 	    if ( paymentTypeObjectArr[i] == null ) { // Try database and add to cache if found.
-		PaymentTypeObject paymenttypeObj = new PaymentTypeObject();
-		paymenttypeObj.setPaymentTypeId(payment_type_id);
-		@SuppressWarnings("unchecked")
-		ArrayList<PaymentTypeObject> v = (ArrayList)DBUtil.fetch(paymenttypeObj);
-		if ( v == null || v.size() == 0 )
-		    return null;
-		else {
-		    paymentTypeObjectArr[i] = (PaymentTypeObject)paymenttypeObj.clone();
-		    Util.putInCache(PAYMENTTYPE, paymentTypeObjectArr);
-		}
+		    PaymentTypeObject paymenttypeObj = new PaymentTypeObject();
+		    paymenttypeObj.setPaymentTypeId(payment_type_id);
+		    @SuppressWarnings("unchecked")
+		    ArrayList<PaymentTypeObject> v = (ArrayList)DBUtil.fetch(paymenttypeObj);
+		    if ( v == null || v.size() == 0 )
+			    return null;
+		    else {
+			    paymentTypeObjectArr[i] = (PaymentTypeObject)paymenttypeObj.clone();
+			    Util.putInCache(PAYMENTTYPE, paymentTypeObjectArr);
+		    }
 	    }
 	    if ( paymentTypeObjectArr[i].getPaymentTypeId() == payment_type_id ) {
-		DebugHandler.debug("Returning " + paymentTypeObjectArr[i]);
-		return (PaymentTypeObject)paymentTypeObjectArr[i].clone();
+		    DebugHandler.debug("Returning " + paymentTypeObjectArr[i]);
+		    return (PaymentTypeObject)paymentTypeObjectArr[i].clone();
 	    }
 	}
 	return null;
@@ -113,22 +113,22 @@ public class PaymentTypeImpl implements PaymentTypeInterface  {
      */
     
     public PaymentTypeObject[] getAllPaymentTypes() throws AppException{
-	PaymentTypeObject paymentTypeObject = new PaymentTypeObject();
-	PaymentTypeObject[] paymentTypeObjectArr = (PaymentTypeObject[])Util.getAppCache().get(PAYMENTTYPE);
-	if ( paymentTypeObjectArr == null ) {
-	    DebugHandler.info("Getting paymenttype from database");
-	    @SuppressWarnings("unchecked")
-	    ArrayList<PaymentTypeObject> v = (ArrayList)DBUtil.list(paymentTypeObject);
-	    DebugHandler.finest(":v: " +  v);
-	    if ( v == null )
-		return null;
-	    paymentTypeObjectArr = new PaymentTypeObject[v.size()];
-	    for ( int idx = 0; idx < v.size(); idx++ ) {
-		paymentTypeObjectArr[idx] = v.get(idx);
-	    }
-	    Util.putInCache(PAYMENTTYPE, paymentTypeObjectArr);
-	}
-	return paymentTypeObjectArr;
+		PaymentTypeObject paymentTypeObject = new PaymentTypeObject();
+		PaymentTypeObject[] paymentTypeObjectArr = (PaymentTypeObject[])Util.getAppCache().get(PAYMENTTYPE);
+		if ( paymentTypeObjectArr == null ) {
+		    DebugHandler.info("Getting paymenttype from database");
+		    @SuppressWarnings("unchecked")
+		    ArrayList<PaymentTypeObject> v = (ArrayList)DBUtil.list(paymentTypeObject);
+		    DebugHandler.finest(":v: " +  v);
+		    if ( v == null )
+			    return null;
+		    paymentTypeObjectArr = new PaymentTypeObject[v.size()];
+		    for ( int idx = 0; idx < v.size(); idx++ ) {
+			    paymentTypeObjectArr[idx] = v.get(idx);
+		    }
+		    Util.putInCache(PAYMENTTYPE, paymentTypeObjectArr);
+		}
+		return paymentTypeObjectArr;
     }
     
     
@@ -143,41 +143,46 @@ public class PaymentTypeImpl implements PaymentTypeInterface  {
      */
     
     public Integer addPaymentType(PaymentTypeObject paymentTypeObject) throws AppException{
-	if ( AppConstants.DB_TYPE.equalsIgnoreCase(Constants.ORACLE) ) {
-		long l = DBUtil.getNextId("Payment_Type_seq");
-		paymentTypeObject.setPaymentTypeId((int)l);
-	}
-	Integer i = (Integer)DBUtil.insert(paymentTypeObject);
-	DebugHandler.fine("i: " +  i);
-	PaymentTypeObject buf = new PaymentTypeObject();
-	buf.setPaymentTypeName(paymentTypeObject.getPaymentTypeName());
-	@SuppressWarnings("unchecked")
-	ArrayList<PaymentTypeObject> v = (ArrayList)DBUtil.list(paymentTypeObject, buf);
+		if ( AppConstants.DB_TYPE.equalsIgnoreCase(Constants.ORACLE) ) {
+			long l = DBUtil.getNextId("Payment_Type_seq");
+			paymentTypeObject.setPaymentTypeId((int)l);
+		}
+		Integer i = (Integer)DBUtil.insert(paymentTypeObject);
+		DebugHandler.fine("i: " +  i);
+		// Do for Non Oracle where there is auto increment
+		if ( ! AppConstants.DB_TYPE.equalsIgnoreCase(Constants.ORACLE) ) {
+			paymentTypeObject.setPaymentTypeId(i.intValue());
+			DebugHandler.fine(paymentTypeObject);
+		}
+		PaymentTypeObject buf = new PaymentTypeObject();
+		buf.setPaymentTypeId(paymentTypeObject.getPaymentTypeId());
+		@SuppressWarnings("unchecked")
+		ArrayList<PaymentTypeObject> v = (ArrayList)DBUtil.list(paymentTypeObject, buf);
 		paymentTypeObject = v.get(0);
-	PaymentTypeObject[] paymentTypeObjectArr = getAllPaymentTypes();
-	boolean foundSpace = false;
+		PaymentTypeObject[] paymentTypeObjectArr = getAllPaymentTypes();
+		boolean foundSpace = false;
 
-	for ( int idx = 0; idx < paymentTypeObjectArr.length; idx++ ) {
-	    if ( paymentTypeObjectArr[idx] == null ) {
-		paymentTypeObjectArr[idx] = (PaymentTypeObject)paymentTypeObject.clone();
-		foundSpace = true;
-		break;
-	    }
+		for ( int idx = 0; idx < paymentTypeObjectArr.length; idx++ ) {
+			if ( paymentTypeObjectArr[idx] == null ) {
+				paymentTypeObjectArr[idx] = (PaymentTypeObject)paymentTypeObject.clone();
+				foundSpace = true;
+				break;
+			}
+		}
+		if ( foundSpace == false ) {
+			PaymentTypeObject[] newpaymentTypeObjectArr = new PaymentTypeObject[paymentTypeObjectArr.length + 1];
+			int idx = 0;
+			for ( idx = 0; idx < paymentTypeObjectArr.length; idx++ ) {
+				newpaymentTypeObjectArr[idx] = (PaymentTypeObject)paymentTypeObjectArr[idx].clone();
+			}
+			newpaymentTypeObjectArr[idx] = (PaymentTypeObject)paymentTypeObject.clone();
+			Util.putInCache(PAYMENTTYPE, newpaymentTypeObjectArr);
+		} else {
+			Util.putInCache(PAYMENTTYPE, paymentTypeObjectArr);
+		}
+		return i;
 	}
-	if ( foundSpace == false ) {
-	    PaymentTypeObject[] newpaymentTypeObjectArr = new PaymentTypeObject[paymentTypeObjectArr.length + 1];
-	    int idx = 0;
-	    for ( idx = 0; idx < paymentTypeObjectArr.length; idx++ ) {
-		newpaymentTypeObjectArr[idx] = (PaymentTypeObject)paymentTypeObjectArr[idx].clone();
-	    }
-	    newpaymentTypeObjectArr[idx] = (PaymentTypeObject)paymentTypeObject.clone();
-	    Util.putInCache(PAYMENTTYPE, newpaymentTypeObjectArr);
-	} else {
-	    Util.putInCache(PAYMENTTYPE, paymentTypeObjectArr);
-	}
-	return i;
-    }
-    
+	
     
     /**
      *
@@ -189,24 +194,24 @@ public class PaymentTypeImpl implements PaymentTypeInterface  {
      *
      */
     
-    public Integer updatePaymentType(PaymentTypeObject paymentTypeObject) throws AppException{
-	PaymentTypeObject newPaymentTypeObject = getPaymentType(paymentTypeObject.getPaymentTypeId()); // This call will make sure cache/db are in sync
-	Integer i = (Integer)DBUtil.update(paymentTypeObject);
-	DebugHandler.fine("i: " +  i);
-	PaymentTypeObject[] paymentTypeObjectArr = getAllPaymentTypes();
-	if ( paymentTypeObjectArr == null )
-	    return null;
-	for ( int idx = 0; idx < paymentTypeObjectArr.length; idx++ ) {
-	    if ( paymentTypeObjectArr[idx] != null ) {
-		if ( paymentTypeObjectArr[idx].getPaymentTypeId() == paymentTypeObject.getPaymentTypeId() ) {
-		    DebugHandler.debug("Found PaymentType " + paymentTypeObject.getPaymentTypeId());
-		    paymentTypeObjectArr[idx] = (PaymentTypeObject)paymentTypeObject.clone();
-		    Util.putInCache(PAYMENTTYPE, paymentTypeObjectArr);
+	public Integer updatePaymentType(PaymentTypeObject paymentTypeObject) throws AppException{
+		PaymentTypeObject newPaymentTypeObject = getPaymentType(paymentTypeObject.getPaymentTypeId()); // This call will make sure cache/db are in sync
+		Integer i = (Integer)DBUtil.update(paymentTypeObject);
+		DebugHandler.fine("i: " +  i);
+		PaymentTypeObject[] paymentTypeObjectArr = getAllPaymentTypes();
+		if ( paymentTypeObjectArr == null )
+			return null;
+		for ( int idx = 0; idx < paymentTypeObjectArr.length; idx++ ) {
+			if ( paymentTypeObjectArr[idx] != null ) {
+				if ( paymentTypeObjectArr[idx].getPaymentTypeId() == paymentTypeObject.getPaymentTypeId() ) {
+					DebugHandler.debug("Found PaymentType " + paymentTypeObject.getPaymentTypeId());
+					paymentTypeObjectArr[idx] = (PaymentTypeObject)paymentTypeObject.clone();
+					Util.putInCache(PAYMENTTYPE, paymentTypeObjectArr);
+				}
+			}
 		}
-	    }
+		return i;
 	}
-	return i;
-    }
     
     
     /**

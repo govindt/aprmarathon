@@ -58,6 +58,7 @@ public class EventTypeImpl implements EventTypeInterface  {
  || (eventtype_obj.getEventTypeStartDate() != null && eventtype_obj.getEventTypeStartDate().equals(eventTypeObjectArr[i].getEventTypeStartDate()))
  || (eventtype_obj.getEventTypeEndDate() != null && eventtype_obj.getEventTypeEndDate().equals(eventTypeObjectArr[i].getEventTypeEndDate()))
  || (eventtype_obj.getEventTypeVenue() != null && eventtype_obj.getEventTypeVenue().equals(eventTypeObjectArr[i].getEventTypeVenue()))
+ || (eventtype_obj.getOnlineRegistrationOnly() != null && eventtype_obj.getOnlineRegistrationOnly().equals(eventTypeObjectArr[i].getOnlineRegistrationOnly()))
 ) {
 					v.add((EventTypeObject)eventTypeObjectArr[i].clone());
 				}
@@ -87,20 +88,20 @@ public class EventTypeImpl implements EventTypeInterface  {
 	    return null;
 	for ( int i = 0; i < eventTypeObjectArr.length; i++ ) {
 	    if ( eventTypeObjectArr[i] == null ) { // Try database and add to cache if found.
-		EventTypeObject eventtypeObj = new EventTypeObject();
-		eventtypeObj.setEventTypeId(event_type_id);
-		@SuppressWarnings("unchecked")
-		ArrayList<EventTypeObject> v = (ArrayList)DBUtil.fetch(eventtypeObj);
-		if ( v == null || v.size() == 0 )
-		    return null;
-		else {
-		    eventTypeObjectArr[i] = (EventTypeObject)eventtypeObj.clone();
-		    Util.putInCache(EVENTTYPE, eventTypeObjectArr);
-		}
+		    EventTypeObject eventtypeObj = new EventTypeObject();
+		    eventtypeObj.setEventTypeId(event_type_id);
+		    @SuppressWarnings("unchecked")
+		    ArrayList<EventTypeObject> v = (ArrayList)DBUtil.fetch(eventtypeObj);
+		    if ( v == null || v.size() == 0 )
+			    return null;
+		    else {
+			    eventTypeObjectArr[i] = (EventTypeObject)eventtypeObj.clone();
+			    Util.putInCache(EVENTTYPE, eventTypeObjectArr);
+		    }
 	    }
 	    if ( eventTypeObjectArr[i].getEventTypeId() == event_type_id ) {
-		DebugHandler.debug("Returning " + eventTypeObjectArr[i]);
-		return (EventTypeObject)eventTypeObjectArr[i].clone();
+		    DebugHandler.debug("Returning " + eventTypeObjectArr[i]);
+		    return (EventTypeObject)eventTypeObjectArr[i].clone();
 	    }
 	}
 	return null;
@@ -118,22 +119,22 @@ public class EventTypeImpl implements EventTypeInterface  {
      */
     
     public EventTypeObject[] getAllEventTypes() throws AppException{
-	EventTypeObject eventTypeObject = new EventTypeObject();
-	EventTypeObject[] eventTypeObjectArr = (EventTypeObject[])Util.getAppCache().get(EVENTTYPE);
-	if ( eventTypeObjectArr == null ) {
-	    DebugHandler.info("Getting eventtype from database");
-	    @SuppressWarnings("unchecked")
-	    ArrayList<EventTypeObject> v = (ArrayList)DBUtil.list(eventTypeObject);
-	    DebugHandler.finest(":v: " +  v);
-	    if ( v == null )
-		return null;
-	    eventTypeObjectArr = new EventTypeObject[v.size()];
-	    for ( int idx = 0; idx < v.size(); idx++ ) {
-		eventTypeObjectArr[idx] = v.get(idx);
-	    }
-	    Util.putInCache(EVENTTYPE, eventTypeObjectArr);
-	}
-	return eventTypeObjectArr;
+		EventTypeObject eventTypeObject = new EventTypeObject();
+		EventTypeObject[] eventTypeObjectArr = (EventTypeObject[])Util.getAppCache().get(EVENTTYPE);
+		if ( eventTypeObjectArr == null ) {
+		    DebugHandler.info("Getting eventtype from database");
+		    @SuppressWarnings("unchecked")
+		    ArrayList<EventTypeObject> v = (ArrayList)DBUtil.list(eventTypeObject);
+		    DebugHandler.finest(":v: " +  v);
+		    if ( v == null )
+			    return null;
+		    eventTypeObjectArr = new EventTypeObject[v.size()];
+		    for ( int idx = 0; idx < v.size(); idx++ ) {
+			    eventTypeObjectArr[idx] = v.get(idx);
+		    }
+		    Util.putInCache(EVENTTYPE, eventTypeObjectArr);
+		}
+		return eventTypeObjectArr;
     }
     
     
@@ -148,41 +149,46 @@ public class EventTypeImpl implements EventTypeInterface  {
      */
     
     public Integer addEventType(EventTypeObject eventTypeObject) throws AppException{
-	if ( AppConstants.DB_TYPE.equalsIgnoreCase(Constants.ORACLE) ) {
-		long l = DBUtil.getNextId("Event_Type_seq");
-		eventTypeObject.setEventTypeId((int)l);
-	}
-	Integer i = (Integer)DBUtil.insert(eventTypeObject);
-	DebugHandler.fine("i: " +  i);
-	EventTypeObject buf = new EventTypeObject();
-	buf.setEventTypeName(eventTypeObject.getEventTypeName());
-	@SuppressWarnings("unchecked")
-	ArrayList<EventTypeObject> v = (ArrayList)DBUtil.list(eventTypeObject, buf);
+		if ( AppConstants.DB_TYPE.equalsIgnoreCase(Constants.ORACLE) ) {
+			long l = DBUtil.getNextId("Event_Type_seq");
+			eventTypeObject.setEventTypeId((int)l);
+		}
+		Integer i = (Integer)DBUtil.insert(eventTypeObject);
+		DebugHandler.fine("i: " +  i);
+		// Do for Non Oracle where there is auto increment
+		if ( ! AppConstants.DB_TYPE.equalsIgnoreCase(Constants.ORACLE) ) {
+			eventTypeObject.setEventTypeId(i.intValue());
+			DebugHandler.fine(eventTypeObject);
+		}
+		EventTypeObject buf = new EventTypeObject();
+		buf.setEventTypeId(eventTypeObject.getEventTypeId());
+		@SuppressWarnings("unchecked")
+		ArrayList<EventTypeObject> v = (ArrayList)DBUtil.list(eventTypeObject, buf);
 		eventTypeObject = v.get(0);
-	EventTypeObject[] eventTypeObjectArr = getAllEventTypes();
-	boolean foundSpace = false;
+		EventTypeObject[] eventTypeObjectArr = getAllEventTypes();
+		boolean foundSpace = false;
 
-	for ( int idx = 0; idx < eventTypeObjectArr.length; idx++ ) {
-	    if ( eventTypeObjectArr[idx] == null ) {
-		eventTypeObjectArr[idx] = (EventTypeObject)eventTypeObject.clone();
-		foundSpace = true;
-		break;
-	    }
+		for ( int idx = 0; idx < eventTypeObjectArr.length; idx++ ) {
+			if ( eventTypeObjectArr[idx] == null ) {
+				eventTypeObjectArr[idx] = (EventTypeObject)eventTypeObject.clone();
+				foundSpace = true;
+				break;
+			}
+		}
+		if ( foundSpace == false ) {
+			EventTypeObject[] neweventTypeObjectArr = new EventTypeObject[eventTypeObjectArr.length + 1];
+			int idx = 0;
+			for ( idx = 0; idx < eventTypeObjectArr.length; idx++ ) {
+				neweventTypeObjectArr[idx] = (EventTypeObject)eventTypeObjectArr[idx].clone();
+			}
+			neweventTypeObjectArr[idx] = (EventTypeObject)eventTypeObject.clone();
+			Util.putInCache(EVENTTYPE, neweventTypeObjectArr);
+		} else {
+			Util.putInCache(EVENTTYPE, eventTypeObjectArr);
+		}
+		return i;
 	}
-	if ( foundSpace == false ) {
-	    EventTypeObject[] neweventTypeObjectArr = new EventTypeObject[eventTypeObjectArr.length + 1];
-	    int idx = 0;
-	    for ( idx = 0; idx < eventTypeObjectArr.length; idx++ ) {
-		neweventTypeObjectArr[idx] = (EventTypeObject)eventTypeObjectArr[idx].clone();
-	    }
-	    neweventTypeObjectArr[idx] = (EventTypeObject)eventTypeObject.clone();
-	    Util.putInCache(EVENTTYPE, neweventTypeObjectArr);
-	} else {
-	    Util.putInCache(EVENTTYPE, eventTypeObjectArr);
-	}
-	return i;
-    }
-    
+	
     
     /**
      *
@@ -194,24 +200,24 @@ public class EventTypeImpl implements EventTypeInterface  {
      *
      */
     
-    public Integer updateEventType(EventTypeObject eventTypeObject) throws AppException{
-	EventTypeObject newEventTypeObject = getEventType(eventTypeObject.getEventTypeId()); // This call will make sure cache/db are in sync
-	Integer i = (Integer)DBUtil.update(eventTypeObject);
-	DebugHandler.fine("i: " +  i);
-	EventTypeObject[] eventTypeObjectArr = getAllEventTypes();
-	if ( eventTypeObjectArr == null )
-	    return null;
-	for ( int idx = 0; idx < eventTypeObjectArr.length; idx++ ) {
-	    if ( eventTypeObjectArr[idx] != null ) {
-		if ( eventTypeObjectArr[idx].getEventTypeId() == eventTypeObject.getEventTypeId() ) {
-		    DebugHandler.debug("Found EventType " + eventTypeObject.getEventTypeId());
-		    eventTypeObjectArr[idx] = (EventTypeObject)eventTypeObject.clone();
-		    Util.putInCache(EVENTTYPE, eventTypeObjectArr);
+	public Integer updateEventType(EventTypeObject eventTypeObject) throws AppException{
+		EventTypeObject newEventTypeObject = getEventType(eventTypeObject.getEventTypeId()); // This call will make sure cache/db are in sync
+		Integer i = (Integer)DBUtil.update(eventTypeObject);
+		DebugHandler.fine("i: " +  i);
+		EventTypeObject[] eventTypeObjectArr = getAllEventTypes();
+		if ( eventTypeObjectArr == null )
+			return null;
+		for ( int idx = 0; idx < eventTypeObjectArr.length; idx++ ) {
+			if ( eventTypeObjectArr[idx] != null ) {
+				if ( eventTypeObjectArr[idx].getEventTypeId() == eventTypeObject.getEventTypeId() ) {
+					DebugHandler.debug("Found EventType " + eventTypeObject.getEventTypeId());
+					eventTypeObjectArr[idx] = (EventTypeObject)eventTypeObject.clone();
+					Util.putInCache(EVENTTYPE, eventTypeObjectArr);
+				}
+			}
 		}
-	    }
+		return i;
 	}
-	return i;
-    }
     
     
     /**

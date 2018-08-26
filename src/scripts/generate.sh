@@ -1237,20 +1237,20 @@ ${NAWK} -v QUOTE="'" -v logname=${LOGNAME} -v version=1.0 -v since=1.0 -v proj_n
 		printf("\t    return null;\n") >> impl_file_name;
 		printf("\tfor ( int i = 0; i < %sArr.length; i++ ) {\n", tmp) >> impl_file_name;
 		printf("\t    if ( %sArr[i] == null ) { // Try database and add to cache if found.\n", tmp) >> impl_file_name;
-		printf("\t\t%sObject %sObj = new %sObject();\n", tmp_file_name, tolower(tmp_file_name), tmp_file_name) >> impl_file_name;
-		printf("\t\t%sObj.set%s(%s);\n", tolower(tmp_file_name), new_field_names[j], field_names[j]) >> impl_file_name;
-	        printf("\t\t@SuppressWarnings(\"unchecked\")\n") >> impl_file_name;
-		printf("\t\tArrayList<%sObject> v = (ArrayList)DBUtil.fetch(%sObj);\n", tmp_file_name, tolower(tmp_file_name))>> impl_file_name;
-		printf("\t\tif ( v == null || v.size() == 0 )\n")>> impl_file_name;
-		printf("\t\t    return null;\n")>> impl_file_name;
-		printf("\t\telse {\n")>> impl_file_name;
-		printf("\t\t    %sArr[i] = (%sObject)%sObj.clone();\n", tmp, tmp_file_name, tolower(tmp_file_name) )>> impl_file_name;
-		printf("\t\t    Util.putInCache(%s, %sArr);\n", toupper(tmp_file_name), tmp)>> impl_file_name;
-		printf("\t\t}\n")>> impl_file_name;
+		printf("\t\t    %sObject %sObj = new %sObject();\n", tmp_file_name, tolower(tmp_file_name), tmp_file_name) >> impl_file_name;
+		printf("\t\t    %sObj.set%s(%s);\n", tolower(tmp_file_name), new_field_names[j], field_names[j]) >> impl_file_name;
+	    printf("\t\t    @SuppressWarnings(\"unchecked\")\n") >> impl_file_name;
+		printf("\t\t    ArrayList<%sObject> v = (ArrayList)DBUtil.fetch(%sObj);\n", tmp_file_name, tolower(tmp_file_name))>> impl_file_name;
+		printf("\t\t    if ( v == null || v.size() == 0 )\n")>> impl_file_name;
+		printf("\t\t\t    return null;\n")>> impl_file_name;
+		printf("\t\t    else {\n")>> impl_file_name;
+		printf("\t\t\t    %sArr[i] = (%sObject)%sObj.clone();\n", tmp, tmp_file_name, tolower(tmp_file_name) )>> impl_file_name;
+		printf("\t\t\t    Util.putInCache(%s, %sArr);\n", toupper(tmp_file_name), tmp)>> impl_file_name;
+		printf("\t\t    }\n")>> impl_file_name;
 		printf("\t    }\n")>> impl_file_name;
 		printf("\t    if ( %sArr[i].get%s() == %s ) {\n", tmp, new_field_names[j], field_names[j])>> impl_file_name;
-		printf("\t\tDebugHandler.debug(\"Returning \" + %sArr[i]);\n",tmp )>> impl_file_name;
-		printf("\t\treturn (%sObject)%sArr[i].clone();\n",tmp_file_name, tmp)>> impl_file_name;
+		printf("\t\t    DebugHandler.debug(\"Returning \" + %sArr[i]);\n",tmp )>> impl_file_name;
+		printf("\t\t    return (%sObject)%sArr[i].clone();\n",tmp_file_name, tmp)>> impl_file_name;
 		printf("\t    }\n")>> impl_file_name;
 		printf("\t}\n")>> impl_file_name;
 		printf("\treturn null;\n")>> impl_file_name;
@@ -1280,22 +1280,22 @@ ${NAWK} -v QUOTE="'" -v logname=${LOGNAME} -v version=1.0 -v since=1.0 -v proj_n
 		printf("    public %sObject[] getAll%ss() throws AppException{\n",tmp_file_name, tmp_file_name) >> impl_file_name;
 	}
 
-	printf("\t%sObject %s = new %sObject();\n", tmp_file_name, tmp, tmp_file_name) >> impl_file_name;
-	printf("\t%sObject[] %sArr = (%sObject[])Util.getAppCache().get(%s);\n", tmp_file_name, tmp, tmp_file_name, toupper(tmp_file_name)) >> impl_file_name;
-	printf("\tif ( %sArr == null ) {\n", tmp) >> impl_file_name;
-	printf("\t    DebugHandler.info(\"Getting %s from database\");\n", tolower(tmp_file_name)) >> impl_file_name;
-	printf("\t    @SuppressWarnings(\"unchecked\")\n") >> impl_file_name;
-	printf("\t    ArrayList<%sObject> v = (ArrayList)DBUtil.list(%s);\n", tmp_file_name, tmp)>> impl_file_name; 
-	printf("\t    DebugHandler.finest(\":v: \" +  v);\n")>> impl_file_name;
-	printf("\t    if ( v == null )\n")>> impl_file_name;
-	printf("\t\treturn null;\n")>> impl_file_name;
-	printf("\t    %sArr = new %sObject[v.size()];\n", tmp, tmp_file_name)>> impl_file_name;
-	printf("\t    for ( int idx = 0; idx < v.size(); idx++ ) {\n")>> impl_file_name;
-	printf("\t\t%sArr[idx] = v.get(idx);\n", tmp)>> impl_file_name;
-	printf("\t    }\n")>> impl_file_name;
-	printf("\t    Util.putInCache(%s, %sArr);\n", toupper(tmp_file_name), tmp)>> impl_file_name;
-	printf("\t}\n")>> impl_file_name;
-	printf("\treturn %sArr;\n", tmp)>> impl_file_name;
+	printf("\t\t%sObject %s = new %sObject();\n", tmp_file_name, tmp, tmp_file_name) >> impl_file_name;
+	printf("\t\t%sObject[] %sArr = (%sObject[])Util.getAppCache().get(%s);\n", tmp_file_name, tmp, tmp_file_name, toupper(tmp_file_name)) >> impl_file_name;
+	printf("\t\tif ( %sArr == null ) {\n", tmp) >> impl_file_name;
+	printf("\t\t    DebugHandler.info(\"Getting %s from database\");\n", tolower(tmp_file_name)) >> impl_file_name;
+	printf("\t\t    @SuppressWarnings(\"unchecked\")\n") >> impl_file_name;
+	printf("\t\t    ArrayList<%sObject> v = (ArrayList)DBUtil.list(%s);\n", tmp_file_name, tmp)>> impl_file_name; 
+	printf("\t\t    DebugHandler.finest(\":v: \" +  v);\n")>> impl_file_name;
+	printf("\t\t    if ( v == null )\n")>> impl_file_name;
+	printf("\t\t\t    return null;\n")>> impl_file_name;
+	printf("\t\t    %sArr = new %sObject[v.size()];\n", tmp, tmp_file_name)>> impl_file_name;
+	printf("\t\t    for ( int idx = 0; idx < v.size(); idx++ ) {\n")>> impl_file_name;
+	printf("\t\t\t    %sArr[idx] = v.get(idx);\n", tmp)>> impl_file_name;
+	printf("\t\t    }\n")>> impl_file_name;
+	printf("\t\t    Util.putInCache(%s, %sArr);\n", toupper(tmp_file_name), tmp)>> impl_file_name;
+	printf("\t\t}\n")>> impl_file_name;
+	printf("\t\treturn %sArr;\n", tmp)>> impl_file_name;
 	printf("    }\n    \n")>> impl_file_name;
 	# End getAll Method
 
@@ -1313,47 +1313,52 @@ ${NAWK} -v QUOTE="'" -v logname=${LOGNAME} -v version=1.0 -v since=1.0 -v proj_n
 
 	# add Method
 	printf("    public Integer add%s(%sObject %s) throws AppException{\n",tmp_file_name, tmp_file_name, tmp) >> impl_file_name;
-	printf("\tif ( AppConstants.DB_TYPE.equalsIgnoreCase(Constants.ORACLE) ) {\n")>> impl_file_name;
-	printf("\t\tlong l = DBUtil.getNextId(\"%s_seq\");\n", table_name)>> impl_file_name;
-	printf("\t\t%s.set%s((int)l);\n", tmp, new_field_names[1]) >> impl_file_name;
-	printf("\t}\n")>> impl_file_name;
-	printf("\tInteger i = (Integer)DBUtil.insert(%s);\n", tmp)>> impl_file_name;
-	printf("\tDebugHandler.fine(\"i: \" +  i);\n")>> impl_file_name;
-	printf("\t%sObject buf = new %sObject();\n", tmp_file_name, tmp_file_name)>> impl_file_name;
-	printf("\tbuf.set%s(%s.get%s());\n", new_field_names[2], tmp, new_field_names[2])>> impl_file_name;
-	printf("\t@SuppressWarnings(\"unchecked\")\n") >> impl_file_name;
-	printf("\tArrayList<%sObject> v = (ArrayList)DBUtil.list(%s, buf);\n", tmp_file_name, tmp)>> impl_file_name;
+	printf("\t\tif ( AppConstants.DB_TYPE.equalsIgnoreCase(Constants.ORACLE) ) {\n")>> impl_file_name;
+	printf("\t\t\tlong l = DBUtil.getNextId(\"%s_seq\");\n", table_name)>> impl_file_name;
+	printf("\t\t\t%s.set%s((int)l);\n", tmp, new_field_names[1]) >> impl_file_name;
+	printf("\t\t}\n")>> impl_file_name;
+	printf("\t\tInteger i = (Integer)DBUtil.insert(%s);\n", tmp)>> impl_file_name;
+	printf("\t\tDebugHandler.fine(\"i: \" +  i);\n")>> impl_file_name;
+	printf("\t\t// Do for Non Oracle where there is auto increment\n")>> impl_file_name;
+	printf("\t\tif ( ! AppConstants.DB_TYPE.equalsIgnoreCase(Constants.ORACLE) ) {\n")>> impl_file_name;
+	printf("\t\t\t%s.set%s(i.intValue());\n", tmp, new_field_names[1]) >> impl_file_name;
+	printf("\t\t\tDebugHandler.fine(%s);\n", tmp)>> impl_file_name;
+	printf("\t\t}\n")>> impl_file_name;
+	printf("\t\t%sObject buf = new %sObject();\n", tmp_file_name, tmp_file_name)>> impl_file_name;
+	printf("\t\tbuf.set%s(%s.get%s());\n", new_field_names[1], tmp, new_field_names[1])>> impl_file_name;
+	printf("\t\t@SuppressWarnings(\"unchecked\")\n") >> impl_file_name;
+	printf("\t\tArrayList<%sObject> v = (ArrayList)DBUtil.list(%s, buf);\n", tmp_file_name, tmp)>> impl_file_name;
 	printf("\t\t%s = v.get(0);\n", tmp)>> impl_file_name;
 	table_length=length(tmp_file_name);
 	last_char=substr(tmp_file_name, table_length, 1);
 	if (last_char == "s") {
-	    printf("\t%sObject[] %sArr = getAll%s();\n", tmp_file_name, tmp, tmp_file_name)>> impl_file_name;
+	    printf("\t\t%sObject[] %sArr = getAll%s();\n", tmp_file_name, tmp, tmp_file_name)>> impl_file_name;
 	} else {
-	    printf("\t%sObject[] %sArr = getAll%ss();\n", tmp_file_name, tmp, tmp_file_name)>> impl_file_name;
+	    printf("\t\t%sObject[] %sArr = getAll%ss();\n", tmp_file_name, tmp, tmp_file_name)>> impl_file_name;
 	}
-	printf("\tboolean foundSpace = false;\n")>> impl_file_name;
+	printf("\t\tboolean foundSpace = false;\n")>> impl_file_name;
 	printf("\n")>> impl_file_name;
 
-	printf("\tfor ( int idx = 0; idx < %sArr.length; idx++ ) {\n", tmp)>> impl_file_name;
-	printf("\t    if ( %sArr[idx] == null ) {\n", tmp)>> impl_file_name;
-	printf("\t\t%sArr[idx] = (%sObject)%s.clone();\n", tmp, tmp_file_name, tmp)>> impl_file_name;
-	printf("\t\tfoundSpace = true;\n")>> impl_file_name;
-	printf("\t\tbreak;\n")>> impl_file_name;
-	printf("\t    }\n")>> impl_file_name;
-	printf("\t}\n", tmp_file_name, tmp, tmp_file_name)>> impl_file_name;
-	printf("\tif ( foundSpace == false ) {\n")>> impl_file_name;
-	printf("\t    %sObject[] new%sArr = new %sObject[%sArr.length + 1];\n", tmp_file_name, tmp, tmp_file_name, tmp)>> impl_file_name;
-	printf("\t    int idx = 0;\n")>> impl_file_name;
-	printf("\t    for ( idx = 0; idx < %sArr.length; idx++ ) {\n", tmp)>> impl_file_name;
-	printf("\t\tnew%sArr[idx] = (%sObject)%sArr[idx].clone();\n", tmp, tmp_file_name, tmp)>> impl_file_name;
-	printf("\t    }\n")>> impl_file_name;
-	printf("\t    new%sArr[idx] = (%sObject)%s.clone();\n", tmp, tmp_file_name, tmp)>> impl_file_name;
-	printf("\t    Util.putInCache(%s, new%sArr);\n", toupper(tmp_file_name), tmp)>> impl_file_name;
-	printf("\t} else {\n")>> impl_file_name;
-	printf("\t    Util.putInCache(%s, %sArr);\n", toupper(tmp_file_name), tmp)>> impl_file_name;
-	printf("\t}\n")>> impl_file_name;
-	printf("\treturn i;\n", tmp)>> impl_file_name;
-	printf("    }\n    \n")>> impl_file_name;
+	printf("\t\tfor ( int idx = 0; idx < %sArr.length; idx++ ) {\n", tmp)>> impl_file_name;
+	printf("\t\t\tif ( %sArr[idx] == null ) {\n", tmp)>> impl_file_name;
+	printf("\t\t\t\t%sArr[idx] = (%sObject)%s.clone();\n", tmp, tmp_file_name, tmp)>> impl_file_name;
+	printf("\t\t\t\tfoundSpace = true;\n")>> impl_file_name;
+	printf("\t\t\t\tbreak;\n")>> impl_file_name;
+	printf("\t\t\t}\n")>> impl_file_name;
+	printf("\t\t}\n", tmp_file_name, tmp, tmp_file_name)>> impl_file_name;
+	printf("\t\tif ( foundSpace == false ) {\n")>> impl_file_name;
+	printf("\t\t\t%sObject[] new%sArr = new %sObject[%sArr.length + 1];\n", tmp_file_name, tmp, tmp_file_name, tmp)>> impl_file_name;
+	printf("\t\t\tint idx = 0;\n")>> impl_file_name;
+	printf("\t\t\tfor ( idx = 0; idx < %sArr.length; idx++ ) {\n", tmp)>> impl_file_name;
+	printf("\t\t\t\tnew%sArr[idx] = (%sObject)%sArr[idx].clone();\n", tmp, tmp_file_name, tmp)>> impl_file_name;
+	printf("\t\t\t}\n")>> impl_file_name;
+	printf("\t\t\tnew%sArr[idx] = (%sObject)%s.clone();\n", tmp, tmp_file_name, tmp)>> impl_file_name;
+	printf("\t\t\tUtil.putInCache(%s, new%sArr);\n", toupper(tmp_file_name), tmp)>> impl_file_name;
+	printf("\t\t} else {\n")>> impl_file_name;
+	printf("\t\t\tUtil.putInCache(%s, %sArr);\n", toupper(tmp_file_name), tmp)>> impl_file_name;
+	printf("\t\t}\n")>> impl_file_name;
+	printf("\t\treturn i;\n", tmp)>> impl_file_name;
+	printf("\t}\n\t\n")>> impl_file_name;
 	# End add Method
 
 	# Start update Method Comments
@@ -1369,35 +1374,35 @@ ${NAWK} -v QUOTE="'" -v logname=${LOGNAME} -v version=1.0 -v since=1.0 -v proj_n
 	# End update Method Comments
 
 	# updateMethod
-	printf("    public Integer update%s(%sObject %s) throws AppException{\n",tmp_file_name, tmp_file_name, tmp) >> impl_file_name;
+	printf("\tpublic Integer update%s(%sObject %s) throws AppException{\n",tmp_file_name, tmp_file_name, tmp) >> impl_file_name;
 	table_length=length(tmp_file_name);
 	last_char=substr(tmp_file_name, table_length, 1);
 	if (last_char == "s") {
 	    newmethod=substr(tmp_file_name,1,table_length - 1);
-	    printf("\t%sObject new%sObject = get%s(%s.get%s()); // This call will make sure cache/db are in sync\n", tmp_file_name, tmp_file_name, newmethod, tmp, new_field_names[1])>> impl_file_name;
+	    printf("\t\t%sObject new%sObject = get%s(%s.get%s()); // This call will make sure cache/db are in sync\n", tmp_file_name, tmp_file_name, newmethod, tmp, new_field_names[1])>> impl_file_name;
 	} else {
-	    printf("\t%sObject new%sObject = get%s(%s.get%s()); // This call will make sure cache/db are in sync\n", tmp_file_name, tmp_file_name, tmp_file_name, tmp, new_field_names[1])>> impl_file_name;
+	    printf("\t\t%sObject new%sObject = get%s(%s.get%s()); // This call will make sure cache/db are in sync\n", tmp_file_name, tmp_file_name, tmp_file_name, tmp, new_field_names[1])>> impl_file_name;
 	}
-	printf("\tInteger i = (Integer)DBUtil.update(%s);\n", tmp)>> impl_file_name;
-	printf("\tDebugHandler.fine(\"i: \" +  i);\n")>> impl_file_name;
+	printf("\t\tInteger i = (Integer)DBUtil.update(%s);\n", tmp)>> impl_file_name;
+	printf("\t\tDebugHandler.fine(\"i: \" +  i);\n")>> impl_file_name;
 	if (last_char == "s") {
-	    printf("\t%sObject[] %sArr = getAll%s();\n", tmp_file_name, tmp, tmp_file_name)>> impl_file_name;
+	    printf("\t\t%sObject[] %sArr = getAll%s();\n", tmp_file_name, tmp, tmp_file_name)>> impl_file_name;
 	} else {
-	    printf("\t%sObject[] %sArr = getAll%ss();\n", tmp_file_name, tmp, tmp_file_name)>> impl_file_name;
+	    printf("\t\t%sObject[] %sArr = getAll%ss();\n", tmp_file_name, tmp, tmp_file_name)>> impl_file_name;
 	}
-	printf("\tif ( %sArr == null )\n", tmp) >> impl_file_name;
-	printf("\t    return null;\n") >> impl_file_name;
-	printf("\tfor ( int idx = 0; idx < %sArr.length; idx++ ) {\n", tmp) >> impl_file_name;
-	printf("\t    if ( %sArr[idx] != null ) {\n", tmp) >> impl_file_name;
-	printf("\t\tif ( %sArr[idx].get%s() == %s.get%s() ) {\n", tmp, new_field_names[1], tmp, new_field_names[1]) >> impl_file_name;
-	printf("\t\t    DebugHandler.debug(\"Found %s \" + %s.get%s());\n", tmp_file_name, tmp, new_field_names[1])>> impl_file_name;
-	printf("\t\t    %sArr[idx] = (%sObject)%s.clone();\n", tmp, tmp_file_name, tmp) >> impl_file_name;
-	printf("\t\t    Util.putInCache(%s, %sArr);\n", toupper(tmp_file_name), tmp)>> impl_file_name;
+	printf("\t\tif ( %sArr == null )\n", tmp) >> impl_file_name;
+	printf("\t\t\treturn null;\n") >> impl_file_name;
+	printf("\t\tfor ( int idx = 0; idx < %sArr.length; idx++ ) {\n", tmp) >> impl_file_name;
+	printf("\t\t\tif ( %sArr[idx] != null ) {\n", tmp) >> impl_file_name;
+	printf("\t\t\t\tif ( %sArr[idx].get%s() == %s.get%s() ) {\n", tmp, new_field_names[1], tmp, new_field_names[1]) >> impl_file_name;
+	printf("\t\t\t\t\tDebugHandler.debug(\"Found %s \" + %s.get%s());\n", tmp_file_name, tmp, new_field_names[1])>> impl_file_name;
+	printf("\t\t\t\t\t%sArr[idx] = (%sObject)%s.clone();\n", tmp, tmp_file_name, tmp) >> impl_file_name;
+	printf("\t\t\t\t\tUtil.putInCache(%s, %sArr);\n", toupper(tmp_file_name), tmp)>> impl_file_name;
+	printf("\t\t\t\t}\n")>> impl_file_name;
+	printf("\t\t\t}\n")>> impl_file_name;
 	printf("\t\t}\n")>> impl_file_name;
-	printf("\t    }\n")>> impl_file_name;
-	printf("\t}\n")>> impl_file_name;
-	printf("\treturn i;\n", tmp)>> impl_file_name;
-	printf("    }\n    \n")>> impl_file_name;
+	printf("\t\treturn i;\n", tmp)>> impl_file_name;
+	printf("\t}\n    \n")>> impl_file_name;
 	# End updateMethod
 	
 	# Start delete Method Comments

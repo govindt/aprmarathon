@@ -158,8 +158,6 @@ public class Util {
 	Constants.INVALID_TEXT_STYLE = siteProps.getProperty("site.invalid_text_style");
 	Constants.MAX_ROWS_RETURNED = Integer.parseInt(siteProps.getProperty("site.max_rows_returned"));
 	Constants.APP_LOG = siteProps.getProperty("site.logfile");
-	Constants.SMTP_HOST = siteProps.getProperty("site.smtp_host");
-	Constants.SMTP_FROM = siteProps.getProperty("site.smtp_from");
 	
 	Constants.TO_STR = siteProps.getProperty("site.to_str");
 	Constants.SUBJECT_STR = siteProps.getProperty("site.subject_str");

@@ -88,20 +88,20 @@ public class ResultImpl implements ResultInterface  {
 	    return null;
 	for ( int i = 0; i < resultObjectArr.length; i++ ) {
 	    if ( resultObjectArr[i] == null ) { // Try database and add to cache if found.
-		ResultObject resultObj = new ResultObject();
-		resultObj.setResultId(result_id);
-		@SuppressWarnings("unchecked")
-		ArrayList<ResultObject> v = (ArrayList)DBUtil.fetch(resultObj);
-		if ( v == null || v.size() == 0 )
-		    return null;
-		else {
-		    resultObjectArr[i] = (ResultObject)resultObj.clone();
-		    Util.putInCache(RESULT, resultObjectArr);
-		}
+		    ResultObject resultObj = new ResultObject();
+		    resultObj.setResultId(result_id);
+		    @SuppressWarnings("unchecked")
+		    ArrayList<ResultObject> v = (ArrayList)DBUtil.fetch(resultObj);
+		    if ( v == null || v.size() == 0 )
+			    return null;
+		    else {
+			    resultObjectArr[i] = (ResultObject)resultObj.clone();
+			    Util.putInCache(RESULT, resultObjectArr);
+		    }
 	    }
 	    if ( resultObjectArr[i].getResultId() == result_id ) {
-		DebugHandler.debug("Returning " + resultObjectArr[i]);
-		return (ResultObject)resultObjectArr[i].clone();
+		    DebugHandler.debug("Returning " + resultObjectArr[i]);
+		    return (ResultObject)resultObjectArr[i].clone();
 	    }
 	}
 	return null;
@@ -119,22 +119,22 @@ public class ResultImpl implements ResultInterface  {
      */
     
     public ResultObject[] getAllResults() throws AppException{
-	ResultObject resultObject = new ResultObject();
-	ResultObject[] resultObjectArr = (ResultObject[])Util.getAppCache().get(RESULT);
-	if ( resultObjectArr == null ) {
-	    DebugHandler.info("Getting result from database");
-	    @SuppressWarnings("unchecked")
-	    ArrayList<ResultObject> v = (ArrayList)DBUtil.list(resultObject);
-	    DebugHandler.finest(":v: " +  v);
-	    if ( v == null )
-		return null;
-	    resultObjectArr = new ResultObject[v.size()];
-	    for ( int idx = 0; idx < v.size(); idx++ ) {
-		resultObjectArr[idx] = v.get(idx);
-	    }
-	    Util.putInCache(RESULT, resultObjectArr);
-	}
-	return resultObjectArr;
+		ResultObject resultObject = new ResultObject();
+		ResultObject[] resultObjectArr = (ResultObject[])Util.getAppCache().get(RESULT);
+		if ( resultObjectArr == null ) {
+		    DebugHandler.info("Getting result from database");
+		    @SuppressWarnings("unchecked")
+		    ArrayList<ResultObject> v = (ArrayList)DBUtil.list(resultObject);
+		    DebugHandler.finest(":v: " +  v);
+		    if ( v == null )
+			    return null;
+		    resultObjectArr = new ResultObject[v.size()];
+		    for ( int idx = 0; idx < v.size(); idx++ ) {
+			    resultObjectArr[idx] = v.get(idx);
+		    }
+		    Util.putInCache(RESULT, resultObjectArr);
+		}
+		return resultObjectArr;
     }
     
     
@@ -149,41 +149,46 @@ public class ResultImpl implements ResultInterface  {
      */
     
     public Integer addResult(ResultObject resultObject) throws AppException{
-	if ( AppConstants.DB_TYPE.equalsIgnoreCase(Constants.ORACLE) ) {
-		long l = DBUtil.getNextId("Result_seq");
-		resultObject.setResultId((int)l);
-	}
-	Integer i = (Integer)DBUtil.insert(resultObject);
-	DebugHandler.fine("i: " +  i);
-	ResultObject buf = new ResultObject();
-	buf.setResultEvent(resultObject.getResultEvent());
-	@SuppressWarnings("unchecked")
-	ArrayList<ResultObject> v = (ArrayList)DBUtil.list(resultObject, buf);
+		if ( AppConstants.DB_TYPE.equalsIgnoreCase(Constants.ORACLE) ) {
+			long l = DBUtil.getNextId("Result_seq");
+			resultObject.setResultId((int)l);
+		}
+		Integer i = (Integer)DBUtil.insert(resultObject);
+		DebugHandler.fine("i: " +  i);
+		// Do for Non Oracle where there is auto increment
+		if ( ! AppConstants.DB_TYPE.equalsIgnoreCase(Constants.ORACLE) ) {
+			resultObject.setResultId(i.intValue());
+			DebugHandler.fine(resultObject);
+		}
+		ResultObject buf = new ResultObject();
+		buf.setResultId(resultObject.getResultId());
+		@SuppressWarnings("unchecked")
+		ArrayList<ResultObject> v = (ArrayList)DBUtil.list(resultObject, buf);
 		resultObject = v.get(0);
-	ResultObject[] resultObjectArr = getAllResults();
-	boolean foundSpace = false;
+		ResultObject[] resultObjectArr = getAllResults();
+		boolean foundSpace = false;
 
-	for ( int idx = 0; idx < resultObjectArr.length; idx++ ) {
-	    if ( resultObjectArr[idx] == null ) {
-		resultObjectArr[idx] = (ResultObject)resultObject.clone();
-		foundSpace = true;
-		break;
-	    }
+		for ( int idx = 0; idx < resultObjectArr.length; idx++ ) {
+			if ( resultObjectArr[idx] == null ) {
+				resultObjectArr[idx] = (ResultObject)resultObject.clone();
+				foundSpace = true;
+				break;
+			}
+		}
+		if ( foundSpace == false ) {
+			ResultObject[] newresultObjectArr = new ResultObject[resultObjectArr.length + 1];
+			int idx = 0;
+			for ( idx = 0; idx < resultObjectArr.length; idx++ ) {
+				newresultObjectArr[idx] = (ResultObject)resultObjectArr[idx].clone();
+			}
+			newresultObjectArr[idx] = (ResultObject)resultObject.clone();
+			Util.putInCache(RESULT, newresultObjectArr);
+		} else {
+			Util.putInCache(RESULT, resultObjectArr);
+		}
+		return i;
 	}
-	if ( foundSpace == false ) {
-	    ResultObject[] newresultObjectArr = new ResultObject[resultObjectArr.length + 1];
-	    int idx = 0;
-	    for ( idx = 0; idx < resultObjectArr.length; idx++ ) {
-		newresultObjectArr[idx] = (ResultObject)resultObjectArr[idx].clone();
-	    }
-	    newresultObjectArr[idx] = (ResultObject)resultObject.clone();
-	    Util.putInCache(RESULT, newresultObjectArr);
-	} else {
-	    Util.putInCache(RESULT, resultObjectArr);
-	}
-	return i;
-    }
-    
+	
     
     /**
      *
@@ -195,24 +200,24 @@ public class ResultImpl implements ResultInterface  {
      *
      */
     
-    public Integer updateResult(ResultObject resultObject) throws AppException{
-	ResultObject newResultObject = getResult(resultObject.getResultId()); // This call will make sure cache/db are in sync
-	Integer i = (Integer)DBUtil.update(resultObject);
-	DebugHandler.fine("i: " +  i);
-	ResultObject[] resultObjectArr = getAllResults();
-	if ( resultObjectArr == null )
-	    return null;
-	for ( int idx = 0; idx < resultObjectArr.length; idx++ ) {
-	    if ( resultObjectArr[idx] != null ) {
-		if ( resultObjectArr[idx].getResultId() == resultObject.getResultId() ) {
-		    DebugHandler.debug("Found Result " + resultObject.getResultId());
-		    resultObjectArr[idx] = (ResultObject)resultObject.clone();
-		    Util.putInCache(RESULT, resultObjectArr);
+	public Integer updateResult(ResultObject resultObject) throws AppException{
+		ResultObject newResultObject = getResult(resultObject.getResultId()); // This call will make sure cache/db are in sync
+		Integer i = (Integer)DBUtil.update(resultObject);
+		DebugHandler.fine("i: " +  i);
+		ResultObject[] resultObjectArr = getAllResults();
+		if ( resultObjectArr == null )
+			return null;
+		for ( int idx = 0; idx < resultObjectArr.length; idx++ ) {
+			if ( resultObjectArr[idx] != null ) {
+				if ( resultObjectArr[idx].getResultId() == resultObject.getResultId() ) {
+					DebugHandler.debug("Found Result " + resultObject.getResultId());
+					resultObjectArr[idx] = (ResultObject)resultObject.clone();
+					Util.putInCache(RESULT, resultObjectArr);
+				}
+			}
 		}
-	    }
+		return i;
 	}
-	return i;
-    }
     
     
     /**
