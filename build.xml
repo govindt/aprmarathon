@@ -50,24 +50,28 @@
 	<property name="deploy.webinf" value="${deploy.basedir}/aprmarathon/WEB-INF"/>
 	<property name="deploy.webclasses" value="${deploy.webinf}/classes"/>
 	<property name="deploy.weblib" value="${deploy.webinf}/lib"/>
+	<property name="deploy.jars" value="activation.jar agent.jar apache-mime4j-0.4.jar aprmarathon.jar catalina-tribes.jar com.lowagie.text-2.1.7.jar commons-codec-1.11.jar commons-collections4-4.1.jar commons-jcs-core-2.2.jar commons-lang-2.1.jar commons-logging.jar cos.jar dom4j-1.6.jar ecj-4.6.3.jar fr.opensagres.xdocreport.itext.extension-2.0.0.jar gnujpdf.jar google-api-client-1.24.1.jar google-api-services-gmail-v1-rev93-1.24.1.jar google-api-services-sheets-v4-rev483-1.22.0.jar google-http-client-1.24.1.jar google-http-client-jackson2-1.24.1.jar google-oauth-client-1.24.1.jar google-oauth-client-java6-1.24.1.jar google-oauth-client-jetty-1.24.1.jar guava-26.0-jre.jar httpclient-4.0-beta1.jar httpcore-4.0-beta2.jar httpmime-4.0-beta1.jar jackson-core-2.1.3.jar jackson-core-asl-1.9.2.jar jackson-jaxrs-1.9.2.jar jackson-mapper-asl-1.9.2.jar jackson-xc-1.9.2.jar jakarta-regexp-1.2.jar jersey-client-1.19.1.jar jersey-core-1.19.1.jar jersey-json-1.19.1.jar jersey-server-1.19.1.jar jersey-servlet-1.19.1.jar jettison-1.1.jar jettison-1.3.4.jar jetty-6.1.26.jar jetty-util-6.1.26.jar jsr311-api-1.1.1.jar jxl.jar ldapjdk.jar log4j-1.2.12.jar mailapi.jar mail.jar msbase.jar mssqlserver.jar mysql-connector-java-5.1.6-bin.jar ojdbc14.jar ooxml-schemas-1.3.jar org.apache.poi.xwpf.converter.core-1.0.6.jar org.apache.poi.xwpf.converter.pdf-1.0.6.jar poi-3.15.jar poi-ooxml-3.15.jar poi-ooxml-schemas-3.15.jar smtp.jar xmlbeans-2.5.0.jar xml.jar"/>
 	<path id="classpath">
-        <fileset dir="${aprmarathon.jars}" includes="*.jar"/>
-    </path>
+        	<fileset dir="${aprmarathon.jars}" includes="*.jar"/>
+    	</path>
     <target name="deploy">
         <copy todir="${deploy.jspdir}" verbose="true" overwrite="true">
-   			<fileset dir="${aprmarathon.jsp}" includes="**/*.jsp, **/*.html css/**/*.css, js/**/*.js, images/**/*" excludes="Makefile" />
+   		<fileset dir="${aprmarathon.jsp}" includes="**/*.jsp, **/*.html css/**/*.css, js/**/*.js, images/**/*" excludes="Makefile" />
 		</copy>
         <copy todir="${deploy.webclasses}" verbose="true" overwrite="true">
-			<fileset dir="${aprmarathon.classes}" includes="**/*.class,**/*.properties,**/*.tld,**/*.ccf,**/*.json,**/*.docx" />
+		<fileset dir="${aprmarathon.classes}" includes="**/*.class,**/*.properties,**/*.tld,**/*.ccf,**/*.json,**/*.docx" />
 		</copy>
-         <copy todir="${deploy.weblib}" verbose="true" overwrite="true">
-   			<fileset dir="${aprmarathon.classes}" includes="**/aprmarathon.jar, **/core.jar" />
-		</copy>
+        <copy todir="${deploy.weblib}" verbose="true" overwrite="true">
+   		<fileset dir="${aprmarathon.classes}" includes="**/aprmarathon.jar, **/core.jar" />
+	</copy>
+        <copy todir="${deploy.weblib}" verbose="true" overwrite="true">
+   		<fileset dir="${aprmarathon.jars}" includes="${deploy.jars}" />
+	</copy>
         <copy todir="${deploy.webinf}" verbose="true" overwrite="true">
-            <fileset dir="${deploy.webclasses}" includes="**/*.tld" />
+        	<fileset dir="${deploy.webclasses}" includes="**/*.tld" />
         </copy>
-		<delete file="${deploy.webclasses}/menu.tld" />
 	</target>
+
 	<target name="compress">
 		<jar destfile="${aprmarathon.classes}/core.jar" >
 			  <fileset dir="${aprmarathon.classes}" includes="core/**" /> 
@@ -89,11 +93,12 @@
 				<globmapper from="*.sh" to="*"/>
 			</mapper>
 		</copy>
+		<chmod dir="${aprmarathon.bin}" perm="ugo+rx" includes="*"/>
 	</target>
         <target name="compile-images" depends="clean-images">
-            <copy todir="${aprmarathon.image}" verbose="false" overwrite="true">
-				<fileset dir="${aprmarathon.imagesrc}" includes="**/*.gif,**/*.png" />
-             </copy>
+            	<copy todir="${aprmarathon.image}" verbose="false" overwrite="true">
+			<fileset dir="${aprmarathon.imagesrc}" includes="**/*.gif,**/*.png" />
+             	</copy>
         </target>
 	<target name="compile-css" depends="clean-css">
 		<copy todir="${aprmarathon.css}" verbose="false" overwrite="true">
@@ -102,57 +107,56 @@
     </target>
 	<target name="compile-js" depends="clean-js">
         <copy todir="${aprmarathon.js}" verbose="false" overwrite="true">
-   			<fileset dir="${aprmarathon.jssrc}" includes="**/*.js" />
+   		<fileset dir="${aprmarathon.jssrc}" includes="**/*.js" />
         </copy>
     </target>
     <target name="compile-jsps" depends="clean-jsps">
-            <copy todir="${aprmarathon.jsp}" verbose="false" overwrite="true">
+            	<copy todir="${aprmarathon.jsp}" verbose="false" overwrite="true">
    			<fileset dir="${aprmarathon.jspsrc}" includes="**/*.jsp,**/*.html" />
 		</copy>
     </target>
 
 	<target name="compile" depends="init,compile-core-util,compile-core-ui,compile-core-connectionpool,compile-core-busobj,compile-core-db,compile-core-appdb,compile-core-appui,compile-app-util,compile-app-busobj,compile-app-appdb,compile-app-businterface,compile-app-busimpl,compile-app-appui,compile-app-menu,compile-app-restapi,compile-servlet,compile-examples,compile-bins" description="compile the source " >
-    		
   	</target>
         <target name="dist" depends="clean,init,compile-scripts,compile-jsps,compile-images,compile-css,compile-js,compile" description="generate the distribution" >
     		<jar jarfile="${aprmarathon.classes}/aprmarathon.jar" basedir="${aprmarathon.classes}"/>
   	</target>
 	<target name="compile-core-util">
-			<javac 	destdir="${aprmarathon.classes}" classpathref="classpath" includeantruntime="false"
-			fork="true" executable="${env.JAVA_HOME}/bin/javac" debug="${compile.debug}" debuglevel="${compile.debuglevel}" deprecation="${compile.deprecation}" 
-			includes="*.java" srcdir="${aprmarathon.coresrc}/util"> 
-					<compilerarg value="${compile.compilerarg}"/>
-			</javac>
-			<copy todir="${aprmarathon.classes}/core/util">
-				<fileset dir="${aprmarathon.coresrc}/util" includes="**/*.properties, **/*.json"/>
-			</copy>
+		<javac 	destdir="${aprmarathon.classes}" classpathref="classpath" includeantruntime="false"
+		fork="true" executable="${env.JAVA_HOME}/bin/javac" debug="${compile.debug}" debuglevel="${compile.debuglevel}" deprecation="${compile.deprecation}" 
+		includes="*.java" srcdir="${aprmarathon.coresrc}/util"> 
+		<compilerarg value="${compile.compilerarg}"/>
+		</javac>
+		<copy todir="${aprmarathon.classes}/core/util">
+			<fileset dir="${aprmarathon.coresrc}/util" includes="**/*.properties, **/*.json"/>
+		</copy>
 	</target>
 	<target name="compile-core-ui">
 		<javac 	destdir="${aprmarathon.classes}" classpathref="classpath" includeantruntime="false"
-			fork="true" executable="${env.JAVA_HOME}/bin/javac" debug="${compile.debug}" debuglevel="${compile.debuglevel}" deprecation="${compile.deprecation}" 
-			includes="*.java" srcdir="${aprmarathon.coresrc}/ui" >
-					<compilerarg value="${compile.compilerarg}"/>
-			</javac>
+		fork="true" executable="${env.JAVA_HOME}/bin/javac" debug="${compile.debug}" debuglevel="${compile.debuglevel}" deprecation="${compile.deprecation}" 
+		includes="*.java" srcdir="${aprmarathon.coresrc}/ui" >
+		<compilerarg value="${compile.compilerarg}"/>
+		</javac>
 	</target>
 	<target name="compile-core-connectionpool">
-			<javac 	destdir="${aprmarathon.classes}" classpathref="classpath" includeantruntime="false"
-			fork="true" executable="${env.JAVA_HOME}/bin/javac" debug="${compile.debug}" debuglevel="${compile.debuglevel}" deprecation="${compile.deprecation}" 
-			includes="*.java" srcdir="${aprmarathon.coresrc}/ConnectionPool" >
-					<compilerarg value="${compile.compilerarg}"/>
-			</javac>
+		<javac 	destdir="${aprmarathon.classes}" classpathref="classpath" includeantruntime="false"
+		fork="true" executable="${env.JAVA_HOME}/bin/javac" debug="${compile.debug}" debuglevel="${compile.debuglevel}" deprecation="${compile.deprecation}" 
+		includes="*.java" srcdir="${aprmarathon.coresrc}/ConnectionPool" >
+		<compilerarg value="${compile.compilerarg}"/>
+		</javac>
 	</target>
 	<target name="compile-core-busobj">
-			<javac 	destdir="${aprmarathon.classes}" classpathref="classpath" includeantruntime="false"
-			fork="true" executable="${env.JAVA_HOME}/bin/javac" debug="${compile.debug}" debuglevel="${compile.debuglevel}" deprecation="${compile.deprecation}" 
-			includes="*.java" srcdir="${aprmarathon.coresrc}/busobj" >
-					<compilerarg value="${compile.compilerarg}"/>
-			</javac>
+		<javac 	destdir="${aprmarathon.classes}" classpathref="classpath" includeantruntime="false"
+		fork="true" executable="${env.JAVA_HOME}/bin/javac" debug="${compile.debug}" debuglevel="${compile.debuglevel}" deprecation="${compile.deprecation}" 
+		includes="*.java" srcdir="${aprmarathon.coresrc}/busobj" >
+				<compilerarg value="${compile.compilerarg}"/>
+		</javac>
 	</target>
 	<target name="compile-core-db">
 		<javac 	destdir="${aprmarathon.classes}" classpathref="classpath" includeantruntime="false"
-			fork="true" executable="${env.JAVA_HOME}/bin/javac" debug="${compile.debug}" debuglevel="${compile.debuglevel}" deprecation="${compile.deprecation}" 
-			includes="*.java" srcdir="${aprmarathon.coresrc}/db" >
-					<compilerarg value="${compile.compilerarg}"/>
+		fork="true" executable="${env.JAVA_HOME}/bin/javac" debug="${compile.debug}" debuglevel="${compile.debuglevel}" deprecation="${compile.deprecation}" 
+		includes="*.java" srcdir="${aprmarathon.coresrc}/db" >
+		<compilerarg value="${compile.compilerarg}"/>
 		</javac>
 		<copy todir="${aprmarathon.classes}/core/db">
 			<fileset dir="${aprmarathon.coresrc}/db" includes="**/*.properties"/>
@@ -160,16 +164,16 @@
 	</target>
 	<target name="compile-core-appdb">
 		<javac 	destdir="${aprmarathon.classes}" classpathref="classpath" includeantruntime="false"
-			fork="true" executable="${env.JAVA_HOME}/bin/javac" debug="${compile.debug}" debuglevel="${compile.debuglevel}" deprecation="${compile.deprecation}" 
-			includes="*.java" srcdir="${aprmarathon.coresrc}/db" >
-					<compilerarg value="${compile.compilerarg}"/>
+		fork="true" executable="${env.JAVA_HOME}/bin/javac" debug="${compile.debug}" debuglevel="${compile.debuglevel}" deprecation="${compile.deprecation}" 
+		includes="*.java" srcdir="${aprmarathon.coresrc}/db" >
+		<compilerarg value="${compile.compilerarg}"/>
 		</javac>
 	</target>
 	<target name="compile-core-appui">
 		<javac 	destdir="${aprmarathon.classes}" classpathref="classpath" includeantruntime="false"
-			fork="true" executable="${env.JAVA_HOME}/bin/javac" debug="${compile.debug}" debuglevel="${compile.debuglevel}" deprecation="${compile.deprecation}" 
-			includes="*.java" srcdir="${aprmarathon.coresrc}/appui" >
-					<compilerarg value="${compile.compilerarg}"/>
+		fork="true" executable="${env.JAVA_HOME}/bin/javac" debug="${compile.debug}" debuglevel="${compile.debuglevel}" deprecation="${compile.deprecation}" 
+		includes="*.java" srcdir="${aprmarathon.coresrc}/appui" >
+		<compilerarg value="${compile.compilerarg}"/>
 		</javac>
 	</target>
 	<target name="compile-app-util">
@@ -226,16 +230,16 @@
 	</target>
 	<target name="compile-app-restapi">
 		<javac 	destdir="${aprmarathon.classes}" classpathref="classpath" includeantruntime="false"
-			fork="true" executable="${env.JAVA_HOME}/bin/javac" debug="${compile.debug}" debuglevel="${compile.debuglevel}" deprecation="${compile.deprecation}"
-			includes="*.java" srcdir="${aprmarathon.appsrc}/restapi" >
-					<compilerarg value="${compile.compilerarg}"/>
+		fork="true" executable="${env.JAVA_HOME}/bin/javac" debug="${compile.debug}" debuglevel="${compile.debuglevel}" deprecation="${compile.deprecation}"
+		includes="*.java" srcdir="${aprmarathon.appsrc}/restapi" >
+		<compilerarg value="${compile.compilerarg}"/>
 		</javac>
 	</target>
 	<target name="compile-bins">
 		<javac 	destdir="${aprmarathon.classes}" classpathref="classpath" includeantruntime="false"
-			fork="true" executable="${env.JAVA_HOME}/bin/javac" debug="${compile.debug}" debuglevel="${compile.debuglevel}" deprecation="${compile.deprecation}"
-			includes="*.java" srcdir="${aprmarathon.binsrc}" >
-					<compilerarg value="${compile.compilerarg}"/>
+		fork="true" executable="${env.JAVA_HOME}/bin/javac" debug="${compile.debug}" debuglevel="${compile.debuglevel}" deprecation="${compile.deprecation}"
+		includes="*.java" srcdir="${aprmarathon.binsrc}" >
+		<compilerarg value="${compile.compilerarg}"/>
 		</javac>
 		<copy todir="${aprmarathon.classes}">
 			<fileset dir="${aprmarathon.binsrc}" includes="**/*.properties, **/*.ccf, **/*.tld"/>
@@ -243,9 +247,9 @@
 	</target>
 	<target name="compile-examples">
 		<javac 	destdir="${aprmarathon.classes}" classpathref="classpath" includeantruntime="false"
-			fork="true" executable="${env.JAVA_HOME}/bin/javac" debug="${compile.debug}" debuglevel="${compile.debuglevel}" deprecation="${compile.deprecation}"
-			includes="*.java" srcdir="${aprmarathon.examsrc}" >
-					<compilerarg value="${compile.compilerarg}"/>
+		fork="true" executable="${env.JAVA_HOME}/bin/javac" debug="${compile.debug}" debuglevel="${compile.debuglevel}" deprecation="${compile.deprecation}"
+		includes="*.java" srcdir="${aprmarathon.examsrc}" >
+		<compilerarg value="${compile.compilerarg}"/>
 		</javac>
 	</target>
 	<target name="compile-servlet">
@@ -256,7 +260,7 @@
 		</javac>
 	</target>
 	
-	<target name="clean-classes">
+    <target name="clean-classes">
 		<delete dir="${aprmarathon.classes}" />
     </target>
 	<target name="clean-bin">
@@ -280,6 +284,7 @@
 	</target>
 	<target name="clean-deploy">
 		<delete dir="${deploy.webclasses}" />
+		<delete dir="${deploy.weblib}" />
 		<delete dir="${deploy.jspdir}" />
 		<delete dir="${deploy.workdir}" />
 		<delete quiet="true">

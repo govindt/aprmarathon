@@ -95,6 +95,11 @@
         <listener-class>listeners.SessionListener</listener-class>
     </listener>
 
+    <!-- Define listeners required by examples -->
+    <listener>
+        <listener-class>async.AsyncStockContextListener</listener-class>
+    </listener>
+
     <!-- Define servlets that are included in the example application -->
 
     <servlet>
@@ -205,7 +210,7 @@
         </jsp-property-group>
     </jsp-config>
 
-   <security-constraint>
+    <security-constraint>
       <display-name>Example Security Constraint - part 1</display-name>
       <web-resource-collection>
          <web-resource-name>Protected Area - Allow methods</web-resource-name>
@@ -224,7 +229,7 @@
          <role-name>role1</role-name>
       </auth-constraint>
     </security-constraint>
-   <security-constraint>
+    <security-constraint>
       <display-name>Example Security Constraint - part 2</display-name>
       <web-resource-collection>
          <web-resource-name>Protected Area - Deny methods</web-resource-name>
