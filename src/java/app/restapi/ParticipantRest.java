@@ -74,7 +74,9 @@ public class ParticipantRest {
 		ParticipantInterface participantIf = new ParticipantImpl();
 		ParticipantObject participantObject = new ParticipantObject(jObject);
 		DebugHandler.fine(participantObject);
+		long startTime = System.currentTimeMillis();
 		Integer result = participantIf.addParticipant(participantObject);
+		DebugHandler.info("Time taken in millis for adding Participant " + participantObject.getParticipantFirstName() + " " + (System.currentTimeMillis() - startTime));
 		JSONObject jo = participantObject.toJSON();
 		jo.put("result", result);
 		return Response.status(200).entity(jo.toString()).type(MediaType.APPLICATION_JSON).build();

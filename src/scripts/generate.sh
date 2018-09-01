@@ -56,6 +56,7 @@ ${NAWK} -v QUOTE="'" -v logname=${LOGNAME} -v version=1.0 -v since=1.0 -v proj_n
 		printf("create sequence role_seq start with 1 increment by 1;\n") > create_name;
 		printf("create sequence users_seq start with 1 increment by 1;\n") > create_name;
 		printf("create sequence acl_seq start with 1 increment by 1;\n") > create_name;
+		printf("create sequence site_seq start with 1 increment by 1;\n") > create_name;
 		printf("create sequence menu_seq start with 1 increment by 1;\n") > create_name;
 		printf("\n") >> create_name;
 		printf("create table Role(\n\trole_id number primary key,\n\trole_name varchar2(30) not null,\n\tis_valid varchar2(1) default %sY%s\n);\n", QUOTE, QUOTE) >> create_name;
@@ -69,8 +70,13 @@ ${NAWK} -v QUOTE="'" -v logname=${LOGNAME} -v version=1.0 -v since=1.0 -v proj_n
 		printf("create table Acl(\n\tacl_id number primary key,\n\tacl_page varchar2(30) not null,\n\tis_valid varchar2(1) default %sY%s,\n\trole_id number references Role(role_id),\n\tusers_id number references Users(users_id),\n\tpermission number\n);\n", QUOTE, QUOTE) >> create_name;
 		printf("\n") >> create_name;
 
-		printf("create table Menu(\n\tmenu_id number primary key,\n\tmenu_name varchar2(50) not null,\n\turl varchar2(200),\n\tmenu_order number not null,\n\tparent_menu_id number references Menu(menu_id),\n\trole_id number references Role(role_id)\n);\n") >> create_name;
-		printf("insert into Menu values (-1, %sRoot Menu%s, NULL, 0, NULL, 1);\n", QUOTE, QUOTE) >> create_name;
+		printf("create table Site(\n\tsite_id number primary key,\n\tsite_name varchar2(50) not null,\n\tsite_url varchar2(200)\n);\n") >> create_name;
+		printf("\n") >> create_name;
+		printf("insert into Site(site_id, site_name, site_url) values (site_seq.nextval, %sLocal Host%s, %shttp://localhost:9002%s);\n", QUOTE, QUOTE, QUOTE, QUOTE) >> create_name;
+		printf("\n") >> create_name;
+		
+		printf("create table Menu(\n\tmenu_id number primary key,\n\tmenu_name varchar2(50) not null,\n\tsite_id number references Site(site_id),\n\turl varchar2(200),\n\tmenu_order number not null,\n\tparent_menu_id number references Menu(menu_id),\n\trole_id number references Role(role_id)\n);\n") >> create_name;
+		printf("insert into Menu values (-1, %sRoot Menu%s, 1, NULL, 0, NULL, 1);\n", QUOTE, QUOTE) >> create_name;
 		printf("\n") >> create_name;
 	} else {
 		printf("create sequence %s_seq start with 1 increment by 1;\n", tolower(table_name))>> create_name;
@@ -126,12 +132,14 @@ ${NAWK} -v QUOTE="'" -v logname=${LOGNAME} -v version=1.0 -v since=1.0 -v proj_n
 	printf("\n") >> drop_name;
 
 	printf("drop table Menu;\n")>> drop_name;
+	printf("drop table Site;\n")>> drop_name;
 	printf("drop table Acl;\n")>> drop_name;
 	printf("drop table Users;\n")>> drop_name;
 	printf("drop table Role;\n")>> drop_name;
 	printf("\n") >> drop_name;
 
 	printf("drop sequence menu_seq;\n")>> drop_name;
+	printf("drop sequence site_seq;\n")>> drop_name;
 	printf("drop sequence acl_seq;\n")>> drop_name;
 	printf("drop sequence users_seq;\n")>> drop_name;
 	printf("drop sequence role_seq;\n")>> drop_name;
@@ -254,70 +262,70 @@ ${NAWK} -v QUOTE="'" -v logname=${LOGNAME} -v version=1.0 -v since=1.0 -v proj_n
 
 
 	# list Method
-	printf("    public Object list(Object args) throws DBException {\n")>>persistent_filename;
-	printf("        PreparedSQLStatement sql = new PreparedSQLStatement();\n")>>persistent_filename;
-	printf("        String statement = \"SELECT ")>>persistent_filename;
+	printf("\tpublic Object list(Object args) throws DBException {\n")>>persistent_filename;
+	printf("\t\tPreparedSQLStatement sql = new PreparedSQLStatement();\n")>>persistent_filename;
+	printf("\t\tString statement = \"SELECT ")>>persistent_filename;
 	for ( j = 1; j < i; j++ ) {
 	  printf("%s, ", field_names[j])>>persistent_filename;
 	}
 	printf("%s from %s\";\n", field_names[j], table_name)>>persistent_filename;
 
-	printf("        int index = 1;\n")>>persistent_filename;
-	printf("        %sObject passed%sObject = (%sObject)args;\n", tmp_file_name, tmp_file_name, tmp_file_name)>>persistent_filename;
-	printf("        boolean whereSpecified = false;\n\n", tmp_file_name, tmp_file_name)>>persistent_filename;
+	printf("\t\tint index = 1;\n")>>persistent_filename;
+	printf("\t\t%sObject passed%sObject = (%sObject)args;\n", tmp_file_name, tmp_file_name, tmp_file_name)>>persistent_filename;
+	printf("\t\tboolean whereSpecified = false;\n\n", tmp_file_name, tmp_file_name)>>persistent_filename;
 	for ( j = 1; j <= i; j++ ) {
 	    if ( field_types[j] == "int" ) {
-		printf("        if ( passed%sObject.get%s() != 0 ) {\n", tmp_file_name, new_field_names[j])>>persistent_filename; 
+		printf("\t\tif ( passed%sObject.get%s() != 0 ) {\n", tmp_file_name, new_field_names[j])>>persistent_filename; 
 	    }
 	    else if ( field_types[j] == "String" ) {
-		printf("        if ( ! passed%sObject.get%s().equals(\"\") ) {\n", tmp_file_name, new_field_names[j])>>persistent_filename; 
+		printf("\t\tif ( ! passed%sObject.get%s().equals(\"\") ) {\n", tmp_file_name, new_field_names[j])>>persistent_filename; 
 	    }
 	    else if ( field_types[j] == "Date" ) {
-		printf("        if ( passed%sObject.get%s() != null ) {\n", tmp_file_name, new_field_names[j])>>persistent_filename; 
+		printf("\t\tif ( passed%sObject.get%s() != null ) {\n", tmp_file_name, new_field_names[j])>>persistent_filename; 
 	    }
 	    else if ( field_types[j] == "double" ) {
-		printf("        if ( passed%sObject.get%s() != 0.0 ) {\n", tmp_file_name, new_field_names[j])>>persistent_filename; 
+		printf("\t\tif ( passed%sObject.get%s() != 0.0 ) {\n", tmp_file_name, new_field_names[j])>>persistent_filename; 
 	    }
 	    else if ( field_types[j] == "float" ) {
-		printf("        if ( passed%sObject.get%s() != 0.0f ) {\n", tmp_file_name, new_field_names[j])>>persistent_filename; 
+		printf("\t\tif ( passed%sObject.get%s() != 0.0f ) {\n", tmp_file_name, new_field_names[j])>>persistent_filename; 
 	    }
 	    if ( j == 1 ) {
-		printf("\t    statement += \" where %s = ?\";\n", field_names[j])>>persistent_filename;
-		printf("\t    whereSpecified = true;\n")>>persistent_filename;
+		printf("\t\t\tstatement += \" where %s = ?\";\n", field_names[j])>>persistent_filename;
+		printf("\t\t\twhereSpecified = true;\n")>>persistent_filename;
 		
 	    } else {
-		printf("\t    if ( ! whereSpecified ) {\n")>>persistent_filename;
-		printf("\t\tstatement += \" where %s = ?\";\n", field_names[j])>>persistent_filename;
-		printf("\t\twhereSpecified = true;\n")>>persistent_filename;
-		printf("\t    } else\n")>>persistent_filename;
-		printf("\t\tstatement += \" and %s = ?\";\n", field_names[j])>>persistent_filename;
+		printf("\t\t\tif ( ! whereSpecified ) {\n")>>persistent_filename;
+		printf("\t\t\t\tstatement += \" where %s = ?\";\n", field_names[j])>>persistent_filename;
+		printf("\t\t\t\twhereSpecified = true;\n")>>persistent_filename;
+		printf("\t\t\t} else\n")>>persistent_filename;
+		printf("\t\t\t\tstatement += \" and %s = ?\";\n", field_names[j])>>persistent_filename;
 	    }
-	    printf("\t    sql.setStatement(statement);\n")>>persistent_filename;
+	    printf("\t\t\tsql.setStatement(statement);\n")>>persistent_filename;
 	    if ( field_types[j] == "int" ) {
-		printf("\t    sql.setInParams(new SQLParam(index++, new Integer(passed%sObject.get%s()), Types.INTEGER));\n", tmp_file_name, new_field_names[j])>>persistent_filename;;
+		printf("\t\t\tsql.setInParams(new SQLParam(index++, new Integer(passed%sObject.get%s()), Types.INTEGER));\n", tmp_file_name, new_field_names[j])>>persistent_filename;;
 	    }
 	    else if ( field_types[j] == "String" ) {
-		printf("\t    sql.setInParams(new SQLParam(index++,  passed%sObject.get%s(), Types.VARCHAR));\n", tmp_file_name, new_field_names[j])>>persistent_filename;;
+		printf("\t\t\tsql.setInParams(new SQLParam(index++,  passed%sObject.get%s(), Types.VARCHAR));\n", tmp_file_name, new_field_names[j])>>persistent_filename;;
 	    }
 	    else if ( field_types[j] == "Date" ) {
-		printf("\t    sql.setInParams(new SQLParam(index++,  passed%sObject.get%s(), Types.TIMESTAMP));\n", tmp_file_name, new_field_names[j])>>persistent_filename;;
+		printf("\t\t\tsql.setInParams(new SQLParam(index++,  passed%sObject.get%s(), Types.TIMESTAMP));\n", tmp_file_name, new_field_names[j])>>persistent_filename;;
 	    }
 	    else if ( field_types[j] == "double" ) {
-		printf("\t    sql.setInParams(new SQLParam(index++,  new Double(passed%sObject.get%s()), Types.DOUBLE));\n", tmp_file_name, new_field_names[j])>>persistent_filename;;
+		printf("\t\t\tsql.setInParams(new SQLParam(index++,  new Double(passed%sObject.get%s()), Types.DOUBLE));\n", tmp_file_name, new_field_names[j])>>persistent_filename;;
 	    }
 	    else if ( field_types[j] == "float" ) {
-		printf("\t    sql.setInParams(new SQLParam(index++,  new Float(passed%sObject.get%s()), Types.FLOAT));\n", tmp_file_name, new_field_names[j])>>persistent_filename;;
+		printf("\t\t\tsql.setInParams(new SQLParam(index++,  new Float(passed%sObject.get%s()), Types.FLOAT));\n", tmp_file_name, new_field_names[j])>>persistent_filename;;
 	    }
-	    printf("\t}\n")>>persistent_filename;
+	    printf("\t\t}\n")>>persistent_filename;
 	}
-        printf("        sql.setStatement(statement);\n        \n")>>persistent_filename;
-	printf("        DebugHandler.debug(statement);\n")>>persistent_filename;
-	printf("        setSQLStatement(sql);\n        \n")>>persistent_filename;
+    printf("\t\tsql.setStatement(statement);\n        \n")>>persistent_filename;
+	printf("\t\tDebugHandler.debug(statement);\n")>>persistent_filename;
+	printf("\t\tsetSQLStatement(sql);\n        \n")>>persistent_filename;
 
-        printf("        @SuppressWarnings(\"unchecked\")\n")>>persistent_filename;
-	printf("        ArrayList<%sObject> result = (ArrayList<%sObject>) super.list();\n        \n", tmp_file_name, tmp_file_name)>>persistent_filename;
-	printf("        return result;\n")>>persistent_filename;
-	printf("    }\n    \n")>>persistent_filename;
+    printf("\t\t@SuppressWarnings(\"unchecked\")\n")>>persistent_filename;
+	printf("\t\tArrayList<%sObject> result = (ArrayList<%sObject>) super.list();\n        \n", tmp_file_name, tmp_file_name)>>persistent_filename;
+	printf("\t\treturn result;\n")>>persistent_filename;
+	printf("\t}\n    \n")>>persistent_filename;
 	# End - list Method
 
 	# Comments for fetch Method

@@ -108,7 +108,8 @@ public class SendGMail {
         email.addRecipient(javax.mail.Message.RecipientType.TO,
                 new InternetAddress(to));
         email.setSubject(subject);
-        email.setText(bodyText);
+		email.setContent(bodyText,"text/html");
+		email.saveChanges();
         return email;
     }
 	

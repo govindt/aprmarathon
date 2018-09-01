@@ -39,6 +39,7 @@ drop table if exists event;
 
 
 drop table if exists Menu;
+drop table if exists Site;
 drop table if exists Acl;
 drop table if exists Users;
 drop table if exists Role;

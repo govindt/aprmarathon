@@ -20,6 +20,17 @@ import java.util.*;
  */
 
 public class AppConstants {
+    public static String CURRENT_SITE_LABEL;
+    public static String MANAGE_SITE_JSP_STR = "ManageSite.jsp";
+    public static String MANAGE_SITE_STR = "Manage Site";
+    public static String NEW_SITE;
+    public static String SITE_BEAN_NAME_STR = "app.appui.SiteBean";
+    public static String SITE_ID_LABEL;
+    public static String SITE_ID_STR = "siteId";
+    public static String SITE_NAME_LABEL;
+    public static String SITE_NAME_STR = "siteName";
+    public static String SITE_URL_LABEL;
+    public static String SITE_URL_STR = "siteUrl";
     public static String ONLINE_REGISTRATION_ONLY_LABEL;
     public static String ONLINE_REGISTRATION_ONLY_STR = "onlineRegistrationOnly";
     public static String REGISTRANT_PHONE_LABEL;
@@ -432,5 +443,6 @@ public class AppConstants {
 	public static String EMAIL_USERNAMES;
 	public static String RECEIPT_NO_PREFIX;
 	public static String RECEIPT_TEMPLATE;
+	public static int SITE_ID = 1;
 };
 

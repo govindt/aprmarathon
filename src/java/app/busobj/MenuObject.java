@@ -1,7 +1,7 @@
 /*
  * MenuObject.java
  *
- * Project Name Project
+ * APR Marathon Registration App Project
  *
  * Author: Govind Thirumalai
  */
@@ -11,6 +11,9 @@ package app.busobj;
 import java.util.Date;
 import core.util.DebugHandler;
 import core.util.Util;
+import core.util.Constants;
+import java.text.SimpleDateFormat;
+import java.text.ParseException;
 import org.codehaus.jettison.json.JSONObject;
 import org.codehaus.jettison.json.JSONException;
 
@@ -23,103 +26,109 @@ import org.codehaus.jettison.json.JSONException;
  */
 
 public class MenuObject implements Cloneable {
-    private int menu_id;
-    private String menu_name;
-    private String url;
-    private int menu_order;
-    private int parent_menu_id;
-    private int role_id;
+	private int menu_id;
+	private String menu_name;
+	private int site_id;
+	private String url;
+	private int menu_order;
+	private int parent_menu_id;
+	private int role_id;
+	
+	/**
+	 *
+	 * Returns the String representation of the MenuObject.
+	 *
+	 * @return	 Returns the String representation of the MenuObject.
+	 *
+	 */
     
+	public String toString() {
+	   return	"menu_id : " + menu_id + "\n" +
+		"menu_name : " + menu_name + "\n" +
+		"site_id : " + site_id + "\n" +
+		"url : " + url + "\n" +
+		"menu_order : " + menu_order + "\n" +
+		"parent_menu_id : " + parent_menu_id + "\n" +
+		"role_id : " + role_id + "\n";
+	}
     
-    /**
-     *
-     * Returns the String representation of the MenuObject.
-     *
-     * @return      Returns the String representation of the MenuObject.
-     *
-     */
+	/**
+	 *
+	 * Returns the JSON representation of the MenuObject.
+	 *
+	 * @return      Returns the JSON representation of the MenuObject.
+	 *
+	 */
     
-    public String toString() {
-        return "menu_id : " + menu_id + "\n" +
-            "menu_name : " + menu_name + "\n" +
-            "url : " + url + "\n" +
-            "menu_order : " + menu_order + "\n" +
-            "parent_menu_id : " + parent_menu_id + "\n" +
-            "role_id : " + role_id + "\n";
-    }
-
-     /**
-     *
-     * Returns the JSONObject representation of the MenuObject.
-     *
-     * @return      Returns the JSON representation of the MenuObject.
-     *
-     */
+	public JSONObject toJSON() {
+		JSONObject jo = new JSONObject();
+		try {
+			 jo.put("menu_id", menu_id);
+			 jo.put("menu_name", menu_name);
+			 jo.put("site_id", site_id);
+			 jo.put("url", url);
+			 jo.put("menu_order", menu_order);
+			 jo.put("parent_menu_id", parent_menu_id);
+			 jo.put("role_id", role_id);
+		} catch (JSONException je) {}
+		return jo;
+	}
     
-    public JSONObject toJSON() {
-	JSONObject jo = new JSONObject();
-	try {
-            jo.put("menu_id",  menu_id);
-            jo.put("menu_name", menu_name);
-            jo.put("url", url);
-            jo.put("menu_order", menu_order);
-            jo.put("parent_menu_id", parent_menu_id);
-            jo.put("role_id", role_id);
-	} catch (JSONException je) {};
-	return jo;
-    }
+	/**
+	 *
+	 * Returns the hashCode representation of the MenuObject.
+	 *
+	 * @return      Returns the hashCode.
+	 *
+	*/
     
-    /**
-     *
-     * Returns the hashCode representation of the MenuObject.
-     *
-     * @return      Returns the hashCode
-     *
-     */
+	public int hashCode() {
+		return menu_id;
+	}
     
-    public int hashCode() {
-	return menu_id;
-    }
+	/**
+	 * Constructs the MenuObject
+	 *
+	 */
     
-    /**
-     * Constructs the MenuObject
-     *
-     */
+	public MenuObject () {
+		setMenuId(0);
+		setMenuName("");
+		setSiteId(0);
+		setUrl("");
+		setMenuOrder(0);
+		setParentMenuId(0);
+		setRoleId(0);
+	}
     
-    public MenuObject () {
-        setMenuId(0);
-        setMenuName("");
-        setUrl("");
-        setMenuOrder(0);
-        setParentMenuId(0);
-        setRoleId(0);
-    }
-
-    /**
-     * Constructs the MenuObject from JSONObject
-     *
-     */
+	/**
+	 * Constructs the MenuObject from JSONObject
+	 *
+	 */
     
-    public MenuObject (JSONObject jObject) {
-	try {
-	    menu_id = jObject.getInt("menu_id");
-	} catch (JSONException je) {}
-        try {
-	    menu_name = Util.trim(jObject.getString("menu_name"));
-	} catch (JSONException je) {}
-        try {
-	    url = Util.trim(jObject.getString("url"));
-	} catch (JSONException je) {}
-        try {
-	    menu_order = jObject.getInt("menu_order");
-	} catch (JSONException je) {}
-        try {
-	    parent_menu_id = jObject.getInt("parent_menu_id");
-	} catch (JSONException je) {}
-        try {
-	    role_id = jObject.getInt("role_id");
-	} catch (JSONException je) {}
-    }
+	public MenuObject (JSONObject jObject) {
+		try {
+			menu_id = jObject.getInt("menu_id");
+		} catch (JSONException je) {}
+		try {
+			menu_name = jObject.getString("menu_name");
+		} catch (JSONException je) {}
+		try {
+			site_id = jObject.getInt("site_id");
+		} catch (JSONException je) {}
+		try {
+			url = jObject.getString("url");
+		} catch (JSONException je) {}
+		try {
+			menu_order = jObject.getInt("menu_order");
+		} catch (JSONException je) {}
+		try {
+			parent_menu_id = jObject.getInt("parent_menu_id");
+		} catch (JSONException je) {}
+		try {
+			role_id = jObject.getInt("role_id");
+		} catch (JSONException je) {}
+	}
     
     
     /**
@@ -171,6 +180,32 @@ public class MenuObject implements Cloneable {
     
     public String getMenuName() {
         return menu_name;
+    }
+
+    
+    /**
+     *
+     * Sets the <code>site_id</code> field
+     *
+     * @param site_id      int
+     *
+     */
+    
+    public void setSiteId(int site_id) {
+        this.site_id = site_id;
+    }
+    
+    
+    /**
+     *
+     * Gets the <code>site_id</code> field
+     *
+     * @returns site_id
+     *
+     */
+    
+    public int getSiteId() {
+        return site_id;
     }
 
     
@@ -293,6 +328,7 @@ public class MenuObject implements Cloneable {
         return
             menu_id == other.getMenuId() &&
             Util.trim(menu_name).equals(Util.trim(other.getMenuName())) &&
+            site_id == other.getSiteId() &&
             Util.trim(url).equals(Util.trim(other.getUrl())) &&
             menu_order == other.getMenuOrder() &&
             parent_menu_id == other.getParentMenuId() &&

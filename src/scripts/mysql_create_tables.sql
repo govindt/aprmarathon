@@ -27,15 +27,24 @@ create table Acl(
 	permission int
 );
 
+create table Site(
+	site_id int primary key auto_increment,
+	site_name varchar(50) not null,
+	site_url varchar(200)
+);
+
+insert into Site( site_name, site_url) values ( 'Local Host', 'http://localhost:9002');
+
 create table Menu(
 	menu_id int primary key auto_increment,
 	menu_name varchar(50) not null,
+	site_id int references Site(site_id),
 	url varchar(200),
 	menu_order int not null,
 	parent_menu_id int references Menu(menu_id),
 	role_id int references Role(role_id)
 );
-insert into Menu values (-1, 'Root Menu', NULL, 0, NULL, 1);
+insert into Menu values (-1, 'Root Menu', 1, NULL, 0, NULL, 1);
 
 create table Event(
 	event_id int primary key auto_increment,

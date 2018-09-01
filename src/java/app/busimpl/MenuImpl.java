@@ -53,6 +53,7 @@ public class MenuImpl implements MenuInterface  {
 		} else {
 			if ( (menu_obj.getMenuId() != 0 && menu_obj.getMenuId() == menuObjectArr[i].getMenuId())
  || (menu_obj.getMenuName() != null && menu_obj.getMenuName().equals(menuObjectArr[i].getMenuName()))
+ || (menu_obj.getSiteId() != 0 && menu_obj.getSiteId() == menuObjectArr[i].getSiteId())
  || (menu_obj.getUrl() != null && menu_obj.getUrl() != "" && menu_obj.getUrl().equals(menuObjectArr[i].getUrl()))
  || (menu_obj.getMenuOrder() != 0 && menu_obj.getMenuOrder() == menuObjectArr[i].getMenuOrder())
  || (menu_obj.getParentMenuId() != 0 && menu_obj.getParentMenuId() == menuObjectArr[i].getParentMenuId())

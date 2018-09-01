@@ -42,26 +42,26 @@ public class SiteImpl implements SiteInterface  {
      */
     
     public ArrayList<SiteObject> getSites(SiteObject site_obj) throws AppException{
-	SiteObject[] siteObjectArr = getAllSites();
-	ArrayList<SiteObject> v = new ArrayList<SiteObject>();
-	if ( siteObjectArr == null )
-		return null;
-	for ( int i = 0; i < siteObjectArr.length; i++ ) {
-		if ( siteObjectArr[i] != null ) {
-			if ( site_obj.getSiteId() == Constants.GET_ALL ) {
-				v.add((SiteObject)siteObjectArr[i].clone());
-			} else {
-				if ( (site_obj.getSiteId() != 0 && site_obj.getSiteId() == siteObjectArr[i].getSiteId())
- || (site_obj.getSiteName() != null && site_obj.getSiteName().equals(siteObjectArr[i].getSiteName()))
- || (site_obj.getSiteUrl() != null && site_obj.getSiteUrl().equals(siteObjectArr[i].getSiteUrl()))
-) {
+		SiteObject[] siteObjectArr = getAllSites();
+		ArrayList<SiteObject> v = new ArrayList<SiteObject>();
+		if ( siteObjectArr == null )
+			return null;
+		for ( int i = 0; i < siteObjectArr.length; i++ ) {
+			if ( siteObjectArr[i] != null ) {
+				if ( site_obj.getSiteId() == Constants.GET_ALL ) {
 					v.add((SiteObject)siteObjectArr[i].clone());
+				} else {
+					if ( (site_obj.getSiteId() != 0 && site_obj.getSiteId() == siteObjectArr[i].getSiteId())
+	 || (site_obj.getSiteName() != null && site_obj.getSiteName().equals(siteObjectArr[i].getSiteName()))
+	 || (site_obj.getSiteUrl() != null && site_obj.getSiteUrl().equals(siteObjectArr[i].getSiteUrl()))
+	) {
+						v.add((SiteObject)siteObjectArr[i].clone());
+					}
 				}
 			}
 		}
-	}
-	DebugHandler.finest("v: " + v);
-	return v;
+		DebugHandler.finest("v: " + v);
+		return v;
     }
     
     /**

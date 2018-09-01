@@ -25,7 +25,7 @@ export ORAUSER
 MY_DIR=`dirname $0`
 cd ${MY_DIR}
 MY_DIR=`pwd`
-TABLES=" Result Participant_Event Participant Registrant_Payment Registrant_Event Registrant Beneficiary Registration_Class Registration_Source Registration_Type Medal Payment_Status Payment_Type Blood_Group T_Shirt_Size Age_Category Gender Event_Type Event acl users role"
+TABLES=" Menu acl users role"
 # set path variable.
 PATH=$PATH:$ORACLE_HOME/bin
 export PATH

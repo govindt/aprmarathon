@@ -1,7 +1,7 @@
 /*
  * PersistentMenu.java
  *
- * Project Name Project
+ * APR Marathon Registration App Project
  *
  * Author: Govind Thirumalai
  */
@@ -58,13 +58,13 @@ public class PersistentMenu extends PersistentObject {
     
     public Object list() throws DBException {
         PreparedSQLStatement sql = new PreparedSQLStatement();
-	String statement = "SELECT menu_id, menu_name, url, menu_order, parent_menu_id, role_id from Menu order by parent_menu_id, menu_order";
+        String statement = "SELECT menu_id, menu_name, site_id, url, menu_order, parent_menu_id, role_id from Menu";
         int index = 1;
         sql.setStatement(statement);
         
         setSQLStatement(sql);
         
-	@SuppressWarnings("unchecked")
+        @SuppressWarnings("unchecked")
         ArrayList<MenuObject> result = (ArrayList<MenuObject>) super.list();
         
         return result;
@@ -83,74 +83,83 @@ public class PersistentMenu extends PersistentObject {
      * @see     #getResultObjects(ResultSet)
      */
     
-    public Object list(Object args) throws DBException {
-        PreparedSQLStatement sql = new PreparedSQLStatement();
-        String statement = "SELECT menu_id, menu_name, url, menu_order, parent_menu_id, role_id from Menu";
-        int index = 1;
-        MenuObject passedMenuObject = (MenuObject)args;
-        boolean whereSpecified = false;
+	public Object list(Object args) throws DBException {
+		PreparedSQLStatement sql = new PreparedSQLStatement();
+		String statement = "SELECT menu_id, menu_name, site_id, url, menu_order, parent_menu_id, role_id from Menu";
+		int index = 1;
+		MenuObject passedMenuObject = (MenuObject)args;
+		boolean whereSpecified = false;
 
-        if ( passedMenuObject.getMenuId() != 0 ) {
-	    statement += " where menu_id = ?";
-	    whereSpecified = true;
-	    sql.setStatement(statement);
-	    sql.setInParams(new SQLParam(index++, new Integer(passedMenuObject.getMenuId()), Types.INTEGER));
-	}
-        if ( ! passedMenuObject.getMenuName().equals("") ) {
-	    if ( ! whereSpecified ) {
-		statement += " where menu_name = ?";
-		whereSpecified = true;
-	    } else
-		statement += " and menu_name = ?";
-	    sql.setStatement(statement);
-	    sql.setInParams(new SQLParam(index++,  passedMenuObject.getMenuName(), Types.VARCHAR));
-	}
-        if ( ! passedMenuObject.getUrl().equals("") ) {
-	    if ( ! whereSpecified ) {
-		statement += " where url = ?";
-		whereSpecified = true;
-	    } else
-		statement += " and url = ?";
-	    sql.setStatement(statement);
-	    sql.setInParams(new SQLParam(index++,  passedMenuObject.getUrl(), Types.VARCHAR));
-	}
-        if ( passedMenuObject.getMenuOrder() != 0 ) {
-	    if ( ! whereSpecified ) {
-		statement += " where menu_order = ?";
-		whereSpecified = true;
-	    } else
-		statement += " and menu_order = ?";
-	    sql.setStatement(statement);
-	    sql.setInParams(new SQLParam(index++, new Integer(passedMenuObject.getMenuOrder()), Types.INTEGER));
-	}
-        if ( passedMenuObject.getParentMenuId() != 0 ) {
-	    if ( ! whereSpecified ) {
-		statement += " where parent_menu_id = ?";
-		whereSpecified = true;
-	    } else
-		statement += " and parent_menu_id = ?";
-	    sql.setStatement(statement);
-	    sql.setInParams(new SQLParam(index++, new Integer(passedMenuObject.getParentMenuId()), Types.INTEGER));
-	}
-        if ( passedMenuObject.getRoleId() != 0 ) {
-	    if ( ! whereSpecified ) {
-		statement += " where role_id = ?";
-		whereSpecified = true;
-	    } else
-		statement += " and role_id = ?";
-	    sql.setStatement(statement);
-	    sql.setInParams(new SQLParam(index++, new Integer(passedMenuObject.getRoleId()), Types.INTEGER));
-	}
-        sql.setStatement(statement);
+		if ( passedMenuObject.getMenuId() != 0 ) {
+			statement += " where menu_id = ?";
+			whereSpecified = true;
+			sql.setStatement(statement);
+			sql.setInParams(new SQLParam(index++, new Integer(passedMenuObject.getMenuId()), Types.INTEGER));
+		}
+		if ( ! passedMenuObject.getMenuName().equals("") ) {
+			if ( ! whereSpecified ) {
+				statement += " where menu_name = ?";
+				whereSpecified = true;
+			} else
+				statement += " and menu_name = ?";
+			sql.setStatement(statement);
+			sql.setInParams(new SQLParam(index++,  passedMenuObject.getMenuName(), Types.VARCHAR));
+		}
+		if ( passedMenuObject.getSiteId() != 0 ) {
+			if ( ! whereSpecified ) {
+				statement += " where site_id = ?";
+				whereSpecified = true;
+			} else
+				statement += " and site_id = ?";
+			sql.setStatement(statement);
+			sql.setInParams(new SQLParam(index++, new Integer(passedMenuObject.getSiteId()), Types.INTEGER));
+		}
+		if ( ! passedMenuObject.getUrl().equals("") ) {
+			if ( ! whereSpecified ) {
+				statement += " where url = ?";
+				whereSpecified = true;
+			} else
+				statement += " and url = ?";
+			sql.setStatement(statement);
+			sql.setInParams(new SQLParam(index++,  passedMenuObject.getUrl(), Types.VARCHAR));
+		}
+		if ( passedMenuObject.getMenuOrder() != 0 ) {
+			if ( ! whereSpecified ) {
+				statement += " where menu_order = ?";
+				whereSpecified = true;
+			} else
+				statement += " and menu_order = ?";
+			sql.setStatement(statement);
+			sql.setInParams(new SQLParam(index++, new Integer(passedMenuObject.getMenuOrder()), Types.INTEGER));
+		}
+		if ( passedMenuObject.getParentMenuId() != 0 ) {
+			if ( ! whereSpecified ) {
+				statement += " where parent_menu_id = ?";
+				whereSpecified = true;
+			} else
+				statement += " and parent_menu_id = ?";
+			sql.setStatement(statement);
+			sql.setInParams(new SQLParam(index++, new Integer(passedMenuObject.getParentMenuId()), Types.INTEGER));
+		}
+		if ( passedMenuObject.getRoleId() != 0 ) {
+			if ( ! whereSpecified ) {
+				statement += " where role_id = ?";
+				whereSpecified = true;
+			} else
+				statement += " and role_id = ?";
+			sql.setStatement(statement);
+			sql.setInParams(new SQLParam(index++, new Integer(passedMenuObject.getRoleId()), Types.INTEGER));
+		}
+		sql.setStatement(statement);
         
-        DebugHandler.debug(statement);
-        setSQLStatement(sql);
+		DebugHandler.info(statement);
+		setSQLStatement(sql);
         
-	@SuppressWarnings("unchecked")
-        ArrayList<MenuObject> result = (ArrayList<MenuObject>) super.list();
+		@SuppressWarnings("unchecked")
+		ArrayList<MenuObject> result = (ArrayList<MenuObject>) super.list();
         
-        return result;
-    }
+		return result;
+	}
     
     
     /**
@@ -167,13 +176,13 @@ public class PersistentMenu extends PersistentObject {
     
     public Object fetch() throws DBException {
         PreparedSQLStatement sql = new PreparedSQLStatement();
-        String statement = "SELECT menu_id, menu_name, url, menu_order, parent_menu_id, role_id from Menu where menu_id = ? ";
+        String statement = "SELECT menu_id, menu_name, site_id, url, menu_order, parent_menu_id, role_id from Menu where menu_id = ? ";
         int index = 1;
         sql.setStatement(statement);
         sql.setInParams(new SQLParam(index++, new Integer(menuObject.getMenuId()), Types.INTEGER));
         setSQLStatement(sql);
-
-	@SuppressWarnings("unchecked")
+        
+        @SuppressWarnings("unchecked")
         ArrayList<MenuObject> result = (ArrayList<MenuObject>) super.fetch();
         
         return result;
@@ -197,15 +206,16 @@ public class PersistentMenu extends PersistentObject {
         String statement;
         int index = 1;
 
-	if ( AppConstants.DB_TYPE.equalsIgnoreCase(Constants.ORACLE) ) {
-	    statement = "INSERT INTO Menu (menu_id, menu_name, url, menu_order, parent_menu_id, role_id) VALUES(?, ?, ?, ?, ?, ?) ";
-	    sql.setStatement(statement);
-	    sql.setInParams(new SQLParam(index++, new Integer(menuObject.getMenuId()), Types.INTEGER));
-	} else {
-	    statement = "INSERT INTO Menu (menu_name, url, menu_order, parent_menu_id, role_id) VALUES(?, ?, ?, ?, ?) ";
-	    sql.setStatement(statement);
-	}
+        if ( AppConstants.DB_TYPE.equalsIgnoreCase(Constants.ORACLE) ) {
+            statement = "INSERT INTO Menu (menu_id, menu_name, site_id, url, menu_order, parent_menu_id, role_id) VALUES(?, ?, ?, ?, ?, ?, ?) ";
+            sql.setStatement(statement);
+            sql.setInParams(new SQLParam(index++, new Integer(menuObject.getMenuId()), Types.INTEGER));
+        } else {
+            statement = "INSERT INTO Menu (menu_name, site_id, url, menu_order, parent_menu_id, role_id) VALUES(?, ?, ?, ?, ?, ?) ";
+            sql.setStatement(statement);
+        }
         sql.setInParams(new SQLParam(index++,  menuObject.getMenuName(), Types.VARCHAR));
+        sql.setInParams(new SQLParam(index++, new Integer(menuObject.getSiteId()), Types.INTEGER));
         sql.setInParams(new SQLParam(index++,  menuObject.getUrl(), Types.VARCHAR));
         sql.setInParams(new SQLParam(index++, new Integer(menuObject.getMenuOrder()), Types.INTEGER));
         sql.setInParams(new SQLParam(index++, new Integer(menuObject.getParentMenuId()), Types.INTEGER));
@@ -258,11 +268,12 @@ public class PersistentMenu extends PersistentObject {
     
     public Object update() throws DBException {
         PreparedSQLStatement sql = new PreparedSQLStatement();
-        String statement = "UPDATE Menu SET menu_id = ?, menu_name = ?, url = ?, menu_order = ?, parent_menu_id = ?, role_id = ? where menu_id = ? ";
+        String statement = "UPDATE Menu SET menu_id = ?, menu_name = ?, site_id = ?, url = ?, menu_order = ?, parent_menu_id = ?, role_id = ? where menu_id = ? ";
         int index = 1;
         sql.setStatement(statement);
         sql.setInParams(new SQLParam(index++, new Integer(menuObject.getMenuId()), Types.INTEGER));
         sql.setInParams(new SQLParam(index++,  menuObject.getMenuName(), Types.VARCHAR));
+        sql.setInParams(new SQLParam(index++, new Integer(menuObject.getSiteId()), Types.INTEGER));
         sql.setInParams(new SQLParam(index++,  menuObject.getUrl(), Types.VARCHAR));
         sql.setInParams(new SQLParam(index++, new Integer(menuObject.getMenuOrder()), Types.INTEGER));
         sql.setInParams(new SQLParam(index++, new Integer(menuObject.getParentMenuId()), Types.INTEGER));
@@ -299,6 +310,7 @@ public class PersistentMenu extends PersistentObject {
                 MenuObject f = new MenuObject();
                 f.setMenuId(rs.getInt(index++));
                 f.setMenuName(rs.getString(index++));
+                f.setSiteId(rs.getInt(index++));
                 f.setUrl(rs.getString(index++));
                 f.setMenuOrder(rs.getInt(index++));
                 f.setParentMenuId(rs.getInt(index++));
@@ -328,7 +340,7 @@ public class PersistentMenu extends PersistentObject {
     
     public Object getResultSetObject(ResultSet rs) {
         try {
-	    @SuppressWarnings("unchecked")
+        @SuppressWarnings("unchecked")
             ArrayList<MenuObject> result = (ArrayList<MenuObject>) getResultObjects(rs);
             return result.get(0);
         } catch (Exception e) {

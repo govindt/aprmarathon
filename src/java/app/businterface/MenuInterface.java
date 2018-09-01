@@ -1,7 +1,7 @@
 /*
  * MenuInterface.java
  *
- * Project Name Project
+ * APR Marathon Registration App Project
  *
  * Author: Govind Thirumalai
  */
