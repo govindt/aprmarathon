@@ -45,10 +45,14 @@ public class EnglishNumberToWords {
 	private static String convertLessThanOneHundred(int number) {
 		String soFar;
 		
-		soFar = numNames[number % 10];
-		number /= 10;
+		if (number < 20) {
+			soFar = numNames[number];
+		} else {
+			soFar = numNames[number % 10];
+			number /= 10;
 
-		soFar = tensNames[number % 10] + soFar;
+			soFar = tensNames[number % 10] + soFar;
+		}
 		
 		return soFar;
 	}
@@ -161,25 +165,31 @@ public class EnglishNumberToWords {
 	* @param args
 	*/
 	public static void main(String[] args) {
-		System.out.println(EnglishNumberToWords.convert(Long.parseLong("100.04"))).toUpperCase());
-		System.out.println("*** " + EnglishNumberToWords.convert(0));
-		System.out.println("*** " + EnglishNumberToWords.convert(11.43));
-		System.out.println("*** " + EnglishNumberToWords.convert(16));
-		System.out.println("*** " + EnglishNumberToWords.convert(100));
-		System.out.println("*** " + EnglishNumberToWords.convert(118));
-		System.out.println("*** " + EnglishNumberToWords.convert(200));
-		System.out.println("*** " + EnglishNumberToWords.convert(219));
-		System.out.println("*** " + EnglishNumberToWords.convert(800));
-		System.out.println("*** " + EnglishNumberToWords.convert(801));
-		System.out.println("*** " + EnglishNumberToWords.convert(1316));
-		System.out.println("*** " + EnglishNumberToWords.convert(1000000));
-		System.out.println("*** " + EnglishNumberToWords.convert(2000000));
-		System.out.println("*** " + EnglishNumberToWords.convert(3000200));
-		System.out.println("*** " + EnglishNumberToWords.convert(700000));
-		System.out.println("*** " + EnglishNumberToWords.convert(9000000));
-		System.out.println("*** " + EnglishNumberToWords.convert(9001000));
-		System.out.println("*** " + EnglishNumberToWords.convert(123456789));
-		System.out.println("*** " + EnglishNumberToWords.convert(2147483647));
-		System.out.println("*** " + EnglishNumberToWords.convert(3000000010L));
+		String[] testData = {"100.04", 
+		"0",
+		"14.15",
+		"11.43",
+		"16",
+		"100.2",
+		"118.0",
+		"200.00",
+		"219",
+		"800.19",
+		"801",
+		"1316.543",
+		"1000000",
+		"2000000.02",
+		"3000200",
+		"700000",
+		"9000000.87",
+		"9001000.96",
+		"123456789.53",
+		"2147483647.18",
+		"3000000010"
+		};
+		for (int i=0; i < testData.length; i++) {
+			System.out.println("Number: " + testData[i]);
+			System.out.println((EnglishNumberToWords.convert(Double.parseDouble(testData[i]))).toUpperCase());
+		}
     }
 }
