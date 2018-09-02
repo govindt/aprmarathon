@@ -161,6 +161,7 @@ public class EnglishNumberToWords {
 	* @param args
 	*/
 	public static void main(String[] args) {
+		System.out.println(EnglishNumberToWords.convert(Long.parseLong("100.04"))).toUpperCase());
 		System.out.println("*** " + EnglishNumberToWords.convert(0));
 		System.out.println("*** " + EnglishNumberToWords.convert(11.43));
 		System.out.println("*** " + EnglishNumberToWords.convert(16));
