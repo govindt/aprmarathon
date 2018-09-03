@@ -57,11 +57,11 @@ public class AppMenuBuilder implements MenuBuilder
 				SiteObject sObj = sif.getSite(AppConstants.SITE_ID);
 				for ( int i = 0; i < v.size(); i++) {
 					mObj = v.get(i);
-					String menu_url = sObj.getSiteUrl() + "/" + Util.getBaseurl() + 
+					String menu_url = sObj.getSiteUrl() + Util.getBaseurl() + 
 						Constants.URL_SEPARATOR + Constants.JSP_STR + Constants.EQUALS_STR + mObj.getUrl();
-					DebugHandler.info(menu_url);
+					DebugHandler.debug(menu_url);
 					if ( mObj.getParentMenuId() == TOP_PARENT_ID ) {
-						CompositeMenu aTopMenu = new CompositeMenu(Constants.EMPTY + mObj.getMenuId(), mObj.getMenuName(), mObj.getUrl());
+						CompositeMenu aTopMenu = new CompositeMenu(Constants.EMPTY + mObj.getMenuId(), mObj.getMenuName(), menu_url);
 						topMenus.add(aTopMenu);
 					}
 				}
@@ -107,21 +107,24 @@ public class AppMenuBuilder implements MenuBuilder
     private void buildMenu(String menuId, CompositeMenu comSrc) throws MenuException
     {
 		DebugHandler.debug("Menu Id : " + menuId);
+		SiteInterface sif = new SiteImpl();
 		MenuInterface mIf = new MenuImpl();
 		MenuObject mObj = new MenuObject();
 		mObj.setParentMenuId(Integer.parseInt(menuId));
 		try {
+			SiteObject sObj = sif.getSite(AppConstants.SITE_ID);
 			ArrayList<MenuObject> v = mIf.getMenus(mObj);
 			for (int i = 0; i < v.size(); i++ ) { 
 				mObj = v.get(i);
 				String childMenuId = mObj.getMenuId() + Constants.EMPTY;
 				String menuName = mObj.getMenuName();
-				String href = mObj.getUrl();
+				String menu_url = sObj.getSiteUrl() + Util.getBaseurl() + 
+						Constants.URL_SEPARATOR + Constants.JSP_STR + Constants.EQUALS_STR + mObj.getUrl();
 				String parentId = mObj.getParentMenuId() + Constants.EMPTY;
-				DebugHandler.debug(childMenuId + " " + menuName + " " + parentId + " " + href);
+				DebugHandler.debug(childMenuId + " " + menuName + " " + parentId + " " + menu_url);
 				if (isLeaf(childMenuId)) { //simple menu 
 					DebugHandler.debug("Leaf : " + menuName);
-					SimpleMenu sm = new SimpleMenu(childMenuId , menuName, href);
+					SimpleMenu sm = new SimpleMenu(childMenuId , menuName, menu_url);
 					comSrc.add(sm);
 				}
 				else {
