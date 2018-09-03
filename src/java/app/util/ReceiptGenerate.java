@@ -94,7 +94,7 @@ public class ReceiptGenerate
 		} finally {
 		}
 	}
-	
+	// Create Receipt
 	public String createReceipt(String template, SendMailObject rObj) throws IOException,  InvalidFormatException {
 		String pdfDirName = System.getProperty("java.io.tmpdir") + File.separator + "pdfs";
 		String[] replaceStrs = {
@@ -103,7 +103,7 @@ public class ReceiptGenerate
 			rObj.getReceiptDate(), 
 			rObj.getRegistrantName() + " " + rObj.getRegistrantLastName(),
 			rObj.getReceiptAddress(), 
-			(EnglishNumberToWords.convert(Long.parseLong(rObj.getAmount()))).toUpperCase(),
+			(EnglishNumberToWords.convert(Double.parseDouble(rObj.getAmount()))).toUpperCase(),
 			rObj.getTransferType(), 
 			rObj.getTransferDetails(),
 			rObj.getTransferDate(), 
