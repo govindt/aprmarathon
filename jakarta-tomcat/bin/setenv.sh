@@ -1,0 +1,1 @@
+export CATALINA_OPTS="-Xms4096M -Xmx4096M"
