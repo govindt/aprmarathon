@@ -185,8 +185,10 @@ public class ParticipantBean implements SpreadSheetInterface {
 	for (int iterator = 0; iterator < participantArr.length; iterator++) {
 	    ParticipantObject participantObject = participantArr[iterator];
 	    if ( participantObject == null )
-		break;
-	    nameArrayList.add(participantObject.getParticipantFirstName());
+			break;
+	    nameArrayList.add(	participantObject.getParticipantId() + "->" +
+							participantObject.getParticipantFirstName() + "->" +
+							participantObject.getParticipantLastName());
 	    valueArrayList.add(new Integer(participantObject.getParticipantId()));
 	}
 	se = new SelectElement(AppConstants.PARTICIPANT_ID_STR, nameArrayList, valueArrayList, String.valueOf(participantId), 0);
