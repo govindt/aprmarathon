@@ -297,15 +297,15 @@ ${NAWK} -v app_properties_file=${APP_PROPERTIES_FILE} -v app_constants=${APP_CON
 		    printf("\tnameArrayList.add(%s.NEW_%s);\n", app_constants, toupper(tmp_file_name))>>app_bean_file;
 		    printf("\tvalueArrayList.add(new Integer(0));\n")>>app_bean_file;
 		    printf("\tfor (int iterator = 0; iterator < %sArr.length; iterator++) {\n", lower_table_name)>>app_bean_file;
-		    printf("\t    %sObject %sObject = %sArr[iterator];\n", tmp_file_name, lower_table_name, lower_table_name)>>app_bean_file;
-		    printf("\t    if ( %sObject == null )\n", lower_table_name)>>app_bean_file;
-		    printf("\t\tbreak;\n", lower_table_name)>>app_bean_file;
+		    printf("\t\t%sObject %sObject = %sArr[iterator];\n", tmp_file_name, lower_table_name, lower_table_name)>>app_bean_file;
+		    printf("\t\tif ( %sObject == null )\n", lower_table_name)>>app_bean_file;
+		    printf("\t\t\tbreak;\n", lower_table_name)>>app_bean_file;
 		    
 		    if ( field_types[j+1] == "int" ) 
-			printf("\t    nameArrayList.add(String.valueOf(%sObject.get%s()));\n", lower_table_name, temp_field_names[j+1])>>app_bean_file;
+			printf("\t\tnameArrayList.add(String.valueOf(%sObject.get%s()));\n", lower_table_name, temp_field_names[j+1])>>app_bean_file;
 		    else
-			printf("\t    nameArrayList.add(%sObject.get%s());\n", lower_table_name, temp_field_names[j+1])>>app_bean_file;
-		    printf("\t    valueArrayList.add(new Integer(%sObject.get%s()));\n", lower_table_name, temp_field_names[j])>>app_bean_file;
+			printf("\t\tnameArrayList.add(%sObject.get%s());\n", lower_table_name, temp_field_names[j+1])>>app_bean_file;
+		    printf("\t\tvalueArrayList.add(new Integer(%sObject.get%s()));\n", lower_table_name, temp_field_names[j])>>app_bean_file;
 		    printf("\t}\n")>>app_bean_file;
 		    printf("\tse = new SelectElement(%s.%s_STR, nameArrayList, valueArrayList, String.valueOf(%s), 0);\n", app_constants, toupper(field_names[j]), new_field_names[j])>>app_bean_file;
 		    printf("\tse.setOnChange(UtilBean.JS_SUBMIT_FORM);\n")>>app_bean_file;

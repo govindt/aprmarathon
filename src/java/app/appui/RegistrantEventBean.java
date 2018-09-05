@@ -218,6 +218,17 @@ public class RegistrantEventBean implements SpreadSheetInterface {
 	be.setId(Constants.BODY_ROW_STYLE);
 	td = new TableDataElement(be);
 	tr.add(td);
+	nameArrayList = new ArrayList<String>();
+	valueArrayList = new ArrayList<Integer>();
+	EventInterface eventIf = new EventImpl();
+	EventObject[] eventRefArr = eventIf.getAllEvents();
+	for (int iterator = 0; iterator < eventRefArr.length; iterator++) {
+	    EventObject eventObject = eventRefArr[iterator];
+	    if (eventObject == null)
+			break;
+	    nameArrayList.add(String.valueOf(eventObject.getEventName()));
+	    valueArrayList.add(new Integer(eventObject.getEventId()));
+	}
 	if ( registrantEventId != 0 )
 		se = new SelectElement(AppConstants.REGISTRANT_EVENT_STR, nameArrayList, valueArrayList, String.valueOf(selectedRegistrantEventObj.getRegistrantEvent()), 0);
 	else
