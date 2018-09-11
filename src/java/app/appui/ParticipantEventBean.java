@@ -537,11 +537,11 @@ public class ParticipantEventBean implements SpreadSheetInterface {
 				participanteventObject.setParticipantBibNo(Util.trim(cell.getStringCellValue()));
 			cell = row.getCell((short)col++);
 			if ( cell != null )
-			try {
-				participanteventObject.setParticipantGroup((int)cell.getNumericCellValue());
-			} catch (NumberFormatException nfe) {
-				participanteventObject.setParticipantGroup(0);
-			}
+				try {
+					participanteventObject.setParticipantGroup((int)cell.getNumericCellValue());
+				} catch (NumberFormatException nfe) {
+					participanteventObject.setParticipantGroup(0);
+				}
 			DebugHandler.fine("Updating ParticipantEvent " + participanteventObject);
 			participanteventIf.updateParticipantEvent(participanteventObject);
 			} else if ( dbOp != null && dbOp.equalsIgnoreCase("INSERT") ) {
@@ -579,11 +579,11 @@ public class ParticipantEventBean implements SpreadSheetInterface {
 				participanteventObject.setParticipantBibNo(Util.trim(cell.getStringCellValue()));
 			cell = row.getCell((short)col++);
 			if ( cell != null )
-			try {
-				participanteventObject.setParticipantGroup((int)cell.getNumericCellValue());
-			} catch (NumberFormatException nfe) {
-				participanteventObject.setParticipantGroup(0);
-			}
+				try {
+					participanteventObject.setParticipantGroup((int)cell.getNumericCellValue());
+				} catch (NumberFormatException nfe) {
+					participanteventObject.setParticipantGroup(0);
+				}
 			DebugHandler.fine("Adding ParticipantEvent " + participanteventObject);
 			participanteventIf.addParticipantEvent(participanteventObject);
 			} else if ( dbOp != null && dbOp.equalsIgnoreCase("DELETE") ) {

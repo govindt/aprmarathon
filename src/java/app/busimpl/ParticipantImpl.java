@@ -62,6 +62,7 @@ public class ParticipantImpl implements ParticipantInterface  {
  || (participant_obj.getParticipantBloodGroup() != 0 && participant_obj.getParticipantBloodGroup() == participantObjectArr[i].getParticipantBloodGroup())
  || (participant_obj.getParticipantCellPhone() != null && participant_obj.getParticipantCellPhone().equals(participantObjectArr[i].getParticipantCellPhone()))
  || (participant_obj.getParticipantEmail() != null && participant_obj.getParticipantEmail().equals(participantObjectArr[i].getParticipantEmail()))
+ || (participant_obj.getParticipantGroup() != 0 && participant_obj.getParticipantGroup() == participantObjectArr[i].getParticipantGroup())
 ) {
 					v.add((ParticipantObject)participantObjectArr[i].clone());
 				}

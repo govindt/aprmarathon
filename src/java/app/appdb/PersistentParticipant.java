@@ -58,7 +58,7 @@ public class PersistentParticipant extends PersistentObject {
     
     public Object list() throws DBException {
         PreparedSQLStatement sql = new PreparedSQLStatement();
-        String statement = "SELECT participant_id, participant_first_name, participant_middle_name, participant_last_name, participant_gender, participant_date_of_birth, participant_age_category, participant_t_shirt_size, participant_blood_group, participant_cell_phone, participant_email from Participant";
+        String statement = "SELECT participant_id, participant_first_name, participant_middle_name, participant_last_name, participant_gender, participant_date_of_birth, participant_age_category, participant_t_shirt_size, participant_blood_group, participant_cell_phone, participant_email, participant_group from Participant";
         int index = 1;
         sql.setStatement(statement);
         
@@ -83,119 +83,128 @@ public class PersistentParticipant extends PersistentObject {
      * @see     #getResultObjects(ResultSet)
      */
     
-    public Object list(Object args) throws DBException {
-        PreparedSQLStatement sql = new PreparedSQLStatement();
-        String statement = "SELECT participant_id, participant_first_name, participant_middle_name, participant_last_name, participant_gender, participant_date_of_birth, participant_age_category, participant_t_shirt_size, participant_blood_group, participant_cell_phone, participant_email from Participant";
-        int index = 1;
-        ParticipantObject passedParticipantObject = (ParticipantObject)args;
-        boolean whereSpecified = false;
+	public Object list(Object args) throws DBException {
+		PreparedSQLStatement sql = new PreparedSQLStatement();
+		String statement = "SELECT participant_id, participant_first_name, participant_middle_name, participant_last_name, participant_gender, participant_date_of_birth, participant_age_category, participant_t_shirt_size, participant_blood_group, participant_cell_phone, participant_email, participant_group from Participant";
+		int index = 1;
+		ParticipantObject passedParticipantObject = (ParticipantObject)args;
+		boolean whereSpecified = false;
 
-        if ( passedParticipantObject.getParticipantId() != 0 ) {
-	    statement += " where participant_id = ?";
-	    whereSpecified = true;
-	    sql.setStatement(statement);
-	    sql.setInParams(new SQLParam(index++, new Integer(passedParticipantObject.getParticipantId()), Types.INTEGER));
-	}
-        if ( ! passedParticipantObject.getParticipantFirstName().equals("") ) {
-	    if ( ! whereSpecified ) {
-		statement += " where participant_first_name = ?";
-		whereSpecified = true;
-	    } else
-		statement += " and participant_first_name = ?";
-	    sql.setStatement(statement);
-	    sql.setInParams(new SQLParam(index++,  passedParticipantObject.getParticipantFirstName(), Types.VARCHAR));
-	}
-        if ( ! passedParticipantObject.getParticipantMiddleName().equals("") ) {
-	    if ( ! whereSpecified ) {
-		statement += " where participant_middle_name = ?";
-		whereSpecified = true;
-	    } else
-		statement += " and participant_middle_name = ?";
-	    sql.setStatement(statement);
-	    sql.setInParams(new SQLParam(index++,  passedParticipantObject.getParticipantMiddleName(), Types.VARCHAR));
-	}
-        if ( ! passedParticipantObject.getParticipantLastName().equals("") ) {
-	    if ( ! whereSpecified ) {
-		statement += " where participant_last_name = ?";
-		whereSpecified = true;
-	    } else
-		statement += " and participant_last_name = ?";
-	    sql.setStatement(statement);
-	    sql.setInParams(new SQLParam(index++,  passedParticipantObject.getParticipantLastName(), Types.VARCHAR));
-	}
-        if ( passedParticipantObject.getParticipantGender() != 0 ) {
-	    if ( ! whereSpecified ) {
-		statement += " where participant_gender = ?";
-		whereSpecified = true;
-	    } else
-		statement += " and participant_gender = ?";
-	    sql.setStatement(statement);
-	    sql.setInParams(new SQLParam(index++, new Integer(passedParticipantObject.getParticipantGender()), Types.INTEGER));
-	}
-        if ( passedParticipantObject.getParticipantDateOfBirth() != null ) {
-	    if ( ! whereSpecified ) {
-		statement += " where participant_date_of_birth = ?";
-		whereSpecified = true;
-	    } else
-		statement += " and participant_date_of_birth = ?";
-	    sql.setStatement(statement);
-	    sql.setInParams(new SQLParam(index++,  passedParticipantObject.getParticipantDateOfBirth(), Types.TIMESTAMP));
-	}
-        if ( passedParticipantObject.getParticipantAgeCategory() != 0 ) {
-	    if ( ! whereSpecified ) {
-		statement += " where participant_age_category = ?";
-		whereSpecified = true;
-	    } else
-		statement += " and participant_age_category = ?";
-	    sql.setStatement(statement);
-	    sql.setInParams(new SQLParam(index++, new Integer(passedParticipantObject.getParticipantAgeCategory()), Types.INTEGER));
-	}
-        if ( passedParticipantObject.getParticipantTShirtSize() != 0 ) {
-	    if ( ! whereSpecified ) {
-		statement += " where participant_t_shirt_size = ?";
-		whereSpecified = true;
-	    } else
-		statement += " and participant_t_shirt_size = ?";
-	    sql.setStatement(statement);
-	    sql.setInParams(new SQLParam(index++, new Integer(passedParticipantObject.getParticipantTShirtSize()), Types.INTEGER));
-	}
-        if ( passedParticipantObject.getParticipantBloodGroup() != 0 ) {
-	    if ( ! whereSpecified ) {
-		statement += " where participant_blood_group = ?";
-		whereSpecified = true;
-	    } else
-		statement += " and participant_blood_group = ?";
-	    sql.setStatement(statement);
-	    sql.setInParams(new SQLParam(index++, new Integer(passedParticipantObject.getParticipantBloodGroup()), Types.INTEGER));
-	}
-        if ( ! passedParticipantObject.getParticipantCellPhone().equals("") ) {
-	    if ( ! whereSpecified ) {
-		statement += " where participant_cell_phone = ?";
-		whereSpecified = true;
-	    } else
-		statement += " and participant_cell_phone = ?";
-	    sql.setStatement(statement);
-	    sql.setInParams(new SQLParam(index++,  passedParticipantObject.getParticipantCellPhone(), Types.VARCHAR));
-	}
-        if ( ! passedParticipantObject.getParticipantEmail().equals("") ) {
-	    if ( ! whereSpecified ) {
-		statement += " where participant_email = ?";
-		whereSpecified = true;
-	    } else
-		statement += " and participant_email = ?";
-	    sql.setStatement(statement);
-	    sql.setInParams(new SQLParam(index++,  passedParticipantObject.getParticipantEmail(), Types.VARCHAR));
-	}
-        sql.setStatement(statement);
+		if ( passedParticipantObject.getParticipantId() != 0 ) {
+			statement += " where participant_id = ?";
+			whereSpecified = true;
+			sql.setStatement(statement);
+			sql.setInParams(new SQLParam(index++, new Integer(passedParticipantObject.getParticipantId()), Types.INTEGER));
+		}
+		if ( ! passedParticipantObject.getParticipantFirstName().equals("") ) {
+			if ( ! whereSpecified ) {
+				statement += " where participant_first_name = ?";
+				whereSpecified = true;
+			} else
+				statement += " and participant_first_name = ?";
+			sql.setStatement(statement);
+			sql.setInParams(new SQLParam(index++,  passedParticipantObject.getParticipantFirstName(), Types.VARCHAR));
+		}
+		if ( ! passedParticipantObject.getParticipantMiddleName().equals("") ) {
+			if ( ! whereSpecified ) {
+				statement += " where participant_middle_name = ?";
+				whereSpecified = true;
+			} else
+				statement += " and participant_middle_name = ?";
+			sql.setStatement(statement);
+			sql.setInParams(new SQLParam(index++,  passedParticipantObject.getParticipantMiddleName(), Types.VARCHAR));
+		}
+		if ( ! passedParticipantObject.getParticipantLastName().equals("") ) {
+			if ( ! whereSpecified ) {
+				statement += " where participant_last_name = ?";
+				whereSpecified = true;
+			} else
+				statement += " and participant_last_name = ?";
+			sql.setStatement(statement);
+			sql.setInParams(new SQLParam(index++,  passedParticipantObject.getParticipantLastName(), Types.VARCHAR));
+		}
+		if ( passedParticipantObject.getParticipantGender() != 0 ) {
+			if ( ! whereSpecified ) {
+				statement += " where participant_gender = ?";
+				whereSpecified = true;
+			} else
+				statement += " and participant_gender = ?";
+			sql.setStatement(statement);
+			sql.setInParams(new SQLParam(index++, new Integer(passedParticipantObject.getParticipantGender()), Types.INTEGER));
+		}
+		if ( passedParticipantObject.getParticipantDateOfBirth() != null ) {
+			if ( ! whereSpecified ) {
+				statement += " where participant_date_of_birth = ?";
+				whereSpecified = true;
+			} else
+				statement += " and participant_date_of_birth = ?";
+			sql.setStatement(statement);
+			sql.setInParams(new SQLParam(index++,  passedParticipantObject.getParticipantDateOfBirth(), Types.TIMESTAMP));
+		}
+		if ( passedParticipantObject.getParticipantAgeCategory() != 0 ) {
+			if ( ! whereSpecified ) {
+				statement += " where participant_age_category = ?";
+				whereSpecified = true;
+			} else
+				statement += " and participant_age_category = ?";
+			sql.setStatement(statement);
+			sql.setInParams(new SQLParam(index++, new Integer(passedParticipantObject.getParticipantAgeCategory()), Types.INTEGER));
+		}
+		if ( passedParticipantObject.getParticipantTShirtSize() != 0 ) {
+			if ( ! whereSpecified ) {
+				statement += " where participant_t_shirt_size = ?";
+				whereSpecified = true;
+			} else
+				statement += " and participant_t_shirt_size = ?";
+			sql.setStatement(statement);
+			sql.setInParams(new SQLParam(index++, new Integer(passedParticipantObject.getParticipantTShirtSize()), Types.INTEGER));
+		}
+		if ( passedParticipantObject.getParticipantBloodGroup() != 0 ) {
+			if ( ! whereSpecified ) {
+				statement += " where participant_blood_group = ?";
+				whereSpecified = true;
+			} else
+				statement += " and participant_blood_group = ?";
+			sql.setStatement(statement);
+			sql.setInParams(new SQLParam(index++, new Integer(passedParticipantObject.getParticipantBloodGroup()), Types.INTEGER));
+		}
+		if ( ! passedParticipantObject.getParticipantCellPhone().equals("") ) {
+			if ( ! whereSpecified ) {
+				statement += " where participant_cell_phone = ?";
+				whereSpecified = true;
+			} else
+				statement += " and participant_cell_phone = ?";
+			sql.setStatement(statement);
+			sql.setInParams(new SQLParam(index++,  passedParticipantObject.getParticipantCellPhone(), Types.VARCHAR));
+		}
+		if ( ! passedParticipantObject.getParticipantEmail().equals("") ) {
+			if ( ! whereSpecified ) {
+				statement += " where participant_email = ?";
+				whereSpecified = true;
+			} else
+				statement += " and participant_email = ?";
+			sql.setStatement(statement);
+			sql.setInParams(new SQLParam(index++,  passedParticipantObject.getParticipantEmail(), Types.VARCHAR));
+		}
+		if ( passedParticipantObject.getParticipantGroup() != 0 ) {
+			if ( ! whereSpecified ) {
+				statement += " where participant_group = ?";
+				whereSpecified = true;
+			} else
+				statement += " and participant_group = ?";
+			sql.setStatement(statement);
+			sql.setInParams(new SQLParam(index++, new Integer(passedParticipantObject.getParticipantGroup()), Types.INTEGER));
+		}
+		sql.setStatement(statement);
         
-        DebugHandler.debug(statement);
-        setSQLStatement(sql);
+		DebugHandler.debug(statement);
+		setSQLStatement(sql);
         
-        @SuppressWarnings("unchecked")
-        ArrayList<ParticipantObject> result = (ArrayList<ParticipantObject>) super.list();
+		@SuppressWarnings("unchecked")
+		ArrayList<ParticipantObject> result = (ArrayList<ParticipantObject>) super.list();
         
-        return result;
-    }
+		return result;
+	}
     
     
     /**
@@ -212,7 +221,7 @@ public class PersistentParticipant extends PersistentObject {
     
     public Object fetch() throws DBException {
         PreparedSQLStatement sql = new PreparedSQLStatement();
-        String statement = "SELECT participant_id, participant_first_name, participant_middle_name, participant_last_name, participant_gender, participant_date_of_birth, participant_age_category, participant_t_shirt_size, participant_blood_group, participant_cell_phone, participant_email from Participant where participant_id = ? ";
+        String statement = "SELECT participant_id, participant_first_name, participant_middle_name, participant_last_name, participant_gender, participant_date_of_birth, participant_age_category, participant_t_shirt_size, participant_blood_group, participant_cell_phone, participant_email, participant_group from Participant where participant_id = ? ";
         int index = 1;
         sql.setStatement(statement);
         sql.setInParams(new SQLParam(index++, new Integer(participantObject.getParticipantId()), Types.INTEGER));
@@ -243,11 +252,11 @@ public class PersistentParticipant extends PersistentObject {
         int index = 1;
 
         if ( AppConstants.DB_TYPE.equalsIgnoreCase(Constants.ORACLE) ) {
-            statement = "INSERT INTO Participant (participant_id, participant_first_name, participant_middle_name, participant_last_name, participant_gender, participant_date_of_birth, participant_age_category, participant_t_shirt_size, participant_blood_group, participant_cell_phone, participant_email) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ";
+            statement = "INSERT INTO Participant (participant_id, participant_first_name, participant_middle_name, participant_last_name, participant_gender, participant_date_of_birth, participant_age_category, participant_t_shirt_size, participant_blood_group, participant_cell_phone, participant_email, participant_group) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ";
             sql.setStatement(statement);
             sql.setInParams(new SQLParam(index++, new Integer(participantObject.getParticipantId()), Types.INTEGER));
         } else {
-            statement = "INSERT INTO Participant (participant_first_name, participant_middle_name, participant_last_name, participant_gender, participant_date_of_birth, participant_age_category, participant_t_shirt_size, participant_blood_group, participant_cell_phone, participant_email) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ";
+            statement = "INSERT INTO Participant (participant_first_name, participant_middle_name, participant_last_name, participant_gender, participant_date_of_birth, participant_age_category, participant_t_shirt_size, participant_blood_group, participant_cell_phone, participant_email, participant_group) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ";
             sql.setStatement(statement);
         }
         sql.setInParams(new SQLParam(index++,  participantObject.getParticipantFirstName(), Types.VARCHAR));
@@ -260,6 +269,7 @@ public class PersistentParticipant extends PersistentObject {
         sql.setInParams(new SQLParam(index++, new Integer(participantObject.getParticipantBloodGroup()), Types.INTEGER));
         sql.setInParams(new SQLParam(index++,  participantObject.getParticipantCellPhone(), Types.VARCHAR));
         sql.setInParams(new SQLParam(index++,  participantObject.getParticipantEmail(), Types.VARCHAR));
+        sql.setInParams(new SQLParam(index++, new Integer(participantObject.getParticipantGroup()), Types.INTEGER));
         setSQLStatement(sql);
         
         Integer result = (Integer) super.insert();
@@ -308,7 +318,7 @@ public class PersistentParticipant extends PersistentObject {
     
     public Object update() throws DBException {
         PreparedSQLStatement sql = new PreparedSQLStatement();
-        String statement = "UPDATE Participant SET participant_id = ?, participant_first_name = ?, participant_middle_name = ?, participant_last_name = ?, participant_gender = ?, participant_date_of_birth = ?, participant_age_category = ?, participant_t_shirt_size = ?, participant_blood_group = ?, participant_cell_phone = ?, participant_email = ? where participant_id = ? ";
+        String statement = "UPDATE Participant SET participant_id = ?, participant_first_name = ?, participant_middle_name = ?, participant_last_name = ?, participant_gender = ?, participant_date_of_birth = ?, participant_age_category = ?, participant_t_shirt_size = ?, participant_blood_group = ?, participant_cell_phone = ?, participant_email = ?, participant_group = ? where participant_id = ? ";
         int index = 1;
         sql.setStatement(statement);
         sql.setInParams(new SQLParam(index++, new Integer(participantObject.getParticipantId()), Types.INTEGER));
@@ -322,6 +332,7 @@ public class PersistentParticipant extends PersistentObject {
         sql.setInParams(new SQLParam(index++, new Integer(participantObject.getParticipantBloodGroup()), Types.INTEGER));
         sql.setInParams(new SQLParam(index++,  participantObject.getParticipantCellPhone(), Types.VARCHAR));
         sql.setInParams(new SQLParam(index++,  participantObject.getParticipantEmail(), Types.VARCHAR));
+        sql.setInParams(new SQLParam(index++, new Integer(participantObject.getParticipantGroup()), Types.INTEGER));
         sql.setInParams(new SQLParam(index++, new Integer(participantObject.getParticipantId()), Types.INTEGER));
         setSQLStatement(sql);
         
@@ -363,6 +374,7 @@ public class PersistentParticipant extends PersistentObject {
                 f.setParticipantBloodGroup(rs.getInt(index++));
                 f.setParticipantCellPhone(rs.getString(index++));
                 f.setParticipantEmail(rs.getString(index++));
+                f.setParticipantGroup(rs.getInt(index++));
                 result.add(f);
             }
         } catch (Exception e) {

@@ -138,6 +138,7 @@ Participant_T_Shirt_Size int references T_Shirt_Size(T_Shirt_Size_Id.T_Shirt_Siz
 Participant_Blood_Group int references Blood_Group(Blood_Group_Id.Blood_Group_Name)
 Participant_Cell_Phone varchar2(20) not null
 Participant_Email varchar2(75) not null
+Participant_Group int references Registrant_Event(Registrant_Event_Id.Registrant_Id)
 
 Participant_Event
 

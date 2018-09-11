@@ -37,6 +37,7 @@ public class ParticipantObject implements Cloneable {
 	private int participant_blood_group;
 	private String participant_cell_phone;
 	private String participant_email;
+	private int participant_group;
 	
 	/**
 	 *
@@ -57,7 +58,8 @@ public class ParticipantObject implements Cloneable {
 		"participant_t_shirt_size : " + participant_t_shirt_size + "\n" +
 		"participant_blood_group : " + participant_blood_group + "\n" +
 		"participant_cell_phone : " + participant_cell_phone + "\n" +
-		"participant_email : " + participant_email + "\n";
+		"participant_email : " + participant_email + "\n" +
+		"participant_group : " + participant_group + "\n";
 	}
     
 	/**
@@ -82,6 +84,7 @@ public class ParticipantObject implements Cloneable {
 			 jo.put("participant_blood_group", participant_blood_group);
 			 jo.put("participant_cell_phone", participant_cell_phone);
 			 jo.put("participant_email", participant_email);
+			 jo.put("participant_group", participant_group);
 		} catch (JSONException je) {}
 		return jo;
 	}
@@ -115,6 +118,7 @@ public class ParticipantObject implements Cloneable {
 		setParticipantBloodGroup(0);
 		setParticipantCellPhone("");
 		setParticipantEmail("");
+		setParticipantGroup(0);
 	}
     
 	/**
@@ -160,6 +164,9 @@ public class ParticipantObject implements Cloneable {
 		} catch (JSONException je) {}
 		try {
 			participant_email = jObject.getString("participant_email");
+		} catch (JSONException je) {}
+		try {
+			participant_group = jObject.getInt("participant_group");
 		} catch (JSONException je) {}
 	}
     
@@ -452,6 +459,32 @@ public class ParticipantObject implements Cloneable {
     
     /**
      *
+     * Sets the <code>participant_group</code> field
+     *
+     * @param participant_group      int
+     *
+     */
+    
+    public void setParticipantGroup(int participant_group) {
+        this.participant_group = participant_group;
+    }
+    
+    
+    /**
+     *
+     * Gets the <code>participant_group</code> field
+     *
+     * @returns participant_group
+     *
+     */
+    
+    public int getParticipantGroup() {
+        return participant_group;
+    }
+
+    
+    /**
+     *
      * Tests if this object equals <code>obj</code>
      *
      * @returns true if equals
@@ -473,7 +506,8 @@ public class ParticipantObject implements Cloneable {
             participant_t_shirt_size == other.getParticipantTShirtSize() &&
             participant_blood_group == other.getParticipantBloodGroup() &&
             Util.trim(participant_cell_phone).equals(Util.trim(other.getParticipantCellPhone())) &&
-            Util.trim(participant_email).equals(Util.trim(other.getParticipantEmail()));
+            Util.trim(participant_email).equals(Util.trim(other.getParticipantEmail())) &&
+            participant_group == other.getParticipantGroup();
     }
     
     /**
