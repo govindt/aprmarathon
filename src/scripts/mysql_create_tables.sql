@@ -184,7 +184,8 @@ create table Participant(
 	participant_t_shirt_size int references T_Shirt_Size(T_Shirt_Size_Id),
 	participant_blood_group int references Blood_Group(Blood_Group_Id),
 	participant_cell_phone varchar(20) not null,
-	participant_email varchar(75) not null
+	participant_email varchar(75) not null,
+	participant_group int references Registrant_Event(Registrant_Event_Id)
 );
 
 create table Participant_Event(
