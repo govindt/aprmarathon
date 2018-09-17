@@ -27,107 +27,108 @@ import app.util.AppConstants;
  */
 
 public class ParticipantImpl implements ParticipantInterface  {
-    private String PARTICIPANT = "ParticipantInterface.getAllParticipant";
-    
+	private String PARTICIPANT = "ParticipantInterface.getAllParticipant";
+	
     /**
-     *
-     * Implementation that returns the ParticipantObject given a ParticipantObject filled with values that will be used for query from the underlying datasource.
-     *
-     * @param participant_obj	ParticipantObject
-     *
-     * @return      Returns the ArrayList of ParticipantObjects
-     *
-     * @throws AppException if the underlying operation fails
-     *
-     */
+	 *
+	 * Implementation that returns the ParticipantObject given a ParticipantObject filled with values that will be used for query from the underlying datasource.
+	 *
+	 * @param participant_obj	ParticipantObject
+	 *
+	 * @return      Returns the ArrayList of ParticipantObjects
+	 *
+	 * @throws AppException if the underlying operation fails
+	 *
+	 */
     
 	public ArrayList<ParticipantObject> getParticipants(ParticipantObject participant_obj) throws AppException{
+		ParticipantObject[] participantObjectArr = getAllParticipants();
 		@SuppressWarnings("unchecked")
 		ArrayList<ParticipantObject> v = (ArrayList<ParticipantObject>)DBUtil.list(participant_obj,participant_obj);
-	DebugHandler.finest("v: " + v);
-	return v;
-    }
-    
-    /**
-     *
-     * Implementation of the method that returns the ParticipantObject from the underlying datasource.
-     * given participant_id.
-     *
-     * @param participant_id     int
-     *
-     * @return      Returns the ParticipantObject
-     *
-     * @throws AppException if the operation fails
-     *
-     */
-    
-    public ParticipantObject getParticipant(int participant_id) throws AppException{
-	ParticipantObject[] participantObjectArr = getAllParticipants();
-	if ( participantObjectArr == null )
-	    return null;
-	for ( int i = 0; i < participantObjectArr.length; i++ ) {
-	    if ( participantObjectArr[i] == null ) { // Try database and add to cache if found.
-		    ParticipantObject participantObj = new ParticipantObject();
-		    participantObj.setParticipantId(participant_id);
-		    @SuppressWarnings("unchecked")
-		    ArrayList<ParticipantObject> v = (ArrayList)DBUtil.fetch(participantObj);
-		    if ( v == null || v.size() == 0 )
-			    return null;
-		    else {
-			    participantObjectArr[i] = (ParticipantObject)participantObj.clone();
-			    Util.putInCache(PARTICIPANT, participantObjectArr);
-		    }
-	    }
-	    if ( participantObjectArr[i].getParticipantId() == participant_id ) {
-		    DebugHandler.debug("Returning " + participantObjectArr[i]);
-		    return (ParticipantObject)participantObjectArr[i].clone();
-	    }
+		DebugHandler.finest("v: " + v);
+		return v;
 	}
-	return null;
-    }
-    
-    
+	
     /**
-     *
-     * Implementation that returns all the <code>ParticipantObjects</code> from the underlying datasource.
-     *
-     * @return      Returns an Array of <code>ParticipantObject</code>
-     *
-     * @throws AppException if the operation fails
-     *
-     */
+	 *
+	 * Implementation of the method that returns the ParticipantObject from the underlying datasource.
+	 * given participant_id.
+	 *
+	 * @param participant_id     int
+	 *
+	 * @return      Returns the ParticipantObject
+	 *
+	 * @throws AppException if the operation fails
+	 *
+	 */
     
-    public ParticipantObject[] getAllParticipants() throws AppException{
+	public ParticipantObject getParticipant(int participant_id) throws AppException{
+		ParticipantObject[] participantObjectArr = getAllParticipants();
+		if ( participantObjectArr == null )
+			return null;
+		for ( int i = 0; i < participantObjectArr.length; i++ ) {
+			if ( participantObjectArr[i] == null ) { // Try database and add to cache if found.
+				ParticipantObject participantObj = new ParticipantObject();
+				participantObj.setParticipantId(participant_id);
+				@SuppressWarnings("unchecked")
+				ArrayList<ParticipantObject> v = (ArrayList)DBUtil.fetch(participantObj);
+				if ( v == null || v.size() == 0 )
+					return null;
+				else {
+					participantObjectArr[i] = (ParticipantObject)participantObj.clone();
+					Util.putInCache(PARTICIPANT, participantObjectArr);
+				}
+			}
+			if ( participantObjectArr[i].getParticipantId() == participant_id ) {
+				DebugHandler.debug("Returning " + participantObjectArr[i]);
+				return (ParticipantObject)participantObjectArr[i].clone();
+			}
+		}
+		return null;
+	}
+    
+	
+    /**
+	 *
+	 * Implementation that returns all the <code>ParticipantObjects</code> from the underlying datasource.
+	 *
+	 * @return      Returns an Array of <code>ParticipantObject</code>
+	 *
+	 * @throws AppException if the operation fails
+	 *
+	 */
+    
+	public ParticipantObject[] getAllParticipants() throws AppException{
 		ParticipantObject participantObject = new ParticipantObject();
 		ParticipantObject[] participantObjectArr = (ParticipantObject[])Util.getAppCache().get(PARTICIPANT);
 		if ( participantObjectArr == null ) {
-		    DebugHandler.info("Getting participant from database");
-		    @SuppressWarnings("unchecked")
-		    ArrayList<ParticipantObject> v = (ArrayList)DBUtil.list(participantObject);
-		    DebugHandler.finest(":v: " +  v);
-		    if ( v == null )
-			    return null;
-		    participantObjectArr = new ParticipantObject[v.size()];
-		    for ( int idx = 0; idx < v.size(); idx++ ) {
-			    participantObjectArr[idx] = v.get(idx);
-		    }
-		    Util.putInCache(PARTICIPANT, participantObjectArr);
+			DebugHandler.info("Getting participant from database");
+			@SuppressWarnings("unchecked")
+			ArrayList<ParticipantObject> v = (ArrayList)DBUtil.list(participantObject);
+			DebugHandler.finest(":v: " +  v);
+			if ( v == null )
+				return null;
+			participantObjectArr = new ParticipantObject[v.size()];
+			for ( int idx = 0; idx < v.size(); idx++ ) {
+				participantObjectArr[idx] = v.get(idx);
+			}
+			Util.putInCache(PARTICIPANT, participantObjectArr);
 		}
 		return participantObjectArr;
-    }
+	}
     
-    
+	
     /**
-     *
-     * Implementation to add the <code>ParticipantObject</code> to the underlying datasource.
-     *
-     * @param participantObject     ParticipantObject
-     *
-     * @throws AppException if the operation fails
-     *
-     */
+	 *
+	 * Implementation to add the <code>ParticipantObject</code> to the underlying datasource.
+	 *
+	 * @param participantObject     ParticipantObject
+	 *
+	 * @throws AppException if the operation fails
+	 *
+	 */
     
-    public Integer addParticipant(ParticipantObject participantObject) throws AppException{
+	public Integer addParticipant(ParticipantObject participantObject) throws AppException{
 		if ( AppConstants.DB_TYPE.equalsIgnoreCase(Constants.ORACLE) ) {
 			long l = DBUtil.getNextId("Participant_seq");
 			participantObject.setParticipantId((int)l);
@@ -168,16 +169,16 @@ public class ParticipantImpl implements ParticipantInterface  {
 		return i;
 	}
 	
-    
+	
     /**
-     *
-     * Implementation to update the <code>ParticipantObject</code> in the underlying datasource.
-     *
-     * @param participantObject     ParticipantObject
-     *
-     * @throws AppException if the operation fails
-     *
-     */
+	 *
+	 * Implementation to update the <code>ParticipantObject</code> in the underlying datasource.
+	 *
+	 * @param participantObject     ParticipantObject
+	 *
+	 * @throws AppException if the operation fails
+	 *
+	 */
     
 	public Integer updateParticipant(ParticipantObject participantObject) throws AppException{
 		ParticipantObject newParticipantObject = getParticipant(participantObject.getParticipantId()); // This call will make sure cache/db are in sync
@@ -198,18 +199,18 @@ public class ParticipantImpl implements ParticipantInterface  {
 		return i;
 	}
     
-    
+	
     /**
-     *
-     * Implementation to delete the <code>ParticipantObject</code> in the underlying datasource.
-     *
-     * @param participantObject     ParticipantObject
-     *
-     * @throws AppException if the operation fails
-     *
-     */
+	 *
+	 * Implementation to delete the <code>ParticipantObject</code> in the underlying datasource.
+	 *
+	 * @param participantObject     ParticipantObject
+	 *
+	 * @throws AppException if the operation fails
+	 *
+	 */
     
-    public Integer deleteParticipant(ParticipantObject participantObject) throws AppException{
+	public Integer deleteParticipant(ParticipantObject participantObject) throws AppException{
 	ParticipantObject newParticipantObject = getParticipant(participantObject.getParticipantId()); // This call will make sure cache/db are in sync
 	ParticipantObject[] participantObjectArr = getAllParticipants();
 	Integer i = new Integer(0);

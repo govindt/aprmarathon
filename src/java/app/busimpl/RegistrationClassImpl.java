@@ -27,107 +27,108 @@ import app.util.AppConstants;
  */
 
 public class RegistrationClassImpl implements RegistrationClassInterface  {
-    private String REGISTRATIONCLASS = "RegistrationClassInterface.getAllRegistrationClass";
-    
+	private String REGISTRATIONCLASS = "RegistrationClassInterface.getAllRegistrationClass";
+	
     /**
-     *
-     * Implementation that returns the RegistrationClassObject given a RegistrationClassObject filled with values that will be used for query from the underlying datasource.
-     *
-     * @param registrationclass_obj	RegistrationClassObject
-     *
-     * @return      Returns the ArrayList of RegistrationClassObjects
-     *
-     * @throws AppException if the underlying operation fails
-     *
-     */
+	 *
+	 * Implementation that returns the RegistrationClassObject given a RegistrationClassObject filled with values that will be used for query from the underlying datasource.
+	 *
+	 * @param registrationclass_obj	RegistrationClassObject
+	 *
+	 * @return      Returns the ArrayList of RegistrationClassObjects
+	 *
+	 * @throws AppException if the underlying operation fails
+	 *
+	 */
     
 	public ArrayList<RegistrationClassObject> getRegistrationClass(RegistrationClassObject registrationclass_obj) throws AppException{
+		RegistrationClassObject[] registrationClassObjectArr = getAllRegistrationClass();
 		@SuppressWarnings("unchecked")
 		ArrayList<RegistrationClassObject> v = (ArrayList<RegistrationClassObject>)DBUtil.list(registrationclass_obj,registrationclass_obj);
-	DebugHandler.finest("v: " + v);
-	return v;
-    }
-    
-    /**
-     *
-     * Implementation of the method that returns the RegistrationClassObject from the underlying datasource.
-     * given registration_class_id.
-     *
-     * @param registration_class_id     int
-     *
-     * @return      Returns the RegistrationClassObject
-     *
-     * @throws AppException if the operation fails
-     *
-     */
-    
-    public RegistrationClassObject getRegistrationClas(int registration_class_id) throws AppException{
-	RegistrationClassObject[] registrationClassObjectArr = getAllRegistrationClass();
-	if ( registrationClassObjectArr == null )
-	    return null;
-	for ( int i = 0; i < registrationClassObjectArr.length; i++ ) {
-	    if ( registrationClassObjectArr[i] == null ) { // Try database and add to cache if found.
-		    RegistrationClassObject registrationclassObj = new RegistrationClassObject();
-		    registrationclassObj.setRegistrationClassId(registration_class_id);
-		    @SuppressWarnings("unchecked")
-		    ArrayList<RegistrationClassObject> v = (ArrayList)DBUtil.fetch(registrationclassObj);
-		    if ( v == null || v.size() == 0 )
-			    return null;
-		    else {
-			    registrationClassObjectArr[i] = (RegistrationClassObject)registrationclassObj.clone();
-			    Util.putInCache(REGISTRATIONCLASS, registrationClassObjectArr);
-		    }
-	    }
-	    if ( registrationClassObjectArr[i].getRegistrationClassId() == registration_class_id ) {
-		    DebugHandler.debug("Returning " + registrationClassObjectArr[i]);
-		    return (RegistrationClassObject)registrationClassObjectArr[i].clone();
-	    }
+		DebugHandler.finest("v: " + v);
+		return v;
 	}
-	return null;
-    }
-    
-    
+	
     /**
-     *
-     * Implementation that returns all the <code>RegistrationClassObjects</code> from the underlying datasource.
-     *
-     * @return      Returns an Array of <code>RegistrationClassObject</code>
-     *
-     * @throws AppException if the operation fails
-     *
-     */
+	 *
+	 * Implementation of the method that returns the RegistrationClassObject from the underlying datasource.
+	 * given registration_class_id.
+	 *
+	 * @param registration_class_id     int
+	 *
+	 * @return      Returns the RegistrationClassObject
+	 *
+	 * @throws AppException if the operation fails
+	 *
+	 */
     
-    public RegistrationClassObject[] getAllRegistrationClass() throws AppException{
+	public RegistrationClassObject getRegistrationClas(int registration_class_id) throws AppException{
+		RegistrationClassObject[] registrationClassObjectArr = getAllRegistrationClass();
+		if ( registrationClassObjectArr == null )
+			return null;
+		for ( int i = 0; i < registrationClassObjectArr.length; i++ ) {
+			if ( registrationClassObjectArr[i] == null ) { // Try database and add to cache if found.
+				RegistrationClassObject registrationclassObj = new RegistrationClassObject();
+				registrationclassObj.setRegistrationClassId(registration_class_id);
+				@SuppressWarnings("unchecked")
+				ArrayList<RegistrationClassObject> v = (ArrayList)DBUtil.fetch(registrationclassObj);
+				if ( v == null || v.size() == 0 )
+					return null;
+				else {
+					registrationClassObjectArr[i] = (RegistrationClassObject)registrationclassObj.clone();
+					Util.putInCache(REGISTRATIONCLASS, registrationClassObjectArr);
+				}
+			}
+			if ( registrationClassObjectArr[i].getRegistrationClassId() == registration_class_id ) {
+				DebugHandler.debug("Returning " + registrationClassObjectArr[i]);
+				return (RegistrationClassObject)registrationClassObjectArr[i].clone();
+			}
+		}
+		return null;
+	}
+    
+	
+    /**
+	 *
+	 * Implementation that returns all the <code>RegistrationClassObjects</code> from the underlying datasource.
+	 *
+	 * @return      Returns an Array of <code>RegistrationClassObject</code>
+	 *
+	 * @throws AppException if the operation fails
+	 *
+	 */
+    
+	public RegistrationClassObject[] getAllRegistrationClass() throws AppException{
 		RegistrationClassObject registrationClassObject = new RegistrationClassObject();
 		RegistrationClassObject[] registrationClassObjectArr = (RegistrationClassObject[])Util.getAppCache().get(REGISTRATIONCLASS);
 		if ( registrationClassObjectArr == null ) {
-		    DebugHandler.info("Getting registrationclass from database");
-		    @SuppressWarnings("unchecked")
-		    ArrayList<RegistrationClassObject> v = (ArrayList)DBUtil.list(registrationClassObject);
-		    DebugHandler.finest(":v: " +  v);
-		    if ( v == null )
-			    return null;
-		    registrationClassObjectArr = new RegistrationClassObject[v.size()];
-		    for ( int idx = 0; idx < v.size(); idx++ ) {
-			    registrationClassObjectArr[idx] = v.get(idx);
-		    }
-		    Util.putInCache(REGISTRATIONCLASS, registrationClassObjectArr);
+			DebugHandler.info("Getting registrationclass from database");
+			@SuppressWarnings("unchecked")
+			ArrayList<RegistrationClassObject> v = (ArrayList)DBUtil.list(registrationClassObject);
+			DebugHandler.finest(":v: " +  v);
+			if ( v == null )
+				return null;
+			registrationClassObjectArr = new RegistrationClassObject[v.size()];
+			for ( int idx = 0; idx < v.size(); idx++ ) {
+				registrationClassObjectArr[idx] = v.get(idx);
+			}
+			Util.putInCache(REGISTRATIONCLASS, registrationClassObjectArr);
 		}
 		return registrationClassObjectArr;
-    }
+	}
     
-    
+	
     /**
-     *
-     * Implementation to add the <code>RegistrationClassObject</code> to the underlying datasource.
-     *
-     * @param registrationClassObject     RegistrationClassObject
-     *
-     * @throws AppException if the operation fails
-     *
-     */
+	 *
+	 * Implementation to add the <code>RegistrationClassObject</code> to the underlying datasource.
+	 *
+	 * @param registrationClassObject     RegistrationClassObject
+	 *
+	 * @throws AppException if the operation fails
+	 *
+	 */
     
-    public Integer addRegistrationClass(RegistrationClassObject registrationClassObject) throws AppException{
+	public Integer addRegistrationClass(RegistrationClassObject registrationClassObject) throws AppException{
 		if ( AppConstants.DB_TYPE.equalsIgnoreCase(Constants.ORACLE) ) {
 			long l = DBUtil.getNextId("Registration_Class_seq");
 			registrationClassObject.setRegistrationClassId((int)l);
@@ -168,16 +169,16 @@ public class RegistrationClassImpl implements RegistrationClassInterface  {
 		return i;
 	}
 	
-    
+	
     /**
-     *
-     * Implementation to update the <code>RegistrationClassObject</code> in the underlying datasource.
-     *
-     * @param registrationClassObject     RegistrationClassObject
-     *
-     * @throws AppException if the operation fails
-     *
-     */
+	 *
+	 * Implementation to update the <code>RegistrationClassObject</code> in the underlying datasource.
+	 *
+	 * @param registrationClassObject     RegistrationClassObject
+	 *
+	 * @throws AppException if the operation fails
+	 *
+	 */
     
 	public Integer updateRegistrationClass(RegistrationClassObject registrationClassObject) throws AppException{
 		RegistrationClassObject newRegistrationClassObject = getRegistrationClas(registrationClassObject.getRegistrationClassId()); // This call will make sure cache/db are in sync
@@ -198,18 +199,18 @@ public class RegistrationClassImpl implements RegistrationClassInterface  {
 		return i;
 	}
     
-    
+	
     /**
-     *
-     * Implementation to delete the <code>RegistrationClassObject</code> in the underlying datasource.
-     *
-     * @param registrationClassObject     RegistrationClassObject
-     *
-     * @throws AppException if the operation fails
-     *
-     */
+	 *
+	 * Implementation to delete the <code>RegistrationClassObject</code> in the underlying datasource.
+	 *
+	 * @param registrationClassObject     RegistrationClassObject
+	 *
+	 * @throws AppException if the operation fails
+	 *
+	 */
     
-    public Integer deleteRegistrationClass(RegistrationClassObject registrationClassObject) throws AppException{
+	public Integer deleteRegistrationClass(RegistrationClassObject registrationClassObject) throws AppException{
 	RegistrationClassObject newRegistrationClassObject = getRegistrationClas(registrationClassObject.getRegistrationClassId()); // This call will make sure cache/db are in sync
 	RegistrationClassObject[] registrationClassObjectArr = getAllRegistrationClass();
 	Integer i = new Integer(0);

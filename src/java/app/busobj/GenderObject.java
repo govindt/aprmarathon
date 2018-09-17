@@ -95,91 +95,91 @@ public class GenderObject implements Cloneable {
 		} catch (JSONException je) {}
 	}
     
-    
+	
     /**
-     *
-     * Sets the <code>gender_id</code> field
-     *
-     * @param gender_id      int
-     *
-     */
+	 *
+	 * Sets the <code>gender_id</code> field
+	 *
+	 * @param gender_id      int
+	 *
+	 */
     
-    public void setGenderId(int gender_id) {
-        this.gender_id = gender_id;
-    }
+	public void setGenderId(int gender_id) {
+	    this.gender_id = gender_id;
+	}
     
-    
+	
     /**
-     *
-     * Gets the <code>gender_id</code> field
-     *
-     * @returns gender_id
-     *
-     */
+	 *
+	 * Gets the <code>gender_id</code> field
+	 *
+	 * @returns gender_id
+	 *
+	 */
     
-    public int getGenderId() {
-        return gender_id;
-    }
+	public int getGenderId() {
+	    return gender_id;
+	}
 
-    
+	
     /**
-     *
-     * Sets the <code>gender_name</code> field
-     *
-     * @param gender_name      String
-     *
-     */
+	 *
+	 * Sets the <code>gender_name</code> field
+	 *
+	 * @param gender_name      String
+	 *
+	 */
     
-    public void setGenderName(String gender_name) {
-        this.gender_name = gender_name;
-    }
+	public void setGenderName(String gender_name) {
+	    this.gender_name = gender_name;
+	}
     
-    
+	
     /**
-     *
-     * Gets the <code>gender_name</code> field
-     *
-     * @returns gender_name
-     *
-     */
+	 *
+	 * Gets the <code>gender_name</code> field
+	 *
+	 * @returns gender_name
+	 *
+	 */
     
-    public String getGenderName() {
-        return gender_name;
-    }
+	public String getGenderName() {
+	    return gender_name;
+	}
 
-    
+	
     /**
-     *
-     * Tests if this object equals <code>obj</code>
-     *
-     * @returns true if equals
-     *
-     */
+	 *
+	 * Tests if this object equals <code>obj</code>
+	 *
+	 * @returns true if equals
+	 *
+	 */
     
-    public boolean equals(Object obj) {
-        GenderObject other = (GenderObject)obj;
-        DebugHandler.finest("This: " + this);
-        DebugHandler.finest("Other: " + other);
-        return
-            gender_id == other.getGenderId() &&
-            Util.trim(gender_name).equals(Util.trim(other.getGenderName()));
-    }
-    
+	public boolean equals(Object obj) {
+	    GenderObject other = (GenderObject)obj;
+	    DebugHandler.finest("This: " + this);
+	    DebugHandler.finest("Other: " + other);
+	    return
+	        gender_id == other.getGenderId() &&
+	        Util.trim(gender_name).equals(Util.trim(other.getGenderName()));
+	}
+	
     /**
-     *
-     * Clones this object
-     *
-     * @returns the clone of this object
-     *
-     */
+	 *
+	 * Clones this object
+	 *
+	 * @returns the clone of this object
+	 *
+	 */
     
-    public Object clone() {
-        Object theClone = null;
-        try {
-            theClone = super.clone();
-        } catch (CloneNotSupportedException ce) {
-            DebugHandler.severe("Cannot clone " + this);
-        }
-        return theClone;
-    }
+	public Object clone() {
+	    Object theClone = null;
+	    try {
+	   theClone = super.clone();
+	    } catch (CloneNotSupportedException ce) {
+	   DebugHandler.severe("Cannot clone " + this);
+	    }
+	    return theClone;
+	}
 }

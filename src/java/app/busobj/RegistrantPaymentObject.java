@@ -205,415 +205,415 @@ public class RegistrantPaymentObject implements Cloneable {
 		} catch (JSONException je) {}
 	}
     
-    
+	
     /**
-     *
-     * Sets the <code>registrant_payment_id</code> field
-     *
-     * @param registrant_payment_id      int
-     *
-     */
+	 *
+	 * Sets the <code>registrant_payment_id</code> field
+	 *
+	 * @param registrant_payment_id      int
+	 *
+	 */
     
-    public void setRegistrantPaymentId(int registrant_payment_id) {
-        this.registrant_payment_id = registrant_payment_id;
-    }
+	public void setRegistrantPaymentId(int registrant_payment_id) {
+	    this.registrant_payment_id = registrant_payment_id;
+	}
     
-    
+	
     /**
-     *
-     * Gets the <code>registrant_payment_id</code> field
-     *
-     * @returns registrant_payment_id
-     *
-     */
+	 *
+	 * Gets the <code>registrant_payment_id</code> field
+	 *
+	 * @returns registrant_payment_id
+	 *
+	 */
     
-    public int getRegistrantPaymentId() {
-        return registrant_payment_id;
-    }
+	public int getRegistrantPaymentId() {
+	    return registrant_payment_id;
+	}
 
-    
+	
     /**
-     *
-     * Sets the <code>registrant_event</code> field
-     *
-     * @param registrant_event      int
-     *
-     */
+	 *
+	 * Sets the <code>registrant_event</code> field
+	 *
+	 * @param registrant_event      int
+	 *
+	 */
     
-    public void setRegistrantEvent(int registrant_event) {
-        this.registrant_event = registrant_event;
-    }
+	public void setRegistrantEvent(int registrant_event) {
+	    this.registrant_event = registrant_event;
+	}
     
-    
+	
     /**
-     *
-     * Gets the <code>registrant_event</code> field
-     *
-     * @returns registrant_event
-     *
-     */
+	 *
+	 * Gets the <code>registrant_event</code> field
+	 *
+	 * @returns registrant_event
+	 *
+	 */
     
-    public int getRegistrantEvent() {
-        return registrant_event;
-    }
+	public int getRegistrantEvent() {
+	    return registrant_event;
+	}
 
-    
+	
     /**
-     *
-     * Sets the <code>registrant</code> field
-     *
-     * @param registrant      int
-     *
-     */
+	 *
+	 * Sets the <code>registrant</code> field
+	 *
+	 * @param registrant      int
+	 *
+	 */
     
-    public void setRegistrant(int registrant) {
-        this.registrant = registrant;
-    }
+	public void setRegistrant(int registrant) {
+	    this.registrant = registrant;
+	}
     
-    
+	
     /**
-     *
-     * Gets the <code>registrant</code> field
-     *
-     * @returns registrant
-     *
-     */
+	 *
+	 * Gets the <code>registrant</code> field
+	 *
+	 * @returns registrant
+	 *
+	 */
     
-    public int getRegistrant() {
-        return registrant;
-    }
+	public int getRegistrant() {
+	    return registrant;
+	}
 
-    
+	
     /**
-     *
-     * Sets the <code>payment_type</code> field
-     *
-     * @param payment_type      int
-     *
-     */
+	 *
+	 * Sets the <code>payment_type</code> field
+	 *
+	 * @param payment_type      int
+	 *
+	 */
     
-    public void setPaymentType(int payment_type) {
-        this.payment_type = payment_type;
-    }
+	public void setPaymentType(int payment_type) {
+	    this.payment_type = payment_type;
+	}
     
-    
+	
     /**
-     *
-     * Gets the <code>payment_type</code> field
-     *
-     * @returns payment_type
-     *
-     */
+	 *
+	 * Gets the <code>payment_type</code> field
+	 *
+	 * @returns payment_type
+	 *
+	 */
     
-    public int getPaymentType() {
-        return payment_type;
-    }
+	public int getPaymentType() {
+	    return payment_type;
+	}
 
-    
+	
     /**
-     *
-     * Sets the <code>payment_status</code> field
-     *
-     * @param payment_status      int
-     *
-     */
+	 *
+	 * Sets the <code>payment_status</code> field
+	 *
+	 * @param payment_status      int
+	 *
+	 */
     
-    public void setPaymentStatus(int payment_status) {
-        this.payment_status = payment_status;
-    }
+	public void setPaymentStatus(int payment_status) {
+	    this.payment_status = payment_status;
+	}
     
-    
+	
     /**
-     *
-     * Gets the <code>payment_status</code> field
-     *
-     * @returns payment_status
-     *
-     */
+	 *
+	 * Gets the <code>payment_status</code> field
+	 *
+	 * @returns payment_status
+	 *
+	 */
     
-    public int getPaymentStatus() {
-        return payment_status;
-    }
+	public int getPaymentStatus() {
+	    return payment_status;
+	}
 
-    
+	
     /**
-     *
-     * Sets the <code>payment_amount</code> field
-     *
-     * @param payment_amount      double
-     *
-     */
+	 *
+	 * Sets the <code>payment_amount</code> field
+	 *
+	 * @param payment_amount      double
+	 *
+	 */
     
-    public void setPaymentAmount(double payment_amount) {
-        this.payment_amount = payment_amount;
-    }
+	public void setPaymentAmount(double payment_amount) {
+	    this.payment_amount = payment_amount;
+	}
     
-    
+	
     /**
-     *
-     * Gets the <code>payment_amount</code> field
-     *
-     * @returns payment_amount
-     *
-     */
+	 *
+	 * Gets the <code>payment_amount</code> field
+	 *
+	 * @returns payment_amount
+	 *
+	 */
     
-    public double getPaymentAmount() {
-        return payment_amount;
-    }
+	public double getPaymentAmount() {
+	    return payment_amount;
+	}
 
-    
+	
     /**
-     *
-     * Sets the <code>payment_additional_amount</code> field
-     *
-     * @param payment_additional_amount      double
-     *
-     */
+	 *
+	 * Sets the <code>payment_additional_amount</code> field
+	 *
+	 * @param payment_additional_amount      double
+	 *
+	 */
     
-    public void setPaymentAdditionalAmount(double payment_additional_amount) {
-        this.payment_additional_amount = payment_additional_amount;
-    }
+	public void setPaymentAdditionalAmount(double payment_additional_amount) {
+	    this.payment_additional_amount = payment_additional_amount;
+	}
     
-    
+	
     /**
-     *
-     * Gets the <code>payment_additional_amount</code> field
-     *
-     * @returns payment_additional_amount
-     *
-     */
+	 *
+	 * Gets the <code>payment_additional_amount</code> field
+	 *
+	 * @returns payment_additional_amount
+	 *
+	 */
     
-    public double getPaymentAdditionalAmount() {
-        return payment_additional_amount;
-    }
+	public double getPaymentAdditionalAmount() {
+	    return payment_additional_amount;
+	}
 
-    
+	
     /**
-     *
-     * Sets the <code>payment_date</code> field
-     *
-     * @param payment_date      Date
-     *
-     */
+	 *
+	 * Sets the <code>payment_date</code> field
+	 *
+	 * @param payment_date      Date
+	 *
+	 */
     
-    public void setPaymentDate(Date payment_date) {
-        this.payment_date = payment_date;
-    }
+	public void setPaymentDate(Date payment_date) {
+	    this.payment_date = payment_date;
+	}
     
-    
+	
     /**
-     *
-     * Gets the <code>payment_date</code> field
-     *
-     * @returns payment_date
-     *
-     */
+	 *
+	 * Gets the <code>payment_date</code> field
+	 *
+	 * @returns payment_date
+	 *
+	 */
     
-    public Date getPaymentDate() {
-        return payment_date;
-    }
+	public Date getPaymentDate() {
+	    return payment_date;
+	}
 
-    
+	
     /**
-     *
-     * Sets the <code>receipt_date</code> field
-     *
-     * @param receipt_date      Date
-     *
-     */
+	 *
+	 * Sets the <code>receipt_date</code> field
+	 *
+	 * @param receipt_date      Date
+	 *
+	 */
     
-    public void setReceiptDate(Date receipt_date) {
-        this.receipt_date = receipt_date;
-    }
+	public void setReceiptDate(Date receipt_date) {
+	    this.receipt_date = receipt_date;
+	}
     
-    
+	
     /**
-     *
-     * Gets the <code>receipt_date</code> field
-     *
-     * @returns receipt_date
-     *
-     */
+	 *
+	 * Gets the <code>receipt_date</code> field
+	 *
+	 * @returns receipt_date
+	 *
+	 */
     
-    public Date getReceiptDate() {
-        return receipt_date;
-    }
+	public Date getReceiptDate() {
+	    return receipt_date;
+	}
 
-    
+	
     /**
-     *
-     * Sets the <code>payment_details</code> field
-     *
-     * @param payment_details      String
-     *
-     */
+	 *
+	 * Sets the <code>payment_details</code> field
+	 *
+	 * @param payment_details      String
+	 *
+	 */
     
-    public void setPaymentDetails(String payment_details) {
-        this.payment_details = payment_details;
-    }
+	public void setPaymentDetails(String payment_details) {
+	    this.payment_details = payment_details;
+	}
     
-    
+	
     /**
-     *
-     * Gets the <code>payment_details</code> field
-     *
-     * @returns payment_details
-     *
-     */
+	 *
+	 * Gets the <code>payment_details</code> field
+	 *
+	 * @returns payment_details
+	 *
+	 */
     
-    public String getPaymentDetails() {
-        return payment_details;
-    }
+	public String getPaymentDetails() {
+	    return payment_details;
+	}
 
-    
+	
     /**
-     *
-     * Sets the <code>payment_towards</code> field
-     *
-     * @param payment_towards      String
-     *
-     */
+	 *
+	 * Sets the <code>payment_towards</code> field
+	 *
+	 * @param payment_towards      String
+	 *
+	 */
     
-    public void setPaymentTowards(String payment_towards) {
-        this.payment_towards = payment_towards;
-    }
+	public void setPaymentTowards(String payment_towards) {
+	    this.payment_towards = payment_towards;
+	}
     
-    
+	
     /**
-     *
-     * Gets the <code>payment_towards</code> field
-     *
-     * @returns payment_towards
-     *
-     */
+	 *
+	 * Gets the <code>payment_towards</code> field
+	 *
+	 * @returns payment_towards
+	 *
+	 */
     
-    public String getPaymentTowards() {
-        return payment_towards;
-    }
+	public String getPaymentTowards() {
+	    return payment_towards;
+	}
 
-    
+	
     /**
-     *
-     * Sets the <code>payment_reference_id</code> field
-     *
-     * @param payment_reference_id      String
-     *
-     */
+	 *
+	 * Sets the <code>payment_reference_id</code> field
+	 *
+	 * @param payment_reference_id      String
+	 *
+	 */
     
-    public void setPaymentReferenceId(String payment_reference_id) {
-        this.payment_reference_id = payment_reference_id;
-    }
+	public void setPaymentReferenceId(String payment_reference_id) {
+	    this.payment_reference_id = payment_reference_id;
+	}
     
-    
+	
     /**
-     *
-     * Gets the <code>payment_reference_id</code> field
-     *
-     * @returns payment_reference_id
-     *
-     */
+	 *
+	 * Gets the <code>payment_reference_id</code> field
+	 *
+	 * @returns payment_reference_id
+	 *
+	 */
     
-    public String getPaymentReferenceId() {
-        return payment_reference_id;
-    }
+	public String getPaymentReferenceId() {
+	    return payment_reference_id;
+	}
 
-    
+	
     /**
-     *
-     * Sets the <code>payment_tax</code> field
-     *
-     * @param payment_tax      double
-     *
-     */
+	 *
+	 * Sets the <code>payment_tax</code> field
+	 *
+	 * @param payment_tax      double
+	 *
+	 */
     
-    public void setPaymentTax(double payment_tax) {
-        this.payment_tax = payment_tax;
-    }
+	public void setPaymentTax(double payment_tax) {
+	    this.payment_tax = payment_tax;
+	}
     
-    
+	
     /**
-     *
-     * Gets the <code>payment_tax</code> field
-     *
-     * @returns payment_tax
-     *
-     */
+	 *
+	 * Gets the <code>payment_tax</code> field
+	 *
+	 * @returns payment_tax
+	 *
+	 */
     
-    public double getPaymentTax() {
-        return payment_tax;
-    }
+	public double getPaymentTax() {
+	    return payment_tax;
+	}
 
-    
+	
     /**
-     *
-     * Sets the <code>payment_fee</code> field
-     *
-     * @param payment_fee      double
-     *
-     */
+	 *
+	 * Sets the <code>payment_fee</code> field
+	 *
+	 * @param payment_fee      double
+	 *
+	 */
     
-    public void setPaymentFee(double payment_fee) {
-        this.payment_fee = payment_fee;
-    }
+	public void setPaymentFee(double payment_fee) {
+	    this.payment_fee = payment_fee;
+	}
     
-    
+	
     /**
-     *
-     * Gets the <code>payment_fee</code> field
-     *
-     * @returns payment_fee
-     *
-     */
+	 *
+	 * Gets the <code>payment_fee</code> field
+	 *
+	 * @returns payment_fee
+	 *
+	 */
     
-    public double getPaymentFee() {
-        return payment_fee;
-    }
+	public double getPaymentFee() {
+	    return payment_fee;
+	}
 
-    
+	
     /**
-     *
-     * Tests if this object equals <code>obj</code>
-     *
-     * @returns true if equals
-     *
-     */
+	 *
+	 * Tests if this object equals <code>obj</code>
+	 *
+	 * @returns true if equals
+	 *
+	 */
     
-    public boolean equals(Object obj) {
-        RegistrantPaymentObject other = (RegistrantPaymentObject)obj;
-        DebugHandler.finest("This: " + this);
-        DebugHandler.finest("Other: " + other);
-        return
-            registrant_payment_id == other.getRegistrantPaymentId() &&
-            registrant_event == other.getRegistrantEvent() &&
-            registrant == other.getRegistrant() &&
-            payment_type == other.getPaymentType() &&
-            payment_status == other.getPaymentStatus() &&
-            payment_amount == other.getPaymentAmount() &&
-            payment_additional_amount == other.getPaymentAdditionalAmount() &&
-            payment_date.equals(other.getPaymentDate()) &&
-            receipt_date.equals(other.getReceiptDate()) &&
-            Util.trim(payment_details).equals(Util.trim(other.getPaymentDetails())) &&
-            Util.trim(payment_towards).equals(Util.trim(other.getPaymentTowards())) &&
-            Util.trim(payment_reference_id).equals(Util.trim(other.getPaymentReferenceId())) &&
-            payment_tax == other.getPaymentTax() &&
-            payment_fee == other.getPaymentFee();
-    }
-    
+	public boolean equals(Object obj) {
+	    RegistrantPaymentObject other = (RegistrantPaymentObject)obj;
+	    DebugHandler.finest("This: " + this);
+	    DebugHandler.finest("Other: " + other);
+	    return
+	        registrant_payment_id == other.getRegistrantPaymentId() &&
+	        registrant_event == other.getRegistrantEvent() &&
+	        registrant == other.getRegistrant() &&
+	        payment_type == other.getPaymentType() &&
+	        payment_status == other.getPaymentStatus() &&
+	        payment_amount == other.getPaymentAmount() &&
+	        payment_additional_amount == other.getPaymentAdditionalAmount() &&
+	   payment_date.equals(other.getPaymentDate()) &&
+	   receipt_date.equals(other.getReceiptDate()) &&
+	   Util.trim(payment_details).equals(Util.trim(other.getPaymentDetails())) &&
+	   Util.trim(payment_towards).equals(Util.trim(other.getPaymentTowards())) &&
+	   Util.trim(payment_reference_id).equals(Util.trim(other.getPaymentReferenceId())) &&
+	        payment_tax == other.getPaymentTax() &&
+	        payment_fee == other.getPaymentFee();
+	}
+	
     /**
-     *
-     * Clones this object
-     *
-     * @returns the clone of this object
-     *
-     */
+	 *
+	 * Clones this object
+	 *
+	 * @returns the clone of this object
+	 *
+	 */
     
-    public Object clone() {
-        Object theClone = null;
-        try {
-            theClone = super.clone();
-        } catch (CloneNotSupportedException ce) {
-            DebugHandler.severe("Cannot clone " + this);
-        }
-        return theClone;
-    }
+	public Object clone() {
+	    Object theClone = null;
+	    try {
+	   theClone = super.clone();
+	    } catch (CloneNotSupportedException ce) {
+	   DebugHandler.severe("Cannot clone " + this);
+	    }
+	    return theClone;
+	}
 }

@@ -22,80 +22,80 @@ import app.busobj.BloodGroupObject;
  */
 
 public interface BloodGroupInterface {
-    
+	
     /**
-     *
-     * Interface that returns the BloodGroupObject given a BloodGroupObject filled with values that will be used for query from the underlying datasource.
-     *
-     * @param bloodgroup_obj	BloodGroupObject
-     *
-     * @return      Returns the ArrayList of BloodGroupObjects
-     *
-     * @throws AppException if the underlying operation fails
-     *
-     */
+	 *
+	 * Interface that returns the BloodGroupObject given a BloodGroupObject filled with values that will be used for query from the underlying datasource.
+	 *
+	 * @param bloodgroup_obj	BloodGroupObject
+	 *
+	 * @return      Returns the ArrayList of BloodGroupObjects
+	 *
+	 * @throws AppException if the underlying operation fails
+	 *
+	 */
     
-    public ArrayList<BloodGroupObject> getBloodGroups(BloodGroupObject bloodgroup_obj) throws AppException;
-    
+	public ArrayList<BloodGroupObject> getBloodGroups(BloodGroupObject bloodgroup_obj) throws AppException;
+	
     /**
-     *
-     * Interface that returns the BloodGroupObject given blood_group_id from the underlying datasource.
-     *
-     * @param blood_group_id     int
-     *
-     * @return      Returns the BloodGroupObject
-     *
-     * @throws AppException if the underlying operation fails
-     *
-     */
+	 *
+	 * Interface that returns the BloodGroupObject given blood_group_id from the underlying datasource.
+	 *
+	 * @param blood_group_id     int
+	 *
+	 * @return      Returns the BloodGroupObject
+	 *
+	 * @throws AppException if the underlying operation fails
+	 *
+	 */
     
-    public BloodGroupObject getBloodGroup(int blood_group_id) throws AppException;
-    
+	public BloodGroupObject getBloodGroup(int blood_group_id) throws AppException;
+	
     /**
-     *
-     * Interface that returns all the <code>BloodGroupObject</code> from the underlying datasource.
-     *
-     * @return      Returns an Array of <code>BloodGroupObject</code>
-     *
-     * @throws AppException if the underlying operation fails
-     *
-     */
+	 *
+	 * Interface that returns all the <code>BloodGroupObject</code> from the underlying datasource.
+	 *
+	 * @return      Returns an Array of <code>BloodGroupObject</code>
+	 *
+	 * @throws AppException if the underlying operation fails
+	 *
+	 */
     
-    public BloodGroupObject[] getAllBloodGroups() throws AppException;
-    
+	public BloodGroupObject[] getAllBloodGroups() throws AppException;
+	
     /**
-     *
-     * Interface to add the <code>BloodGroupObject</code> to the underlying datasource.
-     *
-     * @param bloodGroupObject     BloodGroupObject
-     *
-     * @throws AppException if the underlying operation fails
-     *
-     */
+	 *
+	 * Interface to add the <code>BloodGroupObject</code> to the underlying datasource.
+	 *
+	 * @param bloodGroupObject     BloodGroupObject
+	 *
+	 * @throws AppException if the underlying operation fails
+	 *
+	 */
     
-    public Integer addBloodGroup(BloodGroupObject bloodGroupObject) throws AppException;
-    
+	public Integer addBloodGroup(BloodGroupObject bloodGroupObject) throws AppException;
+	
     /**
-     *
-     * Interface to update the <code>BloodGroupObject</code> in the underlying datasource.
-     *
-     * @param bloodGroupObject     BloodGroupObject
-     *
-     * @throws AppException if the underlying operation fails
-     *
-     */
+	 *
+	 * Interface to update the <code>BloodGroupObject</code> in the underlying datasource.
+	 *
+	 * @param bloodGroupObject     BloodGroupObject
+	 *
+	 * @throws AppException if the underlying operation fails
+	 *
+	 */
     
-    public Integer updateBloodGroup(BloodGroupObject bloodGroupObject) throws AppException;
-    
+	public Integer updateBloodGroup(BloodGroupObject bloodGroupObject) throws AppException;
+	
     /**
-     *
-     * Interface to delete the <code>BloodGroupObject</code> in the underlying datasource.
-     *
-     * @param bloodGroupObject     BloodGroupObject
-     *
-     * @throws AppException if the underlying operation fails
-     *
-     */
+	 *
+	 * Interface to delete the <code>BloodGroupObject</code> in the underlying datasource.
+	 *
+	 * @param bloodGroupObject     BloodGroupObject
+	 *
+	 * @throws AppException if the underlying operation fails
+	 *
+	 */
     
-    public Integer deleteBloodGroup(BloodGroupObject bloodGroupObject) throws AppException;
+	public Integer deleteBloodGroup(BloodGroupObject bloodGroupObject) throws AppException;
 }

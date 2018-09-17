@@ -95,91 +95,91 @@ public class RegistrationSourceObject implements Cloneable {
 		} catch (JSONException je) {}
 	}
     
-    
+	
     /**
-     *
-     * Sets the <code>registration_source_id</code> field
-     *
-     * @param registration_source_id      int
-     *
-     */
+	 *
+	 * Sets the <code>registration_source_id</code> field
+	 *
+	 * @param registration_source_id      int
+	 *
+	 */
     
-    public void setRegistrationSourceId(int registration_source_id) {
-        this.registration_source_id = registration_source_id;
-    }
+	public void setRegistrationSourceId(int registration_source_id) {
+	    this.registration_source_id = registration_source_id;
+	}
     
-    
+	
     /**
-     *
-     * Gets the <code>registration_source_id</code> field
-     *
-     * @returns registration_source_id
-     *
-     */
+	 *
+	 * Gets the <code>registration_source_id</code> field
+	 *
+	 * @returns registration_source_id
+	 *
+	 */
     
-    public int getRegistrationSourceId() {
-        return registration_source_id;
-    }
+	public int getRegistrationSourceId() {
+	    return registration_source_id;
+	}
 
-    
+	
     /**
-     *
-     * Sets the <code>registration_source_name</code> field
-     *
-     * @param registration_source_name      String
-     *
-     */
+	 *
+	 * Sets the <code>registration_source_name</code> field
+	 *
+	 * @param registration_source_name      String
+	 *
+	 */
     
-    public void setRegistrationSourceName(String registration_source_name) {
-        this.registration_source_name = registration_source_name;
-    }
+	public void setRegistrationSourceName(String registration_source_name) {
+	    this.registration_source_name = registration_source_name;
+	}
     
-    
+	
     /**
-     *
-     * Gets the <code>registration_source_name</code> field
-     *
-     * @returns registration_source_name
-     *
-     */
+	 *
+	 * Gets the <code>registration_source_name</code> field
+	 *
+	 * @returns registration_source_name
+	 *
+	 */
     
-    public String getRegistrationSourceName() {
-        return registration_source_name;
-    }
+	public String getRegistrationSourceName() {
+	    return registration_source_name;
+	}
 
-    
+	
     /**
-     *
-     * Tests if this object equals <code>obj</code>
-     *
-     * @returns true if equals
-     *
-     */
+	 *
+	 * Tests if this object equals <code>obj</code>
+	 *
+	 * @returns true if equals
+	 *
+	 */
     
-    public boolean equals(Object obj) {
-        RegistrationSourceObject other = (RegistrationSourceObject)obj;
-        DebugHandler.finest("This: " + this);
-        DebugHandler.finest("Other: " + other);
-        return
-            registration_source_id == other.getRegistrationSourceId() &&
-            Util.trim(registration_source_name).equals(Util.trim(other.getRegistrationSourceName()));
-    }
-    
+	public boolean equals(Object obj) {
+	    RegistrationSourceObject other = (RegistrationSourceObject)obj;
+	    DebugHandler.finest("This: " + this);
+	    DebugHandler.finest("Other: " + other);
+	    return
+	        registration_source_id == other.getRegistrationSourceId() &&
+	        Util.trim(registration_source_name).equals(Util.trim(other.getRegistrationSourceName()));
+	}
+	
     /**
-     *
-     * Clones this object
-     *
-     * @returns the clone of this object
-     *
-     */
+	 *
+	 * Clones this object
+	 *
+	 * @returns the clone of this object
+	 *
+	 */
     
-    public Object clone() {
-        Object theClone = null;
-        try {
-            theClone = super.clone();
-        } catch (CloneNotSupportedException ce) {
-            DebugHandler.severe("Cannot clone " + this);
-        }
-        return theClone;
-    }
+	public Object clone() {
+	    Object theClone = null;
+	    try {
+	   theClone = super.clone();
+	    } catch (CloneNotSupportedException ce) {
+	   DebugHandler.severe("Cannot clone " + this);
+	    }
+	    return theClone;
+	}
 }

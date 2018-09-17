@@ -27,107 +27,108 @@ import app.util.AppConstants;
  */
 
 public class EventImpl implements EventInterface  {
-    private String EVENT = "EventInterface.getAllEvent";
-    
+	private String EVENT = "EventInterface.getAllEvent";
+	
     /**
-     *
-     * Implementation that returns the EventObject given a EventObject filled with values that will be used for query from the underlying datasource.
-     *
-     * @param event_obj	EventObject
-     *
-     * @return      Returns the ArrayList of EventObjects
-     *
-     * @throws AppException if the underlying operation fails
-     *
-     */
+	 *
+	 * Implementation that returns the EventObject given a EventObject filled with values that will be used for query from the underlying datasource.
+	 *
+	 * @param event_obj	EventObject
+	 *
+	 * @return      Returns the ArrayList of EventObjects
+	 *
+	 * @throws AppException if the underlying operation fails
+	 *
+	 */
     
 	public ArrayList<EventObject> getEvents(EventObject event_obj) throws AppException{
+		EventObject[] eventObjectArr = getAllEvents();
 		@SuppressWarnings("unchecked")
 		ArrayList<EventObject> v = (ArrayList<EventObject>)DBUtil.list(event_obj,event_obj);
-	DebugHandler.finest("v: " + v);
-	return v;
-    }
-    
-    /**
-     *
-     * Implementation of the method that returns the EventObject from the underlying datasource.
-     * given event_id.
-     *
-     * @param event_id     int
-     *
-     * @return      Returns the EventObject
-     *
-     * @throws AppException if the operation fails
-     *
-     */
-    
-    public EventObject getEvent(int event_id) throws AppException{
-	EventObject[] eventObjectArr = getAllEvents();
-	if ( eventObjectArr == null )
-	    return null;
-	for ( int i = 0; i < eventObjectArr.length; i++ ) {
-	    if ( eventObjectArr[i] == null ) { // Try database and add to cache if found.
-		    EventObject eventObj = new EventObject();
-		    eventObj.setEventId(event_id);
-		    @SuppressWarnings("unchecked")
-		    ArrayList<EventObject> v = (ArrayList)DBUtil.fetch(eventObj);
-		    if ( v == null || v.size() == 0 )
-			    return null;
-		    else {
-			    eventObjectArr[i] = (EventObject)eventObj.clone();
-			    Util.putInCache(EVENT, eventObjectArr);
-		    }
-	    }
-	    if ( eventObjectArr[i].getEventId() == event_id ) {
-		    DebugHandler.debug("Returning " + eventObjectArr[i]);
-		    return (EventObject)eventObjectArr[i].clone();
-	    }
+		DebugHandler.finest("v: " + v);
+		return v;
 	}
-	return null;
-    }
-    
-    
+	
     /**
-     *
-     * Implementation that returns all the <code>EventObjects</code> from the underlying datasource.
-     *
-     * @return      Returns an Array of <code>EventObject</code>
-     *
-     * @throws AppException if the operation fails
-     *
-     */
+	 *
+	 * Implementation of the method that returns the EventObject from the underlying datasource.
+	 * given event_id.
+	 *
+	 * @param event_id     int
+	 *
+	 * @return      Returns the EventObject
+	 *
+	 * @throws AppException if the operation fails
+	 *
+	 */
     
-    public EventObject[] getAllEvents() throws AppException{
+	public EventObject getEvent(int event_id) throws AppException{
+		EventObject[] eventObjectArr = getAllEvents();
+		if ( eventObjectArr == null )
+			return null;
+		for ( int i = 0; i < eventObjectArr.length; i++ ) {
+			if ( eventObjectArr[i] == null ) { // Try database and add to cache if found.
+				EventObject eventObj = new EventObject();
+				eventObj.setEventId(event_id);
+				@SuppressWarnings("unchecked")
+				ArrayList<EventObject> v = (ArrayList)DBUtil.fetch(eventObj);
+				if ( v == null || v.size() == 0 )
+					return null;
+				else {
+					eventObjectArr[i] = (EventObject)eventObj.clone();
+					Util.putInCache(EVENT, eventObjectArr);
+				}
+			}
+			if ( eventObjectArr[i].getEventId() == event_id ) {
+				DebugHandler.debug("Returning " + eventObjectArr[i]);
+				return (EventObject)eventObjectArr[i].clone();
+			}
+		}
+		return null;
+	}
+    
+	
+    /**
+	 *
+	 * Implementation that returns all the <code>EventObjects</code> from the underlying datasource.
+	 *
+	 * @return      Returns an Array of <code>EventObject</code>
+	 *
+	 * @throws AppException if the operation fails
+	 *
+	 */
+    
+	public EventObject[] getAllEvents() throws AppException{
 		EventObject eventObject = new EventObject();
 		EventObject[] eventObjectArr = (EventObject[])Util.getAppCache().get(EVENT);
 		if ( eventObjectArr == null ) {
-		    DebugHandler.info("Getting event from database");
-		    @SuppressWarnings("unchecked")
-		    ArrayList<EventObject> v = (ArrayList)DBUtil.list(eventObject);
-		    DebugHandler.finest(":v: " +  v);
-		    if ( v == null )
-			    return null;
-		    eventObjectArr = new EventObject[v.size()];
-		    for ( int idx = 0; idx < v.size(); idx++ ) {
-			    eventObjectArr[idx] = v.get(idx);
-		    }
-		    Util.putInCache(EVENT, eventObjectArr);
+			DebugHandler.info("Getting event from database");
+			@SuppressWarnings("unchecked")
+			ArrayList<EventObject> v = (ArrayList)DBUtil.list(eventObject);
+			DebugHandler.finest(":v: " +  v);
+			if ( v == null )
+				return null;
+			eventObjectArr = new EventObject[v.size()];
+			for ( int idx = 0; idx < v.size(); idx++ ) {
+				eventObjectArr[idx] = v.get(idx);
+			}
+			Util.putInCache(EVENT, eventObjectArr);
 		}
 		return eventObjectArr;
-    }
+	}
     
-    
+	
     /**
-     *
-     * Implementation to add the <code>EventObject</code> to the underlying datasource.
-     *
-     * @param eventObject     EventObject
-     *
-     * @throws AppException if the operation fails
-     *
-     */
+	 *
+	 * Implementation to add the <code>EventObject</code> to the underlying datasource.
+	 *
+	 * @param eventObject     EventObject
+	 *
+	 * @throws AppException if the operation fails
+	 *
+	 */
     
-    public Integer addEvent(EventObject eventObject) throws AppException{
+	public Integer addEvent(EventObject eventObject) throws AppException{
 		if ( AppConstants.DB_TYPE.equalsIgnoreCase(Constants.ORACLE) ) {
 			long l = DBUtil.getNextId("Event_seq");
 			eventObject.setEventId((int)l);
@@ -168,16 +169,16 @@ public class EventImpl implements EventInterface  {
 		return i;
 	}
 	
-    
+	
     /**
-     *
-     * Implementation to update the <code>EventObject</code> in the underlying datasource.
-     *
-     * @param eventObject     EventObject
-     *
-     * @throws AppException if the operation fails
-     *
-     */
+	 *
+	 * Implementation to update the <code>EventObject</code> in the underlying datasource.
+	 *
+	 * @param eventObject     EventObject
+	 *
+	 * @throws AppException if the operation fails
+	 *
+	 */
     
 	public Integer updateEvent(EventObject eventObject) throws AppException{
 		EventObject newEventObject = getEvent(eventObject.getEventId()); // This call will make sure cache/db are in sync
@@ -198,18 +199,18 @@ public class EventImpl implements EventInterface  {
 		return i;
 	}
     
-    
+	
     /**
-     *
-     * Implementation to delete the <code>EventObject</code> in the underlying datasource.
-     *
-     * @param eventObject     EventObject
-     *
-     * @throws AppException if the operation fails
-     *
-     */
+	 *
+	 * Implementation to delete the <code>EventObject</code> in the underlying datasource.
+	 *
+	 * @param eventObject     EventObject
+	 *
+	 * @throws AppException if the operation fails
+	 *
+	 */
     
-    public Integer deleteEvent(EventObject eventObject) throws AppException{
+	public Integer deleteEvent(EventObject eventObject) throws AppException{
 	EventObject newEventObject = getEvent(eventObject.getEventId()); // This call will make sure cache/db are in sync
 	EventObject[] eventObjectArr = getAllEvents();
 	Integer i = new Integer(0);

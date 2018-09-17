@@ -27,107 +27,108 @@ import app.util.AppConstants;
  */
 
 public class RegistrantImpl implements RegistrantInterface  {
-    private String REGISTRANT = "RegistrantInterface.getAllRegistrant";
-    
+	private String REGISTRANT = "RegistrantInterface.getAllRegistrant";
+	
     /**
-     *
-     * Implementation that returns the RegistrantObject given a RegistrantObject filled with values that will be used for query from the underlying datasource.
-     *
-     * @param registrant_obj	RegistrantObject
-     *
-     * @return      Returns the ArrayList of RegistrantObjects
-     *
-     * @throws AppException if the underlying operation fails
-     *
-     */
+	 *
+	 * Implementation that returns the RegistrantObject given a RegistrantObject filled with values that will be used for query from the underlying datasource.
+	 *
+	 * @param registrant_obj	RegistrantObject
+	 *
+	 * @return      Returns the ArrayList of RegistrantObjects
+	 *
+	 * @throws AppException if the underlying operation fails
+	 *
+	 */
     
 	public ArrayList<RegistrantObject> getRegistrants(RegistrantObject registrant_obj) throws AppException{
+		RegistrantObject[] registrantObjectArr = getAllRegistrants();
 		@SuppressWarnings("unchecked")
 		ArrayList<RegistrantObject> v = (ArrayList<RegistrantObject>)DBUtil.list(registrant_obj,registrant_obj);
-	DebugHandler.finest("v: " + v);
-	return v;
-    }
-    
-    /**
-     *
-     * Implementation of the method that returns the RegistrantObject from the underlying datasource.
-     * given registrant_id.
-     *
-     * @param registrant_id     int
-     *
-     * @return      Returns the RegistrantObject
-     *
-     * @throws AppException if the operation fails
-     *
-     */
-    
-    public RegistrantObject getRegistrant(int registrant_id) throws AppException{
-	RegistrantObject[] registrantObjectArr = getAllRegistrants();
-	if ( registrantObjectArr == null )
-	    return null;
-	for ( int i = 0; i < registrantObjectArr.length; i++ ) {
-	    if ( registrantObjectArr[i] == null ) { // Try database and add to cache if found.
-		    RegistrantObject registrantObj = new RegistrantObject();
-		    registrantObj.setRegistrantId(registrant_id);
-		    @SuppressWarnings("unchecked")
-		    ArrayList<RegistrantObject> v = (ArrayList)DBUtil.fetch(registrantObj);
-		    if ( v == null || v.size() == 0 )
-			    return null;
-		    else {
-			    registrantObjectArr[i] = (RegistrantObject)registrantObj.clone();
-			    Util.putInCache(REGISTRANT, registrantObjectArr);
-		    }
-	    }
-	    if ( registrantObjectArr[i].getRegistrantId() == registrant_id ) {
-		    DebugHandler.debug("Returning " + registrantObjectArr[i]);
-		    return (RegistrantObject)registrantObjectArr[i].clone();
-	    }
+		DebugHandler.finest("v: " + v);
+		return v;
 	}
-	return null;
-    }
-    
-    
+	
     /**
-     *
-     * Implementation that returns all the <code>RegistrantObjects</code> from the underlying datasource.
-     *
-     * @return      Returns an Array of <code>RegistrantObject</code>
-     *
-     * @throws AppException if the operation fails
-     *
-     */
+	 *
+	 * Implementation of the method that returns the RegistrantObject from the underlying datasource.
+	 * given registrant_id.
+	 *
+	 * @param registrant_id     int
+	 *
+	 * @return      Returns the RegistrantObject
+	 *
+	 * @throws AppException if the operation fails
+	 *
+	 */
     
-    public RegistrantObject[] getAllRegistrants() throws AppException{
+	public RegistrantObject getRegistrant(int registrant_id) throws AppException{
+		RegistrantObject[] registrantObjectArr = getAllRegistrants();
+		if ( registrantObjectArr == null )
+			return null;
+		for ( int i = 0; i < registrantObjectArr.length; i++ ) {
+			if ( registrantObjectArr[i] == null ) { // Try database and add to cache if found.
+				RegistrantObject registrantObj = new RegistrantObject();
+				registrantObj.setRegistrantId(registrant_id);
+				@SuppressWarnings("unchecked")
+				ArrayList<RegistrantObject> v = (ArrayList)DBUtil.fetch(registrantObj);
+				if ( v == null || v.size() == 0 )
+					return null;
+				else {
+					registrantObjectArr[i] = (RegistrantObject)registrantObj.clone();
+					Util.putInCache(REGISTRANT, registrantObjectArr);
+				}
+			}
+			if ( registrantObjectArr[i].getRegistrantId() == registrant_id ) {
+				DebugHandler.debug("Returning " + registrantObjectArr[i]);
+				return (RegistrantObject)registrantObjectArr[i].clone();
+			}
+		}
+		return null;
+	}
+    
+	
+    /**
+	 *
+	 * Implementation that returns all the <code>RegistrantObjects</code> from the underlying datasource.
+	 *
+	 * @return      Returns an Array of <code>RegistrantObject</code>
+	 *
+	 * @throws AppException if the operation fails
+	 *
+	 */
+    
+	public RegistrantObject[] getAllRegistrants() throws AppException{
 		RegistrantObject registrantObject = new RegistrantObject();
 		RegistrantObject[] registrantObjectArr = (RegistrantObject[])Util.getAppCache().get(REGISTRANT);
 		if ( registrantObjectArr == null ) {
-		    DebugHandler.info("Getting registrant from database");
-		    @SuppressWarnings("unchecked")
-		    ArrayList<RegistrantObject> v = (ArrayList)DBUtil.list(registrantObject);
-		    DebugHandler.finest(":v: " +  v);
-		    if ( v == null )
-			    return null;
-		    registrantObjectArr = new RegistrantObject[v.size()];
-		    for ( int idx = 0; idx < v.size(); idx++ ) {
-			    registrantObjectArr[idx] = v.get(idx);
-		    }
-		    Util.putInCache(REGISTRANT, registrantObjectArr);
+			DebugHandler.info("Getting registrant from database");
+			@SuppressWarnings("unchecked")
+			ArrayList<RegistrantObject> v = (ArrayList)DBUtil.list(registrantObject);
+			DebugHandler.finest(":v: " +  v);
+			if ( v == null )
+				return null;
+			registrantObjectArr = new RegistrantObject[v.size()];
+			for ( int idx = 0; idx < v.size(); idx++ ) {
+				registrantObjectArr[idx] = v.get(idx);
+			}
+			Util.putInCache(REGISTRANT, registrantObjectArr);
 		}
 		return registrantObjectArr;
-    }
+	}
     
-    
+	
     /**
-     *
-     * Implementation to add the <code>RegistrantObject</code> to the underlying datasource.
-     *
-     * @param registrantObject     RegistrantObject
-     *
-     * @throws AppException if the operation fails
-     *
-     */
+	 *
+	 * Implementation to add the <code>RegistrantObject</code> to the underlying datasource.
+	 *
+	 * @param registrantObject     RegistrantObject
+	 *
+	 * @throws AppException if the operation fails
+	 *
+	 */
     
-    public Integer addRegistrant(RegistrantObject registrantObject) throws AppException{
+	public Integer addRegistrant(RegistrantObject registrantObject) throws AppException{
 		if ( AppConstants.DB_TYPE.equalsIgnoreCase(Constants.ORACLE) ) {
 			long l = DBUtil.getNextId("Registrant_seq");
 			registrantObject.setRegistrantId((int)l);
@@ -168,16 +169,16 @@ public class RegistrantImpl implements RegistrantInterface  {
 		return i;
 	}
 	
-    
+	
     /**
-     *
-     * Implementation to update the <code>RegistrantObject</code> in the underlying datasource.
-     *
-     * @param registrantObject     RegistrantObject
-     *
-     * @throws AppException if the operation fails
-     *
-     */
+	 *
+	 * Implementation to update the <code>RegistrantObject</code> in the underlying datasource.
+	 *
+	 * @param registrantObject     RegistrantObject
+	 *
+	 * @throws AppException if the operation fails
+	 *
+	 */
     
 	public Integer updateRegistrant(RegistrantObject registrantObject) throws AppException{
 		RegistrantObject newRegistrantObject = getRegistrant(registrantObject.getRegistrantId()); // This call will make sure cache/db are in sync
@@ -198,18 +199,18 @@ public class RegistrantImpl implements RegistrantInterface  {
 		return i;
 	}
     
-    
+	
     /**
-     *
-     * Implementation to delete the <code>RegistrantObject</code> in the underlying datasource.
-     *
-     * @param registrantObject     RegistrantObject
-     *
-     * @throws AppException if the operation fails
-     *
-     */
+	 *
+	 * Implementation to delete the <code>RegistrantObject</code> in the underlying datasource.
+	 *
+	 * @param registrantObject     RegistrantObject
+	 *
+	 * @throws AppException if the operation fails
+	 *
+	 */
     
-    public Integer deleteRegistrant(RegistrantObject registrantObject) throws AppException{
+	public Integer deleteRegistrant(RegistrantObject registrantObject) throws AppException{
 	RegistrantObject newRegistrantObject = getRegistrant(registrantObject.getRegistrantId()); // This call will make sure cache/db are in sync
 	RegistrantObject[] registrantObjectArr = getAllRegistrants();
 	Integer i = new Integer(0);

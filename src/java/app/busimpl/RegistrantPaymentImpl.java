@@ -27,107 +27,108 @@ import app.util.AppConstants;
  */
 
 public class RegistrantPaymentImpl implements RegistrantPaymentInterface  {
-    private String REGISTRANTPAYMENT = "RegistrantPaymentInterface.getAllRegistrantPayment";
-    
+	private String REGISTRANTPAYMENT = "RegistrantPaymentInterface.getAllRegistrantPayment";
+	
     /**
-     *
-     * Implementation that returns the RegistrantPaymentObject given a RegistrantPaymentObject filled with values that will be used for query from the underlying datasource.
-     *
-     * @param registrantpayment_obj	RegistrantPaymentObject
-     *
-     * @return      Returns the ArrayList of RegistrantPaymentObjects
-     *
-     * @throws AppException if the underlying operation fails
-     *
-     */
+	 *
+	 * Implementation that returns the RegistrantPaymentObject given a RegistrantPaymentObject filled with values that will be used for query from the underlying datasource.
+	 *
+	 * @param registrantpayment_obj	RegistrantPaymentObject
+	 *
+	 * @return      Returns the ArrayList of RegistrantPaymentObjects
+	 *
+	 * @throws AppException if the underlying operation fails
+	 *
+	 */
     
 	public ArrayList<RegistrantPaymentObject> getRegistrantPayments(RegistrantPaymentObject registrantpayment_obj) throws AppException{
+		RegistrantPaymentObject[] registrantPaymentObjectArr = getAllRegistrantPayments();
 		@SuppressWarnings("unchecked")
 		ArrayList<RegistrantPaymentObject> v = (ArrayList<RegistrantPaymentObject>)DBUtil.list(registrantpayment_obj,registrantpayment_obj);
-	DebugHandler.finest("v: " + v);
-	return v;
-    }
-    
-    /**
-     *
-     * Implementation of the method that returns the RegistrantPaymentObject from the underlying datasource.
-     * given registrant_payment_id.
-     *
-     * @param registrant_payment_id     int
-     *
-     * @return      Returns the RegistrantPaymentObject
-     *
-     * @throws AppException if the operation fails
-     *
-     */
-    
-    public RegistrantPaymentObject getRegistrantPayment(int registrant_payment_id) throws AppException{
-	RegistrantPaymentObject[] registrantPaymentObjectArr = getAllRegistrantPayments();
-	if ( registrantPaymentObjectArr == null )
-	    return null;
-	for ( int i = 0; i < registrantPaymentObjectArr.length; i++ ) {
-	    if ( registrantPaymentObjectArr[i] == null ) { // Try database and add to cache if found.
-		    RegistrantPaymentObject registrantpaymentObj = new RegistrantPaymentObject();
-		    registrantpaymentObj.setRegistrantPaymentId(registrant_payment_id);
-		    @SuppressWarnings("unchecked")
-		    ArrayList<RegistrantPaymentObject> v = (ArrayList)DBUtil.fetch(registrantpaymentObj);
-		    if ( v == null || v.size() == 0 )
-			    return null;
-		    else {
-			    registrantPaymentObjectArr[i] = (RegistrantPaymentObject)registrantpaymentObj.clone();
-			    Util.putInCache(REGISTRANTPAYMENT, registrantPaymentObjectArr);
-		    }
-	    }
-	    if ( registrantPaymentObjectArr[i].getRegistrantPaymentId() == registrant_payment_id ) {
-		    DebugHandler.debug("Returning " + registrantPaymentObjectArr[i]);
-		    return (RegistrantPaymentObject)registrantPaymentObjectArr[i].clone();
-	    }
+		DebugHandler.finest("v: " + v);
+		return v;
 	}
-	return null;
-    }
-    
-    
+	
     /**
-     *
-     * Implementation that returns all the <code>RegistrantPaymentObjects</code> from the underlying datasource.
-     *
-     * @return      Returns an Array of <code>RegistrantPaymentObject</code>
-     *
-     * @throws AppException if the operation fails
-     *
-     */
+	 *
+	 * Implementation of the method that returns the RegistrantPaymentObject from the underlying datasource.
+	 * given registrant_payment_id.
+	 *
+	 * @param registrant_payment_id     int
+	 *
+	 * @return      Returns the RegistrantPaymentObject
+	 *
+	 * @throws AppException if the operation fails
+	 *
+	 */
     
-    public RegistrantPaymentObject[] getAllRegistrantPayments() throws AppException{
+	public RegistrantPaymentObject getRegistrantPayment(int registrant_payment_id) throws AppException{
+		RegistrantPaymentObject[] registrantPaymentObjectArr = getAllRegistrantPayments();
+		if ( registrantPaymentObjectArr == null )
+			return null;
+		for ( int i = 0; i < registrantPaymentObjectArr.length; i++ ) {
+			if ( registrantPaymentObjectArr[i] == null ) { // Try database and add to cache if found.
+				RegistrantPaymentObject registrantpaymentObj = new RegistrantPaymentObject();
+				registrantpaymentObj.setRegistrantPaymentId(registrant_payment_id);
+				@SuppressWarnings("unchecked")
+				ArrayList<RegistrantPaymentObject> v = (ArrayList)DBUtil.fetch(registrantpaymentObj);
+				if ( v == null || v.size() == 0 )
+					return null;
+				else {
+					registrantPaymentObjectArr[i] = (RegistrantPaymentObject)registrantpaymentObj.clone();
+					Util.putInCache(REGISTRANTPAYMENT, registrantPaymentObjectArr);
+				}
+			}
+			if ( registrantPaymentObjectArr[i].getRegistrantPaymentId() == registrant_payment_id ) {
+				DebugHandler.debug("Returning " + registrantPaymentObjectArr[i]);
+				return (RegistrantPaymentObject)registrantPaymentObjectArr[i].clone();
+			}
+		}
+		return null;
+	}
+    
+	
+    /**
+	 *
+	 * Implementation that returns all the <code>RegistrantPaymentObjects</code> from the underlying datasource.
+	 *
+	 * @return      Returns an Array of <code>RegistrantPaymentObject</code>
+	 *
+	 * @throws AppException if the operation fails
+	 *
+	 */
+    
+	public RegistrantPaymentObject[] getAllRegistrantPayments() throws AppException{
 		RegistrantPaymentObject registrantPaymentObject = new RegistrantPaymentObject();
 		RegistrantPaymentObject[] registrantPaymentObjectArr = (RegistrantPaymentObject[])Util.getAppCache().get(REGISTRANTPAYMENT);
 		if ( registrantPaymentObjectArr == null ) {
-		    DebugHandler.info("Getting registrantpayment from database");
-		    @SuppressWarnings("unchecked")
-		    ArrayList<RegistrantPaymentObject> v = (ArrayList)DBUtil.list(registrantPaymentObject);
-		    DebugHandler.finest(":v: " +  v);
-		    if ( v == null )
-			    return null;
-		    registrantPaymentObjectArr = new RegistrantPaymentObject[v.size()];
-		    for ( int idx = 0; idx < v.size(); idx++ ) {
-			    registrantPaymentObjectArr[idx] = v.get(idx);
-		    }
-		    Util.putInCache(REGISTRANTPAYMENT, registrantPaymentObjectArr);
+			DebugHandler.info("Getting registrantpayment from database");
+			@SuppressWarnings("unchecked")
+			ArrayList<RegistrantPaymentObject> v = (ArrayList)DBUtil.list(registrantPaymentObject);
+			DebugHandler.finest(":v: " +  v);
+			if ( v == null )
+				return null;
+			registrantPaymentObjectArr = new RegistrantPaymentObject[v.size()];
+			for ( int idx = 0; idx < v.size(); idx++ ) {
+				registrantPaymentObjectArr[idx] = v.get(idx);
+			}
+			Util.putInCache(REGISTRANTPAYMENT, registrantPaymentObjectArr);
 		}
 		return registrantPaymentObjectArr;
-    }
+	}
     
-    
+	
     /**
-     *
-     * Implementation to add the <code>RegistrantPaymentObject</code> to the underlying datasource.
-     *
-     * @param registrantPaymentObject     RegistrantPaymentObject
-     *
-     * @throws AppException if the operation fails
-     *
-     */
+	 *
+	 * Implementation to add the <code>RegistrantPaymentObject</code> to the underlying datasource.
+	 *
+	 * @param registrantPaymentObject     RegistrantPaymentObject
+	 *
+	 * @throws AppException if the operation fails
+	 *
+	 */
     
-    public Integer addRegistrantPayment(RegistrantPaymentObject registrantPaymentObject) throws AppException{
+	public Integer addRegistrantPayment(RegistrantPaymentObject registrantPaymentObject) throws AppException{
 		if ( AppConstants.DB_TYPE.equalsIgnoreCase(Constants.ORACLE) ) {
 			long l = DBUtil.getNextId("Registrant_Payment_seq");
 			registrantPaymentObject.setRegistrantPaymentId((int)l);
@@ -168,16 +169,16 @@ public class RegistrantPaymentImpl implements RegistrantPaymentInterface  {
 		return i;
 	}
 	
-    
+	
     /**
-     *
-     * Implementation to update the <code>RegistrantPaymentObject</code> in the underlying datasource.
-     *
-     * @param registrantPaymentObject     RegistrantPaymentObject
-     *
-     * @throws AppException if the operation fails
-     *
-     */
+	 *
+	 * Implementation to update the <code>RegistrantPaymentObject</code> in the underlying datasource.
+	 *
+	 * @param registrantPaymentObject     RegistrantPaymentObject
+	 *
+	 * @throws AppException if the operation fails
+	 *
+	 */
     
 	public Integer updateRegistrantPayment(RegistrantPaymentObject registrantPaymentObject) throws AppException{
 		RegistrantPaymentObject newRegistrantPaymentObject = getRegistrantPayment(registrantPaymentObject.getRegistrantPaymentId()); // This call will make sure cache/db are in sync
@@ -198,18 +199,18 @@ public class RegistrantPaymentImpl implements RegistrantPaymentInterface  {
 		return i;
 	}
     
-    
+	
     /**
-     *
-     * Implementation to delete the <code>RegistrantPaymentObject</code> in the underlying datasource.
-     *
-     * @param registrantPaymentObject     RegistrantPaymentObject
-     *
-     * @throws AppException if the operation fails
-     *
-     */
+	 *
+	 * Implementation to delete the <code>RegistrantPaymentObject</code> in the underlying datasource.
+	 *
+	 * @param registrantPaymentObject     RegistrantPaymentObject
+	 *
+	 * @throws AppException if the operation fails
+	 *
+	 */
     
-    public Integer deleteRegistrantPayment(RegistrantPaymentObject registrantPaymentObject) throws AppException{
+	public Integer deleteRegistrantPayment(RegistrantPaymentObject registrantPaymentObject) throws AppException{
 	RegistrantPaymentObject newRegistrantPaymentObject = getRegistrantPayment(registrantPaymentObject.getRegistrantPaymentId()); // This call will make sure cache/db are in sync
 	RegistrantPaymentObject[] registrantPaymentObjectArr = getAllRegistrantPayments();
 	Integer i = new Integer(0);

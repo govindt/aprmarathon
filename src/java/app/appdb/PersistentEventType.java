@@ -30,58 +30,58 @@ import app.busobj.EventTypeObject;
  */
 
 public class PersistentEventType extends PersistentObject {
-    private EventTypeObject eventTypeObject;
-    
-    
+	private EventTypeObject eventTypeObject;
+	
+	
     /**
-     * Constructs a Persistent Object for the EventTypeObject
-     *
-     * @param eventTypeObject    the EventTypeObject 
-     */
+	 * Constructs a Persistent Object for the EventTypeObject
+	 *
+	 * @param eventTypeObject    the EventTypeObject 
+	 */
     
-    public PersistentEventType (EventTypeObject eventTypeObject) {
-        this.eventTypeObject = eventTypeObject;
-    }
+	public PersistentEventType (EventTypeObject eventTypeObject) {
+	    this.eventTypeObject = eventTypeObject;
+	}
     
-    
+	
     /**
-     * Returns the ArrayList of EventTypeObject.
-     * It is Usually all the rows in the database.
-     * This calls getResultObjects method in the super class.
-     *
-     * @return     ArrayList of EventTypeObject 
-     *
-     * @throws     DBException     If a database error occurs
-     *
-     * @see     #getResultObjects(ResultSet)
-     */
+	 * Returns the ArrayList of EventTypeObject.
+	 * It is Usually all the rows in the database.
+	 * This calls getResultObjects method in the super class.
+	 *
+	 * @return     ArrayList of EventTypeObject 
+	 *
+	 * @throws     DBException     If a database error occurs
+	 *
+	 * @see     #getResultObjects(ResultSet)
+	 */
     
-    public Object list() throws DBException {
-        PreparedSQLStatement sql = new PreparedSQLStatement();
-        String statement = "SELECT event_type_id, event_type_name, event, event_type_description, event_type_start_date, event_type_end_date, event_type_venue, online_registration_only from Event_Type";
-        int index = 1;
-        sql.setStatement(statement);
+	public Object list() throws DBException {
+	    PreparedSQLStatement sql = new PreparedSQLStatement();
+	    String statement = "SELECT event_type_id, event_type_name, event, event_type_description, event_type_start_date, event_type_end_date, event_type_venue, online_registration_only from Event_Type";
+	    int index = 1;
+	    sql.setStatement(statement);
         
-        setSQLStatement(sql);
+	    setSQLStatement(sql);
         
-        @SuppressWarnings("unchecked")
-        ArrayList<EventTypeObject> result = (ArrayList<EventTypeObject>) super.list();
+	    @SuppressWarnings("unchecked")
+	    ArrayList<EventTypeObject> result = (ArrayList<EventTypeObject>) super.list();
         
-        return result;
-    }
+	    return result;
+	}
     
-    
+	
     /**
-     * Returns the ArrayList of EventTypeObjects.
-     * It is Usually all the rows that match the criteria in the database.
-     * This calls getResultObjects method in the super class.
-     *
-     * @return     ArrayList of EventTypeObject 
-     *
-     * @throws     DBException     If a database error occurs
-     *
-     * @see     #getResultObjects(ResultSet)
-     */
+	 * Returns the ArrayList of EventTypeObjects.
+	 * It is Usually all the rows that match the criteria in the database.
+	 * This calls getResultObjects method in the super class.
+	 *
+	 * @return     ArrayList of EventTypeObject 
+	 *
+	 * @throws     DBException     If a database error occurs
+	 *
+	 * @see     #getResultObjects(ResultSet)
+	 */
     
 	public Object list(Object args) throws DBException {
 		PreparedSQLStatement sql = new PreparedSQLStatement();
@@ -170,194 +170,194 @@ public class PersistentEventType extends PersistentObject {
 		return result;
 	}
     
-    
+	
     /**
-     * Returns the ArrayList of one EventTypeObject.
-     * It is Usually the row that matches primary key.
-     * This calls getResultSetObject method in the super class.
-     *
-     * @return     ArrayList of one EventTypeObject 
-     *
-     * @throws     DBException     If a database error occurs
-     *
-     * @see     #getResultSetObject(ResultSet)
-     */
+	 * Returns the ArrayList of one EventTypeObject.
+	 * It is Usually the row that matches primary key.
+	 * This calls getResultSetObject method in the super class.
+	 *
+	 * @return     ArrayList of one EventTypeObject 
+	 *
+	 * @throws     DBException     If a database error occurs
+	 *
+	 * @see     #getResultSetObject(ResultSet)
+	 */
     
-    public Object fetch() throws DBException {
-        PreparedSQLStatement sql = new PreparedSQLStatement();
-        String statement = "SELECT event_type_id, event_type_name, event, event_type_description, event_type_start_date, event_type_end_date, event_type_venue, online_registration_only from Event_Type where event_type_id = ? ";
-        int index = 1;
-        sql.setStatement(statement);
-        sql.setInParams(new SQLParam(index++, new Integer(eventTypeObject.getEventTypeId()), Types.INTEGER));
-        setSQLStatement(sql);
+	public Object fetch() throws DBException {
+	    PreparedSQLStatement sql = new PreparedSQLStatement();
+	    String statement = "SELECT event_type_id, event_type_name, event, event_type_description, event_type_start_date, event_type_end_date, event_type_venue, online_registration_only from Event_Type where event_type_id = ? ";
+	    int index = 1;
+	    sql.setStatement(statement);
+	    sql.setInParams(new SQLParam(index++, new Integer(eventTypeObject.getEventTypeId()), Types.INTEGER));
+	    setSQLStatement(sql);
         
-        @SuppressWarnings("unchecked")
-        ArrayList<EventTypeObject> result = (ArrayList<EventTypeObject>) super.fetch();
+	    @SuppressWarnings("unchecked")
+	    ArrayList<EventTypeObject> result = (ArrayList<EventTypeObject>) super.fetch();
         
-        return result;
-    }
+	    return result;
+	}
     
-    
+	
     /**
-     *
-     * Inserts a row in the database.  The values
-     * are got from the eventTypeObject.
-     * Returns an Integer Object with value 0 on success
-     * and -1 on faliure.
-     *
-     * @return      Returns an Integer indicating success/failure of the database operation
-     *
-     * @throws     DBException     If a database error occurs
-     */
+	 *
+	 * Inserts a row in the database.  The values
+	 * are got from the eventTypeObject.
+	 * Returns an Integer Object with value 0 on success
+	 * and -1 on faliure.
+	 *
+	 * @return      Returns an Integer indicating success/failure of the database operation
+	 *
+	 * @throws     DBException     If a database error occurs
+	 */
     
-    public Object insert() throws DBException {
-        PreparedSQLStatement sql = new PreparedSQLStatement();
-        String statement;
-        int index = 1;
+	public Object insert() throws DBException {
+	    PreparedSQLStatement sql = new PreparedSQLStatement();
+	    String statement;
+	    int index = 1;
 
-        if ( AppConstants.DB_TYPE.equalsIgnoreCase(Constants.ORACLE) ) {
-            statement = "INSERT INTO Event_Type (event_type_id, event_type_name, event, event_type_description, event_type_start_date, event_type_end_date, event_type_venue, online_registration_only) VALUES(?, ?, ?, ?, ?, ?, ?, ?) ";
-            sql.setStatement(statement);
-            sql.setInParams(new SQLParam(index++, new Integer(eventTypeObject.getEventTypeId()), Types.INTEGER));
-        } else {
-            statement = "INSERT INTO Event_Type (event_type_name, event, event_type_description, event_type_start_date, event_type_end_date, event_type_venue, online_registration_only) VALUES(?, ?, ?, ?, ?, ?, ?) ";
-            sql.setStatement(statement);
-        }
-        sql.setInParams(new SQLParam(index++,  eventTypeObject.getEventTypeName(), Types.VARCHAR));
-        sql.setInParams(new SQLParam(index++, new Integer(eventTypeObject.getEvent()), Types.INTEGER));
-        sql.setInParams(new SQLParam(index++,  eventTypeObject.getEventTypeDescription(), Types.VARCHAR));
-        sql.setInParams(new SQLParam(index++,  eventTypeObject.getEventTypeStartDate(), Types.TIMESTAMP));
-        sql.setInParams(new SQLParam(index++,  eventTypeObject.getEventTypeEndDate(), Types.TIMESTAMP));
-        sql.setInParams(new SQLParam(index++,  eventTypeObject.getEventTypeVenue(), Types.VARCHAR));
-        sql.setInParams(new SQLParam(index++,  eventTypeObject.getOnlineRegistrationOnly(), Types.VARCHAR));
-        setSQLStatement(sql);
+	    if ( AppConstants.DB_TYPE.equalsIgnoreCase(Constants.ORACLE) ) {
+	        statement = "INSERT INTO Event_Type (event_type_id, event_type_name, event, event_type_description, event_type_start_date, event_type_end_date, event_type_venue, online_registration_only) VALUES(?, ?, ?, ?, ?, ?, ?, ?) ";
+	        sql.setStatement(statement);
+	        sql.setInParams(new SQLParam(index++, new Integer(eventTypeObject.getEventTypeId()), Types.INTEGER));
+	    } else {
+	        statement = "INSERT INTO Event_Type (event_type_name, event, event_type_description, event_type_start_date, event_type_end_date, event_type_venue, online_registration_only) VALUES(?, ?, ?, ?, ?, ?, ?) ";
+	        sql.setStatement(statement);
+	    }
+	    sql.setInParams(new SQLParam(index++,  eventTypeObject.getEventTypeName(), Types.VARCHAR));
+	    sql.setInParams(new SQLParam(index++, new Integer(eventTypeObject.getEvent()), Types.INTEGER));
+	    sql.setInParams(new SQLParam(index++,  eventTypeObject.getEventTypeDescription(), Types.VARCHAR));
+	    sql.setInParams(new SQLParam(index++,  eventTypeObject.getEventTypeStartDate(), Types.TIMESTAMP));
+	    sql.setInParams(new SQLParam(index++,  eventTypeObject.getEventTypeEndDate(), Types.TIMESTAMP));
+	    sql.setInParams(new SQLParam(index++,  eventTypeObject.getEventTypeVenue(), Types.VARCHAR));
+	    sql.setInParams(new SQLParam(index++,  eventTypeObject.getOnlineRegistrationOnly(), Types.VARCHAR));
+	    setSQLStatement(sql);
         
-        Integer result = (Integer) super.insert();
+	    Integer result = (Integer) super.insert();
         
-        return result;
-    }
+	    return result;
+	}
     
-    
+	
     /**
-     *
-     * Deletes a row in the database. The key is 
-     * in the eventTypeObject.
-     * Returns an Integer Object with value 0 on success
-     * and -1 on faliure.
-     *
-     * @return      Returns an Integer indicating success/failure of the database operation
-     *
-     * @throws     DBException     If a database error occurs
-     */
+	 *
+	 * Deletes a row in the database. The key is 
+	 * in the eventTypeObject.
+	 * Returns an Integer Object with value 0 on success
+	 * and -1 on faliure.
+	 *
+	 * @return      Returns an Integer indicating success/failure of the database operation
+	 *
+	 * @throws     DBException     If a database error occurs
+	 */
     
-    public Object delete() throws DBException {
-        PreparedSQLStatement sql = new PreparedSQLStatement();
-        String statement = "DELETE FROM Event_Type WHERE event_type_id = ? ";
-        int index = 1;
-        sql.setStatement(statement);
-        sql.setInParams(new SQLParam(index++, new Integer(eventTypeObject.getEventTypeId()), Types.INTEGER));
-        setSQLStatement(sql);
+	public Object delete() throws DBException {
+	    PreparedSQLStatement sql = new PreparedSQLStatement();
+	    String statement = "DELETE FROM Event_Type WHERE event_type_id = ? ";
+	    int index = 1;
+	    sql.setStatement(statement);
+	    sql.setInParams(new SQLParam(index++, new Integer(eventTypeObject.getEventTypeId()), Types.INTEGER));
+	    setSQLStatement(sql);
         
-        Integer result = (Integer) super.delete();
+	    Integer result = (Integer) super.delete();
         
-        return result;
-    }
+	    return result;
+	}
     
-    
+	
     /**
-     *
-     * Updates a row in the database. The values are 
-     * got from the eventTypeObject.
-     * Returns an Integer Object with value 0 on success
-     * and -1 on faliure.
-     *
-     * @return      Returns an Integer indicating success/failure of the database operation
-     *
-     * @throws     DBException     If a database error occurs
-     */
+	 *
+	 * Updates a row in the database. The values are 
+	 * got from the eventTypeObject.
+	 * Returns an Integer Object with value 0 on success
+	 * and -1 on faliure.
+	 *
+	 * @return      Returns an Integer indicating success/failure of the database operation
+	 *
+	 * @throws     DBException     If a database error occurs
+	 */
     
-    public Object update() throws DBException {
-        PreparedSQLStatement sql = new PreparedSQLStatement();
-        String statement = "UPDATE Event_Type SET event_type_id = ?, event_type_name = ?, event = ?, event_type_description = ?, event_type_start_date = ?, event_type_end_date = ?, event_type_venue = ?, online_registration_only = ? where event_type_id = ? ";
-        int index = 1;
-        sql.setStatement(statement);
-        sql.setInParams(new SQLParam(index++, new Integer(eventTypeObject.getEventTypeId()), Types.INTEGER));
-        sql.setInParams(new SQLParam(index++,  eventTypeObject.getEventTypeName(), Types.VARCHAR));
-        sql.setInParams(new SQLParam(index++, new Integer(eventTypeObject.getEvent()), Types.INTEGER));
-        sql.setInParams(new SQLParam(index++,  eventTypeObject.getEventTypeDescription(), Types.VARCHAR));
-        sql.setInParams(new SQLParam(index++,  eventTypeObject.getEventTypeStartDate(), Types.TIMESTAMP));
-        sql.setInParams(new SQLParam(index++,  eventTypeObject.getEventTypeEndDate(), Types.TIMESTAMP));
-        sql.setInParams(new SQLParam(index++,  eventTypeObject.getEventTypeVenue(), Types.VARCHAR));
-        sql.setInParams(new SQLParam(index++,  eventTypeObject.getOnlineRegistrationOnly(), Types.VARCHAR));
-        sql.setInParams(new SQLParam(index++, new Integer(eventTypeObject.getEventTypeId()), Types.INTEGER));
-        setSQLStatement(sql);
+	public Object update() throws DBException {
+	    PreparedSQLStatement sql = new PreparedSQLStatement();
+	    String statement = "UPDATE Event_Type SET event_type_id = ?, event_type_name = ?, event = ?, event_type_description = ?, event_type_start_date = ?, event_type_end_date = ?, event_type_venue = ?, online_registration_only = ? where event_type_id = ? ";
+	    int index = 1;
+	    sql.setStatement(statement);
+	    sql.setInParams(new SQLParam(index++, new Integer(eventTypeObject.getEventTypeId()), Types.INTEGER));
+	    sql.setInParams(new SQLParam(index++,  eventTypeObject.getEventTypeName(), Types.VARCHAR));
+	    sql.setInParams(new SQLParam(index++, new Integer(eventTypeObject.getEvent()), Types.INTEGER));
+	    sql.setInParams(new SQLParam(index++,  eventTypeObject.getEventTypeDescription(), Types.VARCHAR));
+	    sql.setInParams(new SQLParam(index++,  eventTypeObject.getEventTypeStartDate(), Types.TIMESTAMP));
+	    sql.setInParams(new SQLParam(index++,  eventTypeObject.getEventTypeEndDate(), Types.TIMESTAMP));
+	    sql.setInParams(new SQLParam(index++,  eventTypeObject.getEventTypeVenue(), Types.VARCHAR));
+	    sql.setInParams(new SQLParam(index++,  eventTypeObject.getOnlineRegistrationOnly(), Types.VARCHAR));
+	    sql.setInParams(new SQLParam(index++, new Integer(eventTypeObject.getEventTypeId()), Types.INTEGER));
+	    setSQLStatement(sql);
         
-        Integer result = (Integer) super.update();
+	    Integer result = (Integer) super.update();
         
-        return result;
-    }
+	    return result;
+	}
     
-    
+	
     /**
-     *
-     * Returns a ArrayList of EventTypeObject from the ResultSet. The values for 
-     * each object is got from the ResultSet.
-     * This is used by the list method.
-     *
-     * @param rs      the ResultSet.
-     *
-     * @return      Returns a ArrayList of EventTypeObject from the ResultSet.
-     *
-     * @see     #list()
-     *
-     */
+	 *
+	 * Returns a ArrayList of EventTypeObject from the ResultSet. The values for 
+	 * each object is got from the ResultSet.
+	 * This is used by the list method.
+	 *
+	 * @param rs      the ResultSet.
+	 *
+	 * @return      Returns a ArrayList of EventTypeObject from the ResultSet.
+	 *
+	 * @see     #list()
+	 *
+	 */
     
-    public Object getResultObjects(ResultSet rs) {
-        ArrayList<EventTypeObject> result = new ArrayList<EventTypeObject>();
+	public Object getResultObjects(ResultSet rs) {
+	    ArrayList<EventTypeObject> result = new ArrayList<EventTypeObject>();
         
-        try {
-            while(rs.next()) {
-                int index = 1;
-                EventTypeObject f = new EventTypeObject();
-                f.setEventTypeId(rs.getInt(index++));
-                f.setEventTypeName(rs.getString(index++));
-                f.setEvent(rs.getInt(index++));
-                f.setEventTypeDescription(rs.getString(index++));
-                f.setEventTypeStartDate(rs.getDate(index++));
-                f.setEventTypeEndDate(rs.getDate(index++));
-                f.setEventTypeVenue(rs.getString(index++));
-                f.setOnlineRegistrationOnly(rs.getString(index++));
-                result.add(f);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return result;
-    }
+	    try {
+	        while(rs.next()) {
+	            int index = 1;
+	            EventTypeObject f = new EventTypeObject();
+	            f.setEventTypeId(rs.getInt(index++));
+	            f.setEventTypeName(rs.getString(index++));
+	            f.setEvent(rs.getInt(index++));
+	            f.setEventTypeDescription(rs.getString(index++));
+	            f.setEventTypeStartDate(rs.getDate(index++));
+	            f.setEventTypeEndDate(rs.getDate(index++));
+	            f.setEventTypeVenue(rs.getString(index++));
+	            f.setOnlineRegistrationOnly(rs.getString(index++));
+	            result.add(f);
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	    return result;
+	}
     
-    
+	
     /**
-     *
-     * Returns a EventTypeObject from the ResultSet. The values for 
-     * each object is got from the ResultSet.
-     *
-     * This is used by the fetch method.
-     * @param rs      the ResultSet.
-     *
-     * @return      Returns a EventTypeObject from the ResultSet.
-     *
-     * @see     #fetch()
-     *
-     */
+	 *
+	 * Returns a EventTypeObject from the ResultSet. The values for 
+	 * each object is got from the ResultSet.
+	 *
+	 * This is used by the fetch method.
+	 * @param rs      the ResultSet.
+	 *
+	 * @return      Returns a EventTypeObject from the ResultSet.
+	 *
+	 * @see     #fetch()
+	 *
+	 */
     
-    public Object getResultSetObject(ResultSet rs) {
-        try {
-        @SuppressWarnings("unchecked")
-            ArrayList<EventTypeObject> result = (ArrayList<EventTypeObject>) getResultObjects(rs);
-            return result.get(0);
-        } catch (Exception e) {
-            return null;
-        }
-    }
+	public Object getResultSetObject(ResultSet rs) {
+	    try {
+	    @SuppressWarnings("unchecked")
+	        ArrayList<EventTypeObject> result = (ArrayList<EventTypeObject>) getResultObjects(rs);
+	        return result.get(0);
+	    } catch (Exception e) {
+	        return null;
+	    }
+	}
 }
     

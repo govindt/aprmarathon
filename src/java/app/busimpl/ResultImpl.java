@@ -27,107 +27,108 @@ import app.util.AppConstants;
  */
 
 public class ResultImpl implements ResultInterface  {
-    private String RESULT = "ResultInterface.getAllResult";
-    
+	private String RESULT = "ResultInterface.getAllResult";
+	
     /**
-     *
-     * Implementation that returns the ResultObject given a ResultObject filled with values that will be used for query from the underlying datasource.
-     *
-     * @param result_obj	ResultObject
-     *
-     * @return      Returns the ArrayList of ResultObjects
-     *
-     * @throws AppException if the underlying operation fails
-     *
-     */
+	 *
+	 * Implementation that returns the ResultObject given a ResultObject filled with values that will be used for query from the underlying datasource.
+	 *
+	 * @param result_obj	ResultObject
+	 *
+	 * @return      Returns the ArrayList of ResultObjects
+	 *
+	 * @throws AppException if the underlying operation fails
+	 *
+	 */
     
 	public ArrayList<ResultObject> getResults(ResultObject result_obj) throws AppException{
+		ResultObject[] resultObjectArr = getAllResults();
 		@SuppressWarnings("unchecked")
 		ArrayList<ResultObject> v = (ArrayList<ResultObject>)DBUtil.list(result_obj,result_obj);
-	DebugHandler.finest("v: " + v);
-	return v;
-    }
-    
-    /**
-     *
-     * Implementation of the method that returns the ResultObject from the underlying datasource.
-     * given result_id.
-     *
-     * @param result_id     int
-     *
-     * @return      Returns the ResultObject
-     *
-     * @throws AppException if the operation fails
-     *
-     */
-    
-    public ResultObject getResult(int result_id) throws AppException{
-	ResultObject[] resultObjectArr = getAllResults();
-	if ( resultObjectArr == null )
-	    return null;
-	for ( int i = 0; i < resultObjectArr.length; i++ ) {
-	    if ( resultObjectArr[i] == null ) { // Try database and add to cache if found.
-		    ResultObject resultObj = new ResultObject();
-		    resultObj.setResultId(result_id);
-		    @SuppressWarnings("unchecked")
-		    ArrayList<ResultObject> v = (ArrayList)DBUtil.fetch(resultObj);
-		    if ( v == null || v.size() == 0 )
-			    return null;
-		    else {
-			    resultObjectArr[i] = (ResultObject)resultObj.clone();
-			    Util.putInCache(RESULT, resultObjectArr);
-		    }
-	    }
-	    if ( resultObjectArr[i].getResultId() == result_id ) {
-		    DebugHandler.debug("Returning " + resultObjectArr[i]);
-		    return (ResultObject)resultObjectArr[i].clone();
-	    }
+		DebugHandler.finest("v: " + v);
+		return v;
 	}
-	return null;
-    }
-    
-    
+	
     /**
-     *
-     * Implementation that returns all the <code>ResultObjects</code> from the underlying datasource.
-     *
-     * @return      Returns an Array of <code>ResultObject</code>
-     *
-     * @throws AppException if the operation fails
-     *
-     */
+	 *
+	 * Implementation of the method that returns the ResultObject from the underlying datasource.
+	 * given result_id.
+	 *
+	 * @param result_id     int
+	 *
+	 * @return      Returns the ResultObject
+	 *
+	 * @throws AppException if the operation fails
+	 *
+	 */
     
-    public ResultObject[] getAllResults() throws AppException{
+	public ResultObject getResult(int result_id) throws AppException{
+		ResultObject[] resultObjectArr = getAllResults();
+		if ( resultObjectArr == null )
+			return null;
+		for ( int i = 0; i < resultObjectArr.length; i++ ) {
+			if ( resultObjectArr[i] == null ) { // Try database and add to cache if found.
+				ResultObject resultObj = new ResultObject();
+				resultObj.setResultId(result_id);
+				@SuppressWarnings("unchecked")
+				ArrayList<ResultObject> v = (ArrayList)DBUtil.fetch(resultObj);
+				if ( v == null || v.size() == 0 )
+					return null;
+				else {
+					resultObjectArr[i] = (ResultObject)resultObj.clone();
+					Util.putInCache(RESULT, resultObjectArr);
+				}
+			}
+			if ( resultObjectArr[i].getResultId() == result_id ) {
+				DebugHandler.debug("Returning " + resultObjectArr[i]);
+				return (ResultObject)resultObjectArr[i].clone();
+			}
+		}
+		return null;
+	}
+    
+	
+    /**
+	 *
+	 * Implementation that returns all the <code>ResultObjects</code> from the underlying datasource.
+	 *
+	 * @return      Returns an Array of <code>ResultObject</code>
+	 *
+	 * @throws AppException if the operation fails
+	 *
+	 */
+    
+	public ResultObject[] getAllResults() throws AppException{
 		ResultObject resultObject = new ResultObject();
 		ResultObject[] resultObjectArr = (ResultObject[])Util.getAppCache().get(RESULT);
 		if ( resultObjectArr == null ) {
-		    DebugHandler.info("Getting result from database");
-		    @SuppressWarnings("unchecked")
-		    ArrayList<ResultObject> v = (ArrayList)DBUtil.list(resultObject);
-		    DebugHandler.finest(":v: " +  v);
-		    if ( v == null )
-			    return null;
-		    resultObjectArr = new ResultObject[v.size()];
-		    for ( int idx = 0; idx < v.size(); idx++ ) {
-			    resultObjectArr[idx] = v.get(idx);
-		    }
-		    Util.putInCache(RESULT, resultObjectArr);
+			DebugHandler.info("Getting result from database");
+			@SuppressWarnings("unchecked")
+			ArrayList<ResultObject> v = (ArrayList)DBUtil.list(resultObject);
+			DebugHandler.finest(":v: " +  v);
+			if ( v == null )
+				return null;
+			resultObjectArr = new ResultObject[v.size()];
+			for ( int idx = 0; idx < v.size(); idx++ ) {
+				resultObjectArr[idx] = v.get(idx);
+			}
+			Util.putInCache(RESULT, resultObjectArr);
 		}
 		return resultObjectArr;
-    }
+	}
     
-    
+	
     /**
-     *
-     * Implementation to add the <code>ResultObject</code> to the underlying datasource.
-     *
-     * @param resultObject     ResultObject
-     *
-     * @throws AppException if the operation fails
-     *
-     */
+	 *
+	 * Implementation to add the <code>ResultObject</code> to the underlying datasource.
+	 *
+	 * @param resultObject     ResultObject
+	 *
+	 * @throws AppException if the operation fails
+	 *
+	 */
     
-    public Integer addResult(ResultObject resultObject) throws AppException{
+	public Integer addResult(ResultObject resultObject) throws AppException{
 		if ( AppConstants.DB_TYPE.equalsIgnoreCase(Constants.ORACLE) ) {
 			long l = DBUtil.getNextId("Result_seq");
 			resultObject.setResultId((int)l);
@@ -168,16 +169,16 @@ public class ResultImpl implements ResultInterface  {
 		return i;
 	}
 	
-    
+	
     /**
-     *
-     * Implementation to update the <code>ResultObject</code> in the underlying datasource.
-     *
-     * @param resultObject     ResultObject
-     *
-     * @throws AppException if the operation fails
-     *
-     */
+	 *
+	 * Implementation to update the <code>ResultObject</code> in the underlying datasource.
+	 *
+	 * @param resultObject     ResultObject
+	 *
+	 * @throws AppException if the operation fails
+	 *
+	 */
     
 	public Integer updateResult(ResultObject resultObject) throws AppException{
 		ResultObject newResultObject = getResult(resultObject.getResultId()); // This call will make sure cache/db are in sync
@@ -198,18 +199,18 @@ public class ResultImpl implements ResultInterface  {
 		return i;
 	}
     
-    
+	
     /**
-     *
-     * Implementation to delete the <code>ResultObject</code> in the underlying datasource.
-     *
-     * @param resultObject     ResultObject
-     *
-     * @throws AppException if the operation fails
-     *
-     */
+	 *
+	 * Implementation to delete the <code>ResultObject</code> in the underlying datasource.
+	 *
+	 * @param resultObject     ResultObject
+	 *
+	 * @throws AppException if the operation fails
+	 *
+	 */
     
-    public Integer deleteResult(ResultObject resultObject) throws AppException{
+	public Integer deleteResult(ResultObject resultObject) throws AppException{
 	ResultObject newResultObject = getResult(resultObject.getResultId()); // This call will make sure cache/db are in sync
 	ResultObject[] resultObjectArr = getAllResults();
 	Integer i = new Integer(0);

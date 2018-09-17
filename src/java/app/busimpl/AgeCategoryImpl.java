@@ -27,107 +27,108 @@ import app.util.AppConstants;
  */
 
 public class AgeCategoryImpl implements AgeCategoryInterface  {
-    private String AGECATEGORY = "AgeCategoryInterface.getAllAgeCategory";
-    
+	private String AGECATEGORY = "AgeCategoryInterface.getAllAgeCategory";
+	
     /**
-     *
-     * Implementation that returns the AgeCategoryObject given a AgeCategoryObject filled with values that will be used for query from the underlying datasource.
-     *
-     * @param agecategory_obj	AgeCategoryObject
-     *
-     * @return      Returns the ArrayList of AgeCategoryObjects
-     *
-     * @throws AppException if the underlying operation fails
-     *
-     */
+	 *
+	 * Implementation that returns the AgeCategoryObject given a AgeCategoryObject filled with values that will be used for query from the underlying datasource.
+	 *
+	 * @param agecategory_obj	AgeCategoryObject
+	 *
+	 * @return      Returns the ArrayList of AgeCategoryObjects
+	 *
+	 * @throws AppException if the underlying operation fails
+	 *
+	 */
     
 	public ArrayList<AgeCategoryObject> getAgeCategorys(AgeCategoryObject agecategory_obj) throws AppException{
+		AgeCategoryObject[] ageCategoryObjectArr = getAllAgeCategorys();
 		@SuppressWarnings("unchecked")
 		ArrayList<AgeCategoryObject> v = (ArrayList<AgeCategoryObject>)DBUtil.list(agecategory_obj,agecategory_obj);
-	DebugHandler.finest("v: " + v);
-	return v;
-    }
-    
-    /**
-     *
-     * Implementation of the method that returns the AgeCategoryObject from the underlying datasource.
-     * given age_category_id.
-     *
-     * @param age_category_id     int
-     *
-     * @return      Returns the AgeCategoryObject
-     *
-     * @throws AppException if the operation fails
-     *
-     */
-    
-    public AgeCategoryObject getAgeCategory(int age_category_id) throws AppException{
-	AgeCategoryObject[] ageCategoryObjectArr = getAllAgeCategorys();
-	if ( ageCategoryObjectArr == null )
-	    return null;
-	for ( int i = 0; i < ageCategoryObjectArr.length; i++ ) {
-	    if ( ageCategoryObjectArr[i] == null ) { // Try database and add to cache if found.
-		    AgeCategoryObject agecategoryObj = new AgeCategoryObject();
-		    agecategoryObj.setAgeCategoryId(age_category_id);
-		    @SuppressWarnings("unchecked")
-		    ArrayList<AgeCategoryObject> v = (ArrayList)DBUtil.fetch(agecategoryObj);
-		    if ( v == null || v.size() == 0 )
-			    return null;
-		    else {
-			    ageCategoryObjectArr[i] = (AgeCategoryObject)agecategoryObj.clone();
-			    Util.putInCache(AGECATEGORY, ageCategoryObjectArr);
-		    }
-	    }
-	    if ( ageCategoryObjectArr[i].getAgeCategoryId() == age_category_id ) {
-		    DebugHandler.debug("Returning " + ageCategoryObjectArr[i]);
-		    return (AgeCategoryObject)ageCategoryObjectArr[i].clone();
-	    }
+		DebugHandler.finest("v: " + v);
+		return v;
 	}
-	return null;
-    }
-    
-    
+	
     /**
-     *
-     * Implementation that returns all the <code>AgeCategoryObjects</code> from the underlying datasource.
-     *
-     * @return      Returns an Array of <code>AgeCategoryObject</code>
-     *
-     * @throws AppException if the operation fails
-     *
-     */
+	 *
+	 * Implementation of the method that returns the AgeCategoryObject from the underlying datasource.
+	 * given age_category_id.
+	 *
+	 * @param age_category_id     int
+	 *
+	 * @return      Returns the AgeCategoryObject
+	 *
+	 * @throws AppException if the operation fails
+	 *
+	 */
     
-    public AgeCategoryObject[] getAllAgeCategorys() throws AppException{
+	public AgeCategoryObject getAgeCategory(int age_category_id) throws AppException{
+		AgeCategoryObject[] ageCategoryObjectArr = getAllAgeCategorys();
+		if ( ageCategoryObjectArr == null )
+			return null;
+		for ( int i = 0; i < ageCategoryObjectArr.length; i++ ) {
+			if ( ageCategoryObjectArr[i] == null ) { // Try database and add to cache if found.
+				AgeCategoryObject agecategoryObj = new AgeCategoryObject();
+				agecategoryObj.setAgeCategoryId(age_category_id);
+				@SuppressWarnings("unchecked")
+				ArrayList<AgeCategoryObject> v = (ArrayList)DBUtil.fetch(agecategoryObj);
+				if ( v == null || v.size() == 0 )
+					return null;
+				else {
+					ageCategoryObjectArr[i] = (AgeCategoryObject)agecategoryObj.clone();
+					Util.putInCache(AGECATEGORY, ageCategoryObjectArr);
+				}
+			}
+			if ( ageCategoryObjectArr[i].getAgeCategoryId() == age_category_id ) {
+				DebugHandler.debug("Returning " + ageCategoryObjectArr[i]);
+				return (AgeCategoryObject)ageCategoryObjectArr[i].clone();
+			}
+		}
+		return null;
+	}
+    
+	
+    /**
+	 *
+	 * Implementation that returns all the <code>AgeCategoryObjects</code> from the underlying datasource.
+	 *
+	 * @return      Returns an Array of <code>AgeCategoryObject</code>
+	 *
+	 * @throws AppException if the operation fails
+	 *
+	 */
+    
+	public AgeCategoryObject[] getAllAgeCategorys() throws AppException{
 		AgeCategoryObject ageCategoryObject = new AgeCategoryObject();
 		AgeCategoryObject[] ageCategoryObjectArr = (AgeCategoryObject[])Util.getAppCache().get(AGECATEGORY);
 		if ( ageCategoryObjectArr == null ) {
-		    DebugHandler.info("Getting agecategory from database");
-		    @SuppressWarnings("unchecked")
-		    ArrayList<AgeCategoryObject> v = (ArrayList)DBUtil.list(ageCategoryObject);
-		    DebugHandler.finest(":v: " +  v);
-		    if ( v == null )
-			    return null;
-		    ageCategoryObjectArr = new AgeCategoryObject[v.size()];
-		    for ( int idx = 0; idx < v.size(); idx++ ) {
-			    ageCategoryObjectArr[idx] = v.get(idx);
-		    }
-		    Util.putInCache(AGECATEGORY, ageCategoryObjectArr);
+			DebugHandler.info("Getting agecategory from database");
+			@SuppressWarnings("unchecked")
+			ArrayList<AgeCategoryObject> v = (ArrayList)DBUtil.list(ageCategoryObject);
+			DebugHandler.finest(":v: " +  v);
+			if ( v == null )
+				return null;
+			ageCategoryObjectArr = new AgeCategoryObject[v.size()];
+			for ( int idx = 0; idx < v.size(); idx++ ) {
+				ageCategoryObjectArr[idx] = v.get(idx);
+			}
+			Util.putInCache(AGECATEGORY, ageCategoryObjectArr);
 		}
 		return ageCategoryObjectArr;
-    }
+	}
     
-    
+	
     /**
-     *
-     * Implementation to add the <code>AgeCategoryObject</code> to the underlying datasource.
-     *
-     * @param ageCategoryObject     AgeCategoryObject
-     *
-     * @throws AppException if the operation fails
-     *
-     */
+	 *
+	 * Implementation to add the <code>AgeCategoryObject</code> to the underlying datasource.
+	 *
+	 * @param ageCategoryObject     AgeCategoryObject
+	 *
+	 * @throws AppException if the operation fails
+	 *
+	 */
     
-    public Integer addAgeCategory(AgeCategoryObject ageCategoryObject) throws AppException{
+	public Integer addAgeCategory(AgeCategoryObject ageCategoryObject) throws AppException{
 		if ( AppConstants.DB_TYPE.equalsIgnoreCase(Constants.ORACLE) ) {
 			long l = DBUtil.getNextId("Age_Category_seq");
 			ageCategoryObject.setAgeCategoryId((int)l);
@@ -168,16 +169,16 @@ public class AgeCategoryImpl implements AgeCategoryInterface  {
 		return i;
 	}
 	
-    
+	
     /**
-     *
-     * Implementation to update the <code>AgeCategoryObject</code> in the underlying datasource.
-     *
-     * @param ageCategoryObject     AgeCategoryObject
-     *
-     * @throws AppException if the operation fails
-     *
-     */
+	 *
+	 * Implementation to update the <code>AgeCategoryObject</code> in the underlying datasource.
+	 *
+	 * @param ageCategoryObject     AgeCategoryObject
+	 *
+	 * @throws AppException if the operation fails
+	 *
+	 */
     
 	public Integer updateAgeCategory(AgeCategoryObject ageCategoryObject) throws AppException{
 		AgeCategoryObject newAgeCategoryObject = getAgeCategory(ageCategoryObject.getAgeCategoryId()); // This call will make sure cache/db are in sync
@@ -198,18 +199,18 @@ public class AgeCategoryImpl implements AgeCategoryInterface  {
 		return i;
 	}
     
-    
+	
     /**
-     *
-     * Implementation to delete the <code>AgeCategoryObject</code> in the underlying datasource.
-     *
-     * @param ageCategoryObject     AgeCategoryObject
-     *
-     * @throws AppException if the operation fails
-     *
-     */
+	 *
+	 * Implementation to delete the <code>AgeCategoryObject</code> in the underlying datasource.
+	 *
+	 * @param ageCategoryObject     AgeCategoryObject
+	 *
+	 * @throws AppException if the operation fails
+	 *
+	 */
     
-    public Integer deleteAgeCategory(AgeCategoryObject ageCategoryObject) throws AppException{
+	public Integer deleteAgeCategory(AgeCategoryObject ageCategoryObject) throws AppException{
 	AgeCategoryObject newAgeCategoryObject = getAgeCategory(ageCategoryObject.getAgeCategoryId()); // This call will make sure cache/db are in sync
 	AgeCategoryObject[] ageCategoryObjectArr = getAllAgeCategorys();
 	Integer i = new Integer(0);

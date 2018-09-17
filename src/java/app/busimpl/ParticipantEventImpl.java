@@ -27,107 +27,108 @@ import app.util.AppConstants;
  */
 
 public class ParticipantEventImpl implements ParticipantEventInterface  {
-    private String PARTICIPANTEVENT = "ParticipantEventInterface.getAllParticipantEvent";
-    
+	private String PARTICIPANTEVENT = "ParticipantEventInterface.getAllParticipantEvent";
+	
     /**
-     *
-     * Implementation that returns the ParticipantEventObject given a ParticipantEventObject filled with values that will be used for query from the underlying datasource.
-     *
-     * @param participantevent_obj	ParticipantEventObject
-     *
-     * @return      Returns the ArrayList of ParticipantEventObjects
-     *
-     * @throws AppException if the underlying operation fails
-     *
-     */
+	 *
+	 * Implementation that returns the ParticipantEventObject given a ParticipantEventObject filled with values that will be used for query from the underlying datasource.
+	 *
+	 * @param participantevent_obj	ParticipantEventObject
+	 *
+	 * @return      Returns the ArrayList of ParticipantEventObjects
+	 *
+	 * @throws AppException if the underlying operation fails
+	 *
+	 */
     
 	public ArrayList<ParticipantEventObject> getParticipantEvents(ParticipantEventObject participantevent_obj) throws AppException{
+		ParticipantEventObject[] participantEventObjectArr = getAllParticipantEvents();
 		@SuppressWarnings("unchecked")
 		ArrayList<ParticipantEventObject> v = (ArrayList<ParticipantEventObject>)DBUtil.list(participantevent_obj,participantevent_obj);
-	DebugHandler.finest("v: " + v);
-	return v;
-    }
-    
-    /**
-     *
-     * Implementation of the method that returns the ParticipantEventObject from the underlying datasource.
-     * given participant_event_id.
-     *
-     * @param participant_event_id     int
-     *
-     * @return      Returns the ParticipantEventObject
-     *
-     * @throws AppException if the operation fails
-     *
-     */
-    
-    public ParticipantEventObject getParticipantEvent(int participant_event_id) throws AppException{
-	ParticipantEventObject[] participantEventObjectArr = getAllParticipantEvents();
-	if ( participantEventObjectArr == null )
-	    return null;
-	for ( int i = 0; i < participantEventObjectArr.length; i++ ) {
-	    if ( participantEventObjectArr[i] == null ) { // Try database and add to cache if found.
-		    ParticipantEventObject participanteventObj = new ParticipantEventObject();
-		    participanteventObj.setParticipantEventId(participant_event_id);
-		    @SuppressWarnings("unchecked")
-		    ArrayList<ParticipantEventObject> v = (ArrayList)DBUtil.fetch(participanteventObj);
-		    if ( v == null || v.size() == 0 )
-			    return null;
-		    else {
-			    participantEventObjectArr[i] = (ParticipantEventObject)participanteventObj.clone();
-			    Util.putInCache(PARTICIPANTEVENT, participantEventObjectArr);
-		    }
-	    }
-	    if ( participantEventObjectArr[i].getParticipantEventId() == participant_event_id ) {
-		    DebugHandler.debug("Returning " + participantEventObjectArr[i]);
-		    return (ParticipantEventObject)participantEventObjectArr[i].clone();
-	    }
+		DebugHandler.finest("v: " + v);
+		return v;
 	}
-	return null;
-    }
-    
-    
+	
     /**
-     *
-     * Implementation that returns all the <code>ParticipantEventObjects</code> from the underlying datasource.
-     *
-     * @return      Returns an Array of <code>ParticipantEventObject</code>
-     *
-     * @throws AppException if the operation fails
-     *
-     */
+	 *
+	 * Implementation of the method that returns the ParticipantEventObject from the underlying datasource.
+	 * given participant_event_id.
+	 *
+	 * @param participant_event_id     int
+	 *
+	 * @return      Returns the ParticipantEventObject
+	 *
+	 * @throws AppException if the operation fails
+	 *
+	 */
     
-    public ParticipantEventObject[] getAllParticipantEvents() throws AppException{
+	public ParticipantEventObject getParticipantEvent(int participant_event_id) throws AppException{
+		ParticipantEventObject[] participantEventObjectArr = getAllParticipantEvents();
+		if ( participantEventObjectArr == null )
+			return null;
+		for ( int i = 0; i < participantEventObjectArr.length; i++ ) {
+			if ( participantEventObjectArr[i] == null ) { // Try database and add to cache if found.
+				ParticipantEventObject participanteventObj = new ParticipantEventObject();
+				participanteventObj.setParticipantEventId(participant_event_id);
+				@SuppressWarnings("unchecked")
+				ArrayList<ParticipantEventObject> v = (ArrayList)DBUtil.fetch(participanteventObj);
+				if ( v == null || v.size() == 0 )
+					return null;
+				else {
+					participantEventObjectArr[i] = (ParticipantEventObject)participanteventObj.clone();
+					Util.putInCache(PARTICIPANTEVENT, participantEventObjectArr);
+				}
+			}
+			if ( participantEventObjectArr[i].getParticipantEventId() == participant_event_id ) {
+				DebugHandler.debug("Returning " + participantEventObjectArr[i]);
+				return (ParticipantEventObject)participantEventObjectArr[i].clone();
+			}
+		}
+		return null;
+	}
+    
+	
+    /**
+	 *
+	 * Implementation that returns all the <code>ParticipantEventObjects</code> from the underlying datasource.
+	 *
+	 * @return      Returns an Array of <code>ParticipantEventObject</code>
+	 *
+	 * @throws AppException if the operation fails
+	 *
+	 */
+    
+	public ParticipantEventObject[] getAllParticipantEvents() throws AppException{
 		ParticipantEventObject participantEventObject = new ParticipantEventObject();
 		ParticipantEventObject[] participantEventObjectArr = (ParticipantEventObject[])Util.getAppCache().get(PARTICIPANTEVENT);
 		if ( participantEventObjectArr == null ) {
-		    DebugHandler.info("Getting participantevent from database");
-		    @SuppressWarnings("unchecked")
-		    ArrayList<ParticipantEventObject> v = (ArrayList)DBUtil.list(participantEventObject);
-		    DebugHandler.finest(":v: " +  v);
-		    if ( v == null )
-			    return null;
-		    participantEventObjectArr = new ParticipantEventObject[v.size()];
-		    for ( int idx = 0; idx < v.size(); idx++ ) {
-			    participantEventObjectArr[idx] = v.get(idx);
-		    }
-		    Util.putInCache(PARTICIPANTEVENT, participantEventObjectArr);
+			DebugHandler.info("Getting participantevent from database");
+			@SuppressWarnings("unchecked")
+			ArrayList<ParticipantEventObject> v = (ArrayList)DBUtil.list(participantEventObject);
+			DebugHandler.finest(":v: " +  v);
+			if ( v == null )
+				return null;
+			participantEventObjectArr = new ParticipantEventObject[v.size()];
+			for ( int idx = 0; idx < v.size(); idx++ ) {
+				participantEventObjectArr[idx] = v.get(idx);
+			}
+			Util.putInCache(PARTICIPANTEVENT, participantEventObjectArr);
 		}
 		return participantEventObjectArr;
-    }
+	}
     
-    
+	
     /**
-     *
-     * Implementation to add the <code>ParticipantEventObject</code> to the underlying datasource.
-     *
-     * @param participantEventObject     ParticipantEventObject
-     *
-     * @throws AppException if the operation fails
-     *
-     */
+	 *
+	 * Implementation to add the <code>ParticipantEventObject</code> to the underlying datasource.
+	 *
+	 * @param participantEventObject     ParticipantEventObject
+	 *
+	 * @throws AppException if the operation fails
+	 *
+	 */
     
-    public Integer addParticipantEvent(ParticipantEventObject participantEventObject) throws AppException{
+	public Integer addParticipantEvent(ParticipantEventObject participantEventObject) throws AppException{
 		if ( AppConstants.DB_TYPE.equalsIgnoreCase(Constants.ORACLE) ) {
 			long l = DBUtil.getNextId("Participant_Event_seq");
 			participantEventObject.setParticipantEventId((int)l);
@@ -168,16 +169,16 @@ public class ParticipantEventImpl implements ParticipantEventInterface  {
 		return i;
 	}
 	
-    
+	
     /**
-     *
-     * Implementation to update the <code>ParticipantEventObject</code> in the underlying datasource.
-     *
-     * @param participantEventObject     ParticipantEventObject
-     *
-     * @throws AppException if the operation fails
-     *
-     */
+	 *
+	 * Implementation to update the <code>ParticipantEventObject</code> in the underlying datasource.
+	 *
+	 * @param participantEventObject     ParticipantEventObject
+	 *
+	 * @throws AppException if the operation fails
+	 *
+	 */
     
 	public Integer updateParticipantEvent(ParticipantEventObject participantEventObject) throws AppException{
 		ParticipantEventObject newParticipantEventObject = getParticipantEvent(participantEventObject.getParticipantEventId()); // This call will make sure cache/db are in sync
@@ -198,18 +199,18 @@ public class ParticipantEventImpl implements ParticipantEventInterface  {
 		return i;
 	}
     
-    
+	
     /**
-     *
-     * Implementation to delete the <code>ParticipantEventObject</code> in the underlying datasource.
-     *
-     * @param participantEventObject     ParticipantEventObject
-     *
-     * @throws AppException if the operation fails
-     *
-     */
+	 *
+	 * Implementation to delete the <code>ParticipantEventObject</code> in the underlying datasource.
+	 *
+	 * @param participantEventObject     ParticipantEventObject
+	 *
+	 * @throws AppException if the operation fails
+	 *
+	 */
     
-    public Integer deleteParticipantEvent(ParticipantEventObject participantEventObject) throws AppException{
+	public Integer deleteParticipantEvent(ParticipantEventObject participantEventObject) throws AppException{
 	ParticipantEventObject newParticipantEventObject = getParticipantEvent(participantEventObject.getParticipantEventId()); // This call will make sure cache/db are in sync
 	ParticipantEventObject[] participantEventObjectArr = getAllParticipantEvents();
 	Integer i = new Integer(0);

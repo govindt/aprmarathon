@@ -95,91 +95,91 @@ public class PaymentTypeObject implements Cloneable {
 		} catch (JSONException je) {}
 	}
     
-    
+	
     /**
-     *
-     * Sets the <code>payment_type_id</code> field
-     *
-     * @param payment_type_id      int
-     *
-     */
+	 *
+	 * Sets the <code>payment_type_id</code> field
+	 *
+	 * @param payment_type_id      int
+	 *
+	 */
     
-    public void setPaymentTypeId(int payment_type_id) {
-        this.payment_type_id = payment_type_id;
-    }
+	public void setPaymentTypeId(int payment_type_id) {
+	    this.payment_type_id = payment_type_id;
+	}
     
-    
+	
     /**
-     *
-     * Gets the <code>payment_type_id</code> field
-     *
-     * @returns payment_type_id
-     *
-     */
+	 *
+	 * Gets the <code>payment_type_id</code> field
+	 *
+	 * @returns payment_type_id
+	 *
+	 */
     
-    public int getPaymentTypeId() {
-        return payment_type_id;
-    }
+	public int getPaymentTypeId() {
+	    return payment_type_id;
+	}
 
-    
+	
     /**
-     *
-     * Sets the <code>payment_type_name</code> field
-     *
-     * @param payment_type_name      String
-     *
-     */
+	 *
+	 * Sets the <code>payment_type_name</code> field
+	 *
+	 * @param payment_type_name      String
+	 *
+	 */
     
-    public void setPaymentTypeName(String payment_type_name) {
-        this.payment_type_name = payment_type_name;
-    }
+	public void setPaymentTypeName(String payment_type_name) {
+	    this.payment_type_name = payment_type_name;
+	}
     
-    
+	
     /**
-     *
-     * Gets the <code>payment_type_name</code> field
-     *
-     * @returns payment_type_name
-     *
-     */
+	 *
+	 * Gets the <code>payment_type_name</code> field
+	 *
+	 * @returns payment_type_name
+	 *
+	 */
     
-    public String getPaymentTypeName() {
-        return payment_type_name;
-    }
+	public String getPaymentTypeName() {
+	    return payment_type_name;
+	}
 
-    
+	
     /**
-     *
-     * Tests if this object equals <code>obj</code>
-     *
-     * @returns true if equals
-     *
-     */
+	 *
+	 * Tests if this object equals <code>obj</code>
+	 *
+	 * @returns true if equals
+	 *
+	 */
     
-    public boolean equals(Object obj) {
-        PaymentTypeObject other = (PaymentTypeObject)obj;
-        DebugHandler.finest("This: " + this);
-        DebugHandler.finest("Other: " + other);
-        return
-            payment_type_id == other.getPaymentTypeId() &&
-            Util.trim(payment_type_name).equals(Util.trim(other.getPaymentTypeName()));
-    }
-    
+	public boolean equals(Object obj) {
+	    PaymentTypeObject other = (PaymentTypeObject)obj;
+	    DebugHandler.finest("This: " + this);
+	    DebugHandler.finest("Other: " + other);
+	    return
+	        payment_type_id == other.getPaymentTypeId() &&
+	        Util.trim(payment_type_name).equals(Util.trim(other.getPaymentTypeName()));
+	}
+	
     /**
-     *
-     * Clones this object
-     *
-     * @returns the clone of this object
-     *
-     */
+	 *
+	 * Clones this object
+	 *
+	 * @returns the clone of this object
+	 *
+	 */
     
-    public Object clone() {
-        Object theClone = null;
-        try {
-            theClone = super.clone();
-        } catch (CloneNotSupportedException ce) {
-            DebugHandler.severe("Cannot clone " + this);
-        }
-        return theClone;
-    }
+	public Object clone() {
+	    Object theClone = null;
+	    try {
+	   theClone = super.clone();
+	    } catch (CloneNotSupportedException ce) {
+	   DebugHandler.severe("Cannot clone " + this);
+	    }
+	    return theClone;
+	}
 }
