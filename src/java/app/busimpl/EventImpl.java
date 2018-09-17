@@ -42,7 +42,6 @@ public class EventImpl implements EventInterface  {
 	 */
     
 	public ArrayList<EventObject> getEvents(EventObject event_obj) throws AppException{
-		EventObject[] eventObjectArr = getAllEvents();
 		@SuppressWarnings("unchecked")
 		ArrayList<EventObject> v = (ArrayList<EventObject>)DBUtil.list(event_obj,event_obj);
 		DebugHandler.finest("v: " + v);

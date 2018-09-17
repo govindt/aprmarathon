@@ -42,7 +42,6 @@ public class BeneficiaryImpl implements BeneficiaryInterface  {
 	 */
     
 	public ArrayList<BeneficiaryObject> getBeneficiarys(BeneficiaryObject beneficiary_obj) throws AppException{
-		BeneficiaryObject[] beneficiaryObjectArr = getAllBeneficiarys();
 		@SuppressWarnings("unchecked")
 		ArrayList<BeneficiaryObject> v = (ArrayList<BeneficiaryObject>)DBUtil.list(beneficiary_obj,beneficiary_obj);
 		DebugHandler.finest("v: " + v);

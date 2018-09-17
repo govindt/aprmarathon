@@ -117,31 +117,31 @@ public class RegistrantEventObject implements Cloneable {
 	public RegistrantEventObject (JSONObject jObject) {
 		try {
 			registrant_event_id = jObject.getInt("registrant_event_id");
-		} catch (JSONException je) {}
+		} catch (JSONException je) {registrant_event_id = 0;}
 		try {
 			registrant_id = jObject.getInt("registrant_id");
-		} catch (JSONException je) {}
+		} catch (JSONException je) {registrant_id = 0;}
 		try {
 			registrant_event = jObject.getInt("registrant_event");
-		} catch (JSONException je) {}
+		} catch (JSONException je) {registrant_event = 0;}
 		try {
 			registrant_type = jObject.getInt("registrant_type");
-		} catch (JSONException je) {}
+		} catch (JSONException je) {registrant_type = 0;}
 		try {
 			registrant_source = jObject.getInt("registrant_source");
-		} catch (JSONException je) {}
+		} catch (JSONException je) {registrant_source = 0;}
 		try {
 			registrant_class = jObject.getInt("registrant_class");
-		} catch (JSONException je) {}
+		} catch (JSONException je) {registrant_class = 0;}
 		try {
 			registrant_beneficiary = jObject.getInt("registrant_beneficiary");
-		} catch (JSONException je) {}
+		} catch (JSONException je) {registrant_beneficiary = 0;}
 		try {
 			registrant_emergency_contact = jObject.getString("registrant_emergency_contact");
-		} catch (JSONException je) {}
+		} catch (JSONException je) {registrant_emergency_contact = "";}
 		try {
 			registrant_emergency_phone = jObject.getString("registrant_emergency_phone");
-		} catch (JSONException je) {}
+		} catch (JSONException je) {registrant_emergency_phone = "";}
 	}
     
 	

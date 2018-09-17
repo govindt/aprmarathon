@@ -42,7 +42,6 @@ public class ParticipantImpl implements ParticipantInterface  {
 	 */
     
 	public ArrayList<ParticipantObject> getParticipants(ParticipantObject participant_obj) throws AppException{
-		ParticipantObject[] participantObjectArr = getAllParticipants();
 		@SuppressWarnings("unchecked")
 		ArrayList<ParticipantObject> v = (ArrayList<ParticipantObject>)DBUtil.list(participant_obj,participant_obj);
 		DebugHandler.finest("v: " + v);

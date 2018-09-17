@@ -129,40 +129,40 @@ public class RegistrantObject implements Cloneable {
 	public RegistrantObject (JSONObject jObject) {
 		try {
 			registrant_id = jObject.getInt("registrant_id");
-		} catch (JSONException je) {}
+		} catch (JSONException je) {registrant_id = 0;}
 		try {
 			registrant_name = jObject.getString("registrant_name");
-		} catch (JSONException je) {}
+		} catch (JSONException je) {registrant_name = "";}
 		try {
 			registrant_middle_name = jObject.getString("registrant_middle_name");
-		} catch (JSONException je) {}
+		} catch (JSONException je) {registrant_middle_name = "";}
 		try {
 			registrant_last_name = jObject.getString("registrant_last_name");
-		} catch (JSONException je) {}
+		} catch (JSONException je) {registrant_last_name = "";}
 		try {
 			registrant_email = jObject.getString("registrant_email");
-		} catch (JSONException je) {}
+		} catch (JSONException je) {registrant_email = "";}
 		try {
 			registrant_additional_email = jObject.getString("registrant_additional_email");
-		} catch (JSONException je) {}
+		} catch (JSONException je) {registrant_additional_email = "";}
 		try {
 			registrant_phone = jObject.getString("registrant_phone");
-		} catch (JSONException je) {}
+		} catch (JSONException je) {registrant_phone = "";}
 		try {
 			registrant_address = jObject.getString("registrant_address");
-		} catch (JSONException je) {}
+		} catch (JSONException je) {registrant_address = "";}
 		try {
 			registrant_city = jObject.getString("registrant_city");
-		} catch (JSONException je) {}
+		} catch (JSONException je) {registrant_city = "";}
 		try {
 			registrant_state = jObject.getString("registrant_state");
-		} catch (JSONException je) {}
+		} catch (JSONException je) {registrant_state = "";}
 		try {
 			registrant_pincode = jObject.getString("registrant_pincode");
-		} catch (JSONException je) {}
+		} catch (JSONException je) {registrant_pincode = "";}
 		try {
 			registrant_pan = jObject.getString("registrant_pan");
-		} catch (JSONException je) {}
+		} catch (JSONException je) {registrant_pan = "";}
 	}
     
 	

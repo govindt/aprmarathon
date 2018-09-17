@@ -113,33 +113,33 @@ public class ResultObject implements Cloneable {
 	public ResultObject (JSONObject jObject) {
 		try {
 			result_id = jObject.getInt("result_id");
-		} catch (JSONException je) {}
+		} catch (JSONException je) {result_id = 0;}
 		try {
 			result_event = jObject.getInt("result_event");
-		} catch (JSONException je) {}
+		} catch (JSONException je) {result_event = 0;}
 		try {
 			result_event_type = jObject.getInt("result_event_type");
-		} catch (JSONException je) {}
+		} catch (JSONException je) {result_event_type = 0;}
 		try {
 			result_medal = jObject.getInt("result_medal");
-		} catch (JSONException je) {}
+		} catch (JSONException je) {result_medal = 0;}
 		try {
 			result_winner = jObject.getInt("result_winner");
-		} catch (JSONException je) {}
+		} catch (JSONException je) {result_winner = 0;}
 		try {
 			result_winner_registrant = jObject.getInt("result_winner_registrant");
-		} catch (JSONException je) {}
+		} catch (JSONException je) {result_winner_registrant = 0;}
 		try {
 			result_score = jObject.getString("result_score");
-		} catch (JSONException je) {}
+		} catch (JSONException je) {result_score = "";}
 		try {
 			try {
 				SimpleDateFormat dateFormatter = new SimpleDateFormat(Constants.DATE_FORMAT_STR);
 				result_timing = dateFormatter.parse(jObject.getString("result_timing"));
-			} catch (ParseException e) {
+			} catch (ParseException e) {result_timing = new Date();
 				e.printStackTrace();
 			}
-		} catch (JSONException je) {}
+		} catch (JSONException je) {result_timing = new Date();}
 	}
     
 	

@@ -997,17 +997,20 @@ ${NAWK} -v QUOTE="'" -v logname=${LOGNAME} -v version=1.0 -v since=1.0 -v proj_n
 
 	  if (field_types[j]  == "int" ) { 
 		printf("\t\t\t%s = jObject.getInt(\"%s\");\n", field_names[j], field_names[j])>>file_name;
+		printf("\t\t} catch (JSONException je) {%s = 0;}\n", field_names[j]) >> file_name;  
 	  }
 	  else if ( field_types[j] == "String" ) {
 		printf("\t\t\t%s = jObject.getString(\"%s\");\n", field_names[j], field_names[j])>>file_name;
+		printf("\t\t} catch (JSONException je) {%s = \"\";}\n", field_names[j]) >> file_name; 
 	  }
 	  else if ( field_types[j] == "Date" ) {
 		printf("\t\t\ttry {\n")>>file_name;
 		printf("\t\t\t\tSimpleDateFormat dateFormatter = new SimpleDateFormat(Constants.DATE_FORMAT_STR);\n")>>file_name;
 		printf("\t\t\t\t%s = dateFormatter.parse(jObject.getString(\"%s\"));\n", field_names[j], field_names[j])>>file_name;
-		printf("\t\t\t} catch (ParseException e) {\n")>>file_name;
+		printf("\t\t\t} catch (ParseException e) {%s = new Date();\n", field_names[j])>>file_name;
 		printf("\t\t\t\te.printStackTrace();\n")>>file_name;
 		printf("\t\t\t}\n")>>file_name;
+		printf("\t\t} catch (JSONException je) {%s = new Date();}\n", field_names[j]) >> file_name;
 	  }
 	  else if ( field_types[j] == "double" ) {
 		printf("\t\t\ttry {\n")>>file_name;
@@ -1015,6 +1018,7 @@ ${NAWK} -v QUOTE="'" -v logname=${LOGNAME} -v version=1.0 -v since=1.0 -v proj_n
 		printf("\t\t\t} catch (NumberFormatException e) {\n")>>file_name;
 		printf("\t\t\t\te.printStackTrace();\n")>>file_name;
 		printf("\t\t\t}\n")>>file_name;
+		printf("\t\t} catch (JSONException je) {%s = 0.0;}\n", field_names[j]) >> file_name;
 	  }
 	  else if ( field_types[j] == "float" ) {
 		printf("\t\t\ttry {\n")>>file_name;
@@ -1022,8 +1026,9 @@ ${NAWK} -v QUOTE="'" -v logname=${LOGNAME} -v version=1.0 -v since=1.0 -v proj_n
 		printf("\t\t\t} catch (NumberFormatException e) {\n")>>file_name;
 		printf("\t\t\t\te.printStackTrace();\n")>>file_name;
 		printf("\t\t\t}\n")>>file_name;
+		printf("\t\t} catch (JSONException je) {%s = 0.0;}\n", field_names[j]) >> file_name;
 	  }
-	  printf("\t\t} catch (JSONException je) {}\n") >> file_name; 
+	  
 	}
 	printf("\t}\n    \n")>>file_name;
 	# End Constructor
@@ -1174,10 +1179,10 @@ ${NAWK} -v QUOTE="'" -v logname=${LOGNAME} -v version=1.0 -v since=1.0 -v proj_n
 	# End get Method Comments
 	if (last_char == "s") {
 	    printf("\tpublic ArrayList<%sObject> get%s(%sObject %s_obj) throws AppException{\n", tmp_file_name, tmp_file_name, tmp_file_name, tolower(tmp_file_name)) >> impl_file_name;
-	    printf("\t\t%sObject[] %sArr = getAll%s();\n",tmp_file_name, tmp, tmp_file_name) >> impl_file_name;
+	    #printf("\t\t%sObject[] %sArr = getAll%s();\n",tmp_file_name, tmp, tmp_file_name) >> impl_file_name;
 	} else {
 	    printf("\tpublic ArrayList<%sObject> get%ss(%sObject %s_obj) throws AppException{\n", tmp_file_name, tmp_file_name, tmp_file_name, tolower(tmp_file_name)) >> impl_file_name;
-	    printf("\t\t%sObject[] %sArr = getAll%ss();\n",tmp_file_name, tmp, tmp_file_name) >> impl_file_name;
+	    #printf("\t\t%sObject[] %sArr = getAll%ss();\n",tmp_file_name, tmp, tmp_file_name) >> impl_file_name;
 	}
 	printf("\t\t@SuppressWarnings(\"unchecked\")\n") >> impl_file_name;
 	printf("\t\tArrayList<%sObject> v = (ArrayList<%sObject>)DBUtil.list(%s_obj,%s_obj);\n", tmp_file_name, tmp_file_name, tolower(tmp_file_name), tolower(tmp_file_name)) >> impl_file_name;

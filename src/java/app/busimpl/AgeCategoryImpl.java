@@ -42,7 +42,6 @@ public class AgeCategoryImpl implements AgeCategoryInterface  {
 	 */
     
 	public ArrayList<AgeCategoryObject> getAgeCategorys(AgeCategoryObject agecategory_obj) throws AppException{
-		AgeCategoryObject[] ageCategoryObjectArr = getAllAgeCategorys();
 		@SuppressWarnings("unchecked")
 		ArrayList<AgeCategoryObject> v = (ArrayList<AgeCategoryObject>)DBUtil.list(agecategory_obj,agecategory_obj);
 		DebugHandler.finest("v: " + v);

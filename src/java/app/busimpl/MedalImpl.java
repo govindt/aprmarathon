@@ -42,7 +42,6 @@ public class MedalImpl implements MedalInterface  {
 	 */
     
 	public ArrayList<MedalObject> getMedals(MedalObject medal_obj) throws AppException{
-		MedalObject[] medalObjectArr = getAllMedals();
 		@SuppressWarnings("unchecked")
 		ArrayList<MedalObject> v = (ArrayList<MedalObject>)DBUtil.list(medal_obj,medal_obj);
 		DebugHandler.finest("v: " + v);

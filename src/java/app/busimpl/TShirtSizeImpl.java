@@ -42,7 +42,6 @@ public class TShirtSizeImpl implements TShirtSizeInterface  {
 	 */
     
 	public ArrayList<TShirtSizeObject> getTShirtSizes(TShirtSizeObject tshirtsize_obj) throws AppException{
-		TShirtSizeObject[] tShirtSizeObjectArr = getAllTShirtSizes();
 		@SuppressWarnings("unchecked")
 		ArrayList<TShirtSizeObject> v = (ArrayList<TShirtSizeObject>)DBUtil.list(tshirtsize_obj,tshirtsize_obj);
 		DebugHandler.finest("v: " + v);

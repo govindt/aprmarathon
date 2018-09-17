@@ -113,38 +113,38 @@ public class EventTypeObject implements Cloneable {
 	public EventTypeObject (JSONObject jObject) {
 		try {
 			event_type_id = jObject.getInt("event_type_id");
-		} catch (JSONException je) {}
+		} catch (JSONException je) {event_type_id = 0;}
 		try {
 			event_type_name = jObject.getString("event_type_name");
-		} catch (JSONException je) {}
+		} catch (JSONException je) {event_type_name = "";}
 		try {
 			event = jObject.getInt("event");
-		} catch (JSONException je) {}
+		} catch (JSONException je) {event = 0;}
 		try {
 			event_type_description = jObject.getString("event_type_description");
-		} catch (JSONException je) {}
+		} catch (JSONException je) {event_type_description = "";}
 		try {
 			try {
 				SimpleDateFormat dateFormatter = new SimpleDateFormat(Constants.DATE_FORMAT_STR);
 				event_type_start_date = dateFormatter.parse(jObject.getString("event_type_start_date"));
-			} catch (ParseException e) {
+			} catch (ParseException e) {event_type_start_date = new Date();
 				e.printStackTrace();
 			}
-		} catch (JSONException je) {}
+		} catch (JSONException je) {event_type_start_date = new Date();}
 		try {
 			try {
 				SimpleDateFormat dateFormatter = new SimpleDateFormat(Constants.DATE_FORMAT_STR);
 				event_type_end_date = dateFormatter.parse(jObject.getString("event_type_end_date"));
-			} catch (ParseException e) {
+			} catch (ParseException e) {event_type_end_date = new Date();
 				e.printStackTrace();
 			}
-		} catch (JSONException je) {}
+		} catch (JSONException je) {event_type_end_date = new Date();}
 		try {
 			event_type_venue = jObject.getString("event_type_venue");
-		} catch (JSONException je) {}
+		} catch (JSONException je) {event_type_venue = "";}
 		try {
 			online_registration_only = jObject.getString("online_registration_only");
-		} catch (JSONException je) {}
+		} catch (JSONException je) {online_registration_only = "";}
 	}
     
 	

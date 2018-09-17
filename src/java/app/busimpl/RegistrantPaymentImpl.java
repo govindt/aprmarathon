@@ -42,7 +42,6 @@ public class RegistrantPaymentImpl implements RegistrantPaymentInterface  {
 	 */
     
 	public ArrayList<RegistrantPaymentObject> getRegistrantPayments(RegistrantPaymentObject registrantpayment_obj) throws AppException{
-		RegistrantPaymentObject[] registrantPaymentObjectArr = getAllRegistrantPayments();
 		@SuppressWarnings("unchecked")
 		ArrayList<RegistrantPaymentObject> v = (ArrayList<RegistrantPaymentObject>)DBUtil.list(registrantpayment_obj,registrantpayment_obj);
 		DebugHandler.finest("v: " + v);

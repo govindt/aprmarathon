@@ -89,10 +89,10 @@ public class RegistrationTypeObject implements Cloneable {
 	public RegistrationTypeObject (JSONObject jObject) {
 		try {
 			registration_type_id = jObject.getInt("registration_type_id");
-		} catch (JSONException je) {}
+		} catch (JSONException je) {registration_type_id = 0;}
 		try {
 			registration_type_name = jObject.getString("registration_type_name");
-		} catch (JSONException je) {}
+		} catch (JSONException je) {registration_type_name = "";}
 	}
     
 	

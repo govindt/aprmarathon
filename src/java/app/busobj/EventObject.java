@@ -109,45 +109,45 @@ public class EventObject implements Cloneable {
 	public EventObject (JSONObject jObject) {
 		try {
 			event_id = jObject.getInt("event_id");
-		} catch (JSONException je) {}
+		} catch (JSONException je) {event_id = 0;}
 		try {
 			event_name = jObject.getString("event_name");
-		} catch (JSONException je) {}
+		} catch (JSONException je) {event_name = "";}
 		try {
 			try {
 				SimpleDateFormat dateFormatter = new SimpleDateFormat(Constants.DATE_FORMAT_STR);
 				event_start_date = dateFormatter.parse(jObject.getString("event_start_date"));
-			} catch (ParseException e) {
+			} catch (ParseException e) {event_start_date = new Date();
 				e.printStackTrace();
 			}
-		} catch (JSONException je) {}
+		} catch (JSONException je) {event_start_date = new Date();}
 		try {
 			try {
 				SimpleDateFormat dateFormatter = new SimpleDateFormat(Constants.DATE_FORMAT_STR);
 				event_end_date = dateFormatter.parse(jObject.getString("event_end_date"));
-			} catch (ParseException e) {
+			} catch (ParseException e) {event_end_date = new Date();
 				e.printStackTrace();
 			}
-		} catch (JSONException je) {}
+		} catch (JSONException je) {event_end_date = new Date();}
 		try {
 			event_description = jObject.getString("event_description");
-		} catch (JSONException je) {}
+		} catch (JSONException je) {event_description = "";}
 		try {
 			try {
 				SimpleDateFormat dateFormatter = new SimpleDateFormat(Constants.DATE_FORMAT_STR);
 				event_registation_close_date = dateFormatter.parse(jObject.getString("event_registation_close_date"));
-			} catch (ParseException e) {
+			} catch (ParseException e) {event_registation_close_date = new Date();
 				e.printStackTrace();
 			}
-		} catch (JSONException je) {}
+		} catch (JSONException je) {event_registation_close_date = new Date();}
 		try {
 			try {
 				SimpleDateFormat dateFormatter = new SimpleDateFormat(Constants.DATE_FORMAT_STR);
 				event_changes_close_date = dateFormatter.parse(jObject.getString("event_changes_close_date"));
-			} catch (ParseException e) {
+			} catch (ParseException e) {event_changes_close_date = new Date();
 				e.printStackTrace();
 			}
-		} catch (JSONException je) {}
+		} catch (JSONException je) {event_changes_close_date = new Date();}
 	}
     
 	
