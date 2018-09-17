@@ -304,6 +304,6 @@
 		</delete>
 		<delete dir="${deploy.bindir}/tokens"/>
 	</target>
-	<target name="clean" depends="clean-classes,clean-bin,clean-images,clean-css,clean-js,clean-jsps,clean-deploy">
+	<target name="clean" depends="clean-classes,clean-bin,clean-images,clean-css,clean-js,clean-jsps">
 	</target>
 </project>
