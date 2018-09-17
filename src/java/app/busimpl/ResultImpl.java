@@ -42,7 +42,6 @@ public class ResultImpl implements ResultInterface  {
 	 */
     
 	public ArrayList<ResultObject> getResults(ResultObject result_obj) throws AppException{
-		ResultObject[] resultObjectArr = getAllResults();
 		@SuppressWarnings("unchecked")
 		ArrayList<ResultObject> v = (ArrayList<ResultObject>)DBUtil.list(result_obj,result_obj);
 		DebugHandler.finest("v: " + v);

@@ -137,72 +137,72 @@ public class RegistrantPaymentObject implements Cloneable {
 	public RegistrantPaymentObject (JSONObject jObject) {
 		try {
 			registrant_payment_id = jObject.getInt("registrant_payment_id");
-		} catch (JSONException je) {}
+		} catch (JSONException je) {registrant_payment_id = 0;}
 		try {
 			registrant_event = jObject.getInt("registrant_event");
-		} catch (JSONException je) {}
+		} catch (JSONException je) {registrant_event = 0;}
 		try {
 			registrant = jObject.getInt("registrant");
-		} catch (JSONException je) {}
+		} catch (JSONException je) {registrant = 0;}
 		try {
 			payment_type = jObject.getInt("payment_type");
-		} catch (JSONException je) {}
+		} catch (JSONException je) {payment_type = 0;}
 		try {
 			payment_status = jObject.getInt("payment_status");
-		} catch (JSONException je) {}
+		} catch (JSONException je) {payment_status = 0;}
 		try {
 			try {
 				payment_amount = Double.parseDouble(jObject.getString("payment_amount"));
 			} catch (NumberFormatException e) {
 				e.printStackTrace();
 			}
-		} catch (JSONException je) {}
+		} catch (JSONException je) {payment_amount = 0.0;}
 		try {
 			try {
 				payment_additional_amount = Double.parseDouble(jObject.getString("payment_additional_amount"));
 			} catch (NumberFormatException e) {
 				e.printStackTrace();
 			}
-		} catch (JSONException je) {}
+		} catch (JSONException je) {payment_additional_amount = 0.0;}
 		try {
 			try {
 				SimpleDateFormat dateFormatter = new SimpleDateFormat(Constants.DATE_FORMAT_STR);
 				payment_date = dateFormatter.parse(jObject.getString("payment_date"));
-			} catch (ParseException e) {
+			} catch (ParseException e) {payment_date = new Date();
 				e.printStackTrace();
 			}
-		} catch (JSONException je) {}
+		} catch (JSONException je) {payment_date = new Date();}
 		try {
 			try {
 				SimpleDateFormat dateFormatter = new SimpleDateFormat(Constants.DATE_FORMAT_STR);
 				receipt_date = dateFormatter.parse(jObject.getString("receipt_date"));
-			} catch (ParseException e) {
+			} catch (ParseException e) {receipt_date = new Date();
 				e.printStackTrace();
 			}
-		} catch (JSONException je) {}
+		} catch (JSONException je) {receipt_date = new Date();}
 		try {
 			payment_details = jObject.getString("payment_details");
-		} catch (JSONException je) {}
+		} catch (JSONException je) {payment_details = "";}
 		try {
 			payment_towards = jObject.getString("payment_towards");
-		} catch (JSONException je) {}
+		} catch (JSONException je) {payment_towards = "";}
 		try {
 			payment_reference_id = jObject.getString("payment_reference_id");
-		} catch (JSONException je) {}
+		} catch (JSONException je) {payment_reference_id = "";}
 		try {
 			try {
 				payment_tax = Double.parseDouble(jObject.getString("payment_tax"));
 			} catch (NumberFormatException e) {
 				e.printStackTrace();
 			}
-		} catch (JSONException je) {}
+		} catch (JSONException je) {payment_tax = 0.0;}
 		try {
 			try {
 				payment_fee = Double.parseDouble(jObject.getString("payment_fee"));
 			} catch (NumberFormatException e) {
 				e.printStackTrace();
 			}
-		} catch (JSONException je) {}
+		} catch (JSONException je) {payment_fee = 0.0;}
 	}
     
 	

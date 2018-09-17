@@ -93,13 +93,13 @@ public class BeneficiaryObject implements Cloneable {
 	public BeneficiaryObject (JSONObject jObject) {
 		try {
 			beneficiary_id = jObject.getInt("beneficiary_id");
-		} catch (JSONException je) {}
+		} catch (JSONException je) {beneficiary_id = 0;}
 		try {
 			beneficiary_name = jObject.getString("beneficiary_name");
-		} catch (JSONException je) {}
+		} catch (JSONException je) {beneficiary_name = "";}
 		try {
 			beneficiary_event = jObject.getInt("beneficiary_event");
-		} catch (JSONException je) {}
+		} catch (JSONException je) {beneficiary_event = 0;}
 	}
     
 	

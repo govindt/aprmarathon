@@ -129,45 +129,45 @@ public class ParticipantObject implements Cloneable {
 	public ParticipantObject (JSONObject jObject) {
 		try {
 			participant_id = jObject.getInt("participant_id");
-		} catch (JSONException je) {}
+		} catch (JSONException je) {participant_id = 0;}
 		try {
 			participant_first_name = jObject.getString("participant_first_name");
-		} catch (JSONException je) {}
+		} catch (JSONException je) {participant_first_name = "";}
 		try {
 			participant_middle_name = jObject.getString("participant_middle_name");
-		} catch (JSONException je) {}
+		} catch (JSONException je) {participant_middle_name = "";}
 		try {
 			participant_last_name = jObject.getString("participant_last_name");
-		} catch (JSONException je) {}
+		} catch (JSONException je) {participant_last_name = "";}
 		try {
 			participant_gender = jObject.getInt("participant_gender");
-		} catch (JSONException je) {}
+		} catch (JSONException je) {participant_gender = 0;}
 		try {
 			try {
 				SimpleDateFormat dateFormatter = new SimpleDateFormat(Constants.DATE_FORMAT_STR);
 				participant_date_of_birth = dateFormatter.parse(jObject.getString("participant_date_of_birth"));
-			} catch (ParseException e) {
+			} catch (ParseException e) {participant_date_of_birth = new Date();
 				e.printStackTrace();
 			}
-		} catch (JSONException je) {}
+		} catch (JSONException je) {participant_date_of_birth = new Date();}
 		try {
 			participant_age_category = jObject.getInt("participant_age_category");
-		} catch (JSONException je) {}
+		} catch (JSONException je) {participant_age_category = 0;}
 		try {
 			participant_t_shirt_size = jObject.getInt("participant_t_shirt_size");
-		} catch (JSONException je) {}
+		} catch (JSONException je) {participant_t_shirt_size = 0;}
 		try {
 			participant_blood_group = jObject.getInt("participant_blood_group");
-		} catch (JSONException je) {}
+		} catch (JSONException je) {participant_blood_group = 0;}
 		try {
 			participant_cell_phone = jObject.getString("participant_cell_phone");
-		} catch (JSONException je) {}
+		} catch (JSONException je) {participant_cell_phone = "";}
 		try {
 			participant_email = jObject.getString("participant_email");
-		} catch (JSONException je) {}
+		} catch (JSONException je) {participant_email = "";}
 		try {
 			participant_group = jObject.getInt("participant_group");
-		} catch (JSONException je) {}
+		} catch (JSONException je) {participant_group = 0;}
 	}
     
 	

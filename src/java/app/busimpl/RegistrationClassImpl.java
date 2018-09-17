@@ -42,10 +42,8 @@ public class RegistrationClassImpl implements RegistrationClassInterface  {
 	 */
     
 	public ArrayList<RegistrationClassObject> getRegistrationClass(RegistrationClassObject registrationclass_obj) throws AppException{
-		RegistrationClassObject[] registrationClassObjectArr = getAllRegistrationClass();
-		RegistrationClassObject buf = new RegistrationClassObject();
 		@SuppressWarnings("unchecked")
-		ArrayList<RegistrationClassObject> v = (ArrayList<RegistrationClassObject>)DBUtil.list(buf,registrationclass_obj);
+		ArrayList<RegistrationClassObject> v = (ArrayList<RegistrationClassObject>)DBUtil.list(registrationclass_obj,registrationclass_obj);
 		DebugHandler.finest("v: " + v);
 		return v;
 	}

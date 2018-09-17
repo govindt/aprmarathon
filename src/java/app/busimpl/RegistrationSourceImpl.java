@@ -42,7 +42,6 @@ public class RegistrationSourceImpl implements RegistrationSourceInterface  {
 	 */
     
 	public ArrayList<RegistrationSourceObject> getRegistrationSources(RegistrationSourceObject registrationsource_obj) throws AppException{
-		RegistrationSourceObject[] registrationSourceObjectArr = getAllRegistrationSources();
 		@SuppressWarnings("unchecked")
 		ArrayList<RegistrationSourceObject> v = (ArrayList<RegistrationSourceObject>)DBUtil.list(registrationsource_obj,registrationsource_obj);
 		DebugHandler.finest("v: " + v);

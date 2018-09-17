@@ -42,7 +42,6 @@ public class BloodGroupImpl implements BloodGroupInterface  {
 	 */
     
 	public ArrayList<BloodGroupObject> getBloodGroups(BloodGroupObject bloodgroup_obj) throws AppException{
-		BloodGroupObject[] bloodGroupObjectArr = getAllBloodGroups();
 		@SuppressWarnings("unchecked")
 		ArrayList<BloodGroupObject> v = (ArrayList<BloodGroupObject>)DBUtil.list(bloodgroup_obj,bloodgroup_obj);
 		DebugHandler.finest("v: " + v);

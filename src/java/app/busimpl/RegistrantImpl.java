@@ -42,7 +42,6 @@ public class RegistrantImpl implements RegistrantInterface  {
 	 */
     
 	public ArrayList<RegistrantObject> getRegistrants(RegistrantObject registrant_obj) throws AppException{
-		RegistrantObject[] registrantObjectArr = getAllRegistrants();
 		@SuppressWarnings("unchecked")
 		ArrayList<RegistrantObject> v = (ArrayList<RegistrantObject>)DBUtil.list(registrant_obj,registrant_obj);
 		DebugHandler.finest("v: " + v);

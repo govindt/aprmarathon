@@ -13,13 +13,14 @@
     <servlet>
        	<servlet-name>AppServlet</servlet-name>
        	<servlet-class>AppServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
        	<init-param>
       		<param-name>jsp</param-name>
        		<param-value>Login.jsp</param-value>
        	</init-param>
-	<init-param>
+		<init-param>
         	<param-name>jspBase</param-name>
- 		<param-value>/jsp/</param-value>
+			<param-value>/jsp/</param-value>
         </init-param>
     </servlet>
     <servlet-mapping>
@@ -28,13 +29,13 @@
     </servlet-mapping>
 
     <servlet>  
-	<servlet-name>DemoServlet</servlet-name>  
-	<servlet-class>DemoServlet</servlet-class>  
+		<servlet-name>DemoServlet</servlet-name>  
+		<servlet-class>DemoServlet</servlet-class>  
     </servlet>  
   
     <servlet-mapping>  
-	<servlet-name>DemoServlet</servlet-name>  
-	<url-pattern>/welcome</url-pattern>  
+		<servlet-name>DemoServlet</servlet-name>  
+		<url-pattern>/welcome</url-pattern>  
     </servlet-mapping>  
 
     <servlet>

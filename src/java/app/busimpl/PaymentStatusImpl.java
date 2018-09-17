@@ -42,7 +42,6 @@ public class PaymentStatusImpl implements PaymentStatusInterface  {
 	 */
     
 	public ArrayList<PaymentStatusObject> getPaymentStatus(PaymentStatusObject paymentstatus_obj) throws AppException{
-		PaymentStatusObject[] paymentStatusObjectArr = getAllPaymentStatus();
 		@SuppressWarnings("unchecked")
 		ArrayList<PaymentStatusObject> v = (ArrayList<PaymentStatusObject>)DBUtil.list(paymentstatus_obj,paymentstatus_obj);
 		DebugHandler.finest("v: " + v);

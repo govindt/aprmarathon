@@ -42,7 +42,6 @@ public class RegistrationTypeImpl implements RegistrationTypeInterface  {
 	 */
     
 	public ArrayList<RegistrationTypeObject> getRegistrationTypes(RegistrationTypeObject registrationtype_obj) throws AppException{
-		RegistrationTypeObject[] registrationTypeObjectArr = getAllRegistrationTypes();
 		@SuppressWarnings("unchecked")
 		ArrayList<RegistrationTypeObject> v = (ArrayList<RegistrationTypeObject>)DBUtil.list(registrationtype_obj,registrationtype_obj);
 		DebugHandler.finest("v: " + v);

@@ -42,7 +42,6 @@ public class ParticipantEventImpl implements ParticipantEventInterface  {
 	 */
     
 	public ArrayList<ParticipantEventObject> getParticipantEvents(ParticipantEventObject participantevent_obj) throws AppException{
-		ParticipantEventObject[] participantEventObjectArr = getAllParticipantEvents();
 		@SuppressWarnings("unchecked")
 		ArrayList<ParticipantEventObject> v = (ArrayList<ParticipantEventObject>)DBUtil.list(participantevent_obj,participantevent_obj);
 		DebugHandler.finest("v: " + v);

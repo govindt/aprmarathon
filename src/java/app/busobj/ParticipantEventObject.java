@@ -109,25 +109,25 @@ public class ParticipantEventObject implements Cloneable {
 	public ParticipantEventObject (JSONObject jObject) {
 		try {
 			participant_event_id = jObject.getInt("participant_event_id");
-		} catch (JSONException je) {}
+		} catch (JSONException je) {participant_event_id = 0;}
 		try {
 			participant_id = jObject.getInt("participant_id");
-		} catch (JSONException je) {}
+		} catch (JSONException je) {participant_id = 0;}
 		try {
 			participant_event = jObject.getInt("participant_event");
-		} catch (JSONException je) {}
+		} catch (JSONException je) {participant_event = 0;}
 		try {
 			participant_type = jObject.getInt("participant_type");
-		} catch (JSONException je) {}
+		} catch (JSONException je) {participant_type = 0;}
 		try {
 			participant_event_type = jObject.getInt("participant_event_type");
-		} catch (JSONException je) {}
+		} catch (JSONException je) {participant_event_type = 0;}
 		try {
 			participant_bib_no = jObject.getString("participant_bib_no");
-		} catch (JSONException je) {}
+		} catch (JSONException je) {participant_bib_no = "";}
 		try {
 			participant_group = jObject.getInt("participant_group");
-		} catch (JSONException je) {}
+		} catch (JSONException je) {participant_group = 0;}
 	}
     
 	
