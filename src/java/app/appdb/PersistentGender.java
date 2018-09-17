@@ -83,38 +83,38 @@ public class PersistentGender extends PersistentObject {
      * @see     #getResultObjects(ResultSet)
      */
     
-    public Object list(Object args) throws DBException {
-        PreparedSQLStatement sql = new PreparedSQLStatement();
-        String statement = "SELECT gender_id, gender_name from Gender";
-        int index = 1;
-        GenderObject passedGenderObject = (GenderObject)args;
-        boolean whereSpecified = false;
+	public Object list(Object args) throws DBException {
+		PreparedSQLStatement sql = new PreparedSQLStatement();
+		String statement = "SELECT gender_id, gender_name from Gender";
+		int index = 1;
+		GenderObject passedGenderObject = (GenderObject)args;
+		boolean whereSpecified = false;
 
-        if ( passedGenderObject.getGenderId() != 0 ) {
-	    statement += " where gender_id = ?";
-	    whereSpecified = true;
-	    sql.setStatement(statement);
-	    sql.setInParams(new SQLParam(index++, new Integer(passedGenderObject.getGenderId()), Types.INTEGER));
+		if ( passedGenderObject.getGenderId() != 0 ) {
+			statement += " where gender_id = ?";
+			whereSpecified = true;
+			sql.setStatement(statement);
+			sql.setInParams(new SQLParam(index++, new Integer(passedGenderObject.getGenderId()), Types.INTEGER));
+		}
+		if ( ! passedGenderObject.getGenderName().equals("") ) {
+			if ( ! whereSpecified ) {
+				statement += " where gender_name = ?";
+				whereSpecified = true;
+			} else
+				statement += " and gender_name = ?";
+			sql.setStatement(statement);
+			sql.setInParams(new SQLParam(index++,  passedGenderObject.getGenderName(), Types.VARCHAR));
+		}
+		sql.setStatement(statement);
+        
+		DebugHandler.debug(statement);
+		setSQLStatement(sql);
+        
+		@SuppressWarnings("unchecked")
+		ArrayList<GenderObject> result = (ArrayList<GenderObject>) super.list();
+        
+		return result;
 	}
-        if ( ! passedGenderObject.getGenderName().equals("") ) {
-	    if ( ! whereSpecified ) {
-		statement += " where gender_name = ?";
-		whereSpecified = true;
-	    } else
-		statement += " and gender_name = ?";
-	    sql.setStatement(statement);
-	    sql.setInParams(new SQLParam(index++,  passedGenderObject.getGenderName(), Types.VARCHAR));
-	}
-        sql.setStatement(statement);
-        
-        DebugHandler.debug(statement);
-        setSQLStatement(sql);
-        
-        @SuppressWarnings("unchecked")
-        ArrayList<GenderObject> result = (ArrayList<GenderObject>) super.list();
-        
-        return result;
-    }
     
     
     /**

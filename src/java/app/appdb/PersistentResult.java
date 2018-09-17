@@ -83,92 +83,92 @@ public class PersistentResult extends PersistentObject {
      * @see     #getResultObjects(ResultSet)
      */
     
-    public Object list(Object args) throws DBException {
-        PreparedSQLStatement sql = new PreparedSQLStatement();
-        String statement = "SELECT result_id, result_event, result_event_type, result_medal, result_winner, result_winner_registrant, result_score, result_timing from Result";
-        int index = 1;
-        ResultObject passedResultObject = (ResultObject)args;
-        boolean whereSpecified = false;
+	public Object list(Object args) throws DBException {
+		PreparedSQLStatement sql = new PreparedSQLStatement();
+		String statement = "SELECT result_id, result_event, result_event_type, result_medal, result_winner, result_winner_registrant, result_score, result_timing from Result";
+		int index = 1;
+		ResultObject passedResultObject = (ResultObject)args;
+		boolean whereSpecified = false;
 
-        if ( passedResultObject.getResultId() != 0 ) {
-	    statement += " where result_id = ?";
-	    whereSpecified = true;
-	    sql.setStatement(statement);
-	    sql.setInParams(new SQLParam(index++, new Integer(passedResultObject.getResultId()), Types.INTEGER));
-	}
-        if ( passedResultObject.getResultEvent() != 0 ) {
-	    if ( ! whereSpecified ) {
-		statement += " where result_event = ?";
-		whereSpecified = true;
-	    } else
-		statement += " and result_event = ?";
-	    sql.setStatement(statement);
-	    sql.setInParams(new SQLParam(index++, new Integer(passedResultObject.getResultEvent()), Types.INTEGER));
-	}
-        if ( passedResultObject.getResultEventType() != 0 ) {
-	    if ( ! whereSpecified ) {
-		statement += " where result_event_type = ?";
-		whereSpecified = true;
-	    } else
-		statement += " and result_event_type = ?";
-	    sql.setStatement(statement);
-	    sql.setInParams(new SQLParam(index++, new Integer(passedResultObject.getResultEventType()), Types.INTEGER));
-	}
-        if ( passedResultObject.getResultMedal() != 0 ) {
-	    if ( ! whereSpecified ) {
-		statement += " where result_medal = ?";
-		whereSpecified = true;
-	    } else
-		statement += " and result_medal = ?";
-	    sql.setStatement(statement);
-	    sql.setInParams(new SQLParam(index++, new Integer(passedResultObject.getResultMedal()), Types.INTEGER));
-	}
-        if ( passedResultObject.getResultWinner() != 0 ) {
-	    if ( ! whereSpecified ) {
-		statement += " where result_winner = ?";
-		whereSpecified = true;
-	    } else
-		statement += " and result_winner = ?";
-	    sql.setStatement(statement);
-	    sql.setInParams(new SQLParam(index++, new Integer(passedResultObject.getResultWinner()), Types.INTEGER));
-	}
-        if ( passedResultObject.getResultWinnerRegistrant() != 0 ) {
-	    if ( ! whereSpecified ) {
-		statement += " where result_winner_registrant = ?";
-		whereSpecified = true;
-	    } else
-		statement += " and result_winner_registrant = ?";
-	    sql.setStatement(statement);
-	    sql.setInParams(new SQLParam(index++, new Integer(passedResultObject.getResultWinnerRegistrant()), Types.INTEGER));
-	}
-        if ( ! passedResultObject.getResultScore().equals("") ) {
-	    if ( ! whereSpecified ) {
-		statement += " where result_score = ?";
-		whereSpecified = true;
-	    } else
-		statement += " and result_score = ?";
-	    sql.setStatement(statement);
-	    sql.setInParams(new SQLParam(index++,  passedResultObject.getResultScore(), Types.VARCHAR));
-	}
-        if ( passedResultObject.getResultTiming() != null ) {
-	    if ( ! whereSpecified ) {
-		statement += " where result_timing = ?";
-		whereSpecified = true;
-	    } else
-		statement += " and result_timing = ?";
-	    sql.setStatement(statement);
-	    sql.setInParams(new SQLParam(index++,  passedResultObject.getResultTiming(), Types.TIMESTAMP));
-	}
-        sql.setStatement(statement);
+		if ( passedResultObject.getResultId() != 0 ) {
+			statement += " where result_id = ?";
+			whereSpecified = true;
+			sql.setStatement(statement);
+			sql.setInParams(new SQLParam(index++, new Integer(passedResultObject.getResultId()), Types.INTEGER));
+		}
+		if ( passedResultObject.getResultEvent() != 0 ) {
+			if ( ! whereSpecified ) {
+				statement += " where result_event = ?";
+				whereSpecified = true;
+			} else
+				statement += " and result_event = ?";
+			sql.setStatement(statement);
+			sql.setInParams(new SQLParam(index++, new Integer(passedResultObject.getResultEvent()), Types.INTEGER));
+		}
+		if ( passedResultObject.getResultEventType() != 0 ) {
+			if ( ! whereSpecified ) {
+				statement += " where result_event_type = ?";
+				whereSpecified = true;
+			} else
+				statement += " and result_event_type = ?";
+			sql.setStatement(statement);
+			sql.setInParams(new SQLParam(index++, new Integer(passedResultObject.getResultEventType()), Types.INTEGER));
+		}
+		if ( passedResultObject.getResultMedal() != 0 ) {
+			if ( ! whereSpecified ) {
+				statement += " where result_medal = ?";
+				whereSpecified = true;
+			} else
+				statement += " and result_medal = ?";
+			sql.setStatement(statement);
+			sql.setInParams(new SQLParam(index++, new Integer(passedResultObject.getResultMedal()), Types.INTEGER));
+		}
+		if ( passedResultObject.getResultWinner() != 0 ) {
+			if ( ! whereSpecified ) {
+				statement += " where result_winner = ?";
+				whereSpecified = true;
+			} else
+				statement += " and result_winner = ?";
+			sql.setStatement(statement);
+			sql.setInParams(new SQLParam(index++, new Integer(passedResultObject.getResultWinner()), Types.INTEGER));
+		}
+		if ( passedResultObject.getResultWinnerRegistrant() != 0 ) {
+			if ( ! whereSpecified ) {
+				statement += " where result_winner_registrant = ?";
+				whereSpecified = true;
+			} else
+				statement += " and result_winner_registrant = ?";
+			sql.setStatement(statement);
+			sql.setInParams(new SQLParam(index++, new Integer(passedResultObject.getResultWinnerRegistrant()), Types.INTEGER));
+		}
+		if ( ! passedResultObject.getResultScore().equals("") ) {
+			if ( ! whereSpecified ) {
+				statement += " where result_score = ?";
+				whereSpecified = true;
+			} else
+				statement += " and result_score = ?";
+			sql.setStatement(statement);
+			sql.setInParams(new SQLParam(index++,  passedResultObject.getResultScore(), Types.VARCHAR));
+		}
+		if ( passedResultObject.getResultTiming() != null ) {
+			if ( ! whereSpecified ) {
+				statement += " where result_timing = ?";
+				whereSpecified = true;
+			} else
+				statement += " and result_timing = ?";
+			sql.setStatement(statement);
+			sql.setInParams(new SQLParam(index++,  passedResultObject.getResultTiming(), Types.TIMESTAMP));
+		}
+		sql.setStatement(statement);
         
-        DebugHandler.debug(statement);
-        setSQLStatement(sql);
+		DebugHandler.debug(statement);
+		setSQLStatement(sql);
         
-        @SuppressWarnings("unchecked")
-        ArrayList<ResultObject> result = (ArrayList<ResultObject>) super.list();
+		@SuppressWarnings("unchecked")
+		ArrayList<ResultObject> result = (ArrayList<ResultObject>) super.list();
         
-        return result;
-    }
+		return result;
+	}
     
     
     /**

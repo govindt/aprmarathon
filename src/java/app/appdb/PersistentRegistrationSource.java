@@ -83,38 +83,38 @@ public class PersistentRegistrationSource extends PersistentObject {
      * @see     #getResultObjects(ResultSet)
      */
     
-    public Object list(Object args) throws DBException {
-        PreparedSQLStatement sql = new PreparedSQLStatement();
-        String statement = "SELECT registration_source_id, registration_source_name from Registration_Source";
-        int index = 1;
-        RegistrationSourceObject passedRegistrationSourceObject = (RegistrationSourceObject)args;
-        boolean whereSpecified = false;
+	public Object list(Object args) throws DBException {
+		PreparedSQLStatement sql = new PreparedSQLStatement();
+		String statement = "SELECT registration_source_id, registration_source_name from Registration_Source";
+		int index = 1;
+		RegistrationSourceObject passedRegistrationSourceObject = (RegistrationSourceObject)args;
+		boolean whereSpecified = false;
 
-        if ( passedRegistrationSourceObject.getRegistrationSourceId() != 0 ) {
-	    statement += " where registration_source_id = ?";
-	    whereSpecified = true;
-	    sql.setStatement(statement);
-	    sql.setInParams(new SQLParam(index++, new Integer(passedRegistrationSourceObject.getRegistrationSourceId()), Types.INTEGER));
+		if ( passedRegistrationSourceObject.getRegistrationSourceId() != 0 ) {
+			statement += " where registration_source_id = ?";
+			whereSpecified = true;
+			sql.setStatement(statement);
+			sql.setInParams(new SQLParam(index++, new Integer(passedRegistrationSourceObject.getRegistrationSourceId()), Types.INTEGER));
+		}
+		if ( ! passedRegistrationSourceObject.getRegistrationSourceName().equals("") ) {
+			if ( ! whereSpecified ) {
+				statement += " where registration_source_name = ?";
+				whereSpecified = true;
+			} else
+				statement += " and registration_source_name = ?";
+			sql.setStatement(statement);
+			sql.setInParams(new SQLParam(index++,  passedRegistrationSourceObject.getRegistrationSourceName(), Types.VARCHAR));
+		}
+		sql.setStatement(statement);
+        
+		DebugHandler.debug(statement);
+		setSQLStatement(sql);
+        
+		@SuppressWarnings("unchecked")
+		ArrayList<RegistrationSourceObject> result = (ArrayList<RegistrationSourceObject>) super.list();
+        
+		return result;
 	}
-        if ( ! passedRegistrationSourceObject.getRegistrationSourceName().equals("") ) {
-	    if ( ! whereSpecified ) {
-		statement += " where registration_source_name = ?";
-		whereSpecified = true;
-	    } else
-		statement += " and registration_source_name = ?";
-	    sql.setStatement(statement);
-	    sql.setInParams(new SQLParam(index++,  passedRegistrationSourceObject.getRegistrationSourceName(), Types.VARCHAR));
-	}
-        sql.setStatement(statement);
-        
-        DebugHandler.debug(statement);
-        setSQLStatement(sql);
-        
-        @SuppressWarnings("unchecked")
-        ArrayList<RegistrationSourceObject> result = (ArrayList<RegistrationSourceObject>) super.list();
-        
-        return result;
-    }
     
     
     /**

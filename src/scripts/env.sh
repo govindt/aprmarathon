@@ -15,7 +15,7 @@ export CLASSPATH=${JARHOME}/../jst/classes:${JARHOME}/jconn2.jar:${JARHOME}/ojdb
 
 
 export ORACLE_HOME=${ORACLE_HOME:-/u01/app/oracle/product/10.1.0/Db_1/}
-export PATH=${ORACLE_HOME}/bin:${JAVA_HOME}/bin:${ANT_HOME}/bin:${PATH}
+export PATH=${ORACLE_HOME}/bin:${JAVA_HOME}/bin:${ANT_HOME}/bin:${JAVA_DEV_ROOT}/bin:${JAVA_DEV_ROOT}/bin:{PATH}
 export LD_LIBRARY_PATH=${ORACLE_HOME}/lib:/usr/lib:/usr/local/lib
 export ORACLE_SID=aprm
 #export CATALINA_HOME=${JAVA_DEV_ROOT}/apache-tomcat-9.0.11

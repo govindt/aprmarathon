@@ -41,25 +41,9 @@ public class BeneficiaryImpl implements BeneficiaryInterface  {
      *
      */
     
-    public ArrayList<BeneficiaryObject> getBeneficiarys(BeneficiaryObject beneficiary_obj) throws AppException{
-	BeneficiaryObject[] beneficiaryObjectArr = getAllBeneficiarys();
-	ArrayList<BeneficiaryObject> v = new ArrayList<BeneficiaryObject>();
-	if ( beneficiaryObjectArr == null )
-		return null;
-	for ( int i = 0; i < beneficiaryObjectArr.length; i++ ) {
-		if ( beneficiaryObjectArr[i] != null ) {
-			if ( beneficiary_obj.getBeneficiaryId() == Constants.GET_ALL ) {
-				v.add((BeneficiaryObject)beneficiaryObjectArr[i].clone());
-			} else {
-				if ( (beneficiary_obj.getBeneficiaryId() != 0 && beneficiary_obj.getBeneficiaryId() == beneficiaryObjectArr[i].getBeneficiaryId())
- || (beneficiary_obj.getBeneficiaryName() != null && beneficiary_obj.getBeneficiaryName().equals(beneficiaryObjectArr[i].getBeneficiaryName()))
- || (beneficiary_obj.getBeneficiaryEvent() != 0 && beneficiary_obj.getBeneficiaryEvent() == beneficiaryObjectArr[i].getBeneficiaryEvent())
-) {
-					v.add((BeneficiaryObject)beneficiaryObjectArr[i].clone());
-				}
-			}
-		}
-	}
+	public ArrayList<BeneficiaryObject> getBeneficiarys(BeneficiaryObject beneficiary_obj) throws AppException{
+		@SuppressWarnings("unchecked")
+		ArrayList<BeneficiaryObject> v = (ArrayList<BeneficiaryObject>)DBUtil.list(beneficiary_obj,beneficiary_obj);
 	DebugHandler.finest("v: " + v);
 	return v;
     }

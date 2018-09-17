@@ -83,38 +83,38 @@ public class PersistentAgeCategory extends PersistentObject {
      * @see     #getResultObjects(ResultSet)
      */
     
-    public Object list(Object args) throws DBException {
-        PreparedSQLStatement sql = new PreparedSQLStatement();
-        String statement = "SELECT age_category_id, age_category from Age_Category";
-        int index = 1;
-        AgeCategoryObject passedAgeCategoryObject = (AgeCategoryObject)args;
-        boolean whereSpecified = false;
+	public Object list(Object args) throws DBException {
+		PreparedSQLStatement sql = new PreparedSQLStatement();
+		String statement = "SELECT age_category_id, age_category from Age_Category";
+		int index = 1;
+		AgeCategoryObject passedAgeCategoryObject = (AgeCategoryObject)args;
+		boolean whereSpecified = false;
 
-        if ( passedAgeCategoryObject.getAgeCategoryId() != 0 ) {
-	    statement += " where age_category_id = ?";
-	    whereSpecified = true;
-	    sql.setStatement(statement);
-	    sql.setInParams(new SQLParam(index++, new Integer(passedAgeCategoryObject.getAgeCategoryId()), Types.INTEGER));
+		if ( passedAgeCategoryObject.getAgeCategoryId() != 0 ) {
+			statement += " where age_category_id = ?";
+			whereSpecified = true;
+			sql.setStatement(statement);
+			sql.setInParams(new SQLParam(index++, new Integer(passedAgeCategoryObject.getAgeCategoryId()), Types.INTEGER));
+		}
+		if ( ! passedAgeCategoryObject.getAgeCategory().equals("") ) {
+			if ( ! whereSpecified ) {
+				statement += " where age_category = ?";
+				whereSpecified = true;
+			} else
+				statement += " and age_category = ?";
+			sql.setStatement(statement);
+			sql.setInParams(new SQLParam(index++,  passedAgeCategoryObject.getAgeCategory(), Types.VARCHAR));
+		}
+		sql.setStatement(statement);
+        
+		DebugHandler.debug(statement);
+		setSQLStatement(sql);
+        
+		@SuppressWarnings("unchecked")
+		ArrayList<AgeCategoryObject> result = (ArrayList<AgeCategoryObject>) super.list();
+        
+		return result;
 	}
-        if ( ! passedAgeCategoryObject.getAgeCategory().equals("") ) {
-	    if ( ! whereSpecified ) {
-		statement += " where age_category = ?";
-		whereSpecified = true;
-	    } else
-		statement += " and age_category = ?";
-	    sql.setStatement(statement);
-	    sql.setInParams(new SQLParam(index++,  passedAgeCategoryObject.getAgeCategory(), Types.VARCHAR));
-	}
-        sql.setStatement(statement);
-        
-        DebugHandler.debug(statement);
-        setSQLStatement(sql);
-        
-        @SuppressWarnings("unchecked")
-        ArrayList<AgeCategoryObject> result = (ArrayList<AgeCategoryObject>) super.list();
-        
-        return result;
-    }
     
     
     /**

@@ -41,31 +41,9 @@ public class RegistrantEventImpl implements RegistrantEventInterface  {
      *
      */
     
-    public ArrayList<RegistrantEventObject> getRegistrantEvents(RegistrantEventObject registrantevent_obj) throws AppException{
-	RegistrantEventObject[] registrantEventObjectArr = getAllRegistrantEvents();
-	ArrayList<RegistrantEventObject> v = new ArrayList<RegistrantEventObject>();
-	if ( registrantEventObjectArr == null )
-		return null;
-	for ( int i = 0; i < registrantEventObjectArr.length; i++ ) {
-		if ( registrantEventObjectArr[i] != null ) {
-			if ( registrantevent_obj.getRegistrantEventId() == Constants.GET_ALL ) {
-				v.add((RegistrantEventObject)registrantEventObjectArr[i].clone());
-			} else {
-				if ( (registrantevent_obj.getRegistrantEventId() != 0 && registrantevent_obj.getRegistrantEventId() == registrantEventObjectArr[i].getRegistrantEventId())
- || (registrantevent_obj.getRegistrantId() != 0 && registrantevent_obj.getRegistrantId() == registrantEventObjectArr[i].getRegistrantId())
- || (registrantevent_obj.getRegistrantEvent() != 0 && registrantevent_obj.getRegistrantEvent() == registrantEventObjectArr[i].getRegistrantEvent())
- || (registrantevent_obj.getRegistrantType() != 0 && registrantevent_obj.getRegistrantType() == registrantEventObjectArr[i].getRegistrantType())
- || (registrantevent_obj.getRegistrantSource() != 0 && registrantevent_obj.getRegistrantSource() == registrantEventObjectArr[i].getRegistrantSource())
- || (registrantevent_obj.getRegistrantClass() != 0 && registrantevent_obj.getRegistrantClass() == registrantEventObjectArr[i].getRegistrantClass())
- || (registrantevent_obj.getRegistrantBeneficiary() != 0 && registrantevent_obj.getRegistrantBeneficiary() == registrantEventObjectArr[i].getRegistrantBeneficiary())
- || (registrantevent_obj.getRegistrantEmergencyContact() != null && registrantevent_obj.getRegistrantEmergencyContact().equals(registrantEventObjectArr[i].getRegistrantEmergencyContact()))
- || (registrantevent_obj.getRegistrantEmergencyPhone() != null && registrantevent_obj.getRegistrantEmergencyPhone().equals(registrantEventObjectArr[i].getRegistrantEmergencyPhone()))
-) {
-					v.add((RegistrantEventObject)registrantEventObjectArr[i].clone());
-				}
-			}
-		}
-	}
+	public ArrayList<RegistrantEventObject> getRegistrantEvents(RegistrantEventObject registrantevent_obj) throws AppException{
+		@SuppressWarnings("unchecked")
+		ArrayList<RegistrantEventObject> v = (ArrayList<RegistrantEventObject>)DBUtil.list(registrantevent_obj,registrantevent_obj);
 	DebugHandler.finest("v: " + v);
 	return v;
     }

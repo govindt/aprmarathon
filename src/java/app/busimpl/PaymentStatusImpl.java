@@ -41,24 +41,9 @@ public class PaymentStatusImpl implements PaymentStatusInterface  {
      *
      */
     
-    public ArrayList<PaymentStatusObject> getPaymentStatus(PaymentStatusObject paymentstatus_obj) throws AppException{
-	PaymentStatusObject[] paymentStatusObjectArr = getAllPaymentStatus();
-	ArrayList<PaymentStatusObject> v = new ArrayList<PaymentStatusObject>();
-	if ( paymentStatusObjectArr == null )
-		return null;
-	for ( int i = 0; i < paymentStatusObjectArr.length; i++ ) {
-		if ( paymentStatusObjectArr[i] != null ) {
-			if ( paymentstatus_obj.getPaymentStatusId() == Constants.GET_ALL ) {
-				v.add((PaymentStatusObject)paymentStatusObjectArr[i].clone());
-			} else {
-				if ( (paymentstatus_obj.getPaymentStatusId() != 0 && paymentstatus_obj.getPaymentStatusId() == paymentStatusObjectArr[i].getPaymentStatusId())
- || (paymentstatus_obj.getPaymentStatusName() != null && paymentstatus_obj.getPaymentStatusName().equals(paymentStatusObjectArr[i].getPaymentStatusName()))
-) {
-					v.add((PaymentStatusObject)paymentStatusObjectArr[i].clone());
-				}
-			}
-		}
-	}
+	public ArrayList<PaymentStatusObject> getPaymentStatus(PaymentStatusObject paymentstatus_obj) throws AppException{
+		@SuppressWarnings("unchecked")
+		ArrayList<PaymentStatusObject> v = (ArrayList<PaymentStatusObject>)DBUtil.list(paymentstatus_obj,paymentstatus_obj);
 	DebugHandler.finest("v: " + v);
 	return v;
     }

@@ -83,101 +83,101 @@ public class PersistentRegistrantEvent extends PersistentObject {
      * @see     #getResultObjects(ResultSet)
      */
     
-    public Object list(Object args) throws DBException {
-        PreparedSQLStatement sql = new PreparedSQLStatement();
-        String statement = "SELECT registrant_event_id, registrant_id, registrant_event, registrant_type, registrant_source, registrant_class, registrant_beneficiary, registrant_emergency_contact, registrant_emergency_phone from Registrant_Event";
-        int index = 1;
-        RegistrantEventObject passedRegistrantEventObject = (RegistrantEventObject)args;
-        boolean whereSpecified = false;
+	public Object list(Object args) throws DBException {
+		PreparedSQLStatement sql = new PreparedSQLStatement();
+		String statement = "SELECT registrant_event_id, registrant_id, registrant_event, registrant_type, registrant_source, registrant_class, registrant_beneficiary, registrant_emergency_contact, registrant_emergency_phone from Registrant_Event";
+		int index = 1;
+		RegistrantEventObject passedRegistrantEventObject = (RegistrantEventObject)args;
+		boolean whereSpecified = false;
 
-        if ( passedRegistrantEventObject.getRegistrantEventId() != 0 ) {
-	    statement += " where registrant_event_id = ?";
-	    whereSpecified = true;
-	    sql.setStatement(statement);
-	    sql.setInParams(new SQLParam(index++, new Integer(passedRegistrantEventObject.getRegistrantEventId()), Types.INTEGER));
-	}
-        if ( passedRegistrantEventObject.getRegistrantId() != 0 ) {
-	    if ( ! whereSpecified ) {
-		statement += " where registrant_id = ?";
-		whereSpecified = true;
-	    } else
-		statement += " and registrant_id = ?";
-	    sql.setStatement(statement);
-	    sql.setInParams(new SQLParam(index++, new Integer(passedRegistrantEventObject.getRegistrantId()), Types.INTEGER));
-	}
-        if ( passedRegistrantEventObject.getRegistrantEvent() != 0 ) {
-	    if ( ! whereSpecified ) {
-		statement += " where registrant_event = ?";
-		whereSpecified = true;
-	    } else
-		statement += " and registrant_event = ?";
-	    sql.setStatement(statement);
-	    sql.setInParams(new SQLParam(index++, new Integer(passedRegistrantEventObject.getRegistrantEvent()), Types.INTEGER));
-	}
-        if ( passedRegistrantEventObject.getRegistrantType() != 0 ) {
-	    if ( ! whereSpecified ) {
-		statement += " where registrant_type = ?";
-		whereSpecified = true;
-	    } else
-		statement += " and registrant_type = ?";
-	    sql.setStatement(statement);
-	    sql.setInParams(new SQLParam(index++, new Integer(passedRegistrantEventObject.getRegistrantType()), Types.INTEGER));
-	}
-        if ( passedRegistrantEventObject.getRegistrantSource() != 0 ) {
-	    if ( ! whereSpecified ) {
-		statement += " where registrant_source = ?";
-		whereSpecified = true;
-	    } else
-		statement += " and registrant_source = ?";
-	    sql.setStatement(statement);
-	    sql.setInParams(new SQLParam(index++, new Integer(passedRegistrantEventObject.getRegistrantSource()), Types.INTEGER));
-	}
-        if ( passedRegistrantEventObject.getRegistrantClass() != 0 ) {
-	    if ( ! whereSpecified ) {
-		statement += " where registrant_class = ?";
-		whereSpecified = true;
-	    } else
-		statement += " and registrant_class = ?";
-	    sql.setStatement(statement);
-	    sql.setInParams(new SQLParam(index++, new Integer(passedRegistrantEventObject.getRegistrantClass()), Types.INTEGER));
-	}
-        if ( passedRegistrantEventObject.getRegistrantBeneficiary() != 0 ) {
-	    if ( ! whereSpecified ) {
-		statement += " where registrant_beneficiary = ?";
-		whereSpecified = true;
-	    } else
-		statement += " and registrant_beneficiary = ?";
-	    sql.setStatement(statement);
-	    sql.setInParams(new SQLParam(index++, new Integer(passedRegistrantEventObject.getRegistrantBeneficiary()), Types.INTEGER));
-	}
-        if ( ! passedRegistrantEventObject.getRegistrantEmergencyContact().equals("") ) {
-	    if ( ! whereSpecified ) {
-		statement += " where registrant_emergency_contact = ?";
-		whereSpecified = true;
-	    } else
-		statement += " and registrant_emergency_contact = ?";
-	    sql.setStatement(statement);
-	    sql.setInParams(new SQLParam(index++,  passedRegistrantEventObject.getRegistrantEmergencyContact(), Types.VARCHAR));
-	}
-        if ( ! passedRegistrantEventObject.getRegistrantEmergencyPhone().equals("") ) {
-	    if ( ! whereSpecified ) {
-		statement += " where registrant_emergency_phone = ?";
-		whereSpecified = true;
-	    } else
-		statement += " and registrant_emergency_phone = ?";
-	    sql.setStatement(statement);
-	    sql.setInParams(new SQLParam(index++,  passedRegistrantEventObject.getRegistrantEmergencyPhone(), Types.VARCHAR));
-	}
-        sql.setStatement(statement);
+		if ( passedRegistrantEventObject.getRegistrantEventId() != 0 ) {
+			statement += " where registrant_event_id = ?";
+			whereSpecified = true;
+			sql.setStatement(statement);
+			sql.setInParams(new SQLParam(index++, new Integer(passedRegistrantEventObject.getRegistrantEventId()), Types.INTEGER));
+		}
+		if ( passedRegistrantEventObject.getRegistrantId() != 0 ) {
+			if ( ! whereSpecified ) {
+				statement += " where registrant_id = ?";
+				whereSpecified = true;
+			} else
+				statement += " and registrant_id = ?";
+			sql.setStatement(statement);
+			sql.setInParams(new SQLParam(index++, new Integer(passedRegistrantEventObject.getRegistrantId()), Types.INTEGER));
+		}
+		if ( passedRegistrantEventObject.getRegistrantEvent() != 0 ) {
+			if ( ! whereSpecified ) {
+				statement += " where registrant_event = ?";
+				whereSpecified = true;
+			} else
+				statement += " and registrant_event = ?";
+			sql.setStatement(statement);
+			sql.setInParams(new SQLParam(index++, new Integer(passedRegistrantEventObject.getRegistrantEvent()), Types.INTEGER));
+		}
+		if ( passedRegistrantEventObject.getRegistrantType() != 0 ) {
+			if ( ! whereSpecified ) {
+				statement += " where registrant_type = ?";
+				whereSpecified = true;
+			} else
+				statement += " and registrant_type = ?";
+			sql.setStatement(statement);
+			sql.setInParams(new SQLParam(index++, new Integer(passedRegistrantEventObject.getRegistrantType()), Types.INTEGER));
+		}
+		if ( passedRegistrantEventObject.getRegistrantSource() != 0 ) {
+			if ( ! whereSpecified ) {
+				statement += " where registrant_source = ?";
+				whereSpecified = true;
+			} else
+				statement += " and registrant_source = ?";
+			sql.setStatement(statement);
+			sql.setInParams(new SQLParam(index++, new Integer(passedRegistrantEventObject.getRegistrantSource()), Types.INTEGER));
+		}
+		if ( passedRegistrantEventObject.getRegistrantClass() != 0 ) {
+			if ( ! whereSpecified ) {
+				statement += " where registrant_class = ?";
+				whereSpecified = true;
+			} else
+				statement += " and registrant_class = ?";
+			sql.setStatement(statement);
+			sql.setInParams(new SQLParam(index++, new Integer(passedRegistrantEventObject.getRegistrantClass()), Types.INTEGER));
+		}
+		if ( passedRegistrantEventObject.getRegistrantBeneficiary() != 0 ) {
+			if ( ! whereSpecified ) {
+				statement += " where registrant_beneficiary = ?";
+				whereSpecified = true;
+			} else
+				statement += " and registrant_beneficiary = ?";
+			sql.setStatement(statement);
+			sql.setInParams(new SQLParam(index++, new Integer(passedRegistrantEventObject.getRegistrantBeneficiary()), Types.INTEGER));
+		}
+		if ( ! passedRegistrantEventObject.getRegistrantEmergencyContact().equals("") ) {
+			if ( ! whereSpecified ) {
+				statement += " where registrant_emergency_contact = ?";
+				whereSpecified = true;
+			} else
+				statement += " and registrant_emergency_contact = ?";
+			sql.setStatement(statement);
+			sql.setInParams(new SQLParam(index++,  passedRegistrantEventObject.getRegistrantEmergencyContact(), Types.VARCHAR));
+		}
+		if ( ! passedRegistrantEventObject.getRegistrantEmergencyPhone().equals("") ) {
+			if ( ! whereSpecified ) {
+				statement += " where registrant_emergency_phone = ?";
+				whereSpecified = true;
+			} else
+				statement += " and registrant_emergency_phone = ?";
+			sql.setStatement(statement);
+			sql.setInParams(new SQLParam(index++,  passedRegistrantEventObject.getRegistrantEmergencyPhone(), Types.VARCHAR));
+		}
+		sql.setStatement(statement);
         
-        DebugHandler.debug(statement);
-        setSQLStatement(sql);
+		DebugHandler.debug(statement);
+		setSQLStatement(sql);
         
-        @SuppressWarnings("unchecked")
-        ArrayList<RegistrantEventObject> result = (ArrayList<RegistrantEventObject>) super.list();
+		@SuppressWarnings("unchecked")
+		ArrayList<RegistrantEventObject> result = (ArrayList<RegistrantEventObject>) super.list();
         
-        return result;
-    }
+		return result;
+	}
     
     
     /**

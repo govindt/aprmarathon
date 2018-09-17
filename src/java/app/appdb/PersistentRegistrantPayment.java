@@ -83,146 +83,146 @@ public class PersistentRegistrantPayment extends PersistentObject {
      * @see     #getResultObjects(ResultSet)
      */
     
-    public Object list(Object args) throws DBException {
-        PreparedSQLStatement sql = new PreparedSQLStatement();
-        String statement = "SELECT registrant_payment_id, registrant_event, registrant, payment_type, payment_status, payment_amount, payment_additional_amount, payment_date, receipt_date, payment_details, payment_towards, payment_reference_id, payment_tax, payment_fee from Registrant_Payment";
-        int index = 1;
-        RegistrantPaymentObject passedRegistrantPaymentObject = (RegistrantPaymentObject)args;
-        boolean whereSpecified = false;
+	public Object list(Object args) throws DBException {
+		PreparedSQLStatement sql = new PreparedSQLStatement();
+		String statement = "SELECT registrant_payment_id, registrant_event, registrant, payment_type, payment_status, payment_amount, payment_additional_amount, payment_date, receipt_date, payment_details, payment_towards, payment_reference_id, payment_tax, payment_fee from Registrant_Payment";
+		int index = 1;
+		RegistrantPaymentObject passedRegistrantPaymentObject = (RegistrantPaymentObject)args;
+		boolean whereSpecified = false;
 
-        if ( passedRegistrantPaymentObject.getRegistrantPaymentId() != 0 ) {
-	    statement += " where registrant_payment_id = ?";
-	    whereSpecified = true;
-	    sql.setStatement(statement);
-	    sql.setInParams(new SQLParam(index++, new Integer(passedRegistrantPaymentObject.getRegistrantPaymentId()), Types.INTEGER));
-	}
-        if ( passedRegistrantPaymentObject.getRegistrantEvent() != 0 ) {
-	    if ( ! whereSpecified ) {
-		statement += " where registrant_event = ?";
-		whereSpecified = true;
-	    } else
-		statement += " and registrant_event = ?";
-	    sql.setStatement(statement);
-	    sql.setInParams(new SQLParam(index++, new Integer(passedRegistrantPaymentObject.getRegistrantEvent()), Types.INTEGER));
-	}
-        if ( passedRegistrantPaymentObject.getRegistrant() != 0 ) {
-	    if ( ! whereSpecified ) {
-		statement += " where registrant = ?";
-		whereSpecified = true;
-	    } else
-		statement += " and registrant = ?";
-	    sql.setStatement(statement);
-	    sql.setInParams(new SQLParam(index++, new Integer(passedRegistrantPaymentObject.getRegistrant()), Types.INTEGER));
-	}
-        if ( passedRegistrantPaymentObject.getPaymentType() != 0 ) {
-	    if ( ! whereSpecified ) {
-		statement += " where payment_type = ?";
-		whereSpecified = true;
-	    } else
-		statement += " and payment_type = ?";
-	    sql.setStatement(statement);
-	    sql.setInParams(new SQLParam(index++, new Integer(passedRegistrantPaymentObject.getPaymentType()), Types.INTEGER));
-	}
-        if ( passedRegistrantPaymentObject.getPaymentStatus() != 0 ) {
-	    if ( ! whereSpecified ) {
-		statement += " where payment_status = ?";
-		whereSpecified = true;
-	    } else
-		statement += " and payment_status = ?";
-	    sql.setStatement(statement);
-	    sql.setInParams(new SQLParam(index++, new Integer(passedRegistrantPaymentObject.getPaymentStatus()), Types.INTEGER));
-	}
-        if ( passedRegistrantPaymentObject.getPaymentAmount() != 0.0 ) {
-	    if ( ! whereSpecified ) {
-		statement += " where payment_amount = ?";
-		whereSpecified = true;
-	    } else
-		statement += " and payment_amount = ?";
-	    sql.setStatement(statement);
-	    sql.setInParams(new SQLParam(index++,  new Double(passedRegistrantPaymentObject.getPaymentAmount()), Types.DOUBLE));
-	}
-        if ( passedRegistrantPaymentObject.getPaymentAdditionalAmount() != 0.0 ) {
-	    if ( ! whereSpecified ) {
-		statement += " where payment_additional_amount = ?";
-		whereSpecified = true;
-	    } else
-		statement += " and payment_additional_amount = ?";
-	    sql.setStatement(statement);
-	    sql.setInParams(new SQLParam(index++,  new Double(passedRegistrantPaymentObject.getPaymentAdditionalAmount()), Types.DOUBLE));
-	}
-        if ( passedRegistrantPaymentObject.getPaymentDate() != null ) {
-	    if ( ! whereSpecified ) {
-		statement += " where payment_date = ?";
-		whereSpecified = true;
-	    } else
-		statement += " and payment_date = ?";
-	    sql.setStatement(statement);
-	    sql.setInParams(new SQLParam(index++,  passedRegistrantPaymentObject.getPaymentDate(), Types.TIMESTAMP));
-	}
-        if ( passedRegistrantPaymentObject.getReceiptDate() != null ) {
-	    if ( ! whereSpecified ) {
-		statement += " where receipt_date = ?";
-		whereSpecified = true;
-	    } else
-		statement += " and receipt_date = ?";
-	    sql.setStatement(statement);
-	    sql.setInParams(new SQLParam(index++,  passedRegistrantPaymentObject.getReceiptDate(), Types.TIMESTAMP));
-	}
-        if ( ! passedRegistrantPaymentObject.getPaymentDetails().equals("") ) {
-	    if ( ! whereSpecified ) {
-		statement += " where payment_details = ?";
-		whereSpecified = true;
-	    } else
-		statement += " and payment_details = ?";
-	    sql.setStatement(statement);
-	    sql.setInParams(new SQLParam(index++,  passedRegistrantPaymentObject.getPaymentDetails(), Types.VARCHAR));
-	}
-        if ( ! passedRegistrantPaymentObject.getPaymentTowards().equals("") ) {
-	    if ( ! whereSpecified ) {
-		statement += " where payment_towards = ?";
-		whereSpecified = true;
-	    } else
-		statement += " and payment_towards = ?";
-	    sql.setStatement(statement);
-	    sql.setInParams(new SQLParam(index++,  passedRegistrantPaymentObject.getPaymentTowards(), Types.VARCHAR));
-	}
-        if ( ! passedRegistrantPaymentObject.getPaymentReferenceId().equals("") ) {
-	    if ( ! whereSpecified ) {
-		statement += " where payment_reference_id = ?";
-		whereSpecified = true;
-	    } else
-		statement += " and payment_reference_id = ?";
-	    sql.setStatement(statement);
-	    sql.setInParams(new SQLParam(index++,  passedRegistrantPaymentObject.getPaymentReferenceId(), Types.VARCHAR));
-	}
-        if ( passedRegistrantPaymentObject.getPaymentTax() != 0.0 ) {
-	    if ( ! whereSpecified ) {
-		statement += " where payment_tax = ?";
-		whereSpecified = true;
-	    } else
-		statement += " and payment_tax = ?";
-	    sql.setStatement(statement);
-	    sql.setInParams(new SQLParam(index++,  new Double(passedRegistrantPaymentObject.getPaymentTax()), Types.DOUBLE));
-	}
-        if ( passedRegistrantPaymentObject.getPaymentFee() != 0.0 ) {
-	    if ( ! whereSpecified ) {
-		statement += " where payment_fee = ?";
-		whereSpecified = true;
-	    } else
-		statement += " and payment_fee = ?";
-	    sql.setStatement(statement);
-	    sql.setInParams(new SQLParam(index++,  new Double(passedRegistrantPaymentObject.getPaymentFee()), Types.DOUBLE));
-	}
-        sql.setStatement(statement);
+		if ( passedRegistrantPaymentObject.getRegistrantPaymentId() != 0 ) {
+			statement += " where registrant_payment_id = ?";
+			whereSpecified = true;
+			sql.setStatement(statement);
+			sql.setInParams(new SQLParam(index++, new Integer(passedRegistrantPaymentObject.getRegistrantPaymentId()), Types.INTEGER));
+		}
+		if ( passedRegistrantPaymentObject.getRegistrantEvent() != 0 ) {
+			if ( ! whereSpecified ) {
+				statement += " where registrant_event = ?";
+				whereSpecified = true;
+			} else
+				statement += " and registrant_event = ?";
+			sql.setStatement(statement);
+			sql.setInParams(new SQLParam(index++, new Integer(passedRegistrantPaymentObject.getRegistrantEvent()), Types.INTEGER));
+		}
+		if ( passedRegistrantPaymentObject.getRegistrant() != 0 ) {
+			if ( ! whereSpecified ) {
+				statement += " where registrant = ?";
+				whereSpecified = true;
+			} else
+				statement += " and registrant = ?";
+			sql.setStatement(statement);
+			sql.setInParams(new SQLParam(index++, new Integer(passedRegistrantPaymentObject.getRegistrant()), Types.INTEGER));
+		}
+		if ( passedRegistrantPaymentObject.getPaymentType() != 0 ) {
+			if ( ! whereSpecified ) {
+				statement += " where payment_type = ?";
+				whereSpecified = true;
+			} else
+				statement += " and payment_type = ?";
+			sql.setStatement(statement);
+			sql.setInParams(new SQLParam(index++, new Integer(passedRegistrantPaymentObject.getPaymentType()), Types.INTEGER));
+		}
+		if ( passedRegistrantPaymentObject.getPaymentStatus() != 0 ) {
+			if ( ! whereSpecified ) {
+				statement += " where payment_status = ?";
+				whereSpecified = true;
+			} else
+				statement += " and payment_status = ?";
+			sql.setStatement(statement);
+			sql.setInParams(new SQLParam(index++, new Integer(passedRegistrantPaymentObject.getPaymentStatus()), Types.INTEGER));
+		}
+		if ( passedRegistrantPaymentObject.getPaymentAmount() != 0.0 ) {
+			if ( ! whereSpecified ) {
+				statement += " where payment_amount = ?";
+				whereSpecified = true;
+			} else
+				statement += " and payment_amount = ?";
+			sql.setStatement(statement);
+			sql.setInParams(new SQLParam(index++,  new Double(passedRegistrantPaymentObject.getPaymentAmount()), Types.DOUBLE));
+		}
+		if ( passedRegistrantPaymentObject.getPaymentAdditionalAmount() != 0.0 ) {
+			if ( ! whereSpecified ) {
+				statement += " where payment_additional_amount = ?";
+				whereSpecified = true;
+			} else
+				statement += " and payment_additional_amount = ?";
+			sql.setStatement(statement);
+			sql.setInParams(new SQLParam(index++,  new Double(passedRegistrantPaymentObject.getPaymentAdditionalAmount()), Types.DOUBLE));
+		}
+		if ( passedRegistrantPaymentObject.getPaymentDate() != null ) {
+			if ( ! whereSpecified ) {
+				statement += " where payment_date = ?";
+				whereSpecified = true;
+			} else
+				statement += " and payment_date = ?";
+			sql.setStatement(statement);
+			sql.setInParams(new SQLParam(index++,  passedRegistrantPaymentObject.getPaymentDate(), Types.TIMESTAMP));
+		}
+		if ( passedRegistrantPaymentObject.getReceiptDate() != null ) {
+			if ( ! whereSpecified ) {
+				statement += " where receipt_date = ?";
+				whereSpecified = true;
+			} else
+				statement += " and receipt_date = ?";
+			sql.setStatement(statement);
+			sql.setInParams(new SQLParam(index++,  passedRegistrantPaymentObject.getReceiptDate(), Types.TIMESTAMP));
+		}
+		if ( ! passedRegistrantPaymentObject.getPaymentDetails().equals("") ) {
+			if ( ! whereSpecified ) {
+				statement += " where payment_details = ?";
+				whereSpecified = true;
+			} else
+				statement += " and payment_details = ?";
+			sql.setStatement(statement);
+			sql.setInParams(new SQLParam(index++,  passedRegistrantPaymentObject.getPaymentDetails(), Types.VARCHAR));
+		}
+		if ( ! passedRegistrantPaymentObject.getPaymentTowards().equals("") ) {
+			if ( ! whereSpecified ) {
+				statement += " where payment_towards = ?";
+				whereSpecified = true;
+			} else
+				statement += " and payment_towards = ?";
+			sql.setStatement(statement);
+			sql.setInParams(new SQLParam(index++,  passedRegistrantPaymentObject.getPaymentTowards(), Types.VARCHAR));
+		}
+		if ( ! passedRegistrantPaymentObject.getPaymentReferenceId().equals("") ) {
+			if ( ! whereSpecified ) {
+				statement += " where payment_reference_id = ?";
+				whereSpecified = true;
+			} else
+				statement += " and payment_reference_id = ?";
+			sql.setStatement(statement);
+			sql.setInParams(new SQLParam(index++,  passedRegistrantPaymentObject.getPaymentReferenceId(), Types.VARCHAR));
+		}
+		if ( passedRegistrantPaymentObject.getPaymentTax() != 0.0 ) {
+			if ( ! whereSpecified ) {
+				statement += " where payment_tax = ?";
+				whereSpecified = true;
+			} else
+				statement += " and payment_tax = ?";
+			sql.setStatement(statement);
+			sql.setInParams(new SQLParam(index++,  new Double(passedRegistrantPaymentObject.getPaymentTax()), Types.DOUBLE));
+		}
+		if ( passedRegistrantPaymentObject.getPaymentFee() != 0.0 ) {
+			if ( ! whereSpecified ) {
+				statement += " where payment_fee = ?";
+				whereSpecified = true;
+			} else
+				statement += " and payment_fee = ?";
+			sql.setStatement(statement);
+			sql.setInParams(new SQLParam(index++,  new Double(passedRegistrantPaymentObject.getPaymentFee()), Types.DOUBLE));
+		}
+		sql.setStatement(statement);
         
-        DebugHandler.debug(statement);
-        setSQLStatement(sql);
+		DebugHandler.debug(statement);
+		setSQLStatement(sql);
         
-        @SuppressWarnings("unchecked")
-        ArrayList<RegistrantPaymentObject> result = (ArrayList<RegistrantPaymentObject>) super.list();
+		@SuppressWarnings("unchecked")
+		ArrayList<RegistrantPaymentObject> result = (ArrayList<RegistrantPaymentObject>) super.list();
         
-        return result;
-    }
+		return result;
+	}
     
     
     /**

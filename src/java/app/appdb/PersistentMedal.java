@@ -83,47 +83,47 @@ public class PersistentMedal extends PersistentObject {
      * @see     #getResultObjects(ResultSet)
      */
     
-    public Object list(Object args) throws DBException {
-        PreparedSQLStatement sql = new PreparedSQLStatement();
-        String statement = "SELECT medal_id, medal_name, medal_rank from Medal";
-        int index = 1;
-        MedalObject passedMedalObject = (MedalObject)args;
-        boolean whereSpecified = false;
+	public Object list(Object args) throws DBException {
+		PreparedSQLStatement sql = new PreparedSQLStatement();
+		String statement = "SELECT medal_id, medal_name, medal_rank from Medal";
+		int index = 1;
+		MedalObject passedMedalObject = (MedalObject)args;
+		boolean whereSpecified = false;
 
-        if ( passedMedalObject.getMedalId() != 0 ) {
-	    statement += " where medal_id = ?";
-	    whereSpecified = true;
-	    sql.setStatement(statement);
-	    sql.setInParams(new SQLParam(index++, new Integer(passedMedalObject.getMedalId()), Types.INTEGER));
-	}
-        if ( ! passedMedalObject.getMedalName().equals("") ) {
-	    if ( ! whereSpecified ) {
-		statement += " where medal_name = ?";
-		whereSpecified = true;
-	    } else
-		statement += " and medal_name = ?";
-	    sql.setStatement(statement);
-	    sql.setInParams(new SQLParam(index++,  passedMedalObject.getMedalName(), Types.VARCHAR));
-	}
-        if ( passedMedalObject.getMedalRank() != 0 ) {
-	    if ( ! whereSpecified ) {
-		statement += " where medal_rank = ?";
-		whereSpecified = true;
-	    } else
-		statement += " and medal_rank = ?";
-	    sql.setStatement(statement);
-	    sql.setInParams(new SQLParam(index++, new Integer(passedMedalObject.getMedalRank()), Types.INTEGER));
-	}
-        sql.setStatement(statement);
+		if ( passedMedalObject.getMedalId() != 0 ) {
+			statement += " where medal_id = ?";
+			whereSpecified = true;
+			sql.setStatement(statement);
+			sql.setInParams(new SQLParam(index++, new Integer(passedMedalObject.getMedalId()), Types.INTEGER));
+		}
+		if ( ! passedMedalObject.getMedalName().equals("") ) {
+			if ( ! whereSpecified ) {
+				statement += " where medal_name = ?";
+				whereSpecified = true;
+			} else
+				statement += " and medal_name = ?";
+			sql.setStatement(statement);
+			sql.setInParams(new SQLParam(index++,  passedMedalObject.getMedalName(), Types.VARCHAR));
+		}
+		if ( passedMedalObject.getMedalRank() != 0 ) {
+			if ( ! whereSpecified ) {
+				statement += " where medal_rank = ?";
+				whereSpecified = true;
+			} else
+				statement += " and medal_rank = ?";
+			sql.setStatement(statement);
+			sql.setInParams(new SQLParam(index++, new Integer(passedMedalObject.getMedalRank()), Types.INTEGER));
+		}
+		sql.setStatement(statement);
         
-        DebugHandler.debug(statement);
-        setSQLStatement(sql);
+		DebugHandler.debug(statement);
+		setSQLStatement(sql);
         
-        @SuppressWarnings("unchecked")
-        ArrayList<MedalObject> result = (ArrayList<MedalObject>) super.list();
+		@SuppressWarnings("unchecked")
+		ArrayList<MedalObject> result = (ArrayList<MedalObject>) super.list();
         
-        return result;
-    }
+		return result;
+	}
     
     
     /**

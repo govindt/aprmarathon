@@ -83,38 +83,38 @@ public class PersistentPaymentStatus extends PersistentObject {
      * @see     #getResultObjects(ResultSet)
      */
     
-    public Object list(Object args) throws DBException {
-        PreparedSQLStatement sql = new PreparedSQLStatement();
-        String statement = "SELECT payment_status_id, payment_status_name from Payment_Status";
-        int index = 1;
-        PaymentStatusObject passedPaymentStatusObject = (PaymentStatusObject)args;
-        boolean whereSpecified = false;
+	public Object list(Object args) throws DBException {
+		PreparedSQLStatement sql = new PreparedSQLStatement();
+		String statement = "SELECT payment_status_id, payment_status_name from Payment_Status";
+		int index = 1;
+		PaymentStatusObject passedPaymentStatusObject = (PaymentStatusObject)args;
+		boolean whereSpecified = false;
 
-        if ( passedPaymentStatusObject.getPaymentStatusId() != 0 ) {
-	    statement += " where payment_status_id = ?";
-	    whereSpecified = true;
-	    sql.setStatement(statement);
-	    sql.setInParams(new SQLParam(index++, new Integer(passedPaymentStatusObject.getPaymentStatusId()), Types.INTEGER));
+		if ( passedPaymentStatusObject.getPaymentStatusId() != 0 ) {
+			statement += " where payment_status_id = ?";
+			whereSpecified = true;
+			sql.setStatement(statement);
+			sql.setInParams(new SQLParam(index++, new Integer(passedPaymentStatusObject.getPaymentStatusId()), Types.INTEGER));
+		}
+		if ( ! passedPaymentStatusObject.getPaymentStatusName().equals("") ) {
+			if ( ! whereSpecified ) {
+				statement += " where payment_status_name = ?";
+				whereSpecified = true;
+			} else
+				statement += " and payment_status_name = ?";
+			sql.setStatement(statement);
+			sql.setInParams(new SQLParam(index++,  passedPaymentStatusObject.getPaymentStatusName(), Types.VARCHAR));
+		}
+		sql.setStatement(statement);
+        
+		DebugHandler.debug(statement);
+		setSQLStatement(sql);
+        
+		@SuppressWarnings("unchecked")
+		ArrayList<PaymentStatusObject> result = (ArrayList<PaymentStatusObject>) super.list();
+        
+		return result;
 	}
-        if ( ! passedPaymentStatusObject.getPaymentStatusName().equals("") ) {
-	    if ( ! whereSpecified ) {
-		statement += " where payment_status_name = ?";
-		whereSpecified = true;
-	    } else
-		statement += " and payment_status_name = ?";
-	    sql.setStatement(statement);
-	    sql.setInParams(new SQLParam(index++,  passedPaymentStatusObject.getPaymentStatusName(), Types.VARCHAR));
-	}
-        sql.setStatement(statement);
-        
-        DebugHandler.debug(statement);
-        setSQLStatement(sql);
-        
-        @SuppressWarnings("unchecked")
-        ArrayList<PaymentStatusObject> result = (ArrayList<PaymentStatusObject>) super.list();
-        
-        return result;
-    }
     
     
     /**

@@ -83,83 +83,83 @@ public class PersistentParticipantEvent extends PersistentObject {
      * @see     #getResultObjects(ResultSet)
      */
     
-    public Object list(Object args) throws DBException {
-        PreparedSQLStatement sql = new PreparedSQLStatement();
-        String statement = "SELECT participant_event_id, participant_id, participant_event, participant_type, participant_event_type, participant_bib_no, participant_group from Participant_Event";
-        int index = 1;
-        ParticipantEventObject passedParticipantEventObject = (ParticipantEventObject)args;
-        boolean whereSpecified = false;
+	public Object list(Object args) throws DBException {
+		PreparedSQLStatement sql = new PreparedSQLStatement();
+		String statement = "SELECT participant_event_id, participant_id, participant_event, participant_type, participant_event_type, participant_bib_no, participant_group from Participant_Event";
+		int index = 1;
+		ParticipantEventObject passedParticipantEventObject = (ParticipantEventObject)args;
+		boolean whereSpecified = false;
 
-        if ( passedParticipantEventObject.getParticipantEventId() != 0 ) {
-	    statement += " where participant_event_id = ?";
-	    whereSpecified = true;
-	    sql.setStatement(statement);
-	    sql.setInParams(new SQLParam(index++, new Integer(passedParticipantEventObject.getParticipantEventId()), Types.INTEGER));
-	}
-        if ( passedParticipantEventObject.getParticipantId() != 0 ) {
-	    if ( ! whereSpecified ) {
-		statement += " where participant_id = ?";
-		whereSpecified = true;
-	    } else
-		statement += " and participant_id = ?";
-	    sql.setStatement(statement);
-	    sql.setInParams(new SQLParam(index++, new Integer(passedParticipantEventObject.getParticipantId()), Types.INTEGER));
-	}
-        if ( passedParticipantEventObject.getParticipantEvent() != 0 ) {
-	    if ( ! whereSpecified ) {
-		statement += " where participant_event = ?";
-		whereSpecified = true;
-	    } else
-		statement += " and participant_event = ?";
-	    sql.setStatement(statement);
-	    sql.setInParams(new SQLParam(index++, new Integer(passedParticipantEventObject.getParticipantEvent()), Types.INTEGER));
-	}
-        if ( passedParticipantEventObject.getParticipantType() != 0 ) {
-	    if ( ! whereSpecified ) {
-		statement += " where participant_type = ?";
-		whereSpecified = true;
-	    } else
-		statement += " and participant_type = ?";
-	    sql.setStatement(statement);
-	    sql.setInParams(new SQLParam(index++, new Integer(passedParticipantEventObject.getParticipantType()), Types.INTEGER));
-	}
-        if ( passedParticipantEventObject.getParticipantEventType() != 0 ) {
-	    if ( ! whereSpecified ) {
-		statement += " where participant_event_type = ?";
-		whereSpecified = true;
-	    } else
-		statement += " and participant_event_type = ?";
-	    sql.setStatement(statement);
-	    sql.setInParams(new SQLParam(index++, new Integer(passedParticipantEventObject.getParticipantEventType()), Types.INTEGER));
-	}
-        if ( ! passedParticipantEventObject.getParticipantBibNo().equals("") ) {
-	    if ( ! whereSpecified ) {
-		statement += " where participant_bib_no = ?";
-		whereSpecified = true;
-	    } else
-		statement += " and participant_bib_no = ?";
-	    sql.setStatement(statement);
-	    sql.setInParams(new SQLParam(index++,  passedParticipantEventObject.getParticipantBibNo(), Types.VARCHAR));
-	}
-        if ( passedParticipantEventObject.getParticipantGroup() != 0 ) {
-	    if ( ! whereSpecified ) {
-		statement += " where participant_group = ?";
-		whereSpecified = true;
-	    } else
-		statement += " and participant_group = ?";
-	    sql.setStatement(statement);
-	    sql.setInParams(new SQLParam(index++, new Integer(passedParticipantEventObject.getParticipantGroup()), Types.INTEGER));
-	}
-        sql.setStatement(statement);
+		if ( passedParticipantEventObject.getParticipantEventId() != 0 ) {
+			statement += " where participant_event_id = ?";
+			whereSpecified = true;
+			sql.setStatement(statement);
+			sql.setInParams(new SQLParam(index++, new Integer(passedParticipantEventObject.getParticipantEventId()), Types.INTEGER));
+		}
+		if ( passedParticipantEventObject.getParticipantId() != 0 ) {
+			if ( ! whereSpecified ) {
+				statement += " where participant_id = ?";
+				whereSpecified = true;
+			} else
+				statement += " and participant_id = ?";
+			sql.setStatement(statement);
+			sql.setInParams(new SQLParam(index++, new Integer(passedParticipantEventObject.getParticipantId()), Types.INTEGER));
+		}
+		if ( passedParticipantEventObject.getParticipantEvent() != 0 ) {
+			if ( ! whereSpecified ) {
+				statement += " where participant_event = ?";
+				whereSpecified = true;
+			} else
+				statement += " and participant_event = ?";
+			sql.setStatement(statement);
+			sql.setInParams(new SQLParam(index++, new Integer(passedParticipantEventObject.getParticipantEvent()), Types.INTEGER));
+		}
+		if ( passedParticipantEventObject.getParticipantType() != 0 ) {
+			if ( ! whereSpecified ) {
+				statement += " where participant_type = ?";
+				whereSpecified = true;
+			} else
+				statement += " and participant_type = ?";
+			sql.setStatement(statement);
+			sql.setInParams(new SQLParam(index++, new Integer(passedParticipantEventObject.getParticipantType()), Types.INTEGER));
+		}
+		if ( passedParticipantEventObject.getParticipantEventType() != 0 ) {
+			if ( ! whereSpecified ) {
+				statement += " where participant_event_type = ?";
+				whereSpecified = true;
+			} else
+				statement += " and participant_event_type = ?";
+			sql.setStatement(statement);
+			sql.setInParams(new SQLParam(index++, new Integer(passedParticipantEventObject.getParticipantEventType()), Types.INTEGER));
+		}
+		if ( ! passedParticipantEventObject.getParticipantBibNo().equals("") ) {
+			if ( ! whereSpecified ) {
+				statement += " where participant_bib_no = ?";
+				whereSpecified = true;
+			} else
+				statement += " and participant_bib_no = ?";
+			sql.setStatement(statement);
+			sql.setInParams(new SQLParam(index++,  passedParticipantEventObject.getParticipantBibNo(), Types.VARCHAR));
+		}
+		if ( passedParticipantEventObject.getParticipantGroup() != 0 ) {
+			if ( ! whereSpecified ) {
+				statement += " where participant_group = ?";
+				whereSpecified = true;
+			} else
+				statement += " and participant_group = ?";
+			sql.setStatement(statement);
+			sql.setInParams(new SQLParam(index++, new Integer(passedParticipantEventObject.getParticipantGroup()), Types.INTEGER));
+		}
+		sql.setStatement(statement);
         
-        DebugHandler.debug(statement);
-        setSQLStatement(sql);
+		DebugHandler.debug(statement);
+		setSQLStatement(sql);
         
-        @SuppressWarnings("unchecked")
-        ArrayList<ParticipantEventObject> result = (ArrayList<ParticipantEventObject>) super.list();
+		@SuppressWarnings("unchecked")
+		ArrayList<ParticipantEventObject> result = (ArrayList<ParticipantEventObject>) super.list();
         
-        return result;
-    }
+		return result;
+	}
     
     
     /**

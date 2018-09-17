@@ -17,7 +17,7 @@ setenv CLASSPATH ${JARHOME}/../jst/classes:${JARHOME}/jconn2.jar:${JARHOME}/ojdb
 
 
 setenv ORACLE_HOME /u01/app/oracle/product/10.1.0/Db_1
-setenv PATH ${ORACLE_HOME}/bin:${JAVA_HOME}/bin:${ANT_HOME}/bin:${PATH}
+setenv PATH ${ORACLE_HOME}/bin:${JAVA_HOME}/bin:${ANT_HOME}/bin:${JAVA_DEV_ROOT}/bin:${PATH}
 setenv LD_LIBRARY_PATH ${ORACLE_HOME}/lib:/usr/lib:/usr/local/lib
 setenv ORACLE_SID aprm
 #setenv CATALINA_HOME ${JAVA_DEV_ROOT}/apache-tomcat-9.0.11

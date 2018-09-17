@@ -41,36 +41,9 @@ public class RegistrantPaymentImpl implements RegistrantPaymentInterface  {
      *
      */
     
-    public ArrayList<RegistrantPaymentObject> getRegistrantPayments(RegistrantPaymentObject registrantpayment_obj) throws AppException{
-	RegistrantPaymentObject[] registrantPaymentObjectArr = getAllRegistrantPayments();
-	ArrayList<RegistrantPaymentObject> v = new ArrayList<RegistrantPaymentObject>();
-	if ( registrantPaymentObjectArr == null )
-		return null;
-	for ( int i = 0; i < registrantPaymentObjectArr.length; i++ ) {
-		if ( registrantPaymentObjectArr[i] != null ) {
-			if ( registrantpayment_obj.getRegistrantPaymentId() == Constants.GET_ALL ) {
-				v.add((RegistrantPaymentObject)registrantPaymentObjectArr[i].clone());
-			} else {
-				if ( (registrantpayment_obj.getRegistrantPaymentId() != 0 && registrantpayment_obj.getRegistrantPaymentId() == registrantPaymentObjectArr[i].getRegistrantPaymentId())
- || (registrantpayment_obj.getRegistrantEvent() != 0 && registrantpayment_obj.getRegistrantEvent() == registrantPaymentObjectArr[i].getRegistrantEvent())
- || (registrantpayment_obj.getRegistrant() != 0 && registrantpayment_obj.getRegistrant() == registrantPaymentObjectArr[i].getRegistrant())
- || (registrantpayment_obj.getPaymentType() != 0 && registrantpayment_obj.getPaymentType() == registrantPaymentObjectArr[i].getPaymentType())
- || (registrantpayment_obj.getPaymentStatus() != 0 && registrantpayment_obj.getPaymentStatus() == registrantPaymentObjectArr[i].getPaymentStatus())
- || (registrantpayment_obj.getPaymentAmount() != 0 && registrantpayment_obj.getPaymentAmount() == registrantPaymentObjectArr[i].getPaymentAmount())
- || (registrantpayment_obj.getPaymentAdditionalAmount() != 0 && registrantpayment_obj.getPaymentAdditionalAmount() == registrantPaymentObjectArr[i].getPaymentAdditionalAmount())
- || (registrantpayment_obj.getPaymentDate() != null && registrantpayment_obj.getPaymentDate().equals(registrantPaymentObjectArr[i].getPaymentDate()))
- || (registrantpayment_obj.getReceiptDate() != null && registrantpayment_obj.getReceiptDate().equals(registrantPaymentObjectArr[i].getReceiptDate()))
- || (registrantpayment_obj.getPaymentDetails() != null && registrantpayment_obj.getPaymentDetails().equals(registrantPaymentObjectArr[i].getPaymentDetails()))
- || (registrantpayment_obj.getPaymentTowards() != null && registrantpayment_obj.getPaymentTowards().equals(registrantPaymentObjectArr[i].getPaymentTowards()))
- || (registrantpayment_obj.getPaymentReferenceId() != null && registrantpayment_obj.getPaymentReferenceId().equals(registrantPaymentObjectArr[i].getPaymentReferenceId()))
- || (registrantpayment_obj.getPaymentTax() != 0 && registrantpayment_obj.getPaymentTax() == registrantPaymentObjectArr[i].getPaymentTax())
- || (registrantpayment_obj.getPaymentFee() != 0 && registrantpayment_obj.getPaymentFee() == registrantPaymentObjectArr[i].getPaymentFee())
-) {
-					v.add((RegistrantPaymentObject)registrantPaymentObjectArr[i].clone());
-				}
-			}
-		}
-	}
+	public ArrayList<RegistrantPaymentObject> getRegistrantPayments(RegistrantPaymentObject registrantpayment_obj) throws AppException{
+		@SuppressWarnings("unchecked")
+		ArrayList<RegistrantPaymentObject> v = (ArrayList<RegistrantPaymentObject>)DBUtil.list(registrantpayment_obj,registrantpayment_obj);
 	DebugHandler.finest("v: " + v);
 	return v;
     }

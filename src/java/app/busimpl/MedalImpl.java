@@ -41,25 +41,9 @@ public class MedalImpl implements MedalInterface  {
      *
      */
     
-    public ArrayList<MedalObject> getMedals(MedalObject medal_obj) throws AppException{
-	MedalObject[] medalObjectArr = getAllMedals();
-	ArrayList<MedalObject> v = new ArrayList<MedalObject>();
-	if ( medalObjectArr == null )
-		return null;
-	for ( int i = 0; i < medalObjectArr.length; i++ ) {
-		if ( medalObjectArr[i] != null ) {
-			if ( medal_obj.getMedalId() == Constants.GET_ALL ) {
-				v.add((MedalObject)medalObjectArr[i].clone());
-			} else {
-				if ( (medal_obj.getMedalId() != 0 && medal_obj.getMedalId() == medalObjectArr[i].getMedalId())
- || (medal_obj.getMedalName() != null && medal_obj.getMedalName().equals(medalObjectArr[i].getMedalName()))
- || (medal_obj.getMedalRank() != 0 && medal_obj.getMedalRank() == medalObjectArr[i].getMedalRank())
-) {
-					v.add((MedalObject)medalObjectArr[i].clone());
-				}
-			}
-		}
-	}
+	public ArrayList<MedalObject> getMedals(MedalObject medal_obj) throws AppException{
+		@SuppressWarnings("unchecked")
+		ArrayList<MedalObject> v = (ArrayList<MedalObject>)DBUtil.list(medal_obj,medal_obj);
 	DebugHandler.finest("v: " + v);
 	return v;
     }

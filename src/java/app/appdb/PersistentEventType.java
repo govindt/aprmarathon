@@ -83,92 +83,92 @@ public class PersistentEventType extends PersistentObject {
      * @see     #getResultObjects(ResultSet)
      */
     
-    public Object list(Object args) throws DBException {
-        PreparedSQLStatement sql = new PreparedSQLStatement();
-        String statement = "SELECT event_type_id, event_type_name, event, event_type_description, event_type_start_date, event_type_end_date, event_type_venue, online_registration_only from Event_Type";
-        int index = 1;
-        EventTypeObject passedEventTypeObject = (EventTypeObject)args;
-        boolean whereSpecified = false;
+	public Object list(Object args) throws DBException {
+		PreparedSQLStatement sql = new PreparedSQLStatement();
+		String statement = "SELECT event_type_id, event_type_name, event, event_type_description, event_type_start_date, event_type_end_date, event_type_venue, online_registration_only from Event_Type";
+		int index = 1;
+		EventTypeObject passedEventTypeObject = (EventTypeObject)args;
+		boolean whereSpecified = false;
 
-        if ( passedEventTypeObject.getEventTypeId() != 0 ) {
-	    statement += " where event_type_id = ?";
-	    whereSpecified = true;
-	    sql.setStatement(statement);
-	    sql.setInParams(new SQLParam(index++, new Integer(passedEventTypeObject.getEventTypeId()), Types.INTEGER));
-	}
-        if ( ! passedEventTypeObject.getEventTypeName().equals("") ) {
-	    if ( ! whereSpecified ) {
-		statement += " where event_type_name = ?";
-		whereSpecified = true;
-	    } else
-		statement += " and event_type_name = ?";
-	    sql.setStatement(statement);
-	    sql.setInParams(new SQLParam(index++,  passedEventTypeObject.getEventTypeName(), Types.VARCHAR));
-	}
-        if ( passedEventTypeObject.getEvent() != 0 ) {
-	    if ( ! whereSpecified ) {
-		statement += " where event = ?";
-		whereSpecified = true;
-	    } else
-		statement += " and event = ?";
-	    sql.setStatement(statement);
-	    sql.setInParams(new SQLParam(index++, new Integer(passedEventTypeObject.getEvent()), Types.INTEGER));
-	}
-        if ( ! passedEventTypeObject.getEventTypeDescription().equals("") ) {
-	    if ( ! whereSpecified ) {
-		statement += " where event_type_description = ?";
-		whereSpecified = true;
-	    } else
-		statement += " and event_type_description = ?";
-	    sql.setStatement(statement);
-	    sql.setInParams(new SQLParam(index++,  passedEventTypeObject.getEventTypeDescription(), Types.VARCHAR));
-	}
-        if ( passedEventTypeObject.getEventTypeStartDate() != null ) {
-	    if ( ! whereSpecified ) {
-		statement += " where event_type_start_date = ?";
-		whereSpecified = true;
-	    } else
-		statement += " and event_type_start_date = ?";
-	    sql.setStatement(statement);
-	    sql.setInParams(new SQLParam(index++,  passedEventTypeObject.getEventTypeStartDate(), Types.TIMESTAMP));
-	}
-        if ( passedEventTypeObject.getEventTypeEndDate() != null ) {
-	    if ( ! whereSpecified ) {
-		statement += " where event_type_end_date = ?";
-		whereSpecified = true;
-	    } else
-		statement += " and event_type_end_date = ?";
-	    sql.setStatement(statement);
-	    sql.setInParams(new SQLParam(index++,  passedEventTypeObject.getEventTypeEndDate(), Types.TIMESTAMP));
-	}
-        if ( ! passedEventTypeObject.getEventTypeVenue().equals("") ) {
-	    if ( ! whereSpecified ) {
-		statement += " where event_type_venue = ?";
-		whereSpecified = true;
-	    } else
-		statement += " and event_type_venue = ?";
-	    sql.setStatement(statement);
-	    sql.setInParams(new SQLParam(index++,  passedEventTypeObject.getEventTypeVenue(), Types.VARCHAR));
-	}
-        if ( ! passedEventTypeObject.getOnlineRegistrationOnly().equals("") ) {
-	    if ( ! whereSpecified ) {
-		statement += " where online_registration_only = ?";
-		whereSpecified = true;
-	    } else
-		statement += " and online_registration_only = ?";
-	    sql.setStatement(statement);
-	    sql.setInParams(new SQLParam(index++,  passedEventTypeObject.getOnlineRegistrationOnly(), Types.VARCHAR));
-	}
-        sql.setStatement(statement);
+		if ( passedEventTypeObject.getEventTypeId() != 0 ) {
+			statement += " where event_type_id = ?";
+			whereSpecified = true;
+			sql.setStatement(statement);
+			sql.setInParams(new SQLParam(index++, new Integer(passedEventTypeObject.getEventTypeId()), Types.INTEGER));
+		}
+		if ( ! passedEventTypeObject.getEventTypeName().equals("") ) {
+			if ( ! whereSpecified ) {
+				statement += " where event_type_name = ?";
+				whereSpecified = true;
+			} else
+				statement += " and event_type_name = ?";
+			sql.setStatement(statement);
+			sql.setInParams(new SQLParam(index++,  passedEventTypeObject.getEventTypeName(), Types.VARCHAR));
+		}
+		if ( passedEventTypeObject.getEvent() != 0 ) {
+			if ( ! whereSpecified ) {
+				statement += " where event = ?";
+				whereSpecified = true;
+			} else
+				statement += " and event = ?";
+			sql.setStatement(statement);
+			sql.setInParams(new SQLParam(index++, new Integer(passedEventTypeObject.getEvent()), Types.INTEGER));
+		}
+		if ( ! passedEventTypeObject.getEventTypeDescription().equals("") ) {
+			if ( ! whereSpecified ) {
+				statement += " where event_type_description = ?";
+				whereSpecified = true;
+			} else
+				statement += " and event_type_description = ?";
+			sql.setStatement(statement);
+			sql.setInParams(new SQLParam(index++,  passedEventTypeObject.getEventTypeDescription(), Types.VARCHAR));
+		}
+		if ( passedEventTypeObject.getEventTypeStartDate() != null ) {
+			if ( ! whereSpecified ) {
+				statement += " where event_type_start_date = ?";
+				whereSpecified = true;
+			} else
+				statement += " and event_type_start_date = ?";
+			sql.setStatement(statement);
+			sql.setInParams(new SQLParam(index++,  passedEventTypeObject.getEventTypeStartDate(), Types.TIMESTAMP));
+		}
+		if ( passedEventTypeObject.getEventTypeEndDate() != null ) {
+			if ( ! whereSpecified ) {
+				statement += " where event_type_end_date = ?";
+				whereSpecified = true;
+			} else
+				statement += " and event_type_end_date = ?";
+			sql.setStatement(statement);
+			sql.setInParams(new SQLParam(index++,  passedEventTypeObject.getEventTypeEndDate(), Types.TIMESTAMP));
+		}
+		if ( ! passedEventTypeObject.getEventTypeVenue().equals("") ) {
+			if ( ! whereSpecified ) {
+				statement += " where event_type_venue = ?";
+				whereSpecified = true;
+			} else
+				statement += " and event_type_venue = ?";
+			sql.setStatement(statement);
+			sql.setInParams(new SQLParam(index++,  passedEventTypeObject.getEventTypeVenue(), Types.VARCHAR));
+		}
+		if ( ! passedEventTypeObject.getOnlineRegistrationOnly().equals("") ) {
+			if ( ! whereSpecified ) {
+				statement += " where online_registration_only = ?";
+				whereSpecified = true;
+			} else
+				statement += " and online_registration_only = ?";
+			sql.setStatement(statement);
+			sql.setInParams(new SQLParam(index++,  passedEventTypeObject.getOnlineRegistrationOnly(), Types.VARCHAR));
+		}
+		sql.setStatement(statement);
         
-        DebugHandler.debug(statement);
-        setSQLStatement(sql);
+		DebugHandler.debug(statement);
+		setSQLStatement(sql);
         
-        @SuppressWarnings("unchecked")
-        ArrayList<EventTypeObject> result = (ArrayList<EventTypeObject>) super.list();
+		@SuppressWarnings("unchecked")
+		ArrayList<EventTypeObject> result = (ArrayList<EventTypeObject>) super.list();
         
-        return result;
-    }
+		return result;
+	}
     
     
     /**

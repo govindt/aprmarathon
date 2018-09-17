@@ -41,25 +41,9 @@ public class TShirtSizeImpl implements TShirtSizeInterface  {
      *
      */
     
-    public ArrayList<TShirtSizeObject> getTShirtSizes(TShirtSizeObject tshirtsize_obj) throws AppException{
-	TShirtSizeObject[] tShirtSizeObjectArr = getAllTShirtSizes();
-	ArrayList<TShirtSizeObject> v = new ArrayList<TShirtSizeObject>();
-	if ( tShirtSizeObjectArr == null )
-		return null;
-	for ( int i = 0; i < tShirtSizeObjectArr.length; i++ ) {
-		if ( tShirtSizeObjectArr[i] != null ) {
-			if ( tshirtsize_obj.getTShirtSizeId() == Constants.GET_ALL ) {
-				v.add((TShirtSizeObject)tShirtSizeObjectArr[i].clone());
-			} else {
-				if ( (tshirtsize_obj.getTShirtSizeId() != 0 && tshirtsize_obj.getTShirtSizeId() == tShirtSizeObjectArr[i].getTShirtSizeId())
- || (tshirtsize_obj.getTShirtSizeName() != null && tshirtsize_obj.getTShirtSizeName().equals(tShirtSizeObjectArr[i].getTShirtSizeName()))
- || (tshirtsize_obj.getTShirtGender() != 0 && tshirtsize_obj.getTShirtGender() == tShirtSizeObjectArr[i].getTShirtGender())
-) {
-					v.add((TShirtSizeObject)tShirtSizeObjectArr[i].clone());
-				}
-			}
-		}
-	}
+	public ArrayList<TShirtSizeObject> getTShirtSizes(TShirtSizeObject tshirtsize_obj) throws AppException{
+		@SuppressWarnings("unchecked")
+		ArrayList<TShirtSizeObject> v = (ArrayList<TShirtSizeObject>)DBUtil.list(tshirtsize_obj,tshirtsize_obj);
 	DebugHandler.finest("v: " + v);
 	return v;
     }

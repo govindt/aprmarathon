@@ -41,29 +41,9 @@ public class ParticipantEventImpl implements ParticipantEventInterface  {
      *
      */
     
-    public ArrayList<ParticipantEventObject> getParticipantEvents(ParticipantEventObject participantevent_obj) throws AppException{
-	ParticipantEventObject[] participantEventObjectArr = getAllParticipantEvents();
-	ArrayList<ParticipantEventObject> v = new ArrayList<ParticipantEventObject>();
-	if ( participantEventObjectArr == null )
-		return null;
-	for ( int i = 0; i < participantEventObjectArr.length; i++ ) {
-		if ( participantEventObjectArr[i] != null ) {
-			if ( participantevent_obj.getParticipantEventId() == Constants.GET_ALL ) {
-				v.add((ParticipantEventObject)participantEventObjectArr[i].clone());
-			} else {
-				if ( (participantevent_obj.getParticipantEventId() != 0 && participantevent_obj.getParticipantEventId() == participantEventObjectArr[i].getParticipantEventId())
- || (participantevent_obj.getParticipantId() != 0 && participantevent_obj.getParticipantId() == participantEventObjectArr[i].getParticipantId())
- || (participantevent_obj.getParticipantEvent() != 0 && participantevent_obj.getParticipantEvent() == participantEventObjectArr[i].getParticipantEvent())
- || (participantevent_obj.getParticipantType() != 0 && participantevent_obj.getParticipantType() == participantEventObjectArr[i].getParticipantType())
- || (participantevent_obj.getParticipantEventType() != 0 && participantevent_obj.getParticipantEventType() == participantEventObjectArr[i].getParticipantEventType())
- || (participantevent_obj.getParticipantBibNo() != null && participantevent_obj.getParticipantBibNo().equals(participantEventObjectArr[i].getParticipantBibNo()))
- || (participantevent_obj.getParticipantGroup() != 0 && participantevent_obj.getParticipantGroup() == participantEventObjectArr[i].getParticipantGroup())
-) {
-					v.add((ParticipantEventObject)participantEventObjectArr[i].clone());
-				}
-			}
-		}
-	}
+	public ArrayList<ParticipantEventObject> getParticipantEvents(ParticipantEventObject participantevent_obj) throws AppException{
+		@SuppressWarnings("unchecked")
+		ArrayList<ParticipantEventObject> v = (ArrayList<ParticipantEventObject>)DBUtil.list(participantevent_obj,participantevent_obj);
 	DebugHandler.finest("v: " + v);
 	return v;
     }

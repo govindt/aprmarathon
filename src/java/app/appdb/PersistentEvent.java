@@ -83,83 +83,83 @@ public class PersistentEvent extends PersistentObject {
      * @see     #getResultObjects(ResultSet)
      */
     
-    public Object list(Object args) throws DBException {
-        PreparedSQLStatement sql = new PreparedSQLStatement();
-        String statement = "SELECT event_id, event_name, event_start_date, event_end_date, event_description, event_registation_close_date, event_changes_close_date from Event";
-        int index = 1;
-        EventObject passedEventObject = (EventObject)args;
-        boolean whereSpecified = false;
+	public Object list(Object args) throws DBException {
+		PreparedSQLStatement sql = new PreparedSQLStatement();
+		String statement = "SELECT event_id, event_name, event_start_date, event_end_date, event_description, event_registation_close_date, event_changes_close_date from Event";
+		int index = 1;
+		EventObject passedEventObject = (EventObject)args;
+		boolean whereSpecified = false;
 
-        if ( passedEventObject.getEventId() != 0 ) {
-	    statement += " where event_id = ?";
-	    whereSpecified = true;
-	    sql.setStatement(statement);
-	    sql.setInParams(new SQLParam(index++, new Integer(passedEventObject.getEventId()), Types.INTEGER));
-	}
-        if ( ! passedEventObject.getEventName().equals("") ) {
-	    if ( ! whereSpecified ) {
-		statement += " where event_name = ?";
-		whereSpecified = true;
-	    } else
-		statement += " and event_name = ?";
-	    sql.setStatement(statement);
-	    sql.setInParams(new SQLParam(index++,  passedEventObject.getEventName(), Types.VARCHAR));
-	}
-        if ( passedEventObject.getEventStartDate() != null ) {
-	    if ( ! whereSpecified ) {
-		statement += " where event_start_date = ?";
-		whereSpecified = true;
-	    } else
-		statement += " and event_start_date = ?";
-	    sql.setStatement(statement);
-	    sql.setInParams(new SQLParam(index++,  passedEventObject.getEventStartDate(), Types.TIMESTAMP));
-	}
-        if ( passedEventObject.getEventEndDate() != null ) {
-	    if ( ! whereSpecified ) {
-		statement += " where event_end_date = ?";
-		whereSpecified = true;
-	    } else
-		statement += " and event_end_date = ?";
-	    sql.setStatement(statement);
-	    sql.setInParams(new SQLParam(index++,  passedEventObject.getEventEndDate(), Types.TIMESTAMP));
-	}
-        if ( ! passedEventObject.getEventDescription().equals("") ) {
-	    if ( ! whereSpecified ) {
-		statement += " where event_description = ?";
-		whereSpecified = true;
-	    } else
-		statement += " and event_description = ?";
-	    sql.setStatement(statement);
-	    sql.setInParams(new SQLParam(index++,  passedEventObject.getEventDescription(), Types.VARCHAR));
-	}
-        if ( passedEventObject.getEventRegistationCloseDate() != null ) {
-	    if ( ! whereSpecified ) {
-		statement += " where event_registation_close_date = ?";
-		whereSpecified = true;
-	    } else
-		statement += " and event_registation_close_date = ?";
-	    sql.setStatement(statement);
-	    sql.setInParams(new SQLParam(index++,  passedEventObject.getEventRegistationCloseDate(), Types.TIMESTAMP));
-	}
-        if ( passedEventObject.getEventChangesCloseDate() != null ) {
-	    if ( ! whereSpecified ) {
-		statement += " where event_changes_close_date = ?";
-		whereSpecified = true;
-	    } else
-		statement += " and event_changes_close_date = ?";
-	    sql.setStatement(statement);
-	    sql.setInParams(new SQLParam(index++,  passedEventObject.getEventChangesCloseDate(), Types.TIMESTAMP));
-	}
-        sql.setStatement(statement);
+		if ( passedEventObject.getEventId() != 0 ) {
+			statement += " where event_id = ?";
+			whereSpecified = true;
+			sql.setStatement(statement);
+			sql.setInParams(new SQLParam(index++, new Integer(passedEventObject.getEventId()), Types.INTEGER));
+		}
+		if ( ! passedEventObject.getEventName().equals("") ) {
+			if ( ! whereSpecified ) {
+				statement += " where event_name = ?";
+				whereSpecified = true;
+			} else
+				statement += " and event_name = ?";
+			sql.setStatement(statement);
+			sql.setInParams(new SQLParam(index++,  passedEventObject.getEventName(), Types.VARCHAR));
+		}
+		if ( passedEventObject.getEventStartDate() != null ) {
+			if ( ! whereSpecified ) {
+				statement += " where event_start_date = ?";
+				whereSpecified = true;
+			} else
+				statement += " and event_start_date = ?";
+			sql.setStatement(statement);
+			sql.setInParams(new SQLParam(index++,  passedEventObject.getEventStartDate(), Types.TIMESTAMP));
+		}
+		if ( passedEventObject.getEventEndDate() != null ) {
+			if ( ! whereSpecified ) {
+				statement += " where event_end_date = ?";
+				whereSpecified = true;
+			} else
+				statement += " and event_end_date = ?";
+			sql.setStatement(statement);
+			sql.setInParams(new SQLParam(index++,  passedEventObject.getEventEndDate(), Types.TIMESTAMP));
+		}
+		if ( ! passedEventObject.getEventDescription().equals("") ) {
+			if ( ! whereSpecified ) {
+				statement += " where event_description = ?";
+				whereSpecified = true;
+			} else
+				statement += " and event_description = ?";
+			sql.setStatement(statement);
+			sql.setInParams(new SQLParam(index++,  passedEventObject.getEventDescription(), Types.VARCHAR));
+		}
+		if ( passedEventObject.getEventRegistationCloseDate() != null ) {
+			if ( ! whereSpecified ) {
+				statement += " where event_registation_close_date = ?";
+				whereSpecified = true;
+			} else
+				statement += " and event_registation_close_date = ?";
+			sql.setStatement(statement);
+			sql.setInParams(new SQLParam(index++,  passedEventObject.getEventRegistationCloseDate(), Types.TIMESTAMP));
+		}
+		if ( passedEventObject.getEventChangesCloseDate() != null ) {
+			if ( ! whereSpecified ) {
+				statement += " where event_changes_close_date = ?";
+				whereSpecified = true;
+			} else
+				statement += " and event_changes_close_date = ?";
+			sql.setStatement(statement);
+			sql.setInParams(new SQLParam(index++,  passedEventObject.getEventChangesCloseDate(), Types.TIMESTAMP));
+		}
+		sql.setStatement(statement);
         
-        DebugHandler.debug(statement);
-        setSQLStatement(sql);
+		DebugHandler.debug(statement);
+		setSQLStatement(sql);
         
-        @SuppressWarnings("unchecked")
-        ArrayList<EventObject> result = (ArrayList<EventObject>) super.list();
+		@SuppressWarnings("unchecked")
+		ArrayList<EventObject> result = (ArrayList<EventObject>) super.list();
         
-        return result;
-    }
+		return result;
+	}
     
     
     /**
