@@ -41,29 +41,9 @@ public class EventImpl implements EventInterface  {
      *
      */
     
-    public ArrayList<EventObject> getEvents(EventObject event_obj) throws AppException{
-	EventObject[] eventObjectArr = getAllEvents();
-	ArrayList<EventObject> v = new ArrayList<EventObject>();
-	if ( eventObjectArr == null )
-		return null;
-	for ( int i = 0; i < eventObjectArr.length; i++ ) {
-		if ( eventObjectArr[i] != null ) {
-			if ( event_obj.getEventId() == Constants.GET_ALL ) {
-				v.add((EventObject)eventObjectArr[i].clone());
-			} else {
-				if ( (event_obj.getEventId() != 0 && event_obj.getEventId() == eventObjectArr[i].getEventId())
- || (event_obj.getEventName() != null && event_obj.getEventName().equals(eventObjectArr[i].getEventName()))
- || (event_obj.getEventStartDate() != null && event_obj.getEventStartDate().equals(eventObjectArr[i].getEventStartDate()))
- || (event_obj.getEventEndDate() != null && event_obj.getEventEndDate().equals(eventObjectArr[i].getEventEndDate()))
- || (event_obj.getEventDescription() != null && event_obj.getEventDescription().equals(eventObjectArr[i].getEventDescription()))
- || (event_obj.getEventRegistationCloseDate() != null && event_obj.getEventRegistationCloseDate().equals(eventObjectArr[i].getEventRegistationCloseDate()))
- || (event_obj.getEventChangesCloseDate() != null && event_obj.getEventChangesCloseDate().equals(eventObjectArr[i].getEventChangesCloseDate()))
-) {
-					v.add((EventObject)eventObjectArr[i].clone());
-				}
-			}
-		}
-	}
+	public ArrayList<EventObject> getEvents(EventObject event_obj) throws AppException{
+		@SuppressWarnings("unchecked")
+		ArrayList<EventObject> v = (ArrayList<EventObject>)DBUtil.list(event_obj,event_obj);
 	DebugHandler.finest("v: " + v);
 	return v;
     }

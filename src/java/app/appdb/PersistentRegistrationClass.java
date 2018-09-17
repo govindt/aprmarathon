@@ -83,74 +83,74 @@ public class PersistentRegistrationClass extends PersistentObject {
      * @see     #getResultObjects(ResultSet)
      */
     
-    public Object list(Object args) throws DBException {
-        PreparedSQLStatement sql = new PreparedSQLStatement();
-        String statement = "SELECT registration_class_id, registration_class_name, registration_type, registration_event, registration_class_value, registration_free_tickets from Registration_Class";
-        int index = 1;
-        RegistrationClassObject passedRegistrationClassObject = (RegistrationClassObject)args;
-        boolean whereSpecified = false;
+	public Object list(Object args) throws DBException {
+		PreparedSQLStatement sql = new PreparedSQLStatement();
+		String statement = "SELECT registration_class_id, registration_class_name, registration_type, registration_event, registration_class_value, registration_free_tickets from Registration_Class";
+		int index = 1;
+		RegistrationClassObject passedRegistrationClassObject = (RegistrationClassObject)args;
+		boolean whereSpecified = false;
 
-        if ( passedRegistrationClassObject.getRegistrationClassId() != 0 ) {
-	    statement += " where registration_class_id = ?";
-	    whereSpecified = true;
-	    sql.setStatement(statement);
-	    sql.setInParams(new SQLParam(index++, new Integer(passedRegistrationClassObject.getRegistrationClassId()), Types.INTEGER));
-	}
-        if ( ! passedRegistrationClassObject.getRegistrationClassName().equals("") ) {
-	    if ( ! whereSpecified ) {
-		statement += " where registration_class_name = ?";
-		whereSpecified = true;
-	    } else
-		statement += " and registration_class_name = ?";
-	    sql.setStatement(statement);
-	    sql.setInParams(new SQLParam(index++,  passedRegistrationClassObject.getRegistrationClassName(), Types.VARCHAR));
-	}
-        if ( passedRegistrationClassObject.getRegistrationType() != 0 ) {
-	    if ( ! whereSpecified ) {
-		statement += " where registration_type = ?";
-		whereSpecified = true;
-	    } else
-		statement += " and registration_type = ?";
-	    sql.setStatement(statement);
-	    sql.setInParams(new SQLParam(index++, new Integer(passedRegistrationClassObject.getRegistrationType()), Types.INTEGER));
-	}
-        if ( passedRegistrationClassObject.getRegistrationEvent() != 0 ) {
-	    if ( ! whereSpecified ) {
-		statement += " where registration_event = ?";
-		whereSpecified = true;
-	    } else
-		statement += " and registration_event = ?";
-	    sql.setStatement(statement);
-	    sql.setInParams(new SQLParam(index++, new Integer(passedRegistrationClassObject.getRegistrationEvent()), Types.INTEGER));
-	}
-        if ( passedRegistrationClassObject.getRegistrationClassValue() != 0.0 ) {
-	    if ( ! whereSpecified ) {
-		statement += " where registration_class_value = ?";
-		whereSpecified = true;
-	    } else
-		statement += " and registration_class_value = ?";
-	    sql.setStatement(statement);
-	    sql.setInParams(new SQLParam(index++,  new Double(passedRegistrationClassObject.getRegistrationClassValue()), Types.DOUBLE));
-	}
-        if ( passedRegistrationClassObject.getRegistrationFreeTickets() != 0 ) {
-	    if ( ! whereSpecified ) {
-		statement += " where registration_free_tickets = ?";
-		whereSpecified = true;
-	    } else
-		statement += " and registration_free_tickets = ?";
-	    sql.setStatement(statement);
-	    sql.setInParams(new SQLParam(index++, new Integer(passedRegistrationClassObject.getRegistrationFreeTickets()), Types.INTEGER));
-	}
-        sql.setStatement(statement);
+		if ( passedRegistrationClassObject.getRegistrationClassId() != 0 ) {
+			statement += " where registration_class_id = ?";
+			whereSpecified = true;
+			sql.setStatement(statement);
+			sql.setInParams(new SQLParam(index++, new Integer(passedRegistrationClassObject.getRegistrationClassId()), Types.INTEGER));
+		}
+		if ( ! passedRegistrationClassObject.getRegistrationClassName().equals("") ) {
+			if ( ! whereSpecified ) {
+				statement += " where registration_class_name = ?";
+				whereSpecified = true;
+			} else
+				statement += " and registration_class_name = ?";
+			sql.setStatement(statement);
+			sql.setInParams(new SQLParam(index++,  passedRegistrationClassObject.getRegistrationClassName(), Types.VARCHAR));
+		}
+		if ( passedRegistrationClassObject.getRegistrationType() != 0 ) {
+			if ( ! whereSpecified ) {
+				statement += " where registration_type = ?";
+				whereSpecified = true;
+			} else
+				statement += " and registration_type = ?";
+			sql.setStatement(statement);
+			sql.setInParams(new SQLParam(index++, new Integer(passedRegistrationClassObject.getRegistrationType()), Types.INTEGER));
+		}
+		if ( passedRegistrationClassObject.getRegistrationEvent() != 0 ) {
+			if ( ! whereSpecified ) {
+				statement += " where registration_event = ?";
+				whereSpecified = true;
+			} else
+				statement += " and registration_event = ?";
+			sql.setStatement(statement);
+			sql.setInParams(new SQLParam(index++, new Integer(passedRegistrationClassObject.getRegistrationEvent()), Types.INTEGER));
+		}
+		if ( passedRegistrationClassObject.getRegistrationClassValue() != 0.0 ) {
+			if ( ! whereSpecified ) {
+				statement += " where registration_class_value = ?";
+				whereSpecified = true;
+			} else
+				statement += " and registration_class_value = ?";
+			sql.setStatement(statement);
+			sql.setInParams(new SQLParam(index++,  new Double(passedRegistrationClassObject.getRegistrationClassValue()), Types.DOUBLE));
+		}
+		if ( passedRegistrationClassObject.getRegistrationFreeTickets() != 0 ) {
+			if ( ! whereSpecified ) {
+				statement += " where registration_free_tickets = ?";
+				whereSpecified = true;
+			} else
+				statement += " and registration_free_tickets = ?";
+			sql.setStatement(statement);
+			sql.setInParams(new SQLParam(index++, new Integer(passedRegistrationClassObject.getRegistrationFreeTickets()), Types.INTEGER));
+		}
+		sql.setStatement(statement);
         
-        DebugHandler.debug(statement);
-        setSQLStatement(sql);
+		DebugHandler.debug(statement);
+		setSQLStatement(sql);
         
-        @SuppressWarnings("unchecked")
-        ArrayList<RegistrationClassObject> result = (ArrayList<RegistrationClassObject>) super.list();
+		@SuppressWarnings("unchecked")
+		ArrayList<RegistrationClassObject> result = (ArrayList<RegistrationClassObject>) super.list();
         
-        return result;
-    }
+		return result;
+	}
     
     
     /**

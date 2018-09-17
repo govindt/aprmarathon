@@ -41,24 +41,9 @@ public class PaymentTypeImpl implements PaymentTypeInterface  {
      *
      */
     
-    public ArrayList<PaymentTypeObject> getPaymentTypes(PaymentTypeObject paymenttype_obj) throws AppException{
-	PaymentTypeObject[] paymentTypeObjectArr = getAllPaymentTypes();
-	ArrayList<PaymentTypeObject> v = new ArrayList<PaymentTypeObject>();
-	if ( paymentTypeObjectArr == null )
-		return null;
-	for ( int i = 0; i < paymentTypeObjectArr.length; i++ ) {
-		if ( paymentTypeObjectArr[i] != null ) {
-			if ( paymenttype_obj.getPaymentTypeId() == Constants.GET_ALL ) {
-				v.add((PaymentTypeObject)paymentTypeObjectArr[i].clone());
-			} else {
-				if ( (paymenttype_obj.getPaymentTypeId() != 0 && paymenttype_obj.getPaymentTypeId() == paymentTypeObjectArr[i].getPaymentTypeId())
- || (paymenttype_obj.getPaymentTypeName() != null && paymenttype_obj.getPaymentTypeName().equals(paymentTypeObjectArr[i].getPaymentTypeName()))
-) {
-					v.add((PaymentTypeObject)paymentTypeObjectArr[i].clone());
-				}
-			}
-		}
-	}
+	public ArrayList<PaymentTypeObject> getPaymentTypes(PaymentTypeObject paymenttype_obj) throws AppException{
+		@SuppressWarnings("unchecked")
+		ArrayList<PaymentTypeObject> v = (ArrayList<PaymentTypeObject>)DBUtil.list(paymenttype_obj,paymenttype_obj);
 	DebugHandler.finest("v: " + v);
 	return v;
     }

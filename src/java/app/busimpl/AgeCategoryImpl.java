@@ -41,24 +41,9 @@ public class AgeCategoryImpl implements AgeCategoryInterface  {
      *
      */
     
-    public ArrayList<AgeCategoryObject> getAgeCategorys(AgeCategoryObject agecategory_obj) throws AppException{
-	AgeCategoryObject[] ageCategoryObjectArr = getAllAgeCategorys();
-	ArrayList<AgeCategoryObject> v = new ArrayList<AgeCategoryObject>();
-	if ( ageCategoryObjectArr == null )
-		return null;
-	for ( int i = 0; i < ageCategoryObjectArr.length; i++ ) {
-		if ( ageCategoryObjectArr[i] != null ) {
-			if ( agecategory_obj.getAgeCategoryId() == Constants.GET_ALL ) {
-				v.add((AgeCategoryObject)ageCategoryObjectArr[i].clone());
-			} else {
-				if ( (agecategory_obj.getAgeCategoryId() != 0 && agecategory_obj.getAgeCategoryId() == ageCategoryObjectArr[i].getAgeCategoryId())
- || (agecategory_obj.getAgeCategory() != null && agecategory_obj.getAgeCategory().equals(ageCategoryObjectArr[i].getAgeCategory()))
-) {
-					v.add((AgeCategoryObject)ageCategoryObjectArr[i].clone());
-				}
-			}
-		}
-	}
+	public ArrayList<AgeCategoryObject> getAgeCategorys(AgeCategoryObject agecategory_obj) throws AppException{
+		@SuppressWarnings("unchecked")
+		ArrayList<AgeCategoryObject> v = (ArrayList<AgeCategoryObject>)DBUtil.list(agecategory_obj,agecategory_obj);
 	DebugHandler.finest("v: " + v);
 	return v;
     }

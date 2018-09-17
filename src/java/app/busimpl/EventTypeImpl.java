@@ -41,30 +41,9 @@ public class EventTypeImpl implements EventTypeInterface  {
      *
      */
     
-    public ArrayList<EventTypeObject> getEventTypes(EventTypeObject eventtype_obj) throws AppException{
-	EventTypeObject[] eventTypeObjectArr = getAllEventTypes();
-	ArrayList<EventTypeObject> v = new ArrayList<EventTypeObject>();
-	if ( eventTypeObjectArr == null )
-		return null;
-	for ( int i = 0; i < eventTypeObjectArr.length; i++ ) {
-		if ( eventTypeObjectArr[i] != null ) {
-			if ( eventtype_obj.getEventTypeId() == Constants.GET_ALL ) {
-				v.add((EventTypeObject)eventTypeObjectArr[i].clone());
-			} else {
-				if ( (eventtype_obj.getEventTypeId() != 0 && eventtype_obj.getEventTypeId() == eventTypeObjectArr[i].getEventTypeId())
- || (eventtype_obj.getEventTypeName() != null && eventtype_obj.getEventTypeName().equals(eventTypeObjectArr[i].getEventTypeName()))
- || (eventtype_obj.getEvent() != 0 && eventtype_obj.getEvent() == eventTypeObjectArr[i].getEvent())
- || (eventtype_obj.getEventTypeDescription() != null && eventtype_obj.getEventTypeDescription().equals(eventTypeObjectArr[i].getEventTypeDescription()))
- || (eventtype_obj.getEventTypeStartDate() != null && eventtype_obj.getEventTypeStartDate().equals(eventTypeObjectArr[i].getEventTypeStartDate()))
- || (eventtype_obj.getEventTypeEndDate() != null && eventtype_obj.getEventTypeEndDate().equals(eventTypeObjectArr[i].getEventTypeEndDate()))
- || (eventtype_obj.getEventTypeVenue() != null && eventtype_obj.getEventTypeVenue().equals(eventTypeObjectArr[i].getEventTypeVenue()))
- || (eventtype_obj.getOnlineRegistrationOnly() != null && eventtype_obj.getOnlineRegistrationOnly().equals(eventTypeObjectArr[i].getOnlineRegistrationOnly()))
-) {
-					v.add((EventTypeObject)eventTypeObjectArr[i].clone());
-				}
-			}
-		}
-	}
+	public ArrayList<EventTypeObject> getEventTypes(EventTypeObject eventtype_obj) throws AppException{
+		@SuppressWarnings("unchecked")
+		ArrayList<EventTypeObject> v = (ArrayList<EventTypeObject>)DBUtil.list(eventtype_obj,eventtype_obj);
 	DebugHandler.finest("v: " + v);
 	return v;
     }

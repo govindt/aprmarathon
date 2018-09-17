@@ -41,30 +41,9 @@ public class ResultImpl implements ResultInterface  {
      *
      */
     
-    public ArrayList<ResultObject> getResults(ResultObject result_obj) throws AppException{
-	ResultObject[] resultObjectArr = getAllResults();
-	ArrayList<ResultObject> v = new ArrayList<ResultObject>();
-	if ( resultObjectArr == null )
-		return null;
-	for ( int i = 0; i < resultObjectArr.length; i++ ) {
-		if ( resultObjectArr[i] != null ) {
-			if ( result_obj.getResultId() == Constants.GET_ALL ) {
-				v.add((ResultObject)resultObjectArr[i].clone());
-			} else {
-				if ( (result_obj.getResultId() != 0 && result_obj.getResultId() == resultObjectArr[i].getResultId())
- || (result_obj.getResultEvent() != 0 && result_obj.getResultEvent() == resultObjectArr[i].getResultEvent())
- || (result_obj.getResultEventType() != 0 && result_obj.getResultEventType() == resultObjectArr[i].getResultEventType())
- || (result_obj.getResultMedal() != 0 && result_obj.getResultMedal() == resultObjectArr[i].getResultMedal())
- || (result_obj.getResultWinner() != 0 && result_obj.getResultWinner() == resultObjectArr[i].getResultWinner())
- || (result_obj.getResultWinnerRegistrant() != 0 && result_obj.getResultWinnerRegistrant() == resultObjectArr[i].getResultWinnerRegistrant())
- || (result_obj.getResultScore() != null && result_obj.getResultScore().equals(resultObjectArr[i].getResultScore()))
- || (result_obj.getResultTiming() != null && result_obj.getResultTiming().equals(resultObjectArr[i].getResultTiming()))
-) {
-					v.add((ResultObject)resultObjectArr[i].clone());
-				}
-			}
-		}
-	}
+	public ArrayList<ResultObject> getResults(ResultObject result_obj) throws AppException{
+		@SuppressWarnings("unchecked")
+		ArrayList<ResultObject> v = (ArrayList<ResultObject>)DBUtil.list(result_obj,result_obj);
 	DebugHandler.finest("v: " + v);
 	return v;
     }

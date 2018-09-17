@@ -41,34 +41,9 @@ public class ParticipantImpl implements ParticipantInterface  {
      *
      */
     
-    public ArrayList<ParticipantObject> getParticipants(ParticipantObject participant_obj) throws AppException{
-	ParticipantObject[] participantObjectArr = getAllParticipants();
-	ArrayList<ParticipantObject> v = new ArrayList<ParticipantObject>();
-	if ( participantObjectArr == null )
-		return null;
-	for ( int i = 0; i < participantObjectArr.length; i++ ) {
-		if ( participantObjectArr[i] != null ) {
-			if ( participant_obj.getParticipantId() == Constants.GET_ALL ) {
-				v.add((ParticipantObject)participantObjectArr[i].clone());
-			} else {
-				if ( (participant_obj.getParticipantId() != 0 && participant_obj.getParticipantId() == participantObjectArr[i].getParticipantId())
- || (participant_obj.getParticipantFirstName() != null && participant_obj.getParticipantFirstName().equals(participantObjectArr[i].getParticipantFirstName()))
- || (participant_obj.getParticipantMiddleName() != null && participant_obj.getParticipantMiddleName().equals(participantObjectArr[i].getParticipantMiddleName()))
- || (participant_obj.getParticipantLastName() != null && participant_obj.getParticipantLastName().equals(participantObjectArr[i].getParticipantLastName()))
- || (participant_obj.getParticipantGender() != 0 && participant_obj.getParticipantGender() == participantObjectArr[i].getParticipantGender())
- || (participant_obj.getParticipantDateOfBirth() != null && participant_obj.getParticipantDateOfBirth().equals(participantObjectArr[i].getParticipantDateOfBirth()))
- || (participant_obj.getParticipantAgeCategory() != 0 && participant_obj.getParticipantAgeCategory() == participantObjectArr[i].getParticipantAgeCategory())
- || (participant_obj.getParticipantTShirtSize() != 0 && participant_obj.getParticipantTShirtSize() == participantObjectArr[i].getParticipantTShirtSize())
- || (participant_obj.getParticipantBloodGroup() != 0 && participant_obj.getParticipantBloodGroup() == participantObjectArr[i].getParticipantBloodGroup())
- || (participant_obj.getParticipantCellPhone() != null && participant_obj.getParticipantCellPhone().equals(participantObjectArr[i].getParticipantCellPhone()))
- || (participant_obj.getParticipantEmail() != null && participant_obj.getParticipantEmail().equals(participantObjectArr[i].getParticipantEmail()))
- || (participant_obj.getParticipantGroup() != 0 && participant_obj.getParticipantGroup() == participantObjectArr[i].getParticipantGroup())
-) {
-					v.add((ParticipantObject)participantObjectArr[i].clone());
-				}
-			}
-		}
-	}
+	public ArrayList<ParticipantObject> getParticipants(ParticipantObject participant_obj) throws AppException{
+		@SuppressWarnings("unchecked")
+		ArrayList<ParticipantObject> v = (ArrayList<ParticipantObject>)DBUtil.list(participant_obj,participant_obj);
 	DebugHandler.finest("v: " + v);
 	return v;
     }

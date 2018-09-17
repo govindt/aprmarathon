@@ -83,38 +83,38 @@ public class PersistentBloodGroup extends PersistentObject {
      * @see     #getResultObjects(ResultSet)
      */
     
-    public Object list(Object args) throws DBException {
-        PreparedSQLStatement sql = new PreparedSQLStatement();
-        String statement = "SELECT blood_group_id, blood_group_name from Blood_Group";
-        int index = 1;
-        BloodGroupObject passedBloodGroupObject = (BloodGroupObject)args;
-        boolean whereSpecified = false;
+	public Object list(Object args) throws DBException {
+		PreparedSQLStatement sql = new PreparedSQLStatement();
+		String statement = "SELECT blood_group_id, blood_group_name from Blood_Group";
+		int index = 1;
+		BloodGroupObject passedBloodGroupObject = (BloodGroupObject)args;
+		boolean whereSpecified = false;
 
-        if ( passedBloodGroupObject.getBloodGroupId() != 0 ) {
-	    statement += " where blood_group_id = ?";
-	    whereSpecified = true;
-	    sql.setStatement(statement);
-	    sql.setInParams(new SQLParam(index++, new Integer(passedBloodGroupObject.getBloodGroupId()), Types.INTEGER));
+		if ( passedBloodGroupObject.getBloodGroupId() != 0 ) {
+			statement += " where blood_group_id = ?";
+			whereSpecified = true;
+			sql.setStatement(statement);
+			sql.setInParams(new SQLParam(index++, new Integer(passedBloodGroupObject.getBloodGroupId()), Types.INTEGER));
+		}
+		if ( ! passedBloodGroupObject.getBloodGroupName().equals("") ) {
+			if ( ! whereSpecified ) {
+				statement += " where blood_group_name = ?";
+				whereSpecified = true;
+			} else
+				statement += " and blood_group_name = ?";
+			sql.setStatement(statement);
+			sql.setInParams(new SQLParam(index++,  passedBloodGroupObject.getBloodGroupName(), Types.VARCHAR));
+		}
+		sql.setStatement(statement);
+        
+		DebugHandler.debug(statement);
+		setSQLStatement(sql);
+        
+		@SuppressWarnings("unchecked")
+		ArrayList<BloodGroupObject> result = (ArrayList<BloodGroupObject>) super.list();
+        
+		return result;
 	}
-        if ( ! passedBloodGroupObject.getBloodGroupName().equals("") ) {
-	    if ( ! whereSpecified ) {
-		statement += " where blood_group_name = ?";
-		whereSpecified = true;
-	    } else
-		statement += " and blood_group_name = ?";
-	    sql.setStatement(statement);
-	    sql.setInParams(new SQLParam(index++,  passedBloodGroupObject.getBloodGroupName(), Types.VARCHAR));
-	}
-        sql.setStatement(statement);
-        
-        DebugHandler.debug(statement);
-        setSQLStatement(sql);
-        
-        @SuppressWarnings("unchecked")
-        ArrayList<BloodGroupObject> result = (ArrayList<BloodGroupObject>) super.list();
-        
-        return result;
-    }
     
     
     /**

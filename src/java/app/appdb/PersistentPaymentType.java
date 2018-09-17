@@ -83,38 +83,38 @@ public class PersistentPaymentType extends PersistentObject {
      * @see     #getResultObjects(ResultSet)
      */
     
-    public Object list(Object args) throws DBException {
-        PreparedSQLStatement sql = new PreparedSQLStatement();
-        String statement = "SELECT payment_type_id, payment_type_name from Payment_Type";
-        int index = 1;
-        PaymentTypeObject passedPaymentTypeObject = (PaymentTypeObject)args;
-        boolean whereSpecified = false;
+	public Object list(Object args) throws DBException {
+		PreparedSQLStatement sql = new PreparedSQLStatement();
+		String statement = "SELECT payment_type_id, payment_type_name from Payment_Type";
+		int index = 1;
+		PaymentTypeObject passedPaymentTypeObject = (PaymentTypeObject)args;
+		boolean whereSpecified = false;
 
-        if ( passedPaymentTypeObject.getPaymentTypeId() != 0 ) {
-	    statement += " where payment_type_id = ?";
-	    whereSpecified = true;
-	    sql.setStatement(statement);
-	    sql.setInParams(new SQLParam(index++, new Integer(passedPaymentTypeObject.getPaymentTypeId()), Types.INTEGER));
+		if ( passedPaymentTypeObject.getPaymentTypeId() != 0 ) {
+			statement += " where payment_type_id = ?";
+			whereSpecified = true;
+			sql.setStatement(statement);
+			sql.setInParams(new SQLParam(index++, new Integer(passedPaymentTypeObject.getPaymentTypeId()), Types.INTEGER));
+		}
+		if ( ! passedPaymentTypeObject.getPaymentTypeName().equals("") ) {
+			if ( ! whereSpecified ) {
+				statement += " where payment_type_name = ?";
+				whereSpecified = true;
+			} else
+				statement += " and payment_type_name = ?";
+			sql.setStatement(statement);
+			sql.setInParams(new SQLParam(index++,  passedPaymentTypeObject.getPaymentTypeName(), Types.VARCHAR));
+		}
+		sql.setStatement(statement);
+        
+		DebugHandler.debug(statement);
+		setSQLStatement(sql);
+        
+		@SuppressWarnings("unchecked")
+		ArrayList<PaymentTypeObject> result = (ArrayList<PaymentTypeObject>) super.list();
+        
+		return result;
 	}
-        if ( ! passedPaymentTypeObject.getPaymentTypeName().equals("") ) {
-	    if ( ! whereSpecified ) {
-		statement += " where payment_type_name = ?";
-		whereSpecified = true;
-	    } else
-		statement += " and payment_type_name = ?";
-	    sql.setStatement(statement);
-	    sql.setInParams(new SQLParam(index++,  passedPaymentTypeObject.getPaymentTypeName(), Types.VARCHAR));
-	}
-        sql.setStatement(statement);
-        
-        DebugHandler.debug(statement);
-        setSQLStatement(sql);
-        
-        @SuppressWarnings("unchecked")
-        ArrayList<PaymentTypeObject> result = (ArrayList<PaymentTypeObject>) super.list();
-        
-        return result;
-    }
     
     
     /**

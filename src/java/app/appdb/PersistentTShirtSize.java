@@ -83,47 +83,47 @@ public class PersistentTShirtSize extends PersistentObject {
      * @see     #getResultObjects(ResultSet)
      */
     
-    public Object list(Object args) throws DBException {
-        PreparedSQLStatement sql = new PreparedSQLStatement();
-        String statement = "SELECT t_shirt_size_id, t_shirt_size_name, t_shirt_gender from T_Shirt_Size";
-        int index = 1;
-        TShirtSizeObject passedTShirtSizeObject = (TShirtSizeObject)args;
-        boolean whereSpecified = false;
+	public Object list(Object args) throws DBException {
+		PreparedSQLStatement sql = new PreparedSQLStatement();
+		String statement = "SELECT t_shirt_size_id, t_shirt_size_name, t_shirt_gender from T_Shirt_Size";
+		int index = 1;
+		TShirtSizeObject passedTShirtSizeObject = (TShirtSizeObject)args;
+		boolean whereSpecified = false;
 
-        if ( passedTShirtSizeObject.getTShirtSizeId() != 0 ) {
-	    statement += " where t_shirt_size_id = ?";
-	    whereSpecified = true;
-	    sql.setStatement(statement);
-	    sql.setInParams(new SQLParam(index++, new Integer(passedTShirtSizeObject.getTShirtSizeId()), Types.INTEGER));
-	}
-        if ( ! passedTShirtSizeObject.getTShirtSizeName().equals("") ) {
-	    if ( ! whereSpecified ) {
-		statement += " where t_shirt_size_name = ?";
-		whereSpecified = true;
-	    } else
-		statement += " and t_shirt_size_name = ?";
-	    sql.setStatement(statement);
-	    sql.setInParams(new SQLParam(index++,  passedTShirtSizeObject.getTShirtSizeName(), Types.VARCHAR));
-	}
-        if ( passedTShirtSizeObject.getTShirtGender() != 0 ) {
-	    if ( ! whereSpecified ) {
-		statement += " where t_shirt_gender = ?";
-		whereSpecified = true;
-	    } else
-		statement += " and t_shirt_gender = ?";
-	    sql.setStatement(statement);
-	    sql.setInParams(new SQLParam(index++, new Integer(passedTShirtSizeObject.getTShirtGender()), Types.INTEGER));
-	}
-        sql.setStatement(statement);
+		if ( passedTShirtSizeObject.getTShirtSizeId() != 0 ) {
+			statement += " where t_shirt_size_id = ?";
+			whereSpecified = true;
+			sql.setStatement(statement);
+			sql.setInParams(new SQLParam(index++, new Integer(passedTShirtSizeObject.getTShirtSizeId()), Types.INTEGER));
+		}
+		if ( ! passedTShirtSizeObject.getTShirtSizeName().equals("") ) {
+			if ( ! whereSpecified ) {
+				statement += " where t_shirt_size_name = ?";
+				whereSpecified = true;
+			} else
+				statement += " and t_shirt_size_name = ?";
+			sql.setStatement(statement);
+			sql.setInParams(new SQLParam(index++,  passedTShirtSizeObject.getTShirtSizeName(), Types.VARCHAR));
+		}
+		if ( passedTShirtSizeObject.getTShirtGender() != 0 ) {
+			if ( ! whereSpecified ) {
+				statement += " where t_shirt_gender = ?";
+				whereSpecified = true;
+			} else
+				statement += " and t_shirt_gender = ?";
+			sql.setStatement(statement);
+			sql.setInParams(new SQLParam(index++, new Integer(passedTShirtSizeObject.getTShirtGender()), Types.INTEGER));
+		}
+		sql.setStatement(statement);
         
-        DebugHandler.debug(statement);
-        setSQLStatement(sql);
+		DebugHandler.debug(statement);
+		setSQLStatement(sql);
         
-        @SuppressWarnings("unchecked")
-        ArrayList<TShirtSizeObject> result = (ArrayList<TShirtSizeObject>) super.list();
+		@SuppressWarnings("unchecked")
+		ArrayList<TShirtSizeObject> result = (ArrayList<TShirtSizeObject>) super.list();
         
-        return result;
-    }
+		return result;
+	}
     
     
     /**

@@ -275,46 +275,45 @@ ${NAWK} -v QUOTE="'" -v logname=${LOGNAME} -v version=1.0 -v since=1.0 -v proj_n
 	printf("\t\tboolean whereSpecified = false;\n\n", tmp_file_name, tmp_file_name)>>persistent_filename;
 	for ( j = 1; j <= i; j++ ) {
 	    if ( field_types[j] == "int" ) {
-		printf("\t\tif ( passed%sObject.get%s() != 0 ) {\n", tmp_file_name, new_field_names[j])>>persistent_filename; 
+			printf("\t\tif ( passed%sObject.get%s() != 0 ) {\n", tmp_file_name, new_field_names[j])>>persistent_filename; 
 	    }
 	    else if ( field_types[j] == "String" ) {
-		printf("\t\tif ( ! passed%sObject.get%s().equals(\"\") ) {\n", tmp_file_name, new_field_names[j])>>persistent_filename; 
+			printf("\t\tif ( ! passed%sObject.get%s().equals(\"\") ) {\n", tmp_file_name, new_field_names[j])>>persistent_filename; 
 	    }
 	    else if ( field_types[j] == "Date" ) {
-		printf("\t\tif ( passed%sObject.get%s() != null ) {\n", tmp_file_name, new_field_names[j])>>persistent_filename; 
+			printf("\t\tif ( passed%sObject.get%s() != null ) {\n", tmp_file_name, new_field_names[j])>>persistent_filename; 
 	    }
 	    else if ( field_types[j] == "double" ) {
-		printf("\t\tif ( passed%sObject.get%s() != 0.0 ) {\n", tmp_file_name, new_field_names[j])>>persistent_filename; 
+			printf("\t\tif ( passed%sObject.get%s() != 0.0 ) {\n", tmp_file_name, new_field_names[j])>>persistent_filename; 
 	    }
 	    else if ( field_types[j] == "float" ) {
-		printf("\t\tif ( passed%sObject.get%s() != 0.0f ) {\n", tmp_file_name, new_field_names[j])>>persistent_filename; 
+			printf("\t\tif ( passed%sObject.get%s() != 0.0f ) {\n", tmp_file_name, new_field_names[j])>>persistent_filename; 
 	    }
 	    if ( j == 1 ) {
-		printf("\t\t\tstatement += \" where %s = ?\";\n", field_names[j])>>persistent_filename;
-		printf("\t\t\twhereSpecified = true;\n")>>persistent_filename;
-		
+			printf("\t\t\tstatement += \" where %s = ?\";\n", field_names[j])>>persistent_filename;
+			printf("\t\t\twhereSpecified = true;\n")>>persistent_filename;
 	    } else {
-		printf("\t\t\tif ( ! whereSpecified ) {\n")>>persistent_filename;
-		printf("\t\t\t\tstatement += \" where %s = ?\";\n", field_names[j])>>persistent_filename;
-		printf("\t\t\t\twhereSpecified = true;\n")>>persistent_filename;
-		printf("\t\t\t} else\n")>>persistent_filename;
-		printf("\t\t\t\tstatement += \" and %s = ?\";\n", field_names[j])>>persistent_filename;
+			printf("\t\t\tif ( ! whereSpecified ) {\n")>>persistent_filename;
+			printf("\t\t\t\tstatement += \" where %s = ?\";\n", field_names[j])>>persistent_filename;
+			printf("\t\t\t\twhereSpecified = true;\n")>>persistent_filename;
+			printf("\t\t\t} else\n")>>persistent_filename;
+			printf("\t\t\t\tstatement += \" and %s = ?\";\n", field_names[j])>>persistent_filename;
 	    }
 	    printf("\t\t\tsql.setStatement(statement);\n")>>persistent_filename;
-	    if ( field_types[j] == "int" ) {
-		printf("\t\t\tsql.setInParams(new SQLParam(index++, new Integer(passed%sObject.get%s()), Types.INTEGER));\n", tmp_file_name, new_field_names[j])>>persistent_filename;;
+			if ( field_types[j] == "int" ) {
+			printf("\t\t\tsql.setInParams(new SQLParam(index++, new Integer(passed%sObject.get%s()), Types.INTEGER));\n", tmp_file_name, new_field_names[j])>>persistent_filename;;
 	    }
 	    else if ( field_types[j] == "String" ) {
-		printf("\t\t\tsql.setInParams(new SQLParam(index++,  passed%sObject.get%s(), Types.VARCHAR));\n", tmp_file_name, new_field_names[j])>>persistent_filename;;
+			printf("\t\t\tsql.setInParams(new SQLParam(index++,  passed%sObject.get%s(), Types.VARCHAR));\n", tmp_file_name, new_field_names[j])>>persistent_filename;;
 	    }
 	    else if ( field_types[j] == "Date" ) {
-		printf("\t\t\tsql.setInParams(new SQLParam(index++,  passed%sObject.get%s(), Types.TIMESTAMP));\n", tmp_file_name, new_field_names[j])>>persistent_filename;;
+			printf("\t\t\tsql.setInParams(new SQLParam(index++,  passed%sObject.get%s(), Types.TIMESTAMP));\n", tmp_file_name, new_field_names[j])>>persistent_filename;;
 	    }
 	    else if ( field_types[j] == "double" ) {
-		printf("\t\t\tsql.setInParams(new SQLParam(index++,  new Double(passed%sObject.get%s()), Types.DOUBLE));\n", tmp_file_name, new_field_names[j])>>persistent_filename;;
+			printf("\t\t\tsql.setInParams(new SQLParam(index++,  new Double(passed%sObject.get%s()), Types.DOUBLE));\n", tmp_file_name, new_field_names[j])>>persistent_filename;;
 	    }
 	    else if ( field_types[j] == "float" ) {
-		printf("\t\t\tsql.setInParams(new SQLParam(index++,  new Float(passed%sObject.get%s()), Types.FLOAT));\n", tmp_file_name, new_field_names[j])>>persistent_filename;;
+			printf("\t\t\tsql.setInParams(new SQLParam(index++,  new Float(passed%sObject.get%s()), Types.FLOAT));\n", tmp_file_name, new_field_names[j])>>persistent_filename;;
 	    }
 	    printf("\t\t}\n")>>persistent_filename;
 	}
@@ -1174,42 +1173,44 @@ ${NAWK} -v QUOTE="'" -v logname=${LOGNAME} -v version=1.0 -v since=1.0 -v proj_n
 	printf("     */\n    \n") >> impl_file_name;
 	# End get Method Comments
 	if (last_char == "s") {
-	    printf("    public ArrayList<%sObject> get%s(%sObject %s_obj) throws AppException{\n", tmp_file_name, tmp_file_name, tmp_file_name, tolower(tmp_file_name)) >> impl_file_name;
-	    printf("\t%sObject[] %sArr = getAll%s();\n",tmp_file_name, tmp, tmp_file_name) >> impl_file_name;
+	    printf("\tpublic ArrayList<%sObject> get%s(%sObject %s_obj) throws AppException{\n", tmp_file_name, tmp_file_name, tmp_file_name, tolower(tmp_file_name)) >> impl_file_name;
+	#    printf("\t\t%sObject[] %sArr = getAll%s();\n",tmp_file_name, tmp, tmp_file_name) >> impl_file_name;
 	} else {
-	    printf("    public ArrayList<%sObject> get%ss(%sObject %s_obj) throws AppException{\n", tmp_file_name, tmp_file_name, tmp_file_name, tolower(tmp_file_name)) >> impl_file_name;
-	    printf("\t%sObject[] %sArr = getAll%ss();\n",tmp_file_name, tmp, tmp_file_name) >> impl_file_name;
+	    printf("\tpublic ArrayList<%sObject> get%ss(%sObject %s_obj) throws AppException{\n", tmp_file_name, tmp_file_name, tmp_file_name, tolower(tmp_file_name)) >> impl_file_name;
+	#    printf("\t\t%sObject[] %sArr = getAll%ss();\n",tmp_file_name, tmp, tmp_file_name) >> impl_file_name;
 	}
-	printf("\tArrayList<%sObject> v = new ArrayList<%sObject>();\n",tmp_file_name, tmp_file_name) >> impl_file_name;
-	printf("\tif ( %sArr == null )\n", tmp) >> impl_file_name;
-	printf("\t\treturn null;\n") >> impl_file_name;
-	printf("\tfor ( int i = 0; i < %sArr.length; i++ ) {\n", tmp) >> impl_file_name;
-	printf("\t\tif ( %sArr[i] != null ) {\n", tmp) >> impl_file_name;
-	printf("\t\t\tif ( %s_obj.get%s() == Constants.GET_ALL ) {\n", tolower(tmp_file_name), new_field_names[1]) >> impl_file_name;
-	printf("\t\t\t\tv.add((%sObject)%sArr[i].clone());\n", tmp_file_name, tmp)>>impl_file_name;
-	printf("\t\t\t} else {\n") >> impl_file_name;
-	printf("\t\t\t\tif ( ")>>impl_file_name; 
-	for ( j = 1; j <= i; j++ ) {
-	    if ( field_types[j] != "String" && field_types[j]  != "Date" ) {
-		printf("(%s_obj.get%s() != 0 && %s_obj.get%s() == %sArr[i].get%s())\n", tolower(tmp_file_name), new_field_names[j], tolower(tmp_file_name), new_field_names[j], tmp, new_field_names[j])>>impl_file_name; 
-	    } 
-	    else {
-		if ( filed_typed[j]  == "String" ) {
-		    printf("(!Util.trim(%s_obj.get%s()).equals(Constants.SPACE) && %s_obj.get%s().equals(%sArr[i].get%s()))\n", tolower(tmp_file_name), new_field_names[j], tolower(tmp_file_name), new_field_names[j], tmp, new_field_names[j])>>impl_file_name;
-		} else {
-		    printf("(%s_obj.get%s() != null && %s_obj.get%s().equals(%sArr[i].get%s()))\n", tolower(tmp_file_name), new_field_names[j], tolower(tmp_file_name), new_field_names[j], tmp, new_field_names[j])>>impl_file_name;
-		}
-	    }
-	    if ( j != i ) {
-		printf(" || ")>>impl_file_name;
-	    }
-	}
-	printf(") {\n")>>impl_file_name;
-	printf("\t\t\t\t\tv.add((%sObject)%sArr[i].clone());\n", tmp_file_name, tmp)>>impl_file_name;
-	printf("\t\t\t\t}\n")>> impl_file_name;
-	printf("\t\t\t}\n")>> impl_file_name;
-	printf("\t\t}\n")>> impl_file_name;
-	printf("\t}\n")>> impl_file_name;
+	printf("\t\t@SuppressWarnings(\"unchecked\")\n") >> impl_file_name;
+	printf("\t\tArrayList<%sObject> v = (ArrayList<%sObject>)DBUtil.list(%s_obj,%s_obj);\n", tmp_file_name, tmp_file_name, tolower(tmp_file_name), tolower(tmp_file_name)) >> impl_file_name;
+	#printf("\t\tArrayList<%sObject> v = new ArrayList<%sObject>();\n",tmp_file_name, tmp_file_name) >> impl_file_name;
+	#printf("\tif ( %sArr == null )\n", tmp) >> impl_file_name;
+	#printf("\t\treturn null;\n") >> impl_file_name;
+	#printf("\tfor ( int i = 0; i < %sArr.length; i++ ) {\n", tmp) >> impl_file_name;
+	#printf("\t\tif ( %sArr[i] != null ) {\n", tmp) >> impl_file_name;
+	#printf("\t\t\tif ( %s_obj.get%s() == Constants.GET_ALL ) {\n", tolower(tmp_file_name), new_field_names[1]) >> impl_file_name;
+	#printf("\t\t\t\tv.add((%sObject)%sArr[i].clone());\n", tmp_file_name, tmp)>>impl_file_name;
+	#printf("\t\t\t} else {\n") >> impl_file_name;
+	#printf("\t\t\t\tif ( ")>>impl_file_name; 
+	#for ( j = 1; j <= i; j++ ) {
+	#   if ( field_types[j] != "String" && field_types[j]  != "Date" ) {
+	#	printf("(%s_obj.get%s() != 0 && %s_obj.get%s() == %sArr[i].get%s())\n", tolower(tmp_file_name), new_field_names[j], tolower(tmp_file_name), new_field_names[j], tmp, new_field_names[j])>>impl_file_name; 
+	#    } 
+	#    else {
+	#	if ( filed_typed[j]  == "String" ) {
+	#	    printf("(!Util.trim(%s_obj.get%s()).equals(Constants.SPACE) && %s_obj.get%s().equals(%sArr[i].get%s()))\n", tolower(tmp_file_name), new_field_names[j], tolower(tmp_file_name), new_field_names[j], tmp, new_field_names[j])>>impl_file_name;
+	#	} else {
+	#	    printf("(%s_obj.get%s() != null && %s_obj.get%s().equals(%sArr[i].get%s()))\n", tolower(tmp_file_name), new_field_names[j], tolower(tmp_file_name), new_field_names[j], tmp, new_field_names[j])>>impl_file_name;
+	#	}
+	#    }
+	#    if ( j != i ) {
+	#	printf(" || ")>>impl_file_name;
+	#    }
+	#}
+	#printf(") {\n")>>impl_file_name;
+	#printf("\t\t\t\t\tv.add((%sObject)%sArr[i].clone());\n", tmp_file_name, tmp)>>impl_file_name;
+	#printf("\t\t\t\t}\n")>> impl_file_name;
+	#printf("\t\t\t}\n")>> impl_file_name;
+	#printf("\t\t}\n")>> impl_file_name;
+	#printf("\t}\n")>> impl_file_name;
 	printf("\tDebugHandler.finest(\"v: \" + v);\n",tmp_file_name, tolower(tmp_file_name), tmp_file_name) >> impl_file_name;
 	printf("\treturn v;\n",tmp_file_name, tolower(tmp_file_name), tmp_file_name) >> impl_file_name;
 	printf("    }\n",tmp_file_name, tolower(tmp_file_name), tmp_file_name) >> impl_file_name;

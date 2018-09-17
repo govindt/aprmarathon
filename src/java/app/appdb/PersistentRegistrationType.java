@@ -83,38 +83,38 @@ public class PersistentRegistrationType extends PersistentObject {
      * @see     #getResultObjects(ResultSet)
      */
     
-    public Object list(Object args) throws DBException {
-        PreparedSQLStatement sql = new PreparedSQLStatement();
-        String statement = "SELECT registration_type_id, registration_type_name from Registration_Type";
-        int index = 1;
-        RegistrationTypeObject passedRegistrationTypeObject = (RegistrationTypeObject)args;
-        boolean whereSpecified = false;
+	public Object list(Object args) throws DBException {
+		PreparedSQLStatement sql = new PreparedSQLStatement();
+		String statement = "SELECT registration_type_id, registration_type_name from Registration_Type";
+		int index = 1;
+		RegistrationTypeObject passedRegistrationTypeObject = (RegistrationTypeObject)args;
+		boolean whereSpecified = false;
 
-        if ( passedRegistrationTypeObject.getRegistrationTypeId() != 0 ) {
-	    statement += " where registration_type_id = ?";
-	    whereSpecified = true;
-	    sql.setStatement(statement);
-	    sql.setInParams(new SQLParam(index++, new Integer(passedRegistrationTypeObject.getRegistrationTypeId()), Types.INTEGER));
+		if ( passedRegistrationTypeObject.getRegistrationTypeId() != 0 ) {
+			statement += " where registration_type_id = ?";
+			whereSpecified = true;
+			sql.setStatement(statement);
+			sql.setInParams(new SQLParam(index++, new Integer(passedRegistrationTypeObject.getRegistrationTypeId()), Types.INTEGER));
+		}
+		if ( ! passedRegistrationTypeObject.getRegistrationTypeName().equals("") ) {
+			if ( ! whereSpecified ) {
+				statement += " where registration_type_name = ?";
+				whereSpecified = true;
+			} else
+				statement += " and registration_type_name = ?";
+			sql.setStatement(statement);
+			sql.setInParams(new SQLParam(index++,  passedRegistrationTypeObject.getRegistrationTypeName(), Types.VARCHAR));
+		}
+		sql.setStatement(statement);
+        
+		DebugHandler.debug(statement);
+		setSQLStatement(sql);
+        
+		@SuppressWarnings("unchecked")
+		ArrayList<RegistrationTypeObject> result = (ArrayList<RegistrationTypeObject>) super.list();
+        
+		return result;
 	}
-        if ( ! passedRegistrationTypeObject.getRegistrationTypeName().equals("") ) {
-	    if ( ! whereSpecified ) {
-		statement += " where registration_type_name = ?";
-		whereSpecified = true;
-	    } else
-		statement += " and registration_type_name = ?";
-	    sql.setStatement(statement);
-	    sql.setInParams(new SQLParam(index++,  passedRegistrationTypeObject.getRegistrationTypeName(), Types.VARCHAR));
-	}
-        sql.setStatement(statement);
-        
-        DebugHandler.debug(statement);
-        setSQLStatement(sql);
-        
-        @SuppressWarnings("unchecked")
-        ArrayList<RegistrationTypeObject> result = (ArrayList<RegistrationTypeObject>) super.list();
-        
-        return result;
-    }
     
     
     /**

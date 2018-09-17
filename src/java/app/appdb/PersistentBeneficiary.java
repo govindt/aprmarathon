@@ -83,47 +83,47 @@ public class PersistentBeneficiary extends PersistentObject {
      * @see     #getResultObjects(ResultSet)
      */
     
-    public Object list(Object args) throws DBException {
-        PreparedSQLStatement sql = new PreparedSQLStatement();
-        String statement = "SELECT beneficiary_id, beneficiary_name, beneficiary_event from Beneficiary";
-        int index = 1;
-        BeneficiaryObject passedBeneficiaryObject = (BeneficiaryObject)args;
-        boolean whereSpecified = false;
+	public Object list(Object args) throws DBException {
+		PreparedSQLStatement sql = new PreparedSQLStatement();
+		String statement = "SELECT beneficiary_id, beneficiary_name, beneficiary_event from Beneficiary";
+		int index = 1;
+		BeneficiaryObject passedBeneficiaryObject = (BeneficiaryObject)args;
+		boolean whereSpecified = false;
 
-        if ( passedBeneficiaryObject.getBeneficiaryId() != 0 ) {
-	    statement += " where beneficiary_id = ?";
-	    whereSpecified = true;
-	    sql.setStatement(statement);
-	    sql.setInParams(new SQLParam(index++, new Integer(passedBeneficiaryObject.getBeneficiaryId()), Types.INTEGER));
-	}
-        if ( ! passedBeneficiaryObject.getBeneficiaryName().equals("") ) {
-	    if ( ! whereSpecified ) {
-		statement += " where beneficiary_name = ?";
-		whereSpecified = true;
-	    } else
-		statement += " and beneficiary_name = ?";
-	    sql.setStatement(statement);
-	    sql.setInParams(new SQLParam(index++,  passedBeneficiaryObject.getBeneficiaryName(), Types.VARCHAR));
-	}
-        if ( passedBeneficiaryObject.getBeneficiaryEvent() != 0 ) {
-	    if ( ! whereSpecified ) {
-		statement += " where beneficiary_event = ?";
-		whereSpecified = true;
-	    } else
-		statement += " and beneficiary_event = ?";
-	    sql.setStatement(statement);
-	    sql.setInParams(new SQLParam(index++, new Integer(passedBeneficiaryObject.getBeneficiaryEvent()), Types.INTEGER));
-	}
-        sql.setStatement(statement);
+		if ( passedBeneficiaryObject.getBeneficiaryId() != 0 ) {
+			statement += " where beneficiary_id = ?";
+			whereSpecified = true;
+			sql.setStatement(statement);
+			sql.setInParams(new SQLParam(index++, new Integer(passedBeneficiaryObject.getBeneficiaryId()), Types.INTEGER));
+		}
+		if ( ! passedBeneficiaryObject.getBeneficiaryName().equals("") ) {
+			if ( ! whereSpecified ) {
+				statement += " where beneficiary_name = ?";
+				whereSpecified = true;
+			} else
+				statement += " and beneficiary_name = ?";
+			sql.setStatement(statement);
+			sql.setInParams(new SQLParam(index++,  passedBeneficiaryObject.getBeneficiaryName(), Types.VARCHAR));
+		}
+		if ( passedBeneficiaryObject.getBeneficiaryEvent() != 0 ) {
+			if ( ! whereSpecified ) {
+				statement += " where beneficiary_event = ?";
+				whereSpecified = true;
+			} else
+				statement += " and beneficiary_event = ?";
+			sql.setStatement(statement);
+			sql.setInParams(new SQLParam(index++, new Integer(passedBeneficiaryObject.getBeneficiaryEvent()), Types.INTEGER));
+		}
+		sql.setStatement(statement);
         
-        DebugHandler.debug(statement);
-        setSQLStatement(sql);
+		DebugHandler.debug(statement);
+		setSQLStatement(sql);
         
-        @SuppressWarnings("unchecked")
-        ArrayList<BeneficiaryObject> result = (ArrayList<BeneficiaryObject>) super.list();
+		@SuppressWarnings("unchecked")
+		ArrayList<BeneficiaryObject> result = (ArrayList<BeneficiaryObject>) super.list();
         
-        return result;
-    }
+		return result;
+	}
     
     
     /**

@@ -41,28 +41,9 @@ public class RegistrationClassImpl implements RegistrationClassInterface  {
      *
      */
     
-    public ArrayList<RegistrationClassObject> getRegistrationClass(RegistrationClassObject registrationclass_obj) throws AppException{
-	RegistrationClassObject[] registrationClassObjectArr = getAllRegistrationClass();
-	ArrayList<RegistrationClassObject> v = new ArrayList<RegistrationClassObject>();
-	if ( registrationClassObjectArr == null )
-		return null;
-	for ( int i = 0; i < registrationClassObjectArr.length; i++ ) {
-		if ( registrationClassObjectArr[i] != null ) {
-			if ( registrationclass_obj.getRegistrationClassId() == Constants.GET_ALL ) {
-				v.add((RegistrationClassObject)registrationClassObjectArr[i].clone());
-			} else {
-				if ( (registrationclass_obj.getRegistrationClassId() != 0 && registrationclass_obj.getRegistrationClassId() == registrationClassObjectArr[i].getRegistrationClassId())
- || (registrationclass_obj.getRegistrationClassName() != null && registrationclass_obj.getRegistrationClassName().equals(registrationClassObjectArr[i].getRegistrationClassName()))
- || (registrationclass_obj.getRegistrationType() != 0 && registrationclass_obj.getRegistrationType() == registrationClassObjectArr[i].getRegistrationType())
- || (registrationclass_obj.getRegistrationEvent() != 0 && registrationclass_obj.getRegistrationEvent() == registrationClassObjectArr[i].getRegistrationEvent())
- || (registrationclass_obj.getRegistrationClassValue() != 0 && registrationclass_obj.getRegistrationClassValue() == registrationClassObjectArr[i].getRegistrationClassValue())
- || (registrationclass_obj.getRegistrationFreeTickets() != 0 && registrationclass_obj.getRegistrationFreeTickets() == registrationClassObjectArr[i].getRegistrationFreeTickets())
-) {
-					v.add((RegistrationClassObject)registrationClassObjectArr[i].clone());
-				}
-			}
-		}
-	}
+	public ArrayList<RegistrationClassObject> getRegistrationClass(RegistrationClassObject registrationclass_obj) throws AppException{
+		@SuppressWarnings("unchecked")
+		ArrayList<RegistrationClassObject> v = (ArrayList<RegistrationClassObject>)DBUtil.list(registrationclass_obj,registrationclass_obj);
 	DebugHandler.finest("v: " + v);
 	return v;
     }

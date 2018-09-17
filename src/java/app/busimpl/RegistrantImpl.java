@@ -41,34 +41,9 @@ public class RegistrantImpl implements RegistrantInterface  {
      *
      */
     
-    public ArrayList<RegistrantObject> getRegistrants(RegistrantObject registrant_obj) throws AppException{
-	RegistrantObject[] registrantObjectArr = getAllRegistrants();
-	ArrayList<RegistrantObject> v = new ArrayList<RegistrantObject>();
-	if ( registrantObjectArr == null )
-		return null;
-	for ( int i = 0; i < registrantObjectArr.length; i++ ) {
-		if ( registrantObjectArr[i] != null ) {
-			if ( registrant_obj.getRegistrantId() == Constants.GET_ALL ) {
-				v.add((RegistrantObject)registrantObjectArr[i].clone());
-			} else {
-				if ( (registrant_obj.getRegistrantId() != 0 && registrant_obj.getRegistrantId() == registrantObjectArr[i].getRegistrantId())
- || (registrant_obj.getRegistrantName() != null && registrant_obj.getRegistrantName().equals(registrantObjectArr[i].getRegistrantName()))
- || (registrant_obj.getRegistrantMiddleName() != null && registrant_obj.getRegistrantMiddleName().equals(registrantObjectArr[i].getRegistrantMiddleName()))
- || (registrant_obj.getRegistrantLastName() != null && registrant_obj.getRegistrantLastName().equals(registrantObjectArr[i].getRegistrantLastName()))
- || (registrant_obj.getRegistrantEmail() != null && registrant_obj.getRegistrantEmail().equals(registrantObjectArr[i].getRegistrantEmail()))
- || (registrant_obj.getRegistrantAdditionalEmail() != null && registrant_obj.getRegistrantAdditionalEmail().equals(registrantObjectArr[i].getRegistrantAdditionalEmail()))
- || (registrant_obj.getRegistrantPhone() != null && registrant_obj.getRegistrantPhone().equals(registrantObjectArr[i].getRegistrantPhone()))
- || (registrant_obj.getRegistrantAddress() != null && registrant_obj.getRegistrantAddress().equals(registrantObjectArr[i].getRegistrantAddress()))
- || (registrant_obj.getRegistrantCity() != null && registrant_obj.getRegistrantCity().equals(registrantObjectArr[i].getRegistrantCity()))
- || (registrant_obj.getRegistrantState() != null && registrant_obj.getRegistrantState().equals(registrantObjectArr[i].getRegistrantState()))
- || (registrant_obj.getRegistrantPincode() != null && registrant_obj.getRegistrantPincode().equals(registrantObjectArr[i].getRegistrantPincode()))
- || (registrant_obj.getRegistrantPan() != null && registrant_obj.getRegistrantPan().equals(registrantObjectArr[i].getRegistrantPan()))
-) {
-					v.add((RegistrantObject)registrantObjectArr[i].clone());
-				}
-			}
-		}
-	}
+	public ArrayList<RegistrantObject> getRegistrants(RegistrantObject registrant_obj) throws AppException{
+		@SuppressWarnings("unchecked")
+		ArrayList<RegistrantObject> v = (ArrayList<RegistrantObject>)DBUtil.list(registrant_obj,registrant_obj);
 	DebugHandler.finest("v: " + v);
 	return v;
     }
