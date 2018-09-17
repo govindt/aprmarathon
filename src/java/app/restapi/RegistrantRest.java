@@ -74,9 +74,7 @@ public class RegistrantRest {
 		RegistrantInterface registrantIf = new RegistrantImpl();
 		RegistrantObject registrantObject = new RegistrantObject(jObject);
 		DebugHandler.fine(registrantObject);
-		long startTime = System.currentTimeMillis();
 		Integer result = registrantIf.addRegistrant(registrantObject);
-		DebugHandler.info("Time taken in millis for adding Registrant : " + registrantObject.getRegistrantName() + " " + (System.currentTimeMillis() - startTime));
 		JSONObject jo = registrantObject.toJSON();
 		jo.put("result", result);
 		return Response.status(200).entity(jo.toString()).type(MediaType.APPLICATION_JSON).build();

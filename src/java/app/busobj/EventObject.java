@@ -150,226 +150,226 @@ public class EventObject implements Cloneable {
 		} catch (JSONException je) {}
 	}
     
-    
+	
     /**
-     *
-     * Sets the <code>event_id</code> field
-     *
-     * @param event_id      int
-     *
-     */
+	 *
+	 * Sets the <code>event_id</code> field
+	 *
+	 * @param event_id      int
+	 *
+	 */
     
-    public void setEventId(int event_id) {
-        this.event_id = event_id;
-    }
+	public void setEventId(int event_id) {
+	    this.event_id = event_id;
+	}
     
-    
+	
     /**
-     *
-     * Gets the <code>event_id</code> field
-     *
-     * @returns event_id
-     *
-     */
+	 *
+	 * Gets the <code>event_id</code> field
+	 *
+	 * @returns event_id
+	 *
+	 */
     
-    public int getEventId() {
-        return event_id;
-    }
+	public int getEventId() {
+	    return event_id;
+	}
 
-    
+	
     /**
-     *
-     * Sets the <code>event_name</code> field
-     *
-     * @param event_name      String
-     *
-     */
+	 *
+	 * Sets the <code>event_name</code> field
+	 *
+	 * @param event_name      String
+	 *
+	 */
     
-    public void setEventName(String event_name) {
-        this.event_name = event_name;
-    }
+	public void setEventName(String event_name) {
+	    this.event_name = event_name;
+	}
     
-    
+	
     /**
-     *
-     * Gets the <code>event_name</code> field
-     *
-     * @returns event_name
-     *
-     */
+	 *
+	 * Gets the <code>event_name</code> field
+	 *
+	 * @returns event_name
+	 *
+	 */
     
-    public String getEventName() {
-        return event_name;
-    }
+	public String getEventName() {
+	    return event_name;
+	}
 
-    
+	
     /**
-     *
-     * Sets the <code>event_start_date</code> field
-     *
-     * @param event_start_date      Date
-     *
-     */
+	 *
+	 * Sets the <code>event_start_date</code> field
+	 *
+	 * @param event_start_date      Date
+	 *
+	 */
     
-    public void setEventStartDate(Date event_start_date) {
-        this.event_start_date = event_start_date;
-    }
+	public void setEventStartDate(Date event_start_date) {
+	    this.event_start_date = event_start_date;
+	}
     
-    
+	
     /**
-     *
-     * Gets the <code>event_start_date</code> field
-     *
-     * @returns event_start_date
-     *
-     */
+	 *
+	 * Gets the <code>event_start_date</code> field
+	 *
+	 * @returns event_start_date
+	 *
+	 */
     
-    public Date getEventStartDate() {
-        return event_start_date;
-    }
+	public Date getEventStartDate() {
+	    return event_start_date;
+	}
 
-    
+	
     /**
-     *
-     * Sets the <code>event_end_date</code> field
-     *
-     * @param event_end_date      Date
-     *
-     */
+	 *
+	 * Sets the <code>event_end_date</code> field
+	 *
+	 * @param event_end_date      Date
+	 *
+	 */
     
-    public void setEventEndDate(Date event_end_date) {
-        this.event_end_date = event_end_date;
-    }
+	public void setEventEndDate(Date event_end_date) {
+	    this.event_end_date = event_end_date;
+	}
     
-    
+	
     /**
-     *
-     * Gets the <code>event_end_date</code> field
-     *
-     * @returns event_end_date
-     *
-     */
+	 *
+	 * Gets the <code>event_end_date</code> field
+	 *
+	 * @returns event_end_date
+	 *
+	 */
     
-    public Date getEventEndDate() {
-        return event_end_date;
-    }
+	public Date getEventEndDate() {
+	    return event_end_date;
+	}
 
-    
+	
     /**
-     *
-     * Sets the <code>event_description</code> field
-     *
-     * @param event_description      String
-     *
-     */
+	 *
+	 * Sets the <code>event_description</code> field
+	 *
+	 * @param event_description      String
+	 *
+	 */
     
-    public void setEventDescription(String event_description) {
-        this.event_description = event_description;
-    }
+	public void setEventDescription(String event_description) {
+	    this.event_description = event_description;
+	}
     
-    
+	
     /**
-     *
-     * Gets the <code>event_description</code> field
-     *
-     * @returns event_description
-     *
-     */
+	 *
+	 * Gets the <code>event_description</code> field
+	 *
+	 * @returns event_description
+	 *
+	 */
     
-    public String getEventDescription() {
-        return event_description;
-    }
+	public String getEventDescription() {
+	    return event_description;
+	}
 
-    
+	
     /**
-     *
-     * Sets the <code>event_registation_close_date</code> field
-     *
-     * @param event_registation_close_date      Date
-     *
-     */
+	 *
+	 * Sets the <code>event_registation_close_date</code> field
+	 *
+	 * @param event_registation_close_date      Date
+	 *
+	 */
     
-    public void setEventRegistationCloseDate(Date event_registation_close_date) {
-        this.event_registation_close_date = event_registation_close_date;
-    }
+	public void setEventRegistationCloseDate(Date event_registation_close_date) {
+	    this.event_registation_close_date = event_registation_close_date;
+	}
     
-    
+	
     /**
-     *
-     * Gets the <code>event_registation_close_date</code> field
-     *
-     * @returns event_registation_close_date
-     *
-     */
+	 *
+	 * Gets the <code>event_registation_close_date</code> field
+	 *
+	 * @returns event_registation_close_date
+	 *
+	 */
     
-    public Date getEventRegistationCloseDate() {
-        return event_registation_close_date;
-    }
+	public Date getEventRegistationCloseDate() {
+	    return event_registation_close_date;
+	}
 
-    
+	
     /**
-     *
-     * Sets the <code>event_changes_close_date</code> field
-     *
-     * @param event_changes_close_date      Date
-     *
-     */
+	 *
+	 * Sets the <code>event_changes_close_date</code> field
+	 *
+	 * @param event_changes_close_date      Date
+	 *
+	 */
     
-    public void setEventChangesCloseDate(Date event_changes_close_date) {
-        this.event_changes_close_date = event_changes_close_date;
-    }
+	public void setEventChangesCloseDate(Date event_changes_close_date) {
+	    this.event_changes_close_date = event_changes_close_date;
+	}
     
-    
+	
     /**
-     *
-     * Gets the <code>event_changes_close_date</code> field
-     *
-     * @returns event_changes_close_date
-     *
-     */
+	 *
+	 * Gets the <code>event_changes_close_date</code> field
+	 *
+	 * @returns event_changes_close_date
+	 *
+	 */
     
-    public Date getEventChangesCloseDate() {
-        return event_changes_close_date;
-    }
+	public Date getEventChangesCloseDate() {
+	    return event_changes_close_date;
+	}
 
-    
+	
     /**
-     *
-     * Tests if this object equals <code>obj</code>
-     *
-     * @returns true if equals
-     *
-     */
+	 *
+	 * Tests if this object equals <code>obj</code>
+	 *
+	 * @returns true if equals
+	 *
+	 */
     
-    public boolean equals(Object obj) {
-        EventObject other = (EventObject)obj;
-        DebugHandler.finest("This: " + this);
-        DebugHandler.finest("Other: " + other);
-        return
-            event_id == other.getEventId() &&
-            Util.trim(event_name).equals(Util.trim(other.getEventName())) &&
-            event_start_date.equals(other.getEventStartDate()) &&
-            event_end_date.equals(other.getEventEndDate()) &&
-            Util.trim(event_description).equals(Util.trim(other.getEventDescription())) &&
-            event_registation_close_date.equals(other.getEventRegistationCloseDate()) &&
-            event_changes_close_date.equals(other.getEventChangesCloseDate());
-    }
-    
+	public boolean equals(Object obj) {
+	    EventObject other = (EventObject)obj;
+	    DebugHandler.finest("This: " + this);
+	    DebugHandler.finest("Other: " + other);
+	    return
+	        event_id == other.getEventId() &&
+	   Util.trim(event_name).equals(Util.trim(other.getEventName())) &&
+	   event_start_date.equals(other.getEventStartDate()) &&
+	   event_end_date.equals(other.getEventEndDate()) &&
+	   Util.trim(event_description).equals(Util.trim(other.getEventDescription())) &&
+	   event_registation_close_date.equals(other.getEventRegistationCloseDate()) &&
+	   event_changes_close_date.equals(other.getEventChangesCloseDate());
+	}
+	
     /**
-     *
-     * Clones this object
-     *
-     * @returns the clone of this object
-     *
-     */
+	 *
+	 * Clones this object
+	 *
+	 * @returns the clone of this object
+	 *
+	 */
     
-    public Object clone() {
-        Object theClone = null;
-        try {
-            theClone = super.clone();
-        } catch (CloneNotSupportedException ce) {
-            DebugHandler.severe("Cannot clone " + this);
-        }
-        return theClone;
-    }
+	public Object clone() {
+	    Object theClone = null;
+	    try {
+	   theClone = super.clone();
+	    } catch (CloneNotSupportedException ce) {
+	   DebugHandler.severe("Cannot clone " + this);
+	    }
+	    return theClone;
+	}
 }

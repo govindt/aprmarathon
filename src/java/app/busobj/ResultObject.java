@@ -142,253 +142,253 @@ public class ResultObject implements Cloneable {
 		} catch (JSONException je) {}
 	}
     
-    
+	
     /**
-     *
-     * Sets the <code>result_id</code> field
-     *
-     * @param result_id      int
-     *
-     */
+	 *
+	 * Sets the <code>result_id</code> field
+	 *
+	 * @param result_id      int
+	 *
+	 */
     
-    public void setResultId(int result_id) {
-        this.result_id = result_id;
-    }
+	public void setResultId(int result_id) {
+	    this.result_id = result_id;
+	}
     
-    
+	
     /**
-     *
-     * Gets the <code>result_id</code> field
-     *
-     * @returns result_id
-     *
-     */
+	 *
+	 * Gets the <code>result_id</code> field
+	 *
+	 * @returns result_id
+	 *
+	 */
     
-    public int getResultId() {
-        return result_id;
-    }
+	public int getResultId() {
+	    return result_id;
+	}
 
-    
+	
     /**
-     *
-     * Sets the <code>result_event</code> field
-     *
-     * @param result_event      int
-     *
-     */
+	 *
+	 * Sets the <code>result_event</code> field
+	 *
+	 * @param result_event      int
+	 *
+	 */
     
-    public void setResultEvent(int result_event) {
-        this.result_event = result_event;
-    }
+	public void setResultEvent(int result_event) {
+	    this.result_event = result_event;
+	}
     
-    
+	
     /**
-     *
-     * Gets the <code>result_event</code> field
-     *
-     * @returns result_event
-     *
-     */
+	 *
+	 * Gets the <code>result_event</code> field
+	 *
+	 * @returns result_event
+	 *
+	 */
     
-    public int getResultEvent() {
-        return result_event;
-    }
+	public int getResultEvent() {
+	    return result_event;
+	}
 
-    
+	
     /**
-     *
-     * Sets the <code>result_event_type</code> field
-     *
-     * @param result_event_type      int
-     *
-     */
+	 *
+	 * Sets the <code>result_event_type</code> field
+	 *
+	 * @param result_event_type      int
+	 *
+	 */
     
-    public void setResultEventType(int result_event_type) {
-        this.result_event_type = result_event_type;
-    }
+	public void setResultEventType(int result_event_type) {
+	    this.result_event_type = result_event_type;
+	}
     
-    
+	
     /**
-     *
-     * Gets the <code>result_event_type</code> field
-     *
-     * @returns result_event_type
-     *
-     */
+	 *
+	 * Gets the <code>result_event_type</code> field
+	 *
+	 * @returns result_event_type
+	 *
+	 */
     
-    public int getResultEventType() {
-        return result_event_type;
-    }
+	public int getResultEventType() {
+	    return result_event_type;
+	}
 
-    
+	
     /**
-     *
-     * Sets the <code>result_medal</code> field
-     *
-     * @param result_medal      int
-     *
-     */
+	 *
+	 * Sets the <code>result_medal</code> field
+	 *
+	 * @param result_medal      int
+	 *
+	 */
     
-    public void setResultMedal(int result_medal) {
-        this.result_medal = result_medal;
-    }
+	public void setResultMedal(int result_medal) {
+	    this.result_medal = result_medal;
+	}
     
-    
+	
     /**
-     *
-     * Gets the <code>result_medal</code> field
-     *
-     * @returns result_medal
-     *
-     */
+	 *
+	 * Gets the <code>result_medal</code> field
+	 *
+	 * @returns result_medal
+	 *
+	 */
     
-    public int getResultMedal() {
-        return result_medal;
-    }
+	public int getResultMedal() {
+	    return result_medal;
+	}
 
-    
+	
     /**
-     *
-     * Sets the <code>result_winner</code> field
-     *
-     * @param result_winner      int
-     *
-     */
+	 *
+	 * Sets the <code>result_winner</code> field
+	 *
+	 * @param result_winner      int
+	 *
+	 */
     
-    public void setResultWinner(int result_winner) {
-        this.result_winner = result_winner;
-    }
+	public void setResultWinner(int result_winner) {
+	    this.result_winner = result_winner;
+	}
     
-    
+	
     /**
-     *
-     * Gets the <code>result_winner</code> field
-     *
-     * @returns result_winner
-     *
-     */
+	 *
+	 * Gets the <code>result_winner</code> field
+	 *
+	 * @returns result_winner
+	 *
+	 */
     
-    public int getResultWinner() {
-        return result_winner;
-    }
+	public int getResultWinner() {
+	    return result_winner;
+	}
 
-    
+	
     /**
-     *
-     * Sets the <code>result_winner_registrant</code> field
-     *
-     * @param result_winner_registrant      int
-     *
-     */
+	 *
+	 * Sets the <code>result_winner_registrant</code> field
+	 *
+	 * @param result_winner_registrant      int
+	 *
+	 */
     
-    public void setResultWinnerRegistrant(int result_winner_registrant) {
-        this.result_winner_registrant = result_winner_registrant;
-    }
+	public void setResultWinnerRegistrant(int result_winner_registrant) {
+	    this.result_winner_registrant = result_winner_registrant;
+	}
     
-    
+	
     /**
-     *
-     * Gets the <code>result_winner_registrant</code> field
-     *
-     * @returns result_winner_registrant
-     *
-     */
+	 *
+	 * Gets the <code>result_winner_registrant</code> field
+	 *
+	 * @returns result_winner_registrant
+	 *
+	 */
     
-    public int getResultWinnerRegistrant() {
-        return result_winner_registrant;
-    }
+	public int getResultWinnerRegistrant() {
+	    return result_winner_registrant;
+	}
 
-    
+	
     /**
-     *
-     * Sets the <code>result_score</code> field
-     *
-     * @param result_score      String
-     *
-     */
+	 *
+	 * Sets the <code>result_score</code> field
+	 *
+	 * @param result_score      String
+	 *
+	 */
     
-    public void setResultScore(String result_score) {
-        this.result_score = result_score;
-    }
+	public void setResultScore(String result_score) {
+	    this.result_score = result_score;
+	}
     
-    
+	
     /**
-     *
-     * Gets the <code>result_score</code> field
-     *
-     * @returns result_score
-     *
-     */
+	 *
+	 * Gets the <code>result_score</code> field
+	 *
+	 * @returns result_score
+	 *
+	 */
     
-    public String getResultScore() {
-        return result_score;
-    }
+	public String getResultScore() {
+	    return result_score;
+	}
 
-    
+	
     /**
-     *
-     * Sets the <code>result_timing</code> field
-     *
-     * @param result_timing      Date
-     *
-     */
+	 *
+	 * Sets the <code>result_timing</code> field
+	 *
+	 * @param result_timing      Date
+	 *
+	 */
     
-    public void setResultTiming(Date result_timing) {
-        this.result_timing = result_timing;
-    }
+	public void setResultTiming(Date result_timing) {
+	    this.result_timing = result_timing;
+	}
     
-    
+	
     /**
-     *
-     * Gets the <code>result_timing</code> field
-     *
-     * @returns result_timing
-     *
-     */
+	 *
+	 * Gets the <code>result_timing</code> field
+	 *
+	 * @returns result_timing
+	 *
+	 */
     
-    public Date getResultTiming() {
-        return result_timing;
-    }
+	public Date getResultTiming() {
+	    return result_timing;
+	}
 
-    
+	
     /**
-     *
-     * Tests if this object equals <code>obj</code>
-     *
-     * @returns true if equals
-     *
-     */
+	 *
+	 * Tests if this object equals <code>obj</code>
+	 *
+	 * @returns true if equals
+	 *
+	 */
     
-    public boolean equals(Object obj) {
-        ResultObject other = (ResultObject)obj;
-        DebugHandler.finest("This: " + this);
-        DebugHandler.finest("Other: " + other);
-        return
-            result_id == other.getResultId() &&
-            result_event == other.getResultEvent() &&
-            result_event_type == other.getResultEventType() &&
-            result_medal == other.getResultMedal() &&
-            result_winner == other.getResultWinner() &&
-            result_winner_registrant == other.getResultWinnerRegistrant() &&
-            Util.trim(result_score).equals(Util.trim(other.getResultScore())) &&
-            result_timing.equals(other.getResultTiming());
-    }
-    
+	public boolean equals(Object obj) {
+	    ResultObject other = (ResultObject)obj;
+	    DebugHandler.finest("This: " + this);
+	    DebugHandler.finest("Other: " + other);
+	    return
+	        result_id == other.getResultId() &&
+	        result_event == other.getResultEvent() &&
+	        result_event_type == other.getResultEventType() &&
+	        result_medal == other.getResultMedal() &&
+	        result_winner == other.getResultWinner() &&
+	        result_winner_registrant == other.getResultWinnerRegistrant() &&
+	   Util.trim(result_score).equals(Util.trim(other.getResultScore())) &&
+	   result_timing.equals(other.getResultTiming());
+	}
+	
     /**
-     *
-     * Clones this object
-     *
-     * @returns the clone of this object
-     *
-     */
+	 *
+	 * Clones this object
+	 *
+	 * @returns the clone of this object
+	 *
+	 */
     
-    public Object clone() {
-        Object theClone = null;
-        try {
-            theClone = super.clone();
-        } catch (CloneNotSupportedException ce) {
-            DebugHandler.severe("Cannot clone " + this);
-        }
-        return theClone;
-    }
+	public Object clone() {
+	    Object theClone = null;
+	    try {
+	   theClone = super.clone();
+	    } catch (CloneNotSupportedException ce) {
+	   DebugHandler.severe("Cannot clone " + this);
+	    }
+	    return theClone;
+	}
 }

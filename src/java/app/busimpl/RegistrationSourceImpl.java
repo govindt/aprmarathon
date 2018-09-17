@@ -27,107 +27,108 @@ import app.util.AppConstants;
  */
 
 public class RegistrationSourceImpl implements RegistrationSourceInterface  {
-    private String REGISTRATIONSOURCE = "RegistrationSourceInterface.getAllRegistrationSource";
-    
+	private String REGISTRATIONSOURCE = "RegistrationSourceInterface.getAllRegistrationSource";
+	
     /**
-     *
-     * Implementation that returns the RegistrationSourceObject given a RegistrationSourceObject filled with values that will be used for query from the underlying datasource.
-     *
-     * @param registrationsource_obj	RegistrationSourceObject
-     *
-     * @return      Returns the ArrayList of RegistrationSourceObjects
-     *
-     * @throws AppException if the underlying operation fails
-     *
-     */
+	 *
+	 * Implementation that returns the RegistrationSourceObject given a RegistrationSourceObject filled with values that will be used for query from the underlying datasource.
+	 *
+	 * @param registrationsource_obj	RegistrationSourceObject
+	 *
+	 * @return      Returns the ArrayList of RegistrationSourceObjects
+	 *
+	 * @throws AppException if the underlying operation fails
+	 *
+	 */
     
 	public ArrayList<RegistrationSourceObject> getRegistrationSources(RegistrationSourceObject registrationsource_obj) throws AppException{
+		RegistrationSourceObject[] registrationSourceObjectArr = getAllRegistrationSources();
 		@SuppressWarnings("unchecked")
 		ArrayList<RegistrationSourceObject> v = (ArrayList<RegistrationSourceObject>)DBUtil.list(registrationsource_obj,registrationsource_obj);
-	DebugHandler.finest("v: " + v);
-	return v;
-    }
-    
-    /**
-     *
-     * Implementation of the method that returns the RegistrationSourceObject from the underlying datasource.
-     * given registration_source_id.
-     *
-     * @param registration_source_id     int
-     *
-     * @return      Returns the RegistrationSourceObject
-     *
-     * @throws AppException if the operation fails
-     *
-     */
-    
-    public RegistrationSourceObject getRegistrationSource(int registration_source_id) throws AppException{
-	RegistrationSourceObject[] registrationSourceObjectArr = getAllRegistrationSources();
-	if ( registrationSourceObjectArr == null )
-	    return null;
-	for ( int i = 0; i < registrationSourceObjectArr.length; i++ ) {
-	    if ( registrationSourceObjectArr[i] == null ) { // Try database and add to cache if found.
-		    RegistrationSourceObject registrationsourceObj = new RegistrationSourceObject();
-		    registrationsourceObj.setRegistrationSourceId(registration_source_id);
-		    @SuppressWarnings("unchecked")
-		    ArrayList<RegistrationSourceObject> v = (ArrayList)DBUtil.fetch(registrationsourceObj);
-		    if ( v == null || v.size() == 0 )
-			    return null;
-		    else {
-			    registrationSourceObjectArr[i] = (RegistrationSourceObject)registrationsourceObj.clone();
-			    Util.putInCache(REGISTRATIONSOURCE, registrationSourceObjectArr);
-		    }
-	    }
-	    if ( registrationSourceObjectArr[i].getRegistrationSourceId() == registration_source_id ) {
-		    DebugHandler.debug("Returning " + registrationSourceObjectArr[i]);
-		    return (RegistrationSourceObject)registrationSourceObjectArr[i].clone();
-	    }
+		DebugHandler.finest("v: " + v);
+		return v;
 	}
-	return null;
-    }
-    
-    
+	
     /**
-     *
-     * Implementation that returns all the <code>RegistrationSourceObjects</code> from the underlying datasource.
-     *
-     * @return      Returns an Array of <code>RegistrationSourceObject</code>
-     *
-     * @throws AppException if the operation fails
-     *
-     */
+	 *
+	 * Implementation of the method that returns the RegistrationSourceObject from the underlying datasource.
+	 * given registration_source_id.
+	 *
+	 * @param registration_source_id     int
+	 *
+	 * @return      Returns the RegistrationSourceObject
+	 *
+	 * @throws AppException if the operation fails
+	 *
+	 */
     
-    public RegistrationSourceObject[] getAllRegistrationSources() throws AppException{
+	public RegistrationSourceObject getRegistrationSource(int registration_source_id) throws AppException{
+		RegistrationSourceObject[] registrationSourceObjectArr = getAllRegistrationSources();
+		if ( registrationSourceObjectArr == null )
+			return null;
+		for ( int i = 0; i < registrationSourceObjectArr.length; i++ ) {
+			if ( registrationSourceObjectArr[i] == null ) { // Try database and add to cache if found.
+				RegistrationSourceObject registrationsourceObj = new RegistrationSourceObject();
+				registrationsourceObj.setRegistrationSourceId(registration_source_id);
+				@SuppressWarnings("unchecked")
+				ArrayList<RegistrationSourceObject> v = (ArrayList)DBUtil.fetch(registrationsourceObj);
+				if ( v == null || v.size() == 0 )
+					return null;
+				else {
+					registrationSourceObjectArr[i] = (RegistrationSourceObject)registrationsourceObj.clone();
+					Util.putInCache(REGISTRATIONSOURCE, registrationSourceObjectArr);
+				}
+			}
+			if ( registrationSourceObjectArr[i].getRegistrationSourceId() == registration_source_id ) {
+				DebugHandler.debug("Returning " + registrationSourceObjectArr[i]);
+				return (RegistrationSourceObject)registrationSourceObjectArr[i].clone();
+			}
+		}
+		return null;
+	}
+    
+	
+    /**
+	 *
+	 * Implementation that returns all the <code>RegistrationSourceObjects</code> from the underlying datasource.
+	 *
+	 * @return      Returns an Array of <code>RegistrationSourceObject</code>
+	 *
+	 * @throws AppException if the operation fails
+	 *
+	 */
+    
+	public RegistrationSourceObject[] getAllRegistrationSources() throws AppException{
 		RegistrationSourceObject registrationSourceObject = new RegistrationSourceObject();
 		RegistrationSourceObject[] registrationSourceObjectArr = (RegistrationSourceObject[])Util.getAppCache().get(REGISTRATIONSOURCE);
 		if ( registrationSourceObjectArr == null ) {
-		    DebugHandler.info("Getting registrationsource from database");
-		    @SuppressWarnings("unchecked")
-		    ArrayList<RegistrationSourceObject> v = (ArrayList)DBUtil.list(registrationSourceObject);
-		    DebugHandler.finest(":v: " +  v);
-		    if ( v == null )
-			    return null;
-		    registrationSourceObjectArr = new RegistrationSourceObject[v.size()];
-		    for ( int idx = 0; idx < v.size(); idx++ ) {
-			    registrationSourceObjectArr[idx] = v.get(idx);
-		    }
-		    Util.putInCache(REGISTRATIONSOURCE, registrationSourceObjectArr);
+			DebugHandler.info("Getting registrationsource from database");
+			@SuppressWarnings("unchecked")
+			ArrayList<RegistrationSourceObject> v = (ArrayList)DBUtil.list(registrationSourceObject);
+			DebugHandler.finest(":v: " +  v);
+			if ( v == null )
+				return null;
+			registrationSourceObjectArr = new RegistrationSourceObject[v.size()];
+			for ( int idx = 0; idx < v.size(); idx++ ) {
+				registrationSourceObjectArr[idx] = v.get(idx);
+			}
+			Util.putInCache(REGISTRATIONSOURCE, registrationSourceObjectArr);
 		}
 		return registrationSourceObjectArr;
-    }
+	}
     
-    
+	
     /**
-     *
-     * Implementation to add the <code>RegistrationSourceObject</code> to the underlying datasource.
-     *
-     * @param registrationSourceObject     RegistrationSourceObject
-     *
-     * @throws AppException if the operation fails
-     *
-     */
+	 *
+	 * Implementation to add the <code>RegistrationSourceObject</code> to the underlying datasource.
+	 *
+	 * @param registrationSourceObject     RegistrationSourceObject
+	 *
+	 * @throws AppException if the operation fails
+	 *
+	 */
     
-    public Integer addRegistrationSource(RegistrationSourceObject registrationSourceObject) throws AppException{
+	public Integer addRegistrationSource(RegistrationSourceObject registrationSourceObject) throws AppException{
 		if ( AppConstants.DB_TYPE.equalsIgnoreCase(Constants.ORACLE) ) {
 			long l = DBUtil.getNextId("Registration_Source_seq");
 			registrationSourceObject.setRegistrationSourceId((int)l);
@@ -168,16 +169,16 @@ public class RegistrationSourceImpl implements RegistrationSourceInterface  {
 		return i;
 	}
 	
-    
+	
     /**
-     *
-     * Implementation to update the <code>RegistrationSourceObject</code> in the underlying datasource.
-     *
-     * @param registrationSourceObject     RegistrationSourceObject
-     *
-     * @throws AppException if the operation fails
-     *
-     */
+	 *
+	 * Implementation to update the <code>RegistrationSourceObject</code> in the underlying datasource.
+	 *
+	 * @param registrationSourceObject     RegistrationSourceObject
+	 *
+	 * @throws AppException if the operation fails
+	 *
+	 */
     
 	public Integer updateRegistrationSource(RegistrationSourceObject registrationSourceObject) throws AppException{
 		RegistrationSourceObject newRegistrationSourceObject = getRegistrationSource(registrationSourceObject.getRegistrationSourceId()); // This call will make sure cache/db are in sync
@@ -198,18 +199,18 @@ public class RegistrationSourceImpl implements RegistrationSourceInterface  {
 		return i;
 	}
     
-    
+	
     /**
-     *
-     * Implementation to delete the <code>RegistrationSourceObject</code> in the underlying datasource.
-     *
-     * @param registrationSourceObject     RegistrationSourceObject
-     *
-     * @throws AppException if the operation fails
-     *
-     */
+	 *
+	 * Implementation to delete the <code>RegistrationSourceObject</code> in the underlying datasource.
+	 *
+	 * @param registrationSourceObject     RegistrationSourceObject
+	 *
+	 * @throws AppException if the operation fails
+	 *
+	 */
     
-    public Integer deleteRegistrationSource(RegistrationSourceObject registrationSourceObject) throws AppException{
+	public Integer deleteRegistrationSource(RegistrationSourceObject registrationSourceObject) throws AppException{
 	RegistrationSourceObject newRegistrationSourceObject = getRegistrationSource(registrationSourceObject.getRegistrationSourceId()); // This call will make sure cache/db are in sync
 	RegistrationSourceObject[] registrationSourceObjectArr = getAllRegistrationSources();
 	Integer i = new Integer(0);

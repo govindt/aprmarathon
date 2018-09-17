@@ -102,118 +102,118 @@ public class BeneficiaryObject implements Cloneable {
 		} catch (JSONException je) {}
 	}
     
-    
+	
     /**
-     *
-     * Sets the <code>beneficiary_id</code> field
-     *
-     * @param beneficiary_id      int
-     *
-     */
+	 *
+	 * Sets the <code>beneficiary_id</code> field
+	 *
+	 * @param beneficiary_id      int
+	 *
+	 */
     
-    public void setBeneficiaryId(int beneficiary_id) {
-        this.beneficiary_id = beneficiary_id;
-    }
+	public void setBeneficiaryId(int beneficiary_id) {
+	    this.beneficiary_id = beneficiary_id;
+	}
     
-    
+	
     /**
-     *
-     * Gets the <code>beneficiary_id</code> field
-     *
-     * @returns beneficiary_id
-     *
-     */
+	 *
+	 * Gets the <code>beneficiary_id</code> field
+	 *
+	 * @returns beneficiary_id
+	 *
+	 */
     
-    public int getBeneficiaryId() {
-        return beneficiary_id;
-    }
+	public int getBeneficiaryId() {
+	    return beneficiary_id;
+	}
 
-    
+	
     /**
-     *
-     * Sets the <code>beneficiary_name</code> field
-     *
-     * @param beneficiary_name      String
-     *
-     */
+	 *
+	 * Sets the <code>beneficiary_name</code> field
+	 *
+	 * @param beneficiary_name      String
+	 *
+	 */
     
-    public void setBeneficiaryName(String beneficiary_name) {
-        this.beneficiary_name = beneficiary_name;
-    }
+	public void setBeneficiaryName(String beneficiary_name) {
+	    this.beneficiary_name = beneficiary_name;
+	}
     
-    
+	
     /**
-     *
-     * Gets the <code>beneficiary_name</code> field
-     *
-     * @returns beneficiary_name
-     *
-     */
+	 *
+	 * Gets the <code>beneficiary_name</code> field
+	 *
+	 * @returns beneficiary_name
+	 *
+	 */
     
-    public String getBeneficiaryName() {
-        return beneficiary_name;
-    }
+	public String getBeneficiaryName() {
+	    return beneficiary_name;
+	}
 
-    
+	
     /**
-     *
-     * Sets the <code>beneficiary_event</code> field
-     *
-     * @param beneficiary_event      int
-     *
-     */
+	 *
+	 * Sets the <code>beneficiary_event</code> field
+	 *
+	 * @param beneficiary_event      int
+	 *
+	 */
     
-    public void setBeneficiaryEvent(int beneficiary_event) {
-        this.beneficiary_event = beneficiary_event;
-    }
+	public void setBeneficiaryEvent(int beneficiary_event) {
+	    this.beneficiary_event = beneficiary_event;
+	}
     
-    
+	
     /**
-     *
-     * Gets the <code>beneficiary_event</code> field
-     *
-     * @returns beneficiary_event
-     *
-     */
+	 *
+	 * Gets the <code>beneficiary_event</code> field
+	 *
+	 * @returns beneficiary_event
+	 *
+	 */
     
-    public int getBeneficiaryEvent() {
-        return beneficiary_event;
-    }
+	public int getBeneficiaryEvent() {
+	    return beneficiary_event;
+	}
 
-    
+	
     /**
-     *
-     * Tests if this object equals <code>obj</code>
-     *
-     * @returns true if equals
-     *
-     */
+	 *
+	 * Tests if this object equals <code>obj</code>
+	 *
+	 * @returns true if equals
+	 *
+	 */
     
-    public boolean equals(Object obj) {
-        BeneficiaryObject other = (BeneficiaryObject)obj;
-        DebugHandler.finest("This: " + this);
-        DebugHandler.finest("Other: " + other);
-        return
-            beneficiary_id == other.getBeneficiaryId() &&
-            Util.trim(beneficiary_name).equals(Util.trim(other.getBeneficiaryName())) &&
-            beneficiary_event == other.getBeneficiaryEvent();
-    }
-    
+	public boolean equals(Object obj) {
+	    BeneficiaryObject other = (BeneficiaryObject)obj;
+	    DebugHandler.finest("This: " + this);
+	    DebugHandler.finest("Other: " + other);
+	    return
+	        beneficiary_id == other.getBeneficiaryId() &&
+	   Util.trim(beneficiary_name).equals(Util.trim(other.getBeneficiaryName())) &&
+	        beneficiary_event == other.getBeneficiaryEvent();
+	}
+	
     /**
-     *
-     * Clones this object
-     *
-     * @returns the clone of this object
-     *
-     */
+	 *
+	 * Clones this object
+	 *
+	 * @returns the clone of this object
+	 *
+	 */
     
-    public Object clone() {
-        Object theClone = null;
-        try {
-            theClone = super.clone();
-        } catch (CloneNotSupportedException ce) {
-            DebugHandler.severe("Cannot clone " + this);
-        }
-        return theClone;
-    }
+	public Object clone() {
+	    Object theClone = null;
+	    try {
+	   theClone = super.clone();
+	    } catch (CloneNotSupportedException ce) {
+	   DebugHandler.severe("Cannot clone " + this);
+	    }
+	    return theClone;
+	}
 }

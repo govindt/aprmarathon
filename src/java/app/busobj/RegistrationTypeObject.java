@@ -95,91 +95,91 @@ public class RegistrationTypeObject implements Cloneable {
 		} catch (JSONException je) {}
 	}
     
-    
+	
     /**
-     *
-     * Sets the <code>registration_type_id</code> field
-     *
-     * @param registration_type_id      int
-     *
-     */
+	 *
+	 * Sets the <code>registration_type_id</code> field
+	 *
+	 * @param registration_type_id      int
+	 *
+	 */
     
-    public void setRegistrationTypeId(int registration_type_id) {
-        this.registration_type_id = registration_type_id;
-    }
+	public void setRegistrationTypeId(int registration_type_id) {
+	    this.registration_type_id = registration_type_id;
+	}
     
-    
+	
     /**
-     *
-     * Gets the <code>registration_type_id</code> field
-     *
-     * @returns registration_type_id
-     *
-     */
+	 *
+	 * Gets the <code>registration_type_id</code> field
+	 *
+	 * @returns registration_type_id
+	 *
+	 */
     
-    public int getRegistrationTypeId() {
-        return registration_type_id;
-    }
+	public int getRegistrationTypeId() {
+	    return registration_type_id;
+	}
 
-    
+	
     /**
-     *
-     * Sets the <code>registration_type_name</code> field
-     *
-     * @param registration_type_name      String
-     *
-     */
+	 *
+	 * Sets the <code>registration_type_name</code> field
+	 *
+	 * @param registration_type_name      String
+	 *
+	 */
     
-    public void setRegistrationTypeName(String registration_type_name) {
-        this.registration_type_name = registration_type_name;
-    }
+	public void setRegistrationTypeName(String registration_type_name) {
+	    this.registration_type_name = registration_type_name;
+	}
     
-    
+	
     /**
-     *
-     * Gets the <code>registration_type_name</code> field
-     *
-     * @returns registration_type_name
-     *
-     */
+	 *
+	 * Gets the <code>registration_type_name</code> field
+	 *
+	 * @returns registration_type_name
+	 *
+	 */
     
-    public String getRegistrationTypeName() {
-        return registration_type_name;
-    }
+	public String getRegistrationTypeName() {
+	    return registration_type_name;
+	}
 
-    
+	
     /**
-     *
-     * Tests if this object equals <code>obj</code>
-     *
-     * @returns true if equals
-     *
-     */
+	 *
+	 * Tests if this object equals <code>obj</code>
+	 *
+	 * @returns true if equals
+	 *
+	 */
     
-    public boolean equals(Object obj) {
-        RegistrationTypeObject other = (RegistrationTypeObject)obj;
-        DebugHandler.finest("This: " + this);
-        DebugHandler.finest("Other: " + other);
-        return
-            registration_type_id == other.getRegistrationTypeId() &&
-            Util.trim(registration_type_name).equals(Util.trim(other.getRegistrationTypeName()));
-    }
-    
+	public boolean equals(Object obj) {
+	    RegistrationTypeObject other = (RegistrationTypeObject)obj;
+	    DebugHandler.finest("This: " + this);
+	    DebugHandler.finest("Other: " + other);
+	    return
+	        registration_type_id == other.getRegistrationTypeId() &&
+	        Util.trim(registration_type_name).equals(Util.trim(other.getRegistrationTypeName()));
+	}
+	
     /**
-     *
-     * Clones this object
-     *
-     * @returns the clone of this object
-     *
-     */
+	 *
+	 * Clones this object
+	 *
+	 * @returns the clone of this object
+	 *
+	 */
     
-    public Object clone() {
-        Object theClone = null;
-        try {
-            theClone = super.clone();
-        } catch (CloneNotSupportedException ce) {
-            DebugHandler.severe("Cannot clone " + this);
-        }
-        return theClone;
-    }
+	public Object clone() {
+	    Object theClone = null;
+	    try {
+	   theClone = super.clone();
+	    } catch (CloneNotSupportedException ce) {
+	   DebugHandler.severe("Cannot clone " + this);
+	    }
+	    return theClone;
+	}
 }

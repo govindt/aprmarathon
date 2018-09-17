@@ -22,80 +22,80 @@ import app.busobj.RegistrationTypeObject;
  */
 
 public interface RegistrationTypeInterface {
-    
+	
     /**
-     *
-     * Interface that returns the RegistrationTypeObject given a RegistrationTypeObject filled with values that will be used for query from the underlying datasource.
-     *
-     * @param registrationtype_obj	RegistrationTypeObject
-     *
-     * @return      Returns the ArrayList of RegistrationTypeObjects
-     *
-     * @throws AppException if the underlying operation fails
-     *
-     */
+	 *
+	 * Interface that returns the RegistrationTypeObject given a RegistrationTypeObject filled with values that will be used for query from the underlying datasource.
+	 *
+	 * @param registrationtype_obj	RegistrationTypeObject
+	 *
+	 * @return      Returns the ArrayList of RegistrationTypeObjects
+	 *
+	 * @throws AppException if the underlying operation fails
+	 *
+	 */
     
-    public ArrayList<RegistrationTypeObject> getRegistrationTypes(RegistrationTypeObject registrationtype_obj) throws AppException;
-    
+	public ArrayList<RegistrationTypeObject> getRegistrationTypes(RegistrationTypeObject registrationtype_obj) throws AppException;
+	
     /**
-     *
-     * Interface that returns the RegistrationTypeObject given registration_type_id from the underlying datasource.
-     *
-     * @param registration_type_id     int
-     *
-     * @return      Returns the RegistrationTypeObject
-     *
-     * @throws AppException if the underlying operation fails
-     *
-     */
+	 *
+	 * Interface that returns the RegistrationTypeObject given registration_type_id from the underlying datasource.
+	 *
+	 * @param registration_type_id     int
+	 *
+	 * @return      Returns the RegistrationTypeObject
+	 *
+	 * @throws AppException if the underlying operation fails
+	 *
+	 */
     
-    public RegistrationTypeObject getRegistrationType(int registration_type_id) throws AppException;
-    
+	public RegistrationTypeObject getRegistrationType(int registration_type_id) throws AppException;
+	
     /**
-     *
-     * Interface that returns all the <code>RegistrationTypeObject</code> from the underlying datasource.
-     *
-     * @return      Returns an Array of <code>RegistrationTypeObject</code>
-     *
-     * @throws AppException if the underlying operation fails
-     *
-     */
+	 *
+	 * Interface that returns all the <code>RegistrationTypeObject</code> from the underlying datasource.
+	 *
+	 * @return      Returns an Array of <code>RegistrationTypeObject</code>
+	 *
+	 * @throws AppException if the underlying operation fails
+	 *
+	 */
     
-    public RegistrationTypeObject[] getAllRegistrationTypes() throws AppException;
-    
+	public RegistrationTypeObject[] getAllRegistrationTypes() throws AppException;
+	
     /**
-     *
-     * Interface to add the <code>RegistrationTypeObject</code> to the underlying datasource.
-     *
-     * @param registrationTypeObject     RegistrationTypeObject
-     *
-     * @throws AppException if the underlying operation fails
-     *
-     */
+	 *
+	 * Interface to add the <code>RegistrationTypeObject</code> to the underlying datasource.
+	 *
+	 * @param registrationTypeObject     RegistrationTypeObject
+	 *
+	 * @throws AppException if the underlying operation fails
+	 *
+	 */
     
-    public Integer addRegistrationType(RegistrationTypeObject registrationTypeObject) throws AppException;
-    
+	public Integer addRegistrationType(RegistrationTypeObject registrationTypeObject) throws AppException;
+	
     /**
-     *
-     * Interface to update the <code>RegistrationTypeObject</code> in the underlying datasource.
-     *
-     * @param registrationTypeObject     RegistrationTypeObject
-     *
-     * @throws AppException if the underlying operation fails
-     *
-     */
+	 *
+	 * Interface to update the <code>RegistrationTypeObject</code> in the underlying datasource.
+	 *
+	 * @param registrationTypeObject     RegistrationTypeObject
+	 *
+	 * @throws AppException if the underlying operation fails
+	 *
+	 */
     
-    public Integer updateRegistrationType(RegistrationTypeObject registrationTypeObject) throws AppException;
-    
+	public Integer updateRegistrationType(RegistrationTypeObject registrationTypeObject) throws AppException;
+	
     /**
-     *
-     * Interface to delete the <code>RegistrationTypeObject</code> in the underlying datasource.
-     *
-     * @param registrationTypeObject     RegistrationTypeObject
-     *
-     * @throws AppException if the underlying operation fails
-     *
-     */
+	 *
+	 * Interface to delete the <code>RegistrationTypeObject</code> in the underlying datasource.
+	 *
+	 * @param registrationTypeObject     RegistrationTypeObject
+	 *
+	 * @throws AppException if the underlying operation fails
+	 *
+	 */
     
-    public Integer deleteRegistrationType(RegistrationTypeObject registrationTypeObject) throws AppException;
+	public Integer deleteRegistrationType(RegistrationTypeObject registrationTypeObject) throws AppException;
 }

@@ -27,107 +27,108 @@ import app.util.AppConstants;
  */
 
 public class EventTypeImpl implements EventTypeInterface  {
-    private String EVENTTYPE = "EventTypeInterface.getAllEventType";
-    
+	private String EVENTTYPE = "EventTypeInterface.getAllEventType";
+	
     /**
-     *
-     * Implementation that returns the EventTypeObject given a EventTypeObject filled with values that will be used for query from the underlying datasource.
-     *
-     * @param eventtype_obj	EventTypeObject
-     *
-     * @return      Returns the ArrayList of EventTypeObjects
-     *
-     * @throws AppException if the underlying operation fails
-     *
-     */
+	 *
+	 * Implementation that returns the EventTypeObject given a EventTypeObject filled with values that will be used for query from the underlying datasource.
+	 *
+	 * @param eventtype_obj	EventTypeObject
+	 *
+	 * @return      Returns the ArrayList of EventTypeObjects
+	 *
+	 * @throws AppException if the underlying operation fails
+	 *
+	 */
     
 	public ArrayList<EventTypeObject> getEventTypes(EventTypeObject eventtype_obj) throws AppException{
+		EventTypeObject[] eventTypeObjectArr = getAllEventTypes();
 		@SuppressWarnings("unchecked")
 		ArrayList<EventTypeObject> v = (ArrayList<EventTypeObject>)DBUtil.list(eventtype_obj,eventtype_obj);
-	DebugHandler.finest("v: " + v);
-	return v;
-    }
-    
-    /**
-     *
-     * Implementation of the method that returns the EventTypeObject from the underlying datasource.
-     * given event_type_id.
-     *
-     * @param event_type_id     int
-     *
-     * @return      Returns the EventTypeObject
-     *
-     * @throws AppException if the operation fails
-     *
-     */
-    
-    public EventTypeObject getEventType(int event_type_id) throws AppException{
-	EventTypeObject[] eventTypeObjectArr = getAllEventTypes();
-	if ( eventTypeObjectArr == null )
-	    return null;
-	for ( int i = 0; i < eventTypeObjectArr.length; i++ ) {
-	    if ( eventTypeObjectArr[i] == null ) { // Try database and add to cache if found.
-		    EventTypeObject eventtypeObj = new EventTypeObject();
-		    eventtypeObj.setEventTypeId(event_type_id);
-		    @SuppressWarnings("unchecked")
-		    ArrayList<EventTypeObject> v = (ArrayList)DBUtil.fetch(eventtypeObj);
-		    if ( v == null || v.size() == 0 )
-			    return null;
-		    else {
-			    eventTypeObjectArr[i] = (EventTypeObject)eventtypeObj.clone();
-			    Util.putInCache(EVENTTYPE, eventTypeObjectArr);
-		    }
-	    }
-	    if ( eventTypeObjectArr[i].getEventTypeId() == event_type_id ) {
-		    DebugHandler.debug("Returning " + eventTypeObjectArr[i]);
-		    return (EventTypeObject)eventTypeObjectArr[i].clone();
-	    }
+		DebugHandler.finest("v: " + v);
+		return v;
 	}
-	return null;
-    }
-    
-    
+	
     /**
-     *
-     * Implementation that returns all the <code>EventTypeObjects</code> from the underlying datasource.
-     *
-     * @return      Returns an Array of <code>EventTypeObject</code>
-     *
-     * @throws AppException if the operation fails
-     *
-     */
+	 *
+	 * Implementation of the method that returns the EventTypeObject from the underlying datasource.
+	 * given event_type_id.
+	 *
+	 * @param event_type_id     int
+	 *
+	 * @return      Returns the EventTypeObject
+	 *
+	 * @throws AppException if the operation fails
+	 *
+	 */
     
-    public EventTypeObject[] getAllEventTypes() throws AppException{
+	public EventTypeObject getEventType(int event_type_id) throws AppException{
+		EventTypeObject[] eventTypeObjectArr = getAllEventTypes();
+		if ( eventTypeObjectArr == null )
+			return null;
+		for ( int i = 0; i < eventTypeObjectArr.length; i++ ) {
+			if ( eventTypeObjectArr[i] == null ) { // Try database and add to cache if found.
+				EventTypeObject eventtypeObj = new EventTypeObject();
+				eventtypeObj.setEventTypeId(event_type_id);
+				@SuppressWarnings("unchecked")
+				ArrayList<EventTypeObject> v = (ArrayList)DBUtil.fetch(eventtypeObj);
+				if ( v == null || v.size() == 0 )
+					return null;
+				else {
+					eventTypeObjectArr[i] = (EventTypeObject)eventtypeObj.clone();
+					Util.putInCache(EVENTTYPE, eventTypeObjectArr);
+				}
+			}
+			if ( eventTypeObjectArr[i].getEventTypeId() == event_type_id ) {
+				DebugHandler.debug("Returning " + eventTypeObjectArr[i]);
+				return (EventTypeObject)eventTypeObjectArr[i].clone();
+			}
+		}
+		return null;
+	}
+    
+	
+    /**
+	 *
+	 * Implementation that returns all the <code>EventTypeObjects</code> from the underlying datasource.
+	 *
+	 * @return      Returns an Array of <code>EventTypeObject</code>
+	 *
+	 * @throws AppException if the operation fails
+	 *
+	 */
+    
+	public EventTypeObject[] getAllEventTypes() throws AppException{
 		EventTypeObject eventTypeObject = new EventTypeObject();
 		EventTypeObject[] eventTypeObjectArr = (EventTypeObject[])Util.getAppCache().get(EVENTTYPE);
 		if ( eventTypeObjectArr == null ) {
-		    DebugHandler.info("Getting eventtype from database");
-		    @SuppressWarnings("unchecked")
-		    ArrayList<EventTypeObject> v = (ArrayList)DBUtil.list(eventTypeObject);
-		    DebugHandler.finest(":v: " +  v);
-		    if ( v == null )
-			    return null;
-		    eventTypeObjectArr = new EventTypeObject[v.size()];
-		    for ( int idx = 0; idx < v.size(); idx++ ) {
-			    eventTypeObjectArr[idx] = v.get(idx);
-		    }
-		    Util.putInCache(EVENTTYPE, eventTypeObjectArr);
+			DebugHandler.info("Getting eventtype from database");
+			@SuppressWarnings("unchecked")
+			ArrayList<EventTypeObject> v = (ArrayList)DBUtil.list(eventTypeObject);
+			DebugHandler.finest(":v: " +  v);
+			if ( v == null )
+				return null;
+			eventTypeObjectArr = new EventTypeObject[v.size()];
+			for ( int idx = 0; idx < v.size(); idx++ ) {
+				eventTypeObjectArr[idx] = v.get(idx);
+			}
+			Util.putInCache(EVENTTYPE, eventTypeObjectArr);
 		}
 		return eventTypeObjectArr;
-    }
+	}
     
-    
+	
     /**
-     *
-     * Implementation to add the <code>EventTypeObject</code> to the underlying datasource.
-     *
-     * @param eventTypeObject     EventTypeObject
-     *
-     * @throws AppException if the operation fails
-     *
-     */
+	 *
+	 * Implementation to add the <code>EventTypeObject</code> to the underlying datasource.
+	 *
+	 * @param eventTypeObject     EventTypeObject
+	 *
+	 * @throws AppException if the operation fails
+	 *
+	 */
     
-    public Integer addEventType(EventTypeObject eventTypeObject) throws AppException{
+	public Integer addEventType(EventTypeObject eventTypeObject) throws AppException{
 		if ( AppConstants.DB_TYPE.equalsIgnoreCase(Constants.ORACLE) ) {
 			long l = DBUtil.getNextId("Event_Type_seq");
 			eventTypeObject.setEventTypeId((int)l);
@@ -168,16 +169,16 @@ public class EventTypeImpl implements EventTypeInterface  {
 		return i;
 	}
 	
-    
+	
     /**
-     *
-     * Implementation to update the <code>EventTypeObject</code> in the underlying datasource.
-     *
-     * @param eventTypeObject     EventTypeObject
-     *
-     * @throws AppException if the operation fails
-     *
-     */
+	 *
+	 * Implementation to update the <code>EventTypeObject</code> in the underlying datasource.
+	 *
+	 * @param eventTypeObject     EventTypeObject
+	 *
+	 * @throws AppException if the operation fails
+	 *
+	 */
     
 	public Integer updateEventType(EventTypeObject eventTypeObject) throws AppException{
 		EventTypeObject newEventTypeObject = getEventType(eventTypeObject.getEventTypeId()); // This call will make sure cache/db are in sync
@@ -198,18 +199,18 @@ public class EventTypeImpl implements EventTypeInterface  {
 		return i;
 	}
     
-    
+	
     /**
-     *
-     * Implementation to delete the <code>EventTypeObject</code> in the underlying datasource.
-     *
-     * @param eventTypeObject     EventTypeObject
-     *
-     * @throws AppException if the operation fails
-     *
-     */
+	 *
+	 * Implementation to delete the <code>EventTypeObject</code> in the underlying datasource.
+	 *
+	 * @param eventTypeObject     EventTypeObject
+	 *
+	 * @throws AppException if the operation fails
+	 *
+	 */
     
-    public Integer deleteEventType(EventTypeObject eventTypeObject) throws AppException{
+	public Integer deleteEventType(EventTypeObject eventTypeObject) throws AppException{
 	EventTypeObject newEventTypeObject = getEventType(eventTypeObject.getEventTypeId()); // This call will make sure cache/db are in sync
 	EventTypeObject[] eventTypeObjectArr = getAllEventTypes();
 	Integer i = new Integer(0);

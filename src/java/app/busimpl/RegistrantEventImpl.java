@@ -27,107 +27,108 @@ import app.util.AppConstants;
  */
 
 public class RegistrantEventImpl implements RegistrantEventInterface  {
-    private String REGISTRANTEVENT = "RegistrantEventInterface.getAllRegistrantEvent";
-    
+	private String REGISTRANTEVENT = "RegistrantEventInterface.getAllRegistrantEvent";
+	
     /**
-     *
-     * Implementation that returns the RegistrantEventObject given a RegistrantEventObject filled with values that will be used for query from the underlying datasource.
-     *
-     * @param registrantevent_obj	RegistrantEventObject
-     *
-     * @return      Returns the ArrayList of RegistrantEventObjects
-     *
-     * @throws AppException if the underlying operation fails
-     *
-     */
+	 *
+	 * Implementation that returns the RegistrantEventObject given a RegistrantEventObject filled with values that will be used for query from the underlying datasource.
+	 *
+	 * @param registrantevent_obj	RegistrantEventObject
+	 *
+	 * @return      Returns the ArrayList of RegistrantEventObjects
+	 *
+	 * @throws AppException if the underlying operation fails
+	 *
+	 */
     
 	public ArrayList<RegistrantEventObject> getRegistrantEvents(RegistrantEventObject registrantevent_obj) throws AppException{
+		RegistrantEventObject[] registrantEventObjectArr = getAllRegistrantEvents();
 		@SuppressWarnings("unchecked")
 		ArrayList<RegistrantEventObject> v = (ArrayList<RegistrantEventObject>)DBUtil.list(registrantevent_obj,registrantevent_obj);
-	DebugHandler.finest("v: " + v);
-	return v;
-    }
-    
-    /**
-     *
-     * Implementation of the method that returns the RegistrantEventObject from the underlying datasource.
-     * given registrant_event_id.
-     *
-     * @param registrant_event_id     int
-     *
-     * @return      Returns the RegistrantEventObject
-     *
-     * @throws AppException if the operation fails
-     *
-     */
-    
-    public RegistrantEventObject getRegistrantEvent(int registrant_event_id) throws AppException{
-	RegistrantEventObject[] registrantEventObjectArr = getAllRegistrantEvents();
-	if ( registrantEventObjectArr == null )
-	    return null;
-	for ( int i = 0; i < registrantEventObjectArr.length; i++ ) {
-	    if ( registrantEventObjectArr[i] == null ) { // Try database and add to cache if found.
-		    RegistrantEventObject registranteventObj = new RegistrantEventObject();
-		    registranteventObj.setRegistrantEventId(registrant_event_id);
-		    @SuppressWarnings("unchecked")
-		    ArrayList<RegistrantEventObject> v = (ArrayList)DBUtil.fetch(registranteventObj);
-		    if ( v == null || v.size() == 0 )
-			    return null;
-		    else {
-			    registrantEventObjectArr[i] = (RegistrantEventObject)registranteventObj.clone();
-			    Util.putInCache(REGISTRANTEVENT, registrantEventObjectArr);
-		    }
-	    }
-	    if ( registrantEventObjectArr[i].getRegistrantEventId() == registrant_event_id ) {
-		    DebugHandler.debug("Returning " + registrantEventObjectArr[i]);
-		    return (RegistrantEventObject)registrantEventObjectArr[i].clone();
-	    }
+		DebugHandler.finest("v: " + v);
+		return v;
 	}
-	return null;
-    }
-    
-    
+	
     /**
-     *
-     * Implementation that returns all the <code>RegistrantEventObjects</code> from the underlying datasource.
-     *
-     * @return      Returns an Array of <code>RegistrantEventObject</code>
-     *
-     * @throws AppException if the operation fails
-     *
-     */
+	 *
+	 * Implementation of the method that returns the RegistrantEventObject from the underlying datasource.
+	 * given registrant_event_id.
+	 *
+	 * @param registrant_event_id     int
+	 *
+	 * @return      Returns the RegistrantEventObject
+	 *
+	 * @throws AppException if the operation fails
+	 *
+	 */
     
-    public RegistrantEventObject[] getAllRegistrantEvents() throws AppException{
+	public RegistrantEventObject getRegistrantEvent(int registrant_event_id) throws AppException{
+		RegistrantEventObject[] registrantEventObjectArr = getAllRegistrantEvents();
+		if ( registrantEventObjectArr == null )
+			return null;
+		for ( int i = 0; i < registrantEventObjectArr.length; i++ ) {
+			if ( registrantEventObjectArr[i] == null ) { // Try database and add to cache if found.
+				RegistrantEventObject registranteventObj = new RegistrantEventObject();
+				registranteventObj.setRegistrantEventId(registrant_event_id);
+				@SuppressWarnings("unchecked")
+				ArrayList<RegistrantEventObject> v = (ArrayList)DBUtil.fetch(registranteventObj);
+				if ( v == null || v.size() == 0 )
+					return null;
+				else {
+					registrantEventObjectArr[i] = (RegistrantEventObject)registranteventObj.clone();
+					Util.putInCache(REGISTRANTEVENT, registrantEventObjectArr);
+				}
+			}
+			if ( registrantEventObjectArr[i].getRegistrantEventId() == registrant_event_id ) {
+				DebugHandler.debug("Returning " + registrantEventObjectArr[i]);
+				return (RegistrantEventObject)registrantEventObjectArr[i].clone();
+			}
+		}
+		return null;
+	}
+    
+	
+    /**
+	 *
+	 * Implementation that returns all the <code>RegistrantEventObjects</code> from the underlying datasource.
+	 *
+	 * @return      Returns an Array of <code>RegistrantEventObject</code>
+	 *
+	 * @throws AppException if the operation fails
+	 *
+	 */
+    
+	public RegistrantEventObject[] getAllRegistrantEvents() throws AppException{
 		RegistrantEventObject registrantEventObject = new RegistrantEventObject();
 		RegistrantEventObject[] registrantEventObjectArr = (RegistrantEventObject[])Util.getAppCache().get(REGISTRANTEVENT);
 		if ( registrantEventObjectArr == null ) {
-		    DebugHandler.info("Getting registrantevent from database");
-		    @SuppressWarnings("unchecked")
-		    ArrayList<RegistrantEventObject> v = (ArrayList)DBUtil.list(registrantEventObject);
-		    DebugHandler.finest(":v: " +  v);
-		    if ( v == null )
-			    return null;
-		    registrantEventObjectArr = new RegistrantEventObject[v.size()];
-		    for ( int idx = 0; idx < v.size(); idx++ ) {
-			    registrantEventObjectArr[idx] = v.get(idx);
-		    }
-		    Util.putInCache(REGISTRANTEVENT, registrantEventObjectArr);
+			DebugHandler.info("Getting registrantevent from database");
+			@SuppressWarnings("unchecked")
+			ArrayList<RegistrantEventObject> v = (ArrayList)DBUtil.list(registrantEventObject);
+			DebugHandler.finest(":v: " +  v);
+			if ( v == null )
+				return null;
+			registrantEventObjectArr = new RegistrantEventObject[v.size()];
+			for ( int idx = 0; idx < v.size(); idx++ ) {
+				registrantEventObjectArr[idx] = v.get(idx);
+			}
+			Util.putInCache(REGISTRANTEVENT, registrantEventObjectArr);
 		}
 		return registrantEventObjectArr;
-    }
+	}
     
-    
+	
     /**
-     *
-     * Implementation to add the <code>RegistrantEventObject</code> to the underlying datasource.
-     *
-     * @param registrantEventObject     RegistrantEventObject
-     *
-     * @throws AppException if the operation fails
-     *
-     */
+	 *
+	 * Implementation to add the <code>RegistrantEventObject</code> to the underlying datasource.
+	 *
+	 * @param registrantEventObject     RegistrantEventObject
+	 *
+	 * @throws AppException if the operation fails
+	 *
+	 */
     
-    public Integer addRegistrantEvent(RegistrantEventObject registrantEventObject) throws AppException{
+	public Integer addRegistrantEvent(RegistrantEventObject registrantEventObject) throws AppException{
 		if ( AppConstants.DB_TYPE.equalsIgnoreCase(Constants.ORACLE) ) {
 			long l = DBUtil.getNextId("Registrant_Event_seq");
 			registrantEventObject.setRegistrantEventId((int)l);
@@ -168,16 +169,16 @@ public class RegistrantEventImpl implements RegistrantEventInterface  {
 		return i;
 	}
 	
-    
+	
     /**
-     *
-     * Implementation to update the <code>RegistrantEventObject</code> in the underlying datasource.
-     *
-     * @param registrantEventObject     RegistrantEventObject
-     *
-     * @throws AppException if the operation fails
-     *
-     */
+	 *
+	 * Implementation to update the <code>RegistrantEventObject</code> in the underlying datasource.
+	 *
+	 * @param registrantEventObject     RegistrantEventObject
+	 *
+	 * @throws AppException if the operation fails
+	 *
+	 */
     
 	public Integer updateRegistrantEvent(RegistrantEventObject registrantEventObject) throws AppException{
 		RegistrantEventObject newRegistrantEventObject = getRegistrantEvent(registrantEventObject.getRegistrantEventId()); // This call will make sure cache/db are in sync
@@ -198,18 +199,18 @@ public class RegistrantEventImpl implements RegistrantEventInterface  {
 		return i;
 	}
     
-    
+	
     /**
-     *
-     * Implementation to delete the <code>RegistrantEventObject</code> in the underlying datasource.
-     *
-     * @param registrantEventObject     RegistrantEventObject
-     *
-     * @throws AppException if the operation fails
-     *
-     */
+	 *
+	 * Implementation to delete the <code>RegistrantEventObject</code> in the underlying datasource.
+	 *
+	 * @param registrantEventObject     RegistrantEventObject
+	 *
+	 * @throws AppException if the operation fails
+	 *
+	 */
     
-    public Integer deleteRegistrantEvent(RegistrantEventObject registrantEventObject) throws AppException{
+	public Integer deleteRegistrantEvent(RegistrantEventObject registrantEventObject) throws AppException{
 	RegistrantEventObject newRegistrantEventObject = getRegistrantEvent(registrantEventObject.getRegistrantEventId()); // This call will make sure cache/db are in sync
 	RegistrantEventObject[] registrantEventObjectArr = getAllRegistrantEvents();
 	Integer i = new Integer(0);

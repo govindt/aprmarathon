@@ -147,253 +147,253 @@ public class EventTypeObject implements Cloneable {
 		} catch (JSONException je) {}
 	}
     
-    
+	
     /**
-     *
-     * Sets the <code>event_type_id</code> field
-     *
-     * @param event_type_id      int
-     *
-     */
+	 *
+	 * Sets the <code>event_type_id</code> field
+	 *
+	 * @param event_type_id      int
+	 *
+	 */
     
-    public void setEventTypeId(int event_type_id) {
-        this.event_type_id = event_type_id;
-    }
+	public void setEventTypeId(int event_type_id) {
+	    this.event_type_id = event_type_id;
+	}
     
-    
+	
     /**
-     *
-     * Gets the <code>event_type_id</code> field
-     *
-     * @returns event_type_id
-     *
-     */
+	 *
+	 * Gets the <code>event_type_id</code> field
+	 *
+	 * @returns event_type_id
+	 *
+	 */
     
-    public int getEventTypeId() {
-        return event_type_id;
-    }
+	public int getEventTypeId() {
+	    return event_type_id;
+	}
 
-    
+	
     /**
-     *
-     * Sets the <code>event_type_name</code> field
-     *
-     * @param event_type_name      String
-     *
-     */
+	 *
+	 * Sets the <code>event_type_name</code> field
+	 *
+	 * @param event_type_name      String
+	 *
+	 */
     
-    public void setEventTypeName(String event_type_name) {
-        this.event_type_name = event_type_name;
-    }
+	public void setEventTypeName(String event_type_name) {
+	    this.event_type_name = event_type_name;
+	}
     
-    
+	
     /**
-     *
-     * Gets the <code>event_type_name</code> field
-     *
-     * @returns event_type_name
-     *
-     */
+	 *
+	 * Gets the <code>event_type_name</code> field
+	 *
+	 * @returns event_type_name
+	 *
+	 */
     
-    public String getEventTypeName() {
-        return event_type_name;
-    }
+	public String getEventTypeName() {
+	    return event_type_name;
+	}
 
-    
+	
     /**
-     *
-     * Sets the <code>event</code> field
-     *
-     * @param event      int
-     *
-     */
+	 *
+	 * Sets the <code>event</code> field
+	 *
+	 * @param event      int
+	 *
+	 */
     
-    public void setEvent(int event) {
-        this.event = event;
-    }
+	public void setEvent(int event) {
+	    this.event = event;
+	}
     
-    
+	
     /**
-     *
-     * Gets the <code>event</code> field
-     *
-     * @returns event
-     *
-     */
+	 *
+	 * Gets the <code>event</code> field
+	 *
+	 * @returns event
+	 *
+	 */
     
-    public int getEvent() {
-        return event;
-    }
+	public int getEvent() {
+	    return event;
+	}
 
-    
+	
     /**
-     *
-     * Sets the <code>event_type_description</code> field
-     *
-     * @param event_type_description      String
-     *
-     */
+	 *
+	 * Sets the <code>event_type_description</code> field
+	 *
+	 * @param event_type_description      String
+	 *
+	 */
     
-    public void setEventTypeDescription(String event_type_description) {
-        this.event_type_description = event_type_description;
-    }
+	public void setEventTypeDescription(String event_type_description) {
+	    this.event_type_description = event_type_description;
+	}
     
-    
+	
     /**
-     *
-     * Gets the <code>event_type_description</code> field
-     *
-     * @returns event_type_description
-     *
-     */
+	 *
+	 * Gets the <code>event_type_description</code> field
+	 *
+	 * @returns event_type_description
+	 *
+	 */
     
-    public String getEventTypeDescription() {
-        return event_type_description;
-    }
+	public String getEventTypeDescription() {
+	    return event_type_description;
+	}
 
-    
+	
     /**
-     *
-     * Sets the <code>event_type_start_date</code> field
-     *
-     * @param event_type_start_date      Date
-     *
-     */
+	 *
+	 * Sets the <code>event_type_start_date</code> field
+	 *
+	 * @param event_type_start_date      Date
+	 *
+	 */
     
-    public void setEventTypeStartDate(Date event_type_start_date) {
-        this.event_type_start_date = event_type_start_date;
-    }
+	public void setEventTypeStartDate(Date event_type_start_date) {
+	    this.event_type_start_date = event_type_start_date;
+	}
     
-    
+	
     /**
-     *
-     * Gets the <code>event_type_start_date</code> field
-     *
-     * @returns event_type_start_date
-     *
-     */
+	 *
+	 * Gets the <code>event_type_start_date</code> field
+	 *
+	 * @returns event_type_start_date
+	 *
+	 */
     
-    public Date getEventTypeStartDate() {
-        return event_type_start_date;
-    }
+	public Date getEventTypeStartDate() {
+	    return event_type_start_date;
+	}
 
-    
+	
     /**
-     *
-     * Sets the <code>event_type_end_date</code> field
-     *
-     * @param event_type_end_date      Date
-     *
-     */
+	 *
+	 * Sets the <code>event_type_end_date</code> field
+	 *
+	 * @param event_type_end_date      Date
+	 *
+	 */
     
-    public void setEventTypeEndDate(Date event_type_end_date) {
-        this.event_type_end_date = event_type_end_date;
-    }
+	public void setEventTypeEndDate(Date event_type_end_date) {
+	    this.event_type_end_date = event_type_end_date;
+	}
     
-    
+	
     /**
-     *
-     * Gets the <code>event_type_end_date</code> field
-     *
-     * @returns event_type_end_date
-     *
-     */
+	 *
+	 * Gets the <code>event_type_end_date</code> field
+	 *
+	 * @returns event_type_end_date
+	 *
+	 */
     
-    public Date getEventTypeEndDate() {
-        return event_type_end_date;
-    }
+	public Date getEventTypeEndDate() {
+	    return event_type_end_date;
+	}
 
-    
+	
     /**
-     *
-     * Sets the <code>event_type_venue</code> field
-     *
-     * @param event_type_venue      String
-     *
-     */
+	 *
+	 * Sets the <code>event_type_venue</code> field
+	 *
+	 * @param event_type_venue      String
+	 *
+	 */
     
-    public void setEventTypeVenue(String event_type_venue) {
-        this.event_type_venue = event_type_venue;
-    }
+	public void setEventTypeVenue(String event_type_venue) {
+	    this.event_type_venue = event_type_venue;
+	}
     
-    
+	
     /**
-     *
-     * Gets the <code>event_type_venue</code> field
-     *
-     * @returns event_type_venue
-     *
-     */
+	 *
+	 * Gets the <code>event_type_venue</code> field
+	 *
+	 * @returns event_type_venue
+	 *
+	 */
     
-    public String getEventTypeVenue() {
-        return event_type_venue;
-    }
+	public String getEventTypeVenue() {
+	    return event_type_venue;
+	}
 
-    
+	
     /**
-     *
-     * Sets the <code>online_registration_only</code> field
-     *
-     * @param online_registration_only      String
-     *
-     */
+	 *
+	 * Sets the <code>online_registration_only</code> field
+	 *
+	 * @param online_registration_only      String
+	 *
+	 */
     
-    public void setOnlineRegistrationOnly(String online_registration_only) {
-        this.online_registration_only = online_registration_only;
-    }
+	public void setOnlineRegistrationOnly(String online_registration_only) {
+	    this.online_registration_only = online_registration_only;
+	}
     
-    
+	
     /**
-     *
-     * Gets the <code>online_registration_only</code> field
-     *
-     * @returns online_registration_only
-     *
-     */
+	 *
+	 * Gets the <code>online_registration_only</code> field
+	 *
+	 * @returns online_registration_only
+	 *
+	 */
     
-    public String getOnlineRegistrationOnly() {
-        return online_registration_only;
-    }
+	public String getOnlineRegistrationOnly() {
+	    return online_registration_only;
+	}
 
-    
+	
     /**
-     *
-     * Tests if this object equals <code>obj</code>
-     *
-     * @returns true if equals
-     *
-     */
+	 *
+	 * Tests if this object equals <code>obj</code>
+	 *
+	 * @returns true if equals
+	 *
+	 */
     
-    public boolean equals(Object obj) {
-        EventTypeObject other = (EventTypeObject)obj;
-        DebugHandler.finest("This: " + this);
-        DebugHandler.finest("Other: " + other);
-        return
-            event_type_id == other.getEventTypeId() &&
-            Util.trim(event_type_name).equals(Util.trim(other.getEventTypeName())) &&
-            event == other.getEvent() &&
-            Util.trim(event_type_description).equals(Util.trim(other.getEventTypeDescription())) &&
-            event_type_start_date.equals(other.getEventTypeStartDate()) &&
-            event_type_end_date.equals(other.getEventTypeEndDate()) &&
-            Util.trim(event_type_venue).equals(Util.trim(other.getEventTypeVenue())) &&
-            Util.trim(online_registration_only).equals(Util.trim(other.getOnlineRegistrationOnly()));
-    }
-    
+	public boolean equals(Object obj) {
+	    EventTypeObject other = (EventTypeObject)obj;
+	    DebugHandler.finest("This: " + this);
+	    DebugHandler.finest("Other: " + other);
+	    return
+	        event_type_id == other.getEventTypeId() &&
+	   Util.trim(event_type_name).equals(Util.trim(other.getEventTypeName())) &&
+	        event == other.getEvent() &&
+	   Util.trim(event_type_description).equals(Util.trim(other.getEventTypeDescription())) &&
+	   event_type_start_date.equals(other.getEventTypeStartDate()) &&
+	   event_type_end_date.equals(other.getEventTypeEndDate()) &&
+	   Util.trim(event_type_venue).equals(Util.trim(other.getEventTypeVenue())) &&
+	        Util.trim(online_registration_only).equals(Util.trim(other.getOnlineRegistrationOnly()));
+	}
+	
     /**
-     *
-     * Clones this object
-     *
-     * @returns the clone of this object
-     *
-     */
+	 *
+	 * Clones this object
+	 *
+	 * @returns the clone of this object
+	 *
+	 */
     
-    public Object clone() {
-        Object theClone = null;
-        try {
-            theClone = super.clone();
-        } catch (CloneNotSupportedException ce) {
-            DebugHandler.severe("Cannot clone " + this);
-        }
-        return theClone;
-    }
+	public Object clone() {
+	    Object theClone = null;
+	    try {
+	   theClone = super.clone();
+	    } catch (CloneNotSupportedException ce) {
+	   DebugHandler.severe("Cannot clone " + this);
+	    }
+	    return theClone;
+	}
 }

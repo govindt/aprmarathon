@@ -27,107 +27,108 @@ import app.util.AppConstants;
  */
 
 public class GenderImpl implements GenderInterface  {
-    private String GENDER = "GenderInterface.getAllGender";
-    
+	private String GENDER = "GenderInterface.getAllGender";
+	
     /**
-     *
-     * Implementation that returns the GenderObject given a GenderObject filled with values that will be used for query from the underlying datasource.
-     *
-     * @param gender_obj	GenderObject
-     *
-     * @return      Returns the ArrayList of GenderObjects
-     *
-     * @throws AppException if the underlying operation fails
-     *
-     */
+	 *
+	 * Implementation that returns the GenderObject given a GenderObject filled with values that will be used for query from the underlying datasource.
+	 *
+	 * @param gender_obj	GenderObject
+	 *
+	 * @return      Returns the ArrayList of GenderObjects
+	 *
+	 * @throws AppException if the underlying operation fails
+	 *
+	 */
     
 	public ArrayList<GenderObject> getGenders(GenderObject gender_obj) throws AppException{
+		GenderObject[] genderObjectArr = getAllGenders();
 		@SuppressWarnings("unchecked")
 		ArrayList<GenderObject> v = (ArrayList<GenderObject>)DBUtil.list(gender_obj,gender_obj);
-	DebugHandler.finest("v: " + v);
-	return v;
-    }
-    
-    /**
-     *
-     * Implementation of the method that returns the GenderObject from the underlying datasource.
-     * given gender_id.
-     *
-     * @param gender_id     int
-     *
-     * @return      Returns the GenderObject
-     *
-     * @throws AppException if the operation fails
-     *
-     */
-    
-    public GenderObject getGender(int gender_id) throws AppException{
-	GenderObject[] genderObjectArr = getAllGenders();
-	if ( genderObjectArr == null )
-	    return null;
-	for ( int i = 0; i < genderObjectArr.length; i++ ) {
-	    if ( genderObjectArr[i] == null ) { // Try database and add to cache if found.
-		    GenderObject genderObj = new GenderObject();
-		    genderObj.setGenderId(gender_id);
-		    @SuppressWarnings("unchecked")
-		    ArrayList<GenderObject> v = (ArrayList)DBUtil.fetch(genderObj);
-		    if ( v == null || v.size() == 0 )
-			    return null;
-		    else {
-			    genderObjectArr[i] = (GenderObject)genderObj.clone();
-			    Util.putInCache(GENDER, genderObjectArr);
-		    }
-	    }
-	    if ( genderObjectArr[i].getGenderId() == gender_id ) {
-		    DebugHandler.debug("Returning " + genderObjectArr[i]);
-		    return (GenderObject)genderObjectArr[i].clone();
-	    }
+		DebugHandler.finest("v: " + v);
+		return v;
 	}
-	return null;
-    }
-    
-    
+	
     /**
-     *
-     * Implementation that returns all the <code>GenderObjects</code> from the underlying datasource.
-     *
-     * @return      Returns an Array of <code>GenderObject</code>
-     *
-     * @throws AppException if the operation fails
-     *
-     */
+	 *
+	 * Implementation of the method that returns the GenderObject from the underlying datasource.
+	 * given gender_id.
+	 *
+	 * @param gender_id     int
+	 *
+	 * @return      Returns the GenderObject
+	 *
+	 * @throws AppException if the operation fails
+	 *
+	 */
     
-    public GenderObject[] getAllGenders() throws AppException{
+	public GenderObject getGender(int gender_id) throws AppException{
+		GenderObject[] genderObjectArr = getAllGenders();
+		if ( genderObjectArr == null )
+			return null;
+		for ( int i = 0; i < genderObjectArr.length; i++ ) {
+			if ( genderObjectArr[i] == null ) { // Try database and add to cache if found.
+				GenderObject genderObj = new GenderObject();
+				genderObj.setGenderId(gender_id);
+				@SuppressWarnings("unchecked")
+				ArrayList<GenderObject> v = (ArrayList)DBUtil.fetch(genderObj);
+				if ( v == null || v.size() == 0 )
+					return null;
+				else {
+					genderObjectArr[i] = (GenderObject)genderObj.clone();
+					Util.putInCache(GENDER, genderObjectArr);
+				}
+			}
+			if ( genderObjectArr[i].getGenderId() == gender_id ) {
+				DebugHandler.debug("Returning " + genderObjectArr[i]);
+				return (GenderObject)genderObjectArr[i].clone();
+			}
+		}
+		return null;
+	}
+    
+	
+    /**
+	 *
+	 * Implementation that returns all the <code>GenderObjects</code> from the underlying datasource.
+	 *
+	 * @return      Returns an Array of <code>GenderObject</code>
+	 *
+	 * @throws AppException if the operation fails
+	 *
+	 */
+    
+	public GenderObject[] getAllGenders() throws AppException{
 		GenderObject genderObject = new GenderObject();
 		GenderObject[] genderObjectArr = (GenderObject[])Util.getAppCache().get(GENDER);
 		if ( genderObjectArr == null ) {
-		    DebugHandler.info("Getting gender from database");
-		    @SuppressWarnings("unchecked")
-		    ArrayList<GenderObject> v = (ArrayList)DBUtil.list(genderObject);
-		    DebugHandler.finest(":v: " +  v);
-		    if ( v == null )
-			    return null;
-		    genderObjectArr = new GenderObject[v.size()];
-		    for ( int idx = 0; idx < v.size(); idx++ ) {
-			    genderObjectArr[idx] = v.get(idx);
-		    }
-		    Util.putInCache(GENDER, genderObjectArr);
+			DebugHandler.info("Getting gender from database");
+			@SuppressWarnings("unchecked")
+			ArrayList<GenderObject> v = (ArrayList)DBUtil.list(genderObject);
+			DebugHandler.finest(":v: " +  v);
+			if ( v == null )
+				return null;
+			genderObjectArr = new GenderObject[v.size()];
+			for ( int idx = 0; idx < v.size(); idx++ ) {
+				genderObjectArr[idx] = v.get(idx);
+			}
+			Util.putInCache(GENDER, genderObjectArr);
 		}
 		return genderObjectArr;
-    }
+	}
     
-    
+	
     /**
-     *
-     * Implementation to add the <code>GenderObject</code> to the underlying datasource.
-     *
-     * @param genderObject     GenderObject
-     *
-     * @throws AppException if the operation fails
-     *
-     */
+	 *
+	 * Implementation to add the <code>GenderObject</code> to the underlying datasource.
+	 *
+	 * @param genderObject     GenderObject
+	 *
+	 * @throws AppException if the operation fails
+	 *
+	 */
     
-    public Integer addGender(GenderObject genderObject) throws AppException{
+	public Integer addGender(GenderObject genderObject) throws AppException{
 		if ( AppConstants.DB_TYPE.equalsIgnoreCase(Constants.ORACLE) ) {
 			long l = DBUtil.getNextId("Gender_seq");
 			genderObject.setGenderId((int)l);
@@ -168,16 +169,16 @@ public class GenderImpl implements GenderInterface  {
 		return i;
 	}
 	
-    
+	
     /**
-     *
-     * Implementation to update the <code>GenderObject</code> in the underlying datasource.
-     *
-     * @param genderObject     GenderObject
-     *
-     * @throws AppException if the operation fails
-     *
-     */
+	 *
+	 * Implementation to update the <code>GenderObject</code> in the underlying datasource.
+	 *
+	 * @param genderObject     GenderObject
+	 *
+	 * @throws AppException if the operation fails
+	 *
+	 */
     
 	public Integer updateGender(GenderObject genderObject) throws AppException{
 		GenderObject newGenderObject = getGender(genderObject.getGenderId()); // This call will make sure cache/db are in sync
@@ -198,18 +199,18 @@ public class GenderImpl implements GenderInterface  {
 		return i;
 	}
     
-    
+	
     /**
-     *
-     * Implementation to delete the <code>GenderObject</code> in the underlying datasource.
-     *
-     * @param genderObject     GenderObject
-     *
-     * @throws AppException if the operation fails
-     *
-     */
+	 *
+	 * Implementation to delete the <code>GenderObject</code> in the underlying datasource.
+	 *
+	 * @param genderObject     GenderObject
+	 *
+	 * @throws AppException if the operation fails
+	 *
+	 */
     
-    public Integer deleteGender(GenderObject genderObject) throws AppException{
+	public Integer deleteGender(GenderObject genderObject) throws AppException{
 	GenderObject newGenderObject = getGender(genderObject.getGenderId()); // This call will make sure cache/db are in sync
 	GenderObject[] genderObjectArr = getAllGenders();
 	Integer i = new Integer(0);

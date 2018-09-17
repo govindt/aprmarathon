@@ -27,107 +27,108 @@ import app.util.AppConstants;
  */
 
 public class MedalImpl implements MedalInterface  {
-    private String MEDAL = "MedalInterface.getAllMedal";
-    
+	private String MEDAL = "MedalInterface.getAllMedal";
+	
     /**
-     *
-     * Implementation that returns the MedalObject given a MedalObject filled with values that will be used for query from the underlying datasource.
-     *
-     * @param medal_obj	MedalObject
-     *
-     * @return      Returns the ArrayList of MedalObjects
-     *
-     * @throws AppException if the underlying operation fails
-     *
-     */
+	 *
+	 * Implementation that returns the MedalObject given a MedalObject filled with values that will be used for query from the underlying datasource.
+	 *
+	 * @param medal_obj	MedalObject
+	 *
+	 * @return      Returns the ArrayList of MedalObjects
+	 *
+	 * @throws AppException if the underlying operation fails
+	 *
+	 */
     
 	public ArrayList<MedalObject> getMedals(MedalObject medal_obj) throws AppException{
+		MedalObject[] medalObjectArr = getAllMedals();
 		@SuppressWarnings("unchecked")
 		ArrayList<MedalObject> v = (ArrayList<MedalObject>)DBUtil.list(medal_obj,medal_obj);
-	DebugHandler.finest("v: " + v);
-	return v;
-    }
-    
-    /**
-     *
-     * Implementation of the method that returns the MedalObject from the underlying datasource.
-     * given medal_id.
-     *
-     * @param medal_id     int
-     *
-     * @return      Returns the MedalObject
-     *
-     * @throws AppException if the operation fails
-     *
-     */
-    
-    public MedalObject getMedal(int medal_id) throws AppException{
-	MedalObject[] medalObjectArr = getAllMedals();
-	if ( medalObjectArr == null )
-	    return null;
-	for ( int i = 0; i < medalObjectArr.length; i++ ) {
-	    if ( medalObjectArr[i] == null ) { // Try database and add to cache if found.
-		    MedalObject medalObj = new MedalObject();
-		    medalObj.setMedalId(medal_id);
-		    @SuppressWarnings("unchecked")
-		    ArrayList<MedalObject> v = (ArrayList)DBUtil.fetch(medalObj);
-		    if ( v == null || v.size() == 0 )
-			    return null;
-		    else {
-			    medalObjectArr[i] = (MedalObject)medalObj.clone();
-			    Util.putInCache(MEDAL, medalObjectArr);
-		    }
-	    }
-	    if ( medalObjectArr[i].getMedalId() == medal_id ) {
-		    DebugHandler.debug("Returning " + medalObjectArr[i]);
-		    return (MedalObject)medalObjectArr[i].clone();
-	    }
+		DebugHandler.finest("v: " + v);
+		return v;
 	}
-	return null;
-    }
-    
-    
+	
     /**
-     *
-     * Implementation that returns all the <code>MedalObjects</code> from the underlying datasource.
-     *
-     * @return      Returns an Array of <code>MedalObject</code>
-     *
-     * @throws AppException if the operation fails
-     *
-     */
+	 *
+	 * Implementation of the method that returns the MedalObject from the underlying datasource.
+	 * given medal_id.
+	 *
+	 * @param medal_id     int
+	 *
+	 * @return      Returns the MedalObject
+	 *
+	 * @throws AppException if the operation fails
+	 *
+	 */
     
-    public MedalObject[] getAllMedals() throws AppException{
+	public MedalObject getMedal(int medal_id) throws AppException{
+		MedalObject[] medalObjectArr = getAllMedals();
+		if ( medalObjectArr == null )
+			return null;
+		for ( int i = 0; i < medalObjectArr.length; i++ ) {
+			if ( medalObjectArr[i] == null ) { // Try database and add to cache if found.
+				MedalObject medalObj = new MedalObject();
+				medalObj.setMedalId(medal_id);
+				@SuppressWarnings("unchecked")
+				ArrayList<MedalObject> v = (ArrayList)DBUtil.fetch(medalObj);
+				if ( v == null || v.size() == 0 )
+					return null;
+				else {
+					medalObjectArr[i] = (MedalObject)medalObj.clone();
+					Util.putInCache(MEDAL, medalObjectArr);
+				}
+			}
+			if ( medalObjectArr[i].getMedalId() == medal_id ) {
+				DebugHandler.debug("Returning " + medalObjectArr[i]);
+				return (MedalObject)medalObjectArr[i].clone();
+			}
+		}
+		return null;
+	}
+    
+	
+    /**
+	 *
+	 * Implementation that returns all the <code>MedalObjects</code> from the underlying datasource.
+	 *
+	 * @return      Returns an Array of <code>MedalObject</code>
+	 *
+	 * @throws AppException if the operation fails
+	 *
+	 */
+    
+	public MedalObject[] getAllMedals() throws AppException{
 		MedalObject medalObject = new MedalObject();
 		MedalObject[] medalObjectArr = (MedalObject[])Util.getAppCache().get(MEDAL);
 		if ( medalObjectArr == null ) {
-		    DebugHandler.info("Getting medal from database");
-		    @SuppressWarnings("unchecked")
-		    ArrayList<MedalObject> v = (ArrayList)DBUtil.list(medalObject);
-		    DebugHandler.finest(":v: " +  v);
-		    if ( v == null )
-			    return null;
-		    medalObjectArr = new MedalObject[v.size()];
-		    for ( int idx = 0; idx < v.size(); idx++ ) {
-			    medalObjectArr[idx] = v.get(idx);
-		    }
-		    Util.putInCache(MEDAL, medalObjectArr);
+			DebugHandler.info("Getting medal from database");
+			@SuppressWarnings("unchecked")
+			ArrayList<MedalObject> v = (ArrayList)DBUtil.list(medalObject);
+			DebugHandler.finest(":v: " +  v);
+			if ( v == null )
+				return null;
+			medalObjectArr = new MedalObject[v.size()];
+			for ( int idx = 0; idx < v.size(); idx++ ) {
+				medalObjectArr[idx] = v.get(idx);
+			}
+			Util.putInCache(MEDAL, medalObjectArr);
 		}
 		return medalObjectArr;
-    }
+	}
     
-    
+	
     /**
-     *
-     * Implementation to add the <code>MedalObject</code> to the underlying datasource.
-     *
-     * @param medalObject     MedalObject
-     *
-     * @throws AppException if the operation fails
-     *
-     */
+	 *
+	 * Implementation to add the <code>MedalObject</code> to the underlying datasource.
+	 *
+	 * @param medalObject     MedalObject
+	 *
+	 * @throws AppException if the operation fails
+	 *
+	 */
     
-    public Integer addMedal(MedalObject medalObject) throws AppException{
+	public Integer addMedal(MedalObject medalObject) throws AppException{
 		if ( AppConstants.DB_TYPE.equalsIgnoreCase(Constants.ORACLE) ) {
 			long l = DBUtil.getNextId("Medal_seq");
 			medalObject.setMedalId((int)l);
@@ -168,16 +169,16 @@ public class MedalImpl implements MedalInterface  {
 		return i;
 	}
 	
-    
+	
     /**
-     *
-     * Implementation to update the <code>MedalObject</code> in the underlying datasource.
-     *
-     * @param medalObject     MedalObject
-     *
-     * @throws AppException if the operation fails
-     *
-     */
+	 *
+	 * Implementation to update the <code>MedalObject</code> in the underlying datasource.
+	 *
+	 * @param medalObject     MedalObject
+	 *
+	 * @throws AppException if the operation fails
+	 *
+	 */
     
 	public Integer updateMedal(MedalObject medalObject) throws AppException{
 		MedalObject newMedalObject = getMedal(medalObject.getMedalId()); // This call will make sure cache/db are in sync
@@ -198,18 +199,18 @@ public class MedalImpl implements MedalInterface  {
 		return i;
 	}
     
-    
+	
     /**
-     *
-     * Implementation to delete the <code>MedalObject</code> in the underlying datasource.
-     *
-     * @param medalObject     MedalObject
-     *
-     * @throws AppException if the operation fails
-     *
-     */
+	 *
+	 * Implementation to delete the <code>MedalObject</code> in the underlying datasource.
+	 *
+	 * @param medalObject     MedalObject
+	 *
+	 * @throws AppException if the operation fails
+	 *
+	 */
     
-    public Integer deleteMedal(MedalObject medalObject) throws AppException{
+	public Integer deleteMedal(MedalObject medalObject) throws AppException{
 	MedalObject newMedalObject = getMedal(medalObject.getMedalId()); // This call will make sure cache/db are in sync
 	MedalObject[] medalObjectArr = getAllMedals();
 	Integer i = new Integer(0);

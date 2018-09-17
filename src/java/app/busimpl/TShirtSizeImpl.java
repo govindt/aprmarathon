@@ -27,107 +27,108 @@ import app.util.AppConstants;
  */
 
 public class TShirtSizeImpl implements TShirtSizeInterface  {
-    private String TSHIRTSIZE = "TShirtSizeInterface.getAllTShirtSize";
-    
+	private String TSHIRTSIZE = "TShirtSizeInterface.getAllTShirtSize";
+	
     /**
-     *
-     * Implementation that returns the TShirtSizeObject given a TShirtSizeObject filled with values that will be used for query from the underlying datasource.
-     *
-     * @param tshirtsize_obj	TShirtSizeObject
-     *
-     * @return      Returns the ArrayList of TShirtSizeObjects
-     *
-     * @throws AppException if the underlying operation fails
-     *
-     */
+	 *
+	 * Implementation that returns the TShirtSizeObject given a TShirtSizeObject filled with values that will be used for query from the underlying datasource.
+	 *
+	 * @param tshirtsize_obj	TShirtSizeObject
+	 *
+	 * @return      Returns the ArrayList of TShirtSizeObjects
+	 *
+	 * @throws AppException if the underlying operation fails
+	 *
+	 */
     
 	public ArrayList<TShirtSizeObject> getTShirtSizes(TShirtSizeObject tshirtsize_obj) throws AppException{
+		TShirtSizeObject[] tShirtSizeObjectArr = getAllTShirtSizes();
 		@SuppressWarnings("unchecked")
 		ArrayList<TShirtSizeObject> v = (ArrayList<TShirtSizeObject>)DBUtil.list(tshirtsize_obj,tshirtsize_obj);
-	DebugHandler.finest("v: " + v);
-	return v;
-    }
-    
-    /**
-     *
-     * Implementation of the method that returns the TShirtSizeObject from the underlying datasource.
-     * given t_shirt_size_id.
-     *
-     * @param t_shirt_size_id     int
-     *
-     * @return      Returns the TShirtSizeObject
-     *
-     * @throws AppException if the operation fails
-     *
-     */
-    
-    public TShirtSizeObject getTShirtSize(int t_shirt_size_id) throws AppException{
-	TShirtSizeObject[] tShirtSizeObjectArr = getAllTShirtSizes();
-	if ( tShirtSizeObjectArr == null )
-	    return null;
-	for ( int i = 0; i < tShirtSizeObjectArr.length; i++ ) {
-	    if ( tShirtSizeObjectArr[i] == null ) { // Try database and add to cache if found.
-		    TShirtSizeObject tshirtsizeObj = new TShirtSizeObject();
-		    tshirtsizeObj.setTShirtSizeId(t_shirt_size_id);
-		    @SuppressWarnings("unchecked")
-		    ArrayList<TShirtSizeObject> v = (ArrayList)DBUtil.fetch(tshirtsizeObj);
-		    if ( v == null || v.size() == 0 )
-			    return null;
-		    else {
-			    tShirtSizeObjectArr[i] = (TShirtSizeObject)tshirtsizeObj.clone();
-			    Util.putInCache(TSHIRTSIZE, tShirtSizeObjectArr);
-		    }
-	    }
-	    if ( tShirtSizeObjectArr[i].getTShirtSizeId() == t_shirt_size_id ) {
-		    DebugHandler.debug("Returning " + tShirtSizeObjectArr[i]);
-		    return (TShirtSizeObject)tShirtSizeObjectArr[i].clone();
-	    }
+		DebugHandler.finest("v: " + v);
+		return v;
 	}
-	return null;
-    }
-    
-    
+	
     /**
-     *
-     * Implementation that returns all the <code>TShirtSizeObjects</code> from the underlying datasource.
-     *
-     * @return      Returns an Array of <code>TShirtSizeObject</code>
-     *
-     * @throws AppException if the operation fails
-     *
-     */
+	 *
+	 * Implementation of the method that returns the TShirtSizeObject from the underlying datasource.
+	 * given t_shirt_size_id.
+	 *
+	 * @param t_shirt_size_id     int
+	 *
+	 * @return      Returns the TShirtSizeObject
+	 *
+	 * @throws AppException if the operation fails
+	 *
+	 */
     
-    public TShirtSizeObject[] getAllTShirtSizes() throws AppException{
+	public TShirtSizeObject getTShirtSize(int t_shirt_size_id) throws AppException{
+		TShirtSizeObject[] tShirtSizeObjectArr = getAllTShirtSizes();
+		if ( tShirtSizeObjectArr == null )
+			return null;
+		for ( int i = 0; i < tShirtSizeObjectArr.length; i++ ) {
+			if ( tShirtSizeObjectArr[i] == null ) { // Try database and add to cache if found.
+				TShirtSizeObject tshirtsizeObj = new TShirtSizeObject();
+				tshirtsizeObj.setTShirtSizeId(t_shirt_size_id);
+				@SuppressWarnings("unchecked")
+				ArrayList<TShirtSizeObject> v = (ArrayList)DBUtil.fetch(tshirtsizeObj);
+				if ( v == null || v.size() == 0 )
+					return null;
+				else {
+					tShirtSizeObjectArr[i] = (TShirtSizeObject)tshirtsizeObj.clone();
+					Util.putInCache(TSHIRTSIZE, tShirtSizeObjectArr);
+				}
+			}
+			if ( tShirtSizeObjectArr[i].getTShirtSizeId() == t_shirt_size_id ) {
+				DebugHandler.debug("Returning " + tShirtSizeObjectArr[i]);
+				return (TShirtSizeObject)tShirtSizeObjectArr[i].clone();
+			}
+		}
+		return null;
+	}
+    
+	
+    /**
+	 *
+	 * Implementation that returns all the <code>TShirtSizeObjects</code> from the underlying datasource.
+	 *
+	 * @return      Returns an Array of <code>TShirtSizeObject</code>
+	 *
+	 * @throws AppException if the operation fails
+	 *
+	 */
+    
+	public TShirtSizeObject[] getAllTShirtSizes() throws AppException{
 		TShirtSizeObject tShirtSizeObject = new TShirtSizeObject();
 		TShirtSizeObject[] tShirtSizeObjectArr = (TShirtSizeObject[])Util.getAppCache().get(TSHIRTSIZE);
 		if ( tShirtSizeObjectArr == null ) {
-		    DebugHandler.info("Getting tshirtsize from database");
-		    @SuppressWarnings("unchecked")
-		    ArrayList<TShirtSizeObject> v = (ArrayList)DBUtil.list(tShirtSizeObject);
-		    DebugHandler.finest(":v: " +  v);
-		    if ( v == null )
-			    return null;
-		    tShirtSizeObjectArr = new TShirtSizeObject[v.size()];
-		    for ( int idx = 0; idx < v.size(); idx++ ) {
-			    tShirtSizeObjectArr[idx] = v.get(idx);
-		    }
-		    Util.putInCache(TSHIRTSIZE, tShirtSizeObjectArr);
+			DebugHandler.info("Getting tshirtsize from database");
+			@SuppressWarnings("unchecked")
+			ArrayList<TShirtSizeObject> v = (ArrayList)DBUtil.list(tShirtSizeObject);
+			DebugHandler.finest(":v: " +  v);
+			if ( v == null )
+				return null;
+			tShirtSizeObjectArr = new TShirtSizeObject[v.size()];
+			for ( int idx = 0; idx < v.size(); idx++ ) {
+				tShirtSizeObjectArr[idx] = v.get(idx);
+			}
+			Util.putInCache(TSHIRTSIZE, tShirtSizeObjectArr);
 		}
 		return tShirtSizeObjectArr;
-    }
+	}
     
-    
+	
     /**
-     *
-     * Implementation to add the <code>TShirtSizeObject</code> to the underlying datasource.
-     *
-     * @param tShirtSizeObject     TShirtSizeObject
-     *
-     * @throws AppException if the operation fails
-     *
-     */
+	 *
+	 * Implementation to add the <code>TShirtSizeObject</code> to the underlying datasource.
+	 *
+	 * @param tShirtSizeObject     TShirtSizeObject
+	 *
+	 * @throws AppException if the operation fails
+	 *
+	 */
     
-    public Integer addTShirtSize(TShirtSizeObject tShirtSizeObject) throws AppException{
+	public Integer addTShirtSize(TShirtSizeObject tShirtSizeObject) throws AppException{
 		if ( AppConstants.DB_TYPE.equalsIgnoreCase(Constants.ORACLE) ) {
 			long l = DBUtil.getNextId("T_Shirt_Size_seq");
 			tShirtSizeObject.setTShirtSizeId((int)l);
@@ -168,16 +169,16 @@ public class TShirtSizeImpl implements TShirtSizeInterface  {
 		return i;
 	}
 	
-    
+	
     /**
-     *
-     * Implementation to update the <code>TShirtSizeObject</code> in the underlying datasource.
-     *
-     * @param tShirtSizeObject     TShirtSizeObject
-     *
-     * @throws AppException if the operation fails
-     *
-     */
+	 *
+	 * Implementation to update the <code>TShirtSizeObject</code> in the underlying datasource.
+	 *
+	 * @param tShirtSizeObject     TShirtSizeObject
+	 *
+	 * @throws AppException if the operation fails
+	 *
+	 */
     
 	public Integer updateTShirtSize(TShirtSizeObject tShirtSizeObject) throws AppException{
 		TShirtSizeObject newTShirtSizeObject = getTShirtSize(tShirtSizeObject.getTShirtSizeId()); // This call will make sure cache/db are in sync
@@ -198,18 +199,18 @@ public class TShirtSizeImpl implements TShirtSizeInterface  {
 		return i;
 	}
     
-    
+	
     /**
-     *
-     * Implementation to delete the <code>TShirtSizeObject</code> in the underlying datasource.
-     *
-     * @param tShirtSizeObject     TShirtSizeObject
-     *
-     * @throws AppException if the operation fails
-     *
-     */
+	 *
+	 * Implementation to delete the <code>TShirtSizeObject</code> in the underlying datasource.
+	 *
+	 * @param tShirtSizeObject     TShirtSizeObject
+	 *
+	 * @throws AppException if the operation fails
+	 *
+	 */
     
-    public Integer deleteTShirtSize(TShirtSizeObject tShirtSizeObject) throws AppException{
+	public Integer deleteTShirtSize(TShirtSizeObject tShirtSizeObject) throws AppException{
 	TShirtSizeObject newTShirtSizeObject = getTShirtSize(tShirtSizeObject.getTShirtSizeId()); // This call will make sure cache/db are in sync
 	TShirtSizeObject[] tShirtSizeObjectArr = getAllTShirtSizes();
 	Integer i = new Integer(0);

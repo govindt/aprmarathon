@@ -95,91 +95,91 @@ public class AgeCategoryObject implements Cloneable {
 		} catch (JSONException je) {}
 	}
     
-    
+	
     /**
-     *
-     * Sets the <code>age_category_id</code> field
-     *
-     * @param age_category_id      int
-     *
-     */
+	 *
+	 * Sets the <code>age_category_id</code> field
+	 *
+	 * @param age_category_id      int
+	 *
+	 */
     
-    public void setAgeCategoryId(int age_category_id) {
-        this.age_category_id = age_category_id;
-    }
+	public void setAgeCategoryId(int age_category_id) {
+	    this.age_category_id = age_category_id;
+	}
     
-    
+	
     /**
-     *
-     * Gets the <code>age_category_id</code> field
-     *
-     * @returns age_category_id
-     *
-     */
+	 *
+	 * Gets the <code>age_category_id</code> field
+	 *
+	 * @returns age_category_id
+	 *
+	 */
     
-    public int getAgeCategoryId() {
-        return age_category_id;
-    }
+	public int getAgeCategoryId() {
+	    return age_category_id;
+	}
 
-    
+	
     /**
-     *
-     * Sets the <code>age_category</code> field
-     *
-     * @param age_category      String
-     *
-     */
+	 *
+	 * Sets the <code>age_category</code> field
+	 *
+	 * @param age_category      String
+	 *
+	 */
     
-    public void setAgeCategory(String age_category) {
-        this.age_category = age_category;
-    }
+	public void setAgeCategory(String age_category) {
+	    this.age_category = age_category;
+	}
     
-    
+	
     /**
-     *
-     * Gets the <code>age_category</code> field
-     *
-     * @returns age_category
-     *
-     */
+	 *
+	 * Gets the <code>age_category</code> field
+	 *
+	 * @returns age_category
+	 *
+	 */
     
-    public String getAgeCategory() {
-        return age_category;
-    }
+	public String getAgeCategory() {
+	    return age_category;
+	}
 
-    
+	
     /**
-     *
-     * Tests if this object equals <code>obj</code>
-     *
-     * @returns true if equals
-     *
-     */
+	 *
+	 * Tests if this object equals <code>obj</code>
+	 *
+	 * @returns true if equals
+	 *
+	 */
     
-    public boolean equals(Object obj) {
-        AgeCategoryObject other = (AgeCategoryObject)obj;
-        DebugHandler.finest("This: " + this);
-        DebugHandler.finest("Other: " + other);
-        return
-            age_category_id == other.getAgeCategoryId() &&
-            Util.trim(age_category).equals(Util.trim(other.getAgeCategory()));
-    }
-    
+	public boolean equals(Object obj) {
+	    AgeCategoryObject other = (AgeCategoryObject)obj;
+	    DebugHandler.finest("This: " + this);
+	    DebugHandler.finest("Other: " + other);
+	    return
+	        age_category_id == other.getAgeCategoryId() &&
+	        Util.trim(age_category).equals(Util.trim(other.getAgeCategory()));
+	}
+	
     /**
-     *
-     * Clones this object
-     *
-     * @returns the clone of this object
-     *
-     */
+	 *
+	 * Clones this object
+	 *
+	 * @returns the clone of this object
+	 *
+	 */
     
-    public Object clone() {
-        Object theClone = null;
-        try {
-            theClone = super.clone();
-        } catch (CloneNotSupportedException ce) {
-            DebugHandler.severe("Cannot clone " + this);
-        }
-        return theClone;
-    }
+	public Object clone() {
+	    Object theClone = null;
+	    try {
+	   theClone = super.clone();
+	    } catch (CloneNotSupportedException ce) {
+	   DebugHandler.severe("Cannot clone " + this);
+	    }
+	    return theClone;
+	}
 }

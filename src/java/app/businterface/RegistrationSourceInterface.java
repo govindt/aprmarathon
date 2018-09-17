@@ -22,80 +22,80 @@ import app.busobj.RegistrationSourceObject;
  */
 
 public interface RegistrationSourceInterface {
-    
+	
     /**
-     *
-     * Interface that returns the RegistrationSourceObject given a RegistrationSourceObject filled with values that will be used for query from the underlying datasource.
-     *
-     * @param registrationsource_obj	RegistrationSourceObject
-     *
-     * @return      Returns the ArrayList of RegistrationSourceObjects
-     *
-     * @throws AppException if the underlying operation fails
-     *
-     */
+	 *
+	 * Interface that returns the RegistrationSourceObject given a RegistrationSourceObject filled with values that will be used for query from the underlying datasource.
+	 *
+	 * @param registrationsource_obj	RegistrationSourceObject
+	 *
+	 * @return      Returns the ArrayList of RegistrationSourceObjects
+	 *
+	 * @throws AppException if the underlying operation fails
+	 *
+	 */
     
-    public ArrayList<RegistrationSourceObject> getRegistrationSources(RegistrationSourceObject registrationsource_obj) throws AppException;
-    
+	public ArrayList<RegistrationSourceObject> getRegistrationSources(RegistrationSourceObject registrationsource_obj) throws AppException;
+	
     /**
-     *
-     * Interface that returns the RegistrationSourceObject given registration_source_id from the underlying datasource.
-     *
-     * @param registration_source_id     int
-     *
-     * @return      Returns the RegistrationSourceObject
-     *
-     * @throws AppException if the underlying operation fails
-     *
-     */
+	 *
+	 * Interface that returns the RegistrationSourceObject given registration_source_id from the underlying datasource.
+	 *
+	 * @param registration_source_id     int
+	 *
+	 * @return      Returns the RegistrationSourceObject
+	 *
+	 * @throws AppException if the underlying operation fails
+	 *
+	 */
     
-    public RegistrationSourceObject getRegistrationSource(int registration_source_id) throws AppException;
-    
+	public RegistrationSourceObject getRegistrationSource(int registration_source_id) throws AppException;
+	
     /**
-     *
-     * Interface that returns all the <code>RegistrationSourceObject</code> from the underlying datasource.
-     *
-     * @return      Returns an Array of <code>RegistrationSourceObject</code>
-     *
-     * @throws AppException if the underlying operation fails
-     *
-     */
+	 *
+	 * Interface that returns all the <code>RegistrationSourceObject</code> from the underlying datasource.
+	 *
+	 * @return      Returns an Array of <code>RegistrationSourceObject</code>
+	 *
+	 * @throws AppException if the underlying operation fails
+	 *
+	 */
     
-    public RegistrationSourceObject[] getAllRegistrationSources() throws AppException;
-    
+	public RegistrationSourceObject[] getAllRegistrationSources() throws AppException;
+	
     /**
-     *
-     * Interface to add the <code>RegistrationSourceObject</code> to the underlying datasource.
-     *
-     * @param registrationSourceObject     RegistrationSourceObject
-     *
-     * @throws AppException if the underlying operation fails
-     *
-     */
+	 *
+	 * Interface to add the <code>RegistrationSourceObject</code> to the underlying datasource.
+	 *
+	 * @param registrationSourceObject     RegistrationSourceObject
+	 *
+	 * @throws AppException if the underlying operation fails
+	 *
+	 */
     
-    public Integer addRegistrationSource(RegistrationSourceObject registrationSourceObject) throws AppException;
-    
+	public Integer addRegistrationSource(RegistrationSourceObject registrationSourceObject) throws AppException;
+	
     /**
-     *
-     * Interface to update the <code>RegistrationSourceObject</code> in the underlying datasource.
-     *
-     * @param registrationSourceObject     RegistrationSourceObject
-     *
-     * @throws AppException if the underlying operation fails
-     *
-     */
+	 *
+	 * Interface to update the <code>RegistrationSourceObject</code> in the underlying datasource.
+	 *
+	 * @param registrationSourceObject     RegistrationSourceObject
+	 *
+	 * @throws AppException if the underlying operation fails
+	 *
+	 */
     
-    public Integer updateRegistrationSource(RegistrationSourceObject registrationSourceObject) throws AppException;
-    
+	public Integer updateRegistrationSource(RegistrationSourceObject registrationSourceObject) throws AppException;
+	
     /**
-     *
-     * Interface to delete the <code>RegistrationSourceObject</code> in the underlying datasource.
-     *
-     * @param registrationSourceObject     RegistrationSourceObject
-     *
-     * @throws AppException if the underlying operation fails
-     *
-     */
+	 *
+	 * Interface to delete the <code>RegistrationSourceObject</code> in the underlying datasource.
+	 *
+	 * @param registrationSourceObject     RegistrationSourceObject
+	 *
+	 * @throws AppException if the underlying operation fails
+	 *
+	 */
     
-    public Integer deleteRegistrationSource(RegistrationSourceObject registrationSourceObject) throws AppException;
+	public Integer deleteRegistrationSource(RegistrationSourceObject registrationSourceObject) throws AppException;
 }
