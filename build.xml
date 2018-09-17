@@ -304,6 +304,7 @@
 		</delete>
 		<delete dir="${deploy.bindir}/tokens"/>
 	</target>
+	<!-- NOTE: *****Do not clean-deploy as it will remove auth tokens ****-->
 	<target name="clean" depends="clean-classes,clean-bin,clean-images,clean-css,clean-js,clean-jsps">
 	</target>
 </project>
