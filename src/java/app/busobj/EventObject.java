@@ -109,7 +109,7 @@ public class EventObject implements Cloneable {
 	public EventObject (JSONObject jObject) {
 		try {
 			event_id = jObject.getInt("event_id");
-		} catch (JSONException je) {event_id = 0;}
+		} catch (JSONException je) {}
 		try {
 			event_name = jObject.getString("event_name");
 		} catch (JSONException je) {event_name = "";}
@@ -120,7 +120,7 @@ public class EventObject implements Cloneable {
 			} catch (ParseException e) {event_start_date = new Date();
 				e.printStackTrace();
 			}
-		} catch (JSONException je) {event_start_date = new Date();}
+		} catch (JSONException je) {}
 		try {
 			try {
 				SimpleDateFormat dateFormatter = new SimpleDateFormat(Constants.DATE_FORMAT_STR);
@@ -128,7 +128,7 @@ public class EventObject implements Cloneable {
 			} catch (ParseException e) {event_end_date = new Date();
 				e.printStackTrace();
 			}
-		} catch (JSONException je) {event_end_date = new Date();}
+		} catch (JSONException je) {}
 		try {
 			event_description = jObject.getString("event_description");
 		} catch (JSONException je) {event_description = "";}
@@ -139,7 +139,7 @@ public class EventObject implements Cloneable {
 			} catch (ParseException e) {event_registation_close_date = new Date();
 				e.printStackTrace();
 			}
-		} catch (JSONException je) {event_registation_close_date = new Date();}
+		} catch (JSONException je) {}
 		try {
 			try {
 				SimpleDateFormat dateFormatter = new SimpleDateFormat(Constants.DATE_FORMAT_STR);
@@ -147,7 +147,7 @@ public class EventObject implements Cloneable {
 			} catch (ParseException e) {event_changes_close_date = new Date();
 				e.printStackTrace();
 			}
-		} catch (JSONException je) {event_changes_close_date = new Date();}
+		} catch (JSONException je) {}
 	}
     
 	

@@ -93,13 +93,13 @@ public class TShirtSizeObject implements Cloneable {
 	public TShirtSizeObject (JSONObject jObject) {
 		try {
 			t_shirt_size_id = jObject.getInt("t_shirt_size_id");
-		} catch (JSONException je) {t_shirt_size_id = 0;}
+		} catch (JSONException je) {}
 		try {
 			t_shirt_size_name = jObject.getString("t_shirt_size_name");
 		} catch (JSONException je) {t_shirt_size_name = "";}
 		try {
 			t_shirt_gender = jObject.getInt("t_shirt_gender");
-		} catch (JSONException je) {t_shirt_gender = 0;}
+		} catch (JSONException je) {}
 	}
     
 	

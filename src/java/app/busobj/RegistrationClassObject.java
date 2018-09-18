@@ -105,26 +105,26 @@ public class RegistrationClassObject implements Cloneable {
 	public RegistrationClassObject (JSONObject jObject) {
 		try {
 			registration_class_id = jObject.getInt("registration_class_id");
-		} catch (JSONException je) {registration_class_id = 0;}
+		} catch (JSONException je) {}
 		try {
 			registration_class_name = jObject.getString("registration_class_name");
 		} catch (JSONException je) {registration_class_name = "";}
 		try {
 			registration_type = jObject.getInt("registration_type");
-		} catch (JSONException je) {registration_type = 0;}
+		} catch (JSONException je) {}
 		try {
 			registration_event = jObject.getInt("registration_event");
-		} catch (JSONException je) {registration_event = 0;}
+		} catch (JSONException je) {}
 		try {
 			try {
 				registration_class_value = Double.parseDouble(jObject.getString("registration_class_value"));
 			} catch (NumberFormatException e) {
 				e.printStackTrace();
 			}
-		} catch (JSONException je) {registration_class_value = 0.0;}
+		} catch (JSONException je) {}
 		try {
 			registration_free_tickets = jObject.getInt("registration_free_tickets");
-		} catch (JSONException je) {registration_free_tickets = 0;}
+		} catch (JSONException je) {}
 	}
     
 	

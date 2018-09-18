@@ -129,7 +129,7 @@ public class ParticipantObject implements Cloneable {
 	public ParticipantObject (JSONObject jObject) {
 		try {
 			participant_id = jObject.getInt("participant_id");
-		} catch (JSONException je) {participant_id = 0;}
+		} catch (JSONException je) {}
 		try {
 			participant_first_name = jObject.getString("participant_first_name");
 		} catch (JSONException je) {participant_first_name = "";}
@@ -141,7 +141,7 @@ public class ParticipantObject implements Cloneable {
 		} catch (JSONException je) {participant_last_name = "";}
 		try {
 			participant_gender = jObject.getInt("participant_gender");
-		} catch (JSONException je) {participant_gender = 0;}
+		} catch (JSONException je) {}
 		try {
 			try {
 				SimpleDateFormat dateFormatter = new SimpleDateFormat(Constants.DATE_FORMAT_STR);
@@ -149,16 +149,16 @@ public class ParticipantObject implements Cloneable {
 			} catch (ParseException e) {participant_date_of_birth = new Date();
 				e.printStackTrace();
 			}
-		} catch (JSONException je) {participant_date_of_birth = new Date();}
+		} catch (JSONException je) {}
 		try {
 			participant_age_category = jObject.getInt("participant_age_category");
-		} catch (JSONException je) {participant_age_category = 0;}
+		} catch (JSONException je) {}
 		try {
 			participant_t_shirt_size = jObject.getInt("participant_t_shirt_size");
-		} catch (JSONException je) {participant_t_shirt_size = 0;}
+		} catch (JSONException je) {}
 		try {
 			participant_blood_group = jObject.getInt("participant_blood_group");
-		} catch (JSONException je) {participant_blood_group = 0;}
+		} catch (JSONException je) {}
 		try {
 			participant_cell_phone = jObject.getString("participant_cell_phone");
 		} catch (JSONException je) {participant_cell_phone = "";}
@@ -167,7 +167,7 @@ public class ParticipantObject implements Cloneable {
 		} catch (JSONException je) {participant_email = "";}
 		try {
 			participant_group = jObject.getInt("participant_group");
-		} catch (JSONException je) {participant_group = 0;}
+		} catch (JSONException je) {}
 	}
     
 	

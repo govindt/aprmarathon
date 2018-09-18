@@ -89,7 +89,7 @@ public class GenderObject implements Cloneable {
 	public GenderObject (JSONObject jObject) {
 		try {
 			gender_id = jObject.getInt("gender_id");
-		} catch (JSONException je) {gender_id = 0;}
+		} catch (JSONException je) {}
 		try {
 			gender_name = jObject.getString("gender_name");
 		} catch (JSONException je) {gender_name = "";}

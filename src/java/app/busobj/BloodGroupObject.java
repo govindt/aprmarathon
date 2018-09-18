@@ -89,7 +89,7 @@ public class BloodGroupObject implements Cloneable {
 	public BloodGroupObject (JSONObject jObject) {
 		try {
 			blood_group_id = jObject.getInt("blood_group_id");
-		} catch (JSONException je) {blood_group_id = 0;}
+		} catch (JSONException je) {}
 		try {
 			blood_group_name = jObject.getString("blood_group_name");
 		} catch (JSONException je) {blood_group_name = "";}
