@@ -93,13 +93,13 @@ public class MedalObject implements Cloneable {
 	public MedalObject (JSONObject jObject) {
 		try {
 			medal_id = jObject.getInt("medal_id");
-		} catch (JSONException je) {medal_id = 0;}
+		} catch (JSONException je) {}
 		try {
 			medal_name = jObject.getString("medal_name");
 		} catch (JSONException je) {medal_name = "";}
 		try {
 			medal_rank = jObject.getInt("medal_rank");
-		} catch (JSONException je) {medal_rank = 0;}
+		} catch (JSONException je) {}
 	}
     
 	

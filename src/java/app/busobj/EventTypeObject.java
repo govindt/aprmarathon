@@ -113,13 +113,13 @@ public class EventTypeObject implements Cloneable {
 	public EventTypeObject (JSONObject jObject) {
 		try {
 			event_type_id = jObject.getInt("event_type_id");
-		} catch (JSONException je) {event_type_id = 0;}
+		} catch (JSONException je) {}
 		try {
 			event_type_name = jObject.getString("event_type_name");
 		} catch (JSONException je) {event_type_name = "";}
 		try {
 			event = jObject.getInt("event");
-		} catch (JSONException je) {event = 0;}
+		} catch (JSONException je) {}
 		try {
 			event_type_description = jObject.getString("event_type_description");
 		} catch (JSONException je) {event_type_description = "";}
@@ -130,7 +130,7 @@ public class EventTypeObject implements Cloneable {
 			} catch (ParseException e) {event_type_start_date = new Date();
 				e.printStackTrace();
 			}
-		} catch (JSONException je) {event_type_start_date = new Date();}
+		} catch (JSONException je) {}
 		try {
 			try {
 				SimpleDateFormat dateFormatter = new SimpleDateFormat(Constants.DATE_FORMAT_STR);
@@ -138,7 +138,7 @@ public class EventTypeObject implements Cloneable {
 			} catch (ParseException e) {event_type_end_date = new Date();
 				e.printStackTrace();
 			}
-		} catch (JSONException je) {event_type_end_date = new Date();}
+		} catch (JSONException je) {}
 		try {
 			event_type_venue = jObject.getString("event_type_venue");
 		} catch (JSONException je) {event_type_venue = "";}

@@ -89,7 +89,7 @@ public class RegistrationSourceObject implements Cloneable {
 	public RegistrationSourceObject (JSONObject jObject) {
 		try {
 			registration_source_id = jObject.getInt("registration_source_id");
-		} catch (JSONException je) {registration_source_id = 0;}
+		} catch (JSONException je) {}
 		try {
 			registration_source_name = jObject.getString("registration_source_name");
 		} catch (JSONException je) {registration_source_name = "";}

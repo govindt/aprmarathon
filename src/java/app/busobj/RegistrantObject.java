@@ -129,7 +129,7 @@ public class RegistrantObject implements Cloneable {
 	public RegistrantObject (JSONObject jObject) {
 		try {
 			registrant_id = jObject.getInt("registrant_id");
-		} catch (JSONException je) {registrant_id = 0;}
+		} catch (JSONException je) {}
 		try {
 			registrant_name = jObject.getString("registrant_name");
 		} catch (JSONException je) {registrant_name = "";}

@@ -89,7 +89,7 @@ public class PaymentTypeObject implements Cloneable {
 	public PaymentTypeObject (JSONObject jObject) {
 		try {
 			payment_type_id = jObject.getInt("payment_type_id");
-		} catch (JSONException je) {payment_type_id = 0;}
+		} catch (JSONException je) {}
 		try {
 			payment_type_name = jObject.getString("payment_type_name");
 		} catch (JSONException je) {payment_type_name = "";}

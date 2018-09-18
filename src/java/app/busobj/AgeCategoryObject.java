@@ -89,7 +89,7 @@ public class AgeCategoryObject implements Cloneable {
 	public AgeCategoryObject (JSONObject jObject) {
 		try {
 			age_category_id = jObject.getInt("age_category_id");
-		} catch (JSONException je) {age_category_id = 0;}
+		} catch (JSONException je) {}
 		try {
 			age_category = jObject.getString("age_category");
 		} catch (JSONException je) {age_category = "";}

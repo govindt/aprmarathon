@@ -997,7 +997,7 @@ ${NAWK} -v QUOTE="'" -v logname=${LOGNAME} -v version=1.0 -v since=1.0 -v proj_n
 
 	  if (field_types[j]  == "int" ) { 
 		printf("\t\t\t%s = jObject.getInt(\"%s\");\n", field_names[j], field_names[j])>>file_name;
-		printf("\t\t} catch (JSONException je) {%s = 0;}\n", field_names[j]) >> file_name;  
+		printf("\t\t} catch (JSONException je) {}\n", field_names[j]) >> file_name;  
 	  }
 	  else if ( field_types[j] == "String" ) {
 		printf("\t\t\t%s = jObject.getString(\"%s\");\n", field_names[j], field_names[j])>>file_name;
@@ -1010,7 +1010,7 @@ ${NAWK} -v QUOTE="'" -v logname=${LOGNAME} -v version=1.0 -v since=1.0 -v proj_n
 		printf("\t\t\t} catch (ParseException e) {%s = new Date();\n", field_names[j])>>file_name;
 		printf("\t\t\t\te.printStackTrace();\n")>>file_name;
 		printf("\t\t\t}\n")>>file_name;
-		printf("\t\t} catch (JSONException je) {%s = new Date();}\n", field_names[j]) >> file_name;
+		printf("\t\t} catch (JSONException je) {}\n", field_names[j]) >> file_name;
 	  }
 	  else if ( field_types[j] == "double" ) {
 		printf("\t\t\ttry {\n")>>file_name;
@@ -1018,7 +1018,7 @@ ${NAWK} -v QUOTE="'" -v logname=${LOGNAME} -v version=1.0 -v since=1.0 -v proj_n
 		printf("\t\t\t} catch (NumberFormatException e) {\n")>>file_name;
 		printf("\t\t\t\te.printStackTrace();\n")>>file_name;
 		printf("\t\t\t}\n")>>file_name;
-		printf("\t\t} catch (JSONException je) {%s = 0.0;}\n", field_names[j]) >> file_name;
+		printf("\t\t} catch (JSONException je) {}\n", field_names[j]) >> file_name;
 	  }
 	  else if ( field_types[j] == "float" ) {
 		printf("\t\t\ttry {\n")>>file_name;
@@ -1026,7 +1026,7 @@ ${NAWK} -v QUOTE="'" -v logname=${LOGNAME} -v version=1.0 -v since=1.0 -v proj_n
 		printf("\t\t\t} catch (NumberFormatException e) {\n")>>file_name;
 		printf("\t\t\t\te.printStackTrace();\n")>>file_name;
 		printf("\t\t\t}\n")>>file_name;
-		printf("\t\t} catch (JSONException je) {%s = 0.0;}\n", field_names[j]) >> file_name;
+		printf("\t\t} catch (JSONException je) {}\n", field_names[j]) >> file_name;
 	  }
 	  
 	}

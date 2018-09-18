@@ -117,25 +117,25 @@ public class RegistrantEventObject implements Cloneable {
 	public RegistrantEventObject (JSONObject jObject) {
 		try {
 			registrant_event_id = jObject.getInt("registrant_event_id");
-		} catch (JSONException je) {registrant_event_id = 0;}
+		} catch (JSONException je) {}
 		try {
 			registrant_id = jObject.getInt("registrant_id");
-		} catch (JSONException je) {registrant_id = 0;}
+		} catch (JSONException je) {}
 		try {
 			registrant_event = jObject.getInt("registrant_event");
-		} catch (JSONException je) {registrant_event = 0;}
+		} catch (JSONException je) {}
 		try {
 			registrant_type = jObject.getInt("registrant_type");
-		} catch (JSONException je) {registrant_type = 0;}
+		} catch (JSONException je) {}
 		try {
 			registrant_source = jObject.getInt("registrant_source");
-		} catch (JSONException je) {registrant_source = 0;}
+		} catch (JSONException je) {}
 		try {
 			registrant_class = jObject.getInt("registrant_class");
-		} catch (JSONException je) {registrant_class = 0;}
+		} catch (JSONException je) {}
 		try {
 			registrant_beneficiary = jObject.getInt("registrant_beneficiary");
-		} catch (JSONException je) {registrant_beneficiary = 0;}
+		} catch (JSONException je) {}
 		try {
 			registrant_emergency_contact = jObject.getString("registrant_emergency_contact");
 		} catch (JSONException je) {registrant_emergency_contact = "";}

@@ -113,22 +113,22 @@ public class ResultObject implements Cloneable {
 	public ResultObject (JSONObject jObject) {
 		try {
 			result_id = jObject.getInt("result_id");
-		} catch (JSONException je) {result_id = 0;}
+		} catch (JSONException je) {}
 		try {
 			result_event = jObject.getInt("result_event");
-		} catch (JSONException je) {result_event = 0;}
+		} catch (JSONException je) {}
 		try {
 			result_event_type = jObject.getInt("result_event_type");
-		} catch (JSONException je) {result_event_type = 0;}
+		} catch (JSONException je) {}
 		try {
 			result_medal = jObject.getInt("result_medal");
-		} catch (JSONException je) {result_medal = 0;}
+		} catch (JSONException je) {}
 		try {
 			result_winner = jObject.getInt("result_winner");
-		} catch (JSONException je) {result_winner = 0;}
+		} catch (JSONException je) {}
 		try {
 			result_winner_registrant = jObject.getInt("result_winner_registrant");
-		} catch (JSONException je) {result_winner_registrant = 0;}
+		} catch (JSONException je) {}
 		try {
 			result_score = jObject.getString("result_score");
 		} catch (JSONException je) {result_score = "";}
@@ -139,7 +139,7 @@ public class ResultObject implements Cloneable {
 			} catch (ParseException e) {result_timing = new Date();
 				e.printStackTrace();
 			}
-		} catch (JSONException je) {result_timing = new Date();}
+		} catch (JSONException je) {}
 	}
     
 	
