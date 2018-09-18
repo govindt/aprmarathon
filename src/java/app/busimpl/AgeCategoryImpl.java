@@ -42,10 +42,22 @@ public class AgeCategoryImpl implements AgeCategoryInterface  {
 	 */
     
 	public ArrayList<AgeCategoryObject> getAgeCategorys(AgeCategoryObject agecategory_obj) throws AppException{
-		@SuppressWarnings("unchecked")
-		ArrayList<AgeCategoryObject> v = (ArrayList<AgeCategoryObject>)DBUtil.list(agecategory_obj,agecategory_obj);
-		DebugHandler.finest("v: " + v);
-		return v;
+		AgeCategoryObject[] ageCategoryObjectArr = getAllAgeCategorys();
+		if ( agecategory_obj.getAgeCategoryId() == Constants.GET_ALL ) {
+			if ( ageCategoryObjectArr == null )
+				return null;
+			ArrayList<AgeCategoryObject> v = new ArrayList<AgeCategoryObject>();
+			for ( int i = 0; i < ageCategoryObjectArr.length; i++ ) {
+				v.add((AgeCategoryObject)ageCategoryObjectArr[i].clone());
+			}
+			return v;
+		}
+		else {
+			@SuppressWarnings("unchecked")
+			ArrayList<AgeCategoryObject> v = (ArrayList<AgeCategoryObject>)DBUtil.list(agecategory_obj,agecategory_obj);
+			DebugHandler.finest("v: " + v);
+			return v;
+		}
 	}
 	
     /**

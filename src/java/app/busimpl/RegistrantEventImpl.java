@@ -42,10 +42,22 @@ public class RegistrantEventImpl implements RegistrantEventInterface  {
 	 */
     
 	public ArrayList<RegistrantEventObject> getRegistrantEvents(RegistrantEventObject registrantevent_obj) throws AppException{
-		@SuppressWarnings("unchecked")
-		ArrayList<RegistrantEventObject> v = (ArrayList<RegistrantEventObject>)DBUtil.list(registrantevent_obj,registrantevent_obj);
-		DebugHandler.finest("v: " + v);
-		return v;
+		RegistrantEventObject[] registrantEventObjectArr = getAllRegistrantEvents();
+		if ( registrantevent_obj.getRegistrantEventId() == Constants.GET_ALL ) {
+			if ( registrantEventObjectArr == null )
+				return null;
+			ArrayList<RegistrantEventObject> v = new ArrayList<RegistrantEventObject>();
+			for ( int i = 0; i < registrantEventObjectArr.length; i++ ) {
+				v.add((RegistrantEventObject)registrantEventObjectArr[i].clone());
+			}
+			return v;
+		}
+		else {
+			@SuppressWarnings("unchecked")
+			ArrayList<RegistrantEventObject> v = (ArrayList<RegistrantEventObject>)DBUtil.list(registrantevent_obj,registrantevent_obj);
+			DebugHandler.finest("v: " + v);
+			return v;
+		}
 	}
 	
     /**

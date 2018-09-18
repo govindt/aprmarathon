@@ -42,10 +42,22 @@ public class PaymentStatusImpl implements PaymentStatusInterface  {
 	 */
     
 	public ArrayList<PaymentStatusObject> getPaymentStatus(PaymentStatusObject paymentstatus_obj) throws AppException{
-		@SuppressWarnings("unchecked")
-		ArrayList<PaymentStatusObject> v = (ArrayList<PaymentStatusObject>)DBUtil.list(paymentstatus_obj,paymentstatus_obj);
-		DebugHandler.finest("v: " + v);
-		return v;
+		PaymentStatusObject[] paymentStatusObjectArr = getAllPaymentStatus();
+		if ( paymentstatus_obj.getPaymentStatusId() == Constants.GET_ALL ) {
+			if ( paymentStatusObjectArr == null )
+				return null;
+			ArrayList<PaymentStatusObject> v = new ArrayList<PaymentStatusObject>();
+			for ( int i = 0; i < paymentStatusObjectArr.length; i++ ) {
+				v.add((PaymentStatusObject)paymentStatusObjectArr[i].clone());
+			}
+			return v;
+		}
+		else {
+			@SuppressWarnings("unchecked")
+			ArrayList<PaymentStatusObject> v = (ArrayList<PaymentStatusObject>)DBUtil.list(paymentstatus_obj,paymentstatus_obj);
+			DebugHandler.finest("v: " + v);
+			return v;
+		}
 	}
 	
     /**

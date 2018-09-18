@@ -42,10 +42,22 @@ public class ResultImpl implements ResultInterface  {
 	 */
     
 	public ArrayList<ResultObject> getResults(ResultObject result_obj) throws AppException{
-		@SuppressWarnings("unchecked")
-		ArrayList<ResultObject> v = (ArrayList<ResultObject>)DBUtil.list(result_obj,result_obj);
-		DebugHandler.finest("v: " + v);
-		return v;
+		ResultObject[] resultObjectArr = getAllResults();
+		if ( result_obj.getResultId() == Constants.GET_ALL ) {
+			if ( resultObjectArr == null )
+				return null;
+			ArrayList<ResultObject> v = new ArrayList<ResultObject>();
+			for ( int i = 0; i < resultObjectArr.length; i++ ) {
+				v.add((ResultObject)resultObjectArr[i].clone());
+			}
+			return v;
+		}
+		else {
+			@SuppressWarnings("unchecked")
+			ArrayList<ResultObject> v = (ArrayList<ResultObject>)DBUtil.list(result_obj,result_obj);
+			DebugHandler.finest("v: " + v);
+			return v;
+		}
 	}
 	
     /**

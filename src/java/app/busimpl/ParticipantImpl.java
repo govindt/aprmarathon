@@ -42,10 +42,22 @@ public class ParticipantImpl implements ParticipantInterface  {
 	 */
     
 	public ArrayList<ParticipantObject> getParticipants(ParticipantObject participant_obj) throws AppException{
-		@SuppressWarnings("unchecked")
-		ArrayList<ParticipantObject> v = (ArrayList<ParticipantObject>)DBUtil.list(participant_obj,participant_obj);
-		DebugHandler.finest("v: " + v);
-		return v;
+		ParticipantObject[] participantObjectArr = getAllParticipants();
+		if ( participant_obj.getParticipantId() == Constants.GET_ALL ) {
+			if ( participantObjectArr == null )
+				return null;
+			ArrayList<ParticipantObject> v = new ArrayList<ParticipantObject>();
+			for ( int i = 0; i < participantObjectArr.length; i++ ) {
+				v.add((ParticipantObject)participantObjectArr[i].clone());
+			}
+			return v;
+		}
+		else {
+			@SuppressWarnings("unchecked")
+			ArrayList<ParticipantObject> v = (ArrayList<ParticipantObject>)DBUtil.list(participant_obj,participant_obj);
+			DebugHandler.finest("v: " + v);
+			return v;
+		}
 	}
 	
     /**

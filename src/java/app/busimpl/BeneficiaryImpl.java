@@ -42,10 +42,22 @@ public class BeneficiaryImpl implements BeneficiaryInterface  {
 	 */
     
 	public ArrayList<BeneficiaryObject> getBeneficiarys(BeneficiaryObject beneficiary_obj) throws AppException{
-		@SuppressWarnings("unchecked")
-		ArrayList<BeneficiaryObject> v = (ArrayList<BeneficiaryObject>)DBUtil.list(beneficiary_obj,beneficiary_obj);
-		DebugHandler.finest("v: " + v);
-		return v;
+		BeneficiaryObject[] beneficiaryObjectArr = getAllBeneficiarys();
+		if ( beneficiary_obj.getBeneficiaryId() == Constants.GET_ALL ) {
+			if ( beneficiaryObjectArr == null )
+				return null;
+			ArrayList<BeneficiaryObject> v = new ArrayList<BeneficiaryObject>();
+			for ( int i = 0; i < beneficiaryObjectArr.length; i++ ) {
+				v.add((BeneficiaryObject)beneficiaryObjectArr[i].clone());
+			}
+			return v;
+		}
+		else {
+			@SuppressWarnings("unchecked")
+			ArrayList<BeneficiaryObject> v = (ArrayList<BeneficiaryObject>)DBUtil.list(beneficiary_obj,beneficiary_obj);
+			DebugHandler.finest("v: " + v);
+			return v;
+		}
 	}
 	
     /**

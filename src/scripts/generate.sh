@@ -1179,13 +1179,23 @@ ${NAWK} -v QUOTE="'" -v logname=${LOGNAME} -v version=1.0 -v since=1.0 -v proj_n
 	# End get Method Comments
 	if (last_char == "s") {
 	    printf("\tpublic ArrayList<%sObject> get%s(%sObject %s_obj) throws AppException{\n", tmp_file_name, tmp_file_name, tmp_file_name, tolower(tmp_file_name)) >> impl_file_name;
-	    #printf("\t\t%sObject[] %sArr = getAll%s();\n",tmp_file_name, tmp, tmp_file_name) >> impl_file_name;
+	    printf("\t\t%sObject[] %sArr = getAll%s();\n",tmp_file_name, tmp, tmp_file_name) >> impl_file_name;
 	} else {
 	    printf("\tpublic ArrayList<%sObject> get%ss(%sObject %s_obj) throws AppException{\n", tmp_file_name, tmp_file_name, tmp_file_name, tolower(tmp_file_name)) >> impl_file_name;
-	    #printf("\t\t%sObject[] %sArr = getAll%ss();\n",tmp_file_name, tmp, tmp_file_name) >> impl_file_name;
+	    printf("\t\t%sObject[] %sArr = getAll%ss();\n",tmp_file_name, tmp, tmp_file_name) >> impl_file_name;
 	}
-	printf("\t\t@SuppressWarnings(\"unchecked\")\n") >> impl_file_name;
-	printf("\t\tArrayList<%sObject> v = (ArrayList<%sObject>)DBUtil.list(%s_obj,%s_obj);\n", tmp_file_name, tmp_file_name, tolower(tmp_file_name), tolower(tmp_file_name)) >> impl_file_name;
+	printf("\t\tif ( %s_obj.get%s() == Constants.GET_ALL ) {\n", tolower(tmp_file_name), new_field_names[1]) >> impl_file_name;
+	printf("\t\t\tif ( %sArr == null )\n", tmp) >> impl_file_name;
+	printf("\t\t\t\treturn null;\n") >> impl_file_name;
+	printf("\t\t\tArrayList<%sObject> v = new ArrayList<%sObject>();\n",tmp_file_name, tmp_file_name) >> impl_file_name;
+	printf("\t\t\tfor ( int i = 0; i < %sArr.length; i++ ) {\n", tmp) >> impl_file_name;
+	printf("\t\t\t\tv.add((%sObject)%sArr[i].clone());\n", tmp_file_name, tmp)>>impl_file_name;
+	printf("\t\t\t}\n") >> impl_file_name;
+	printf("\t\t\treturn v;\n", tmp) >> impl_file_name;
+	printf("\t\t}\n", tmp) >> impl_file_name;
+	printf("\t\telse {\n") >> impl_file_name;
+	printf("\t\t\t@SuppressWarnings(\"unchecked\")\n") >> impl_file_name;
+	printf("\t\t\tArrayList<%sObject> v = (ArrayList<%sObject>)DBUtil.list(%s_obj,%s_obj);\n", tmp_file_name, tmp_file_name, tolower(tmp_file_name), tolower(tmp_file_name)) >> impl_file_name;
 	#printf("\t\tArrayList<%sObject> v = new ArrayList<%sObject>();\n",tmp_file_name, tmp_file_name) >> impl_file_name;
 	#printf("\tif ( %sArr == null )\n", tmp) >> impl_file_name;
 	#printf("\t\treturn null;\n") >> impl_file_name;
@@ -1216,8 +1226,9 @@ ${NAWK} -v QUOTE="'" -v logname=${LOGNAME} -v version=1.0 -v since=1.0 -v proj_n
 	#printf("\t\t\t}\n")>> impl_file_name;
 	#printf("\t\t}\n")>> impl_file_name;
 	#printf("\t}\n")>> impl_file_name;
-	printf("\t\tDebugHandler.finest(\"v: \" + v);\n",tmp_file_name, tolower(tmp_file_name), tmp_file_name) >> impl_file_name;
-	printf("\t\treturn v;\n",tmp_file_name, tolower(tmp_file_name), tmp_file_name) >> impl_file_name;
+	printf("\t\t\tDebugHandler.finest(\"v: \" + v);\n",tmp_file_name, tolower(tmp_file_name), tmp_file_name) >> impl_file_name;
+	printf("\t\t\treturn v;\n",tmp_file_name, tolower(tmp_file_name), tmp_file_name) >> impl_file_name;
+	printf("\t\t}\n") >> impl_file_name;
 	printf("\t}\n",tmp_file_name, tolower(tmp_file_name), tmp_file_name) >> impl_file_name;
 
 	for ( j = 1; j <= i; ++j ) {

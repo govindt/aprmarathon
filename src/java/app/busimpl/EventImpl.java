@@ -42,10 +42,22 @@ public class EventImpl implements EventInterface  {
 	 */
     
 	public ArrayList<EventObject> getEvents(EventObject event_obj) throws AppException{
-		@SuppressWarnings("unchecked")
-		ArrayList<EventObject> v = (ArrayList<EventObject>)DBUtil.list(event_obj,event_obj);
-		DebugHandler.finest("v: " + v);
-		return v;
+		EventObject[] eventObjectArr = getAllEvents();
+		if ( event_obj.getEventId() == Constants.GET_ALL ) {
+			if ( eventObjectArr == null )
+				return null;
+			ArrayList<EventObject> v = new ArrayList<EventObject>();
+			for ( int i = 0; i < eventObjectArr.length; i++ ) {
+				v.add((EventObject)eventObjectArr[i].clone());
+			}
+			return v;
+		}
+		else {
+			@SuppressWarnings("unchecked")
+			ArrayList<EventObject> v = (ArrayList<EventObject>)DBUtil.list(event_obj,event_obj);
+			DebugHandler.finest("v: " + v);
+			return v;
+		}
 	}
 	
     /**

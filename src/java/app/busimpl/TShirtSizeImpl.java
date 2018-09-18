@@ -42,10 +42,22 @@ public class TShirtSizeImpl implements TShirtSizeInterface  {
 	 */
     
 	public ArrayList<TShirtSizeObject> getTShirtSizes(TShirtSizeObject tshirtsize_obj) throws AppException{
-		@SuppressWarnings("unchecked")
-		ArrayList<TShirtSizeObject> v = (ArrayList<TShirtSizeObject>)DBUtil.list(tshirtsize_obj,tshirtsize_obj);
-		DebugHandler.finest("v: " + v);
-		return v;
+		TShirtSizeObject[] tShirtSizeObjectArr = getAllTShirtSizes();
+		if ( tshirtsize_obj.getTShirtSizeId() == Constants.GET_ALL ) {
+			if ( tShirtSizeObjectArr == null )
+				return null;
+			ArrayList<TShirtSizeObject> v = new ArrayList<TShirtSizeObject>();
+			for ( int i = 0; i < tShirtSizeObjectArr.length; i++ ) {
+				v.add((TShirtSizeObject)tShirtSizeObjectArr[i].clone());
+			}
+			return v;
+		}
+		else {
+			@SuppressWarnings("unchecked")
+			ArrayList<TShirtSizeObject> v = (ArrayList<TShirtSizeObject>)DBUtil.list(tshirtsize_obj,tshirtsize_obj);
+			DebugHandler.finest("v: " + v);
+			return v;
+		}
 	}
 	
     /**
