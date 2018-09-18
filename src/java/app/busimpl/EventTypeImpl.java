@@ -42,10 +42,22 @@ public class EventTypeImpl implements EventTypeInterface  {
 	 */
     
 	public ArrayList<EventTypeObject> getEventTypes(EventTypeObject eventtype_obj) throws AppException{
-		@SuppressWarnings("unchecked")
-		ArrayList<EventTypeObject> v = (ArrayList<EventTypeObject>)DBUtil.list(eventtype_obj,eventtype_obj);
-		DebugHandler.finest("v: " + v);
-		return v;
+		EventTypeObject[] eventTypeObjectArr = getAllEventTypes();
+		if ( eventtype_obj.getEventTypeId() == Constants.GET_ALL ) {
+			if ( eventTypeObjectArr == null )
+				return null;
+			ArrayList<EventTypeObject> v = new ArrayList<EventTypeObject>();
+			for ( int i = 0; i < eventTypeObjectArr.length; i++ ) {
+				v.add((EventTypeObject)eventTypeObjectArr[i].clone());
+			}
+			return v;
+		}
+		else {
+			@SuppressWarnings("unchecked")
+			ArrayList<EventTypeObject> v = (ArrayList<EventTypeObject>)DBUtil.list(eventtype_obj,eventtype_obj);
+			DebugHandler.finest("v: " + v);
+			return v;
+		}
 	}
 	
     /**

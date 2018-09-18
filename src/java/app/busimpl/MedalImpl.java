@@ -42,10 +42,22 @@ public class MedalImpl implements MedalInterface  {
 	 */
     
 	public ArrayList<MedalObject> getMedals(MedalObject medal_obj) throws AppException{
-		@SuppressWarnings("unchecked")
-		ArrayList<MedalObject> v = (ArrayList<MedalObject>)DBUtil.list(medal_obj,medal_obj);
-		DebugHandler.finest("v: " + v);
-		return v;
+		MedalObject[] medalObjectArr = getAllMedals();
+		if ( medal_obj.getMedalId() == Constants.GET_ALL ) {
+			if ( medalObjectArr == null )
+				return null;
+			ArrayList<MedalObject> v = new ArrayList<MedalObject>();
+			for ( int i = 0; i < medalObjectArr.length; i++ ) {
+				v.add((MedalObject)medalObjectArr[i].clone());
+			}
+			return v;
+		}
+		else {
+			@SuppressWarnings("unchecked")
+			ArrayList<MedalObject> v = (ArrayList<MedalObject>)DBUtil.list(medal_obj,medal_obj);
+			DebugHandler.finest("v: " + v);
+			return v;
+		}
 	}
 	
     /**

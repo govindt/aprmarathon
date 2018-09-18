@@ -42,10 +42,22 @@ public class RegistrationTypeImpl implements RegistrationTypeInterface  {
 	 */
     
 	public ArrayList<RegistrationTypeObject> getRegistrationTypes(RegistrationTypeObject registrationtype_obj) throws AppException{
-		@SuppressWarnings("unchecked")
-		ArrayList<RegistrationTypeObject> v = (ArrayList<RegistrationTypeObject>)DBUtil.list(registrationtype_obj,registrationtype_obj);
-		DebugHandler.finest("v: " + v);
-		return v;
+		RegistrationTypeObject[] registrationTypeObjectArr = getAllRegistrationTypes();
+		if ( registrationtype_obj.getRegistrationTypeId() == Constants.GET_ALL ) {
+			if ( registrationTypeObjectArr == null )
+				return null;
+			ArrayList<RegistrationTypeObject> v = new ArrayList<RegistrationTypeObject>();
+			for ( int i = 0; i < registrationTypeObjectArr.length; i++ ) {
+				v.add((RegistrationTypeObject)registrationTypeObjectArr[i].clone());
+			}
+			return v;
+		}
+		else {
+			@SuppressWarnings("unchecked")
+			ArrayList<RegistrationTypeObject> v = (ArrayList<RegistrationTypeObject>)DBUtil.list(registrationtype_obj,registrationtype_obj);
+			DebugHandler.finest("v: " + v);
+			return v;
+		}
 	}
 	
     /**

@@ -42,10 +42,22 @@ public class BloodGroupImpl implements BloodGroupInterface  {
 	 */
     
 	public ArrayList<BloodGroupObject> getBloodGroups(BloodGroupObject bloodgroup_obj) throws AppException{
-		@SuppressWarnings("unchecked")
-		ArrayList<BloodGroupObject> v = (ArrayList<BloodGroupObject>)DBUtil.list(bloodgroup_obj,bloodgroup_obj);
-		DebugHandler.finest("v: " + v);
-		return v;
+		BloodGroupObject[] bloodGroupObjectArr = getAllBloodGroups();
+		if ( bloodgroup_obj.getBloodGroupId() == Constants.GET_ALL ) {
+			if ( bloodGroupObjectArr == null )
+				return null;
+			ArrayList<BloodGroupObject> v = new ArrayList<BloodGroupObject>();
+			for ( int i = 0; i < bloodGroupObjectArr.length; i++ ) {
+				v.add((BloodGroupObject)bloodGroupObjectArr[i].clone());
+			}
+			return v;
+		}
+		else {
+			@SuppressWarnings("unchecked")
+			ArrayList<BloodGroupObject> v = (ArrayList<BloodGroupObject>)DBUtil.list(bloodgroup_obj,bloodgroup_obj);
+			DebugHandler.finest("v: " + v);
+			return v;
+		}
 	}
 	
     /**

@@ -42,10 +42,22 @@ public class RegistrantImpl implements RegistrantInterface  {
 	 */
     
 	public ArrayList<RegistrantObject> getRegistrants(RegistrantObject registrant_obj) throws AppException{
-		@SuppressWarnings("unchecked")
-		ArrayList<RegistrantObject> v = (ArrayList<RegistrantObject>)DBUtil.list(registrant_obj,registrant_obj);
-		DebugHandler.finest("v: " + v);
-		return v;
+		RegistrantObject[] registrantObjectArr = getAllRegistrants();
+		if ( registrant_obj.getRegistrantId() == Constants.GET_ALL ) {
+			if ( registrantObjectArr == null )
+				return null;
+			ArrayList<RegistrantObject> v = new ArrayList<RegistrantObject>();
+			for ( int i = 0; i < registrantObjectArr.length; i++ ) {
+				v.add((RegistrantObject)registrantObjectArr[i].clone());
+			}
+			return v;
+		}
+		else {
+			@SuppressWarnings("unchecked")
+			ArrayList<RegistrantObject> v = (ArrayList<RegistrantObject>)DBUtil.list(registrant_obj,registrant_obj);
+			DebugHandler.finest("v: " + v);
+			return v;
+		}
 	}
 	
     /**

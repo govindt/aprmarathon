@@ -42,10 +42,22 @@ public class RegistrationClassImpl implements RegistrationClassInterface  {
 	 */
     
 	public ArrayList<RegistrationClassObject> getRegistrationClass(RegistrationClassObject registrationclass_obj) throws AppException{
-		@SuppressWarnings("unchecked")
-		ArrayList<RegistrationClassObject> v = (ArrayList<RegistrationClassObject>)DBUtil.list(registrationclass_obj,registrationclass_obj);
-		DebugHandler.finest("v: " + v);
-		return v;
+		RegistrationClassObject[] registrationClassObjectArr = getAllRegistrationClass();
+		if ( registrationclass_obj.getRegistrationClassId() == Constants.GET_ALL ) {
+			if ( registrationClassObjectArr == null )
+				return null;
+			ArrayList<RegistrationClassObject> v = new ArrayList<RegistrationClassObject>();
+			for ( int i = 0; i < registrationClassObjectArr.length; i++ ) {
+				v.add((RegistrationClassObject)registrationClassObjectArr[i].clone());
+			}
+			return v;
+		}
+		else {
+			@SuppressWarnings("unchecked")
+			ArrayList<RegistrationClassObject> v = (ArrayList<RegistrationClassObject>)DBUtil.list(registrationclass_obj,registrationclass_obj);
+			DebugHandler.finest("v: " + v);
+			return v;
+		}
 	}
 	
     /**

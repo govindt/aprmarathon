@@ -42,10 +42,22 @@ public class GenderImpl implements GenderInterface  {
 	 */
     
 	public ArrayList<GenderObject> getGenders(GenderObject gender_obj) throws AppException{
-		@SuppressWarnings("unchecked")
-		ArrayList<GenderObject> v = (ArrayList<GenderObject>)DBUtil.list(gender_obj,gender_obj);
-		DebugHandler.finest("v: " + v);
-		return v;
+		GenderObject[] genderObjectArr = getAllGenders();
+		if ( gender_obj.getGenderId() == Constants.GET_ALL ) {
+			if ( genderObjectArr == null )
+				return null;
+			ArrayList<GenderObject> v = new ArrayList<GenderObject>();
+			for ( int i = 0; i < genderObjectArr.length; i++ ) {
+				v.add((GenderObject)genderObjectArr[i].clone());
+			}
+			return v;
+		}
+		else {
+			@SuppressWarnings("unchecked")
+			ArrayList<GenderObject> v = (ArrayList<GenderObject>)DBUtil.list(gender_obj,gender_obj);
+			DebugHandler.finest("v: " + v);
+			return v;
+		}
 	}
 	
     /**

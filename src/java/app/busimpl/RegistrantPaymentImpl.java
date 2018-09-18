@@ -42,10 +42,22 @@ public class RegistrantPaymentImpl implements RegistrantPaymentInterface  {
 	 */
     
 	public ArrayList<RegistrantPaymentObject> getRegistrantPayments(RegistrantPaymentObject registrantpayment_obj) throws AppException{
-		@SuppressWarnings("unchecked")
-		ArrayList<RegistrantPaymentObject> v = (ArrayList<RegistrantPaymentObject>)DBUtil.list(registrantpayment_obj,registrantpayment_obj);
-		DebugHandler.finest("v: " + v);
-		return v;
+		RegistrantPaymentObject[] registrantPaymentObjectArr = getAllRegistrantPayments();
+		if ( registrantpayment_obj.getRegistrantPaymentId() == Constants.GET_ALL ) {
+			if ( registrantPaymentObjectArr == null )
+				return null;
+			ArrayList<RegistrantPaymentObject> v = new ArrayList<RegistrantPaymentObject>();
+			for ( int i = 0; i < registrantPaymentObjectArr.length; i++ ) {
+				v.add((RegistrantPaymentObject)registrantPaymentObjectArr[i].clone());
+			}
+			return v;
+		}
+		else {
+			@SuppressWarnings("unchecked")
+			ArrayList<RegistrantPaymentObject> v = (ArrayList<RegistrantPaymentObject>)DBUtil.list(registrantpayment_obj,registrantpayment_obj);
+			DebugHandler.finest("v: " + v);
+			return v;
+		}
 	}
 	
     /**
