@@ -26,6 +26,7 @@ import org.codehaus.jettison.json.JSONException;
  */
 
 public class ParticipantObject implements Cloneable {
+	private SimpleDateFormat dateFormatter = new SimpleDateFormat(Constants.DATE_FORMAT_STR);
 	private int participant_id;
 	private String participant_first_name;
 	private String participant_middle_name;
@@ -53,7 +54,7 @@ public class ParticipantObject implements Cloneable {
 		"participant_middle_name : " + participant_middle_name + "\n" +
 		"participant_last_name : " + participant_last_name + "\n" +
 		"participant_gender : " + participant_gender + "\n" +
-		"participant_date_of_birth : " + participant_date_of_birth + "\n" +
+		"participant_date_of_birth : " + dateFormatter.format(participant_date_of_birth) + "\n" +
 		"participant_age_category : " + participant_age_category + "\n" +
 		"participant_t_shirt_size : " + participant_t_shirt_size + "\n" +
 		"participant_blood_group : " + participant_blood_group + "\n" +
@@ -144,7 +145,6 @@ public class ParticipantObject implements Cloneable {
 		} catch (JSONException je) {}
 		try {
 			try {
-				SimpleDateFormat dateFormatter = new SimpleDateFormat(Constants.DATE_FORMAT_STR);
 				participant_date_of_birth = dateFormatter.parse(jObject.getString("participant_date_of_birth"));
 			} catch (ParseException e) {participant_date_of_birth = new Date();
 				e.printStackTrace();
