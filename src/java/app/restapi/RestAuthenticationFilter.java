@@ -1,4 +1,4 @@
-package app.rest;
+package app.restapi;
 
 import java.io.IOException;
 

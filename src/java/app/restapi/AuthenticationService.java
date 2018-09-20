@@ -1,4 +1,4 @@
-package app.rest;
+package app.restapi;
 
 import java.io.IOException;
 import java.util.Base64;
