@@ -26,6 +26,7 @@ import org.codehaus.jettison.json.JSONException;
  */
 
 public class PaymentStatusObject implements Cloneable {
+	private SimpleDateFormat dateFormatter = new SimpleDateFormat(Constants.DATE_FORMAT_STR);
 	private int payment_status_id;
 	private String payment_status_name;
 	
@@ -38,10 +39,11 @@ public class PaymentStatusObject implements Cloneable {
 	 */
     
 	public String toString() {
-	   return	"payment_status_id : " + payment_status_id + "\n" +
-		"payment_status_name : " + payment_status_name + "\n";
+		String buf="";
+		buf += "payment_status_id : " + payment_status_id + "\n";
+		return buf;
 	}
-    
+
 	/**
 	 *
 	 * Returns the JSON representation of the PaymentStatusObject.

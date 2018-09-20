@@ -26,6 +26,7 @@ import org.codehaus.jettison.json.JSONException;
  */
 
 public class MenuObject implements Cloneable {
+	private SimpleDateFormat dateFormatter = new SimpleDateFormat(Constants.DATE_FORMAT_STR);
 	private int menu_id;
 	private String menu_name;
 	private int site_id;
@@ -43,13 +44,15 @@ public class MenuObject implements Cloneable {
 	 */
     
 	public String toString() {
-	   return	"menu_id : " + menu_id + "\n" +
-		"menu_name : " + menu_name + "\n" +
-		"site_id : " + site_id + "\n" +
-		"url : " + url + "\n" +
-		"menu_order : " + menu_order + "\n" +
-		"parent_menu_id : " + parent_menu_id + "\n" +
-		"role_id : " + role_id + "\n";
+		String buf="";
+	    buf += "menu_id : " + menu_id + "\n";
+		buf += "menu_name : " + menu_name + "\n";
+		buf += "site_id : " + site_id + "\n";
+		buf += "url : " + url + "\n";
+		buf += "menu_order : " + menu_order + "\n";
+		buf += "parent_menu_id : " + parent_menu_id + "\n";
+		buf += "role_id : " + role_id + "\n";
+		return buf;
 	}
     
 	/**

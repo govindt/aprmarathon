@@ -11,6 +11,9 @@ package app.busobj;
 import java.util.Date;
 import core.util.DebugHandler;
 import core.util.Util;
+import core.util.Constants;
+import java.text.SimpleDateFormat;
+import java.text.ParseException;
 import org.codehaus.jettison.json.JSONObject;
 import org.codehaus.jettison.json.JSONException;
 
@@ -23,6 +26,7 @@ import org.codehaus.jettison.json.JSONException;
  */
 
 public class RoleObject implements Cloneable {
+	private SimpleDateFormat dateFormatter = new SimpleDateFormat(Constants.DATE_FORMAT_STR);
     private int role_id;
     private String role_name;
     private String is_valid;
@@ -37,9 +41,11 @@ public class RoleObject implements Cloneable {
      */
     
     public String toString() {
-        return "role_id : " + role_id + "\n" +
-            "role_name : " + role_name + "\n" +
-            "is_valid : " + is_valid + "\n";
+		String buf="";
+        buf += "role_id : " + role_id + "\n";
+        buf += "role_name : " + role_name + "\n";
+        buf += "is_valid : " + is_valid + "\n";
+		return buf;
     }
 
      /**

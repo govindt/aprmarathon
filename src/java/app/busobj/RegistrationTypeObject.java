@@ -26,6 +26,7 @@ import org.codehaus.jettison.json.JSONException;
  */
 
 public class RegistrationTypeObject implements Cloneable {
+	private SimpleDateFormat dateFormatter = new SimpleDateFormat(Constants.DATE_FORMAT_STR);
 	private int registration_type_id;
 	private String registration_type_name;
 	
@@ -38,10 +39,11 @@ public class RegistrationTypeObject implements Cloneable {
 	 */
     
 	public String toString() {
-	   return	"registration_type_id : " + registration_type_id + "\n" +
-		"registration_type_name : " + registration_type_name + "\n";
+		String buf="";
+		buf += "registration_type_id : " + registration_type_id + "\n";
+		return buf;
 	}
-    
+
 	/**
 	 *
 	 * Returns the JSON representation of the RegistrationTypeObject.

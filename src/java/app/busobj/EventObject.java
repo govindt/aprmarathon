@@ -26,6 +26,7 @@ import org.codehaus.jettison.json.JSONException;
  */
 
 public class EventObject implements Cloneable {
+	private SimpleDateFormat dateFormatter = new SimpleDateFormat(Constants.DATE_FORMAT_STR);
 	private int event_id;
 	private String event_name;
 	private Date event_start_date;
@@ -43,15 +44,25 @@ public class EventObject implements Cloneable {
 	 */
     
 	public String toString() {
-	   return	"event_id : " + event_id + "\n" +
-		"event_name : " + event_name + "\n" +
-		"event_start_date : " + event_start_date + "\n" +
-		"event_end_date : " + event_end_date + "\n" +
-		"event_description : " + event_description + "\n" +
-		"event_registation_close_date : " + event_registation_close_date + "\n" +
-		"event_changes_close_date : " + event_changes_close_date + "\n";
+		String buf="";
+		buf += "event_id : " + event_id + "\n";
+		buf += "event_name : " + event_name + "\n";
+		if (event_start_date != null)
+			buf += "event_start_date : " + dateFormatter.format(event_start_date) + "\n";
+		else
+			buf += "event_start_date : " + "\n";
+		if (event_end_date != null)
+			buf += "event_end_date : " + dateFormatter.format(event_end_date) + "\n";
+		else
+			buf += "event_end_date : " + "\n";
+		buf += "event_description : " + event_description + "\n";
+		if (event_registation_close_date != null)
+			buf += "event_registation_close_date : " + dateFormatter.format(event_registation_close_date) + "\n";
+		else
+			buf += "event_registation_close_date : " + "\n";
+		return buf;
 	}
-    
+
 	/**
 	 *
 	 * Returns the JSON representation of the EventObject.

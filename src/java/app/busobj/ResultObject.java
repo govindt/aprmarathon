@@ -26,6 +26,7 @@ import org.codehaus.jettison.json.JSONException;
  */
 
 public class ResultObject implements Cloneable {
+	private SimpleDateFormat dateFormatter = new SimpleDateFormat(Constants.DATE_FORMAT_STR);
 	private int result_id;
 	private int result_event;
 	private int result_event_type;
@@ -44,16 +45,17 @@ public class ResultObject implements Cloneable {
 	 */
     
 	public String toString() {
-	   return	"result_id : " + result_id + "\n" +
-		"result_event : " + result_event + "\n" +
-		"result_event_type : " + result_event_type + "\n" +
-		"result_medal : " + result_medal + "\n" +
-		"result_winner : " + result_winner + "\n" +
-		"result_winner_registrant : " + result_winner_registrant + "\n" +
-		"result_score : " + result_score + "\n" +
-		"result_timing : " + result_timing + "\n";
+		String buf="";
+		buf += "result_id : " + result_id + "\n";
+		buf += "result_event : " + result_event + "\n";
+		buf += "result_event_type : " + result_event_type + "\n";
+		buf += "result_medal : " + result_medal + "\n";
+		buf += "result_winner : " + result_winner + "\n";
+		buf += "result_winner_registrant : " + result_winner_registrant + "\n";
+		buf += "result_score : " + result_score + "\n";
+		return buf;
 	}
-    
+
 	/**
 	 *
 	 * Returns the JSON representation of the ResultObject.

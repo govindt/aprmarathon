@@ -26,6 +26,7 @@ import org.codehaus.jettison.json.JSONException;
  */
 
 public class RegistrationClassObject implements Cloneable {
+	private SimpleDateFormat dateFormatter = new SimpleDateFormat(Constants.DATE_FORMAT_STR);
 	private int registration_class_id;
 	private String registration_class_name;
 	private int registration_type;
@@ -42,14 +43,15 @@ public class RegistrationClassObject implements Cloneable {
 	 */
     
 	public String toString() {
-	   return	"registration_class_id : " + registration_class_id + "\n" +
-		"registration_class_name : " + registration_class_name + "\n" +
-		"registration_type : " + registration_type + "\n" +
-		"registration_event : " + registration_event + "\n" +
-		"registration_class_value : " + registration_class_value + "\n" +
-		"registration_free_tickets : " + registration_free_tickets + "\n";
+		String buf="";
+		buf += "registration_class_id : " + registration_class_id + "\n";
+		buf += "registration_class_name : " + registration_class_name + "\n";
+		buf += "registration_type : " + registration_type + "\n";
+		buf += "registration_event : " + registration_event + "\n";
+		buf += "registration_class_value : " + registration_class_value + "\n";
+		return buf;
 	}
-    
+
 	/**
 	 *
 	 * Returns the JSON representation of the RegistrationClassObject.

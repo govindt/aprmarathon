@@ -26,6 +26,7 @@ import org.codehaus.jettison.json.JSONException;
  */
 
 public class AgeCategoryObject implements Cloneable {
+	private SimpleDateFormat dateFormatter = new SimpleDateFormat(Constants.DATE_FORMAT_STR);
 	private int age_category_id;
 	private String age_category;
 	
@@ -38,10 +39,11 @@ public class AgeCategoryObject implements Cloneable {
 	 */
     
 	public String toString() {
-	   return	"age_category_id : " + age_category_id + "\n" +
-		"age_category : " + age_category + "\n";
+		String buf="";
+		buf += "age_category_id : " + age_category_id + "\n";
+		return buf;
 	}
-    
+
 	/**
 	 *
 	 * Returns the JSON representation of the AgeCategoryObject.

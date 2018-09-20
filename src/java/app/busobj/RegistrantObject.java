@@ -26,6 +26,7 @@ import org.codehaus.jettison.json.JSONException;
  */
 
 public class RegistrantObject implements Cloneable {
+	private SimpleDateFormat dateFormatter = new SimpleDateFormat(Constants.DATE_FORMAT_STR);
 	private int registrant_id;
 	private String registrant_name;
 	private String registrant_middle_name;
@@ -48,20 +49,21 @@ public class RegistrantObject implements Cloneable {
 	 */
     
 	public String toString() {
-	   return	"registrant_id : " + registrant_id + "\n" +
-		"registrant_name : " + registrant_name + "\n" +
-		"registrant_middle_name : " + registrant_middle_name + "\n" +
-		"registrant_last_name : " + registrant_last_name + "\n" +
-		"registrant_email : " + registrant_email + "\n" +
-		"registrant_additional_email : " + registrant_additional_email + "\n" +
-		"registrant_phone : " + registrant_phone + "\n" +
-		"registrant_address : " + registrant_address + "\n" +
-		"registrant_city : " + registrant_city + "\n" +
-		"registrant_state : " + registrant_state + "\n" +
-		"registrant_pincode : " + registrant_pincode + "\n" +
-		"registrant_pan : " + registrant_pan + "\n";
+		String buf="";
+		buf += "registrant_id : " + registrant_id + "\n";
+		buf += "registrant_name : " + registrant_name + "\n";
+		buf += "registrant_middle_name : " + registrant_middle_name + "\n";
+		buf += "registrant_last_name : " + registrant_last_name + "\n";
+		buf += "registrant_email : " + registrant_email + "\n";
+		buf += "registrant_additional_email : " + registrant_additional_email + "\n";
+		buf += "registrant_phone : " + registrant_phone + "\n";
+		buf += "registrant_address : " + registrant_address + "\n";
+		buf += "registrant_city : " + registrant_city + "\n";
+		buf += "registrant_state : " + registrant_state + "\n";
+		buf += "registrant_pincode : " + registrant_pincode + "\n";
+		return buf;
 	}
-    
+
 	/**
 	 *
 	 * Returns the JSON representation of the RegistrantObject.

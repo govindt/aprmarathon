@@ -26,6 +26,7 @@ import org.codehaus.jettison.json.JSONException;
  */
 
 public class TShirtSizeObject implements Cloneable {
+	private SimpleDateFormat dateFormatter = new SimpleDateFormat(Constants.DATE_FORMAT_STR);
 	private int t_shirt_size_id;
 	private String t_shirt_size_name;
 	private int t_shirt_gender;
@@ -39,11 +40,12 @@ public class TShirtSizeObject implements Cloneable {
 	 */
     
 	public String toString() {
-	   return	"t_shirt_size_id : " + t_shirt_size_id + "\n" +
-		"t_shirt_size_name : " + t_shirt_size_name + "\n" +
-		"t_shirt_gender : " + t_shirt_gender + "\n";
+		String buf="";
+		buf += "t_shirt_size_id : " + t_shirt_size_id + "\n";
+		buf += "t_shirt_size_name : " + t_shirt_size_name + "\n";
+		return buf;
 	}
-    
+
 	/**
 	 *
 	 * Returns the JSON representation of the TShirtSizeObject.
