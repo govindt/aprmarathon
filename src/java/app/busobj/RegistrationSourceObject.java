@@ -26,6 +26,7 @@ import org.codehaus.jettison.json.JSONException;
  */
 
 public class RegistrationSourceObject implements Cloneable {
+	private SimpleDateFormat dateFormatter = new SimpleDateFormat(Constants.DATE_FORMAT_STR);
 	private int registration_source_id;
 	private String registration_source_name;
 	
@@ -38,10 +39,11 @@ public class RegistrationSourceObject implements Cloneable {
 	 */
     
 	public String toString() {
-	   return	"registration_source_id : " + registration_source_id + "\n" +
-		"registration_source_name : " + registration_source_name + "\n";
+		String buf="";
+		buf += "registration_source_id : " + registration_source_id + "\n";
+		return buf;
 	}
-    
+
 	/**
 	 *
 	 * Returns the JSON representation of the RegistrationSourceObject.

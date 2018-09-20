@@ -26,6 +26,7 @@ import org.codehaus.jettison.json.JSONException;
  */
 
 public class ParticipantEventObject implements Cloneable {
+	private SimpleDateFormat dateFormatter = new SimpleDateFormat(Constants.DATE_FORMAT_STR);
 	private int participant_event_id;
 	private int participant_id;
 	private int participant_event;
@@ -43,15 +44,16 @@ public class ParticipantEventObject implements Cloneable {
 	 */
     
 	public String toString() {
-	   return	"participant_event_id : " + participant_event_id + "\n" +
-		"participant_id : " + participant_id + "\n" +
-		"participant_event : " + participant_event + "\n" +
-		"participant_type : " + participant_type + "\n" +
-		"participant_event_type : " + participant_event_type + "\n" +
-		"participant_bib_no : " + participant_bib_no + "\n" +
-		"participant_group : " + participant_group + "\n";
+		String buf="";
+		buf += "participant_event_id : " + participant_event_id + "\n";
+		buf += "participant_id : " + participant_id + "\n";
+		buf += "participant_event : " + participant_event + "\n";
+		buf += "participant_type : " + participant_type + "\n";
+		buf += "participant_event_type : " + participant_event_type + "\n";
+		buf += "participant_bib_no : " + participant_bib_no + "\n";
+		return buf;
 	}
-    
+
 	/**
 	 *
 	 * Returns the JSON representation of the ParticipantEventObject.

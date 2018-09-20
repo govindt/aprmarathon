@@ -11,6 +11,9 @@ package app.busobj;
 import java.util.Date;
 import core.util.DebugHandler;
 import core.util.Util;
+import core.util.Constants;
+import java.text.SimpleDateFormat;
+import java.text.ParseException;
 import org.codehaus.jettison.json.JSONObject;
 import org.codehaus.jettison.json.JSONException;
 
@@ -23,6 +26,7 @@ import org.codehaus.jettison.json.JSONException;
  */
 
 public class AclObject implements Cloneable {
+	private SimpleDateFormat dateFormatter = new SimpleDateFormat(Constants.DATE_FORMAT_STR);
     private int acl_id;
     private String acl_page;
     private String is_valid;
@@ -40,12 +44,14 @@ public class AclObject implements Cloneable {
      */
     
     public String toString() {
-        return "acl_id : " + acl_id + "\n" +
-            "acl_page : " + acl_page + "\n" +
-            "is_valid : " + is_valid + "\n" +
-            "role_id : " + role_id + "\n" +
-            "users_id : " + users_id + "\n" +
-            "permission : " + permission + "\n";
+		String buf="";
+        buf += "acl_id : " + acl_id + "\n";
+        buf += "acl_page : " + acl_page + "\n";
+        buf += "is_valid : " + is_valid + "\n";
+        buf += "role_id : " + role_id + "\n";
+        buf += "users_id : " + users_id + "\n";
+        buf += "permission : " + permission + "\n";
+		return buf;
     }
 
     /**

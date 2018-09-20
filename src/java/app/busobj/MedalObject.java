@@ -26,6 +26,7 @@ import org.codehaus.jettison.json.JSONException;
  */
 
 public class MedalObject implements Cloneable {
+	private SimpleDateFormat dateFormatter = new SimpleDateFormat(Constants.DATE_FORMAT_STR);
 	private int medal_id;
 	private String medal_name;
 	private int medal_rank;
@@ -39,11 +40,12 @@ public class MedalObject implements Cloneable {
 	 */
     
 	public String toString() {
-	   return	"medal_id : " + medal_id + "\n" +
-		"medal_name : " + medal_name + "\n" +
-		"medal_rank : " + medal_rank + "\n";
+		String buf="";
+		buf += "medal_id : " + medal_id + "\n";
+		buf += "medal_name : " + medal_name + "\n";
+		return buf;
 	}
-    
+
 	/**
 	 *
 	 * Returns the JSON representation of the MedalObject.

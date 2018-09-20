@@ -49,20 +49,24 @@ public class ParticipantObject implements Cloneable {
 	 */
     
 	public String toString() {
-	   return	"participant_id : " + participant_id + "\n" +
-		"participant_first_name : " + participant_first_name + "\n" +
-		"participant_middle_name : " + participant_middle_name + "\n" +
-		"participant_last_name : " + participant_last_name + "\n" +
-		"participant_gender : " + participant_gender + "\n" +
-		"participant_date_of_birth : " + dateFormatter.format(participant_date_of_birth) + "\n" +
-		"participant_age_category : " + participant_age_category + "\n" +
-		"participant_t_shirt_size : " + participant_t_shirt_size + "\n" +
-		"participant_blood_group : " + participant_blood_group + "\n" +
-		"participant_cell_phone : " + participant_cell_phone + "\n" +
-		"participant_email : " + participant_email + "\n" +
-		"participant_group : " + participant_group + "\n";
+		String buf="";
+		buf += "participant_id : " + participant_id + "\n";
+		buf += "participant_first_name : " + participant_first_name + "\n";
+		buf += "participant_middle_name : " + participant_middle_name + "\n";
+		buf += "participant_last_name : " + participant_last_name + "\n";
+		buf += "participant_gender : " + participant_gender + "\n";
+		if (participant_date_of_birth != null)
+			buf += "participant_date_of_birth : " + dateFormatter.format(participant_date_of_birth) + "\n";
+		else
+			buf += "participant_date_of_birth : " + "\n";
+		buf += "participant_age_category : " + participant_age_category + "\n";
+		buf += "participant_t_shirt_size : " + participant_t_shirt_size + "\n";
+		buf += "participant_blood_group : " + participant_blood_group + "\n";
+		buf += "participant_cell_phone : " + participant_cell_phone + "\n";
+		buf += "participant_email : " + participant_email + "\n";
+		return buf;
 	}
-    
+
 	/**
 	 *
 	 * Returns the JSON representation of the ParticipantObject.
@@ -145,6 +149,7 @@ public class ParticipantObject implements Cloneable {
 		} catch (JSONException je) {}
 		try {
 			try {
+				SimpleDateFormat dateFormatter = new SimpleDateFormat(Constants.DATE_FORMAT_STR);
 				participant_date_of_birth = dateFormatter.parse(jObject.getString("participant_date_of_birth"));
 			} catch (ParseException e) {participant_date_of_birth = new Date();
 				e.printStackTrace();

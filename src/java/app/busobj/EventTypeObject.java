@@ -26,6 +26,7 @@ import org.codehaus.jettison.json.JSONException;
  */
 
 public class EventTypeObject implements Cloneable {
+	private SimpleDateFormat dateFormatter = new SimpleDateFormat(Constants.DATE_FORMAT_STR);
 	private int event_type_id;
 	private String event_type_name;
 	private int event;
@@ -44,16 +45,23 @@ public class EventTypeObject implements Cloneable {
 	 */
     
 	public String toString() {
-	   return	"event_type_id : " + event_type_id + "\n" +
-		"event_type_name : " + event_type_name + "\n" +
-		"event : " + event + "\n" +
-		"event_type_description : " + event_type_description + "\n" +
-		"event_type_start_date : " + event_type_start_date + "\n" +
-		"event_type_end_date : " + event_type_end_date + "\n" +
-		"event_type_venue : " + event_type_venue + "\n" +
-		"online_registration_only : " + online_registration_only + "\n";
+		String buf="";
+		buf += "event_type_id : " + event_type_id + "\n";
+		buf += "event_type_name : " + event_type_name + "\n";
+		buf += "event : " + event + "\n";
+		buf += "event_type_description : " + event_type_description + "\n";
+		if (event_type_start_date != null)
+			buf += "event_type_start_date : " + dateFormatter.format(event_type_start_date) + "\n";
+		else
+			buf += "event_type_start_date : " + "\n";
+		if (event_type_end_date != null)
+			buf += "event_type_end_date : " + dateFormatter.format(event_type_end_date) + "\n";
+		else
+			buf += "event_type_end_date : " + "\n";
+		buf += "event_type_venue : " + event_type_venue + "\n";
+		return buf;
 	}
-    
+
 	/**
 	 *
 	 * Returns the JSON representation of the EventTypeObject.

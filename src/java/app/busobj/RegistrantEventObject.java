@@ -26,6 +26,7 @@ import org.codehaus.jettison.json.JSONException;
  */
 
 public class RegistrantEventObject implements Cloneable {
+	private SimpleDateFormat dateFormatter = new SimpleDateFormat(Constants.DATE_FORMAT_STR);
 	private int registrant_event_id;
 	private int registrant_id;
 	private int registrant_event;
@@ -45,17 +46,18 @@ public class RegistrantEventObject implements Cloneable {
 	 */
     
 	public String toString() {
-	   return	"registrant_event_id : " + registrant_event_id + "\n" +
-		"registrant_id : " + registrant_id + "\n" +
-		"registrant_event : " + registrant_event + "\n" +
-		"registrant_type : " + registrant_type + "\n" +
-		"registrant_source : " + registrant_source + "\n" +
-		"registrant_class : " + registrant_class + "\n" +
-		"registrant_beneficiary : " + registrant_beneficiary + "\n" +
-		"registrant_emergency_contact : " + registrant_emergency_contact + "\n" +
-		"registrant_emergency_phone : " + registrant_emergency_phone + "\n";
+		String buf="";
+		buf += "registrant_event_id : " + registrant_event_id + "\n";
+		buf += "registrant_id : " + registrant_id + "\n";
+		buf += "registrant_event : " + registrant_event + "\n";
+		buf += "registrant_type : " + registrant_type + "\n";
+		buf += "registrant_source : " + registrant_source + "\n";
+		buf += "registrant_class : " + registrant_class + "\n";
+		buf += "registrant_beneficiary : " + registrant_beneficiary + "\n";
+		buf += "registrant_emergency_contact : " + registrant_emergency_contact + "\n";
+		return buf;
 	}
-    
+
 	/**
 	 *
 	 * Returns the JSON representation of the RegistrantEventObject.

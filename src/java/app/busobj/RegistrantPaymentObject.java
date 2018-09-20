@@ -26,6 +26,7 @@ import org.codehaus.jettison.json.JSONException;
  */
 
 public class RegistrantPaymentObject implements Cloneable {
+	private SimpleDateFormat dateFormatter = new SimpleDateFormat(Constants.DATE_FORMAT_STR);
 	private int registrant_payment_id;
 	private int registrant_event;
 	private int registrant;
@@ -50,22 +51,29 @@ public class RegistrantPaymentObject implements Cloneable {
 	 */
     
 	public String toString() {
-	   return	"registrant_payment_id : " + registrant_payment_id + "\n" +
-		"registrant_event : " + registrant_event + "\n" +
-		"registrant : " + registrant + "\n" +
-		"payment_type : " + payment_type + "\n" +
-		"payment_status : " + payment_status + "\n" +
-		"payment_amount : " + payment_amount + "\n" +
-		"payment_additional_amount : " + payment_additional_amount + "\n" +
-		"payment_date : " + payment_date + "\n" +
-		"receipt_date : " + receipt_date + "\n" +
-		"payment_details : " + payment_details + "\n" +
-		"payment_towards : " + payment_towards + "\n" +
-		"payment_reference_id : " + payment_reference_id + "\n" +
-		"payment_tax : " + payment_tax + "\n" +
-		"payment_fee : " + payment_fee + "\n";
+		String buf="";
+		buf += "registrant_payment_id : " + registrant_payment_id + "\n";
+		buf += "registrant_event : " + registrant_event + "\n";
+		buf += "registrant : " + registrant + "\n";
+		buf += "payment_type : " + payment_type + "\n";
+		buf += "payment_status : " + payment_status + "\n";
+		buf += "payment_amount : " + payment_amount + "\n";
+		buf += "payment_additional_amount : " + payment_additional_amount + "\n";
+		if (payment_date != null)
+			buf += "payment_date : " + dateFormatter.format(payment_date) + "\n";
+		else
+			buf += "payment_date : " + "\n";
+		if (receipt_date != null)
+			buf += "receipt_date : " + dateFormatter.format(receipt_date) + "\n";
+		else
+			buf += "receipt_date : " + "\n";
+		buf += "payment_details : " + payment_details + "\n";
+		buf += "payment_towards : " + payment_towards + "\n";
+		buf += "payment_reference_id : " + payment_reference_id + "\n";
+		buf += "payment_tax : " + payment_tax + "\n";
+		return buf;
 	}
-    
+
 	/**
 	 *
 	 * Returns the JSON representation of the RegistrantPaymentObject.

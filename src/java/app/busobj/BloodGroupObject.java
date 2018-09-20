@@ -26,6 +26,7 @@ import org.codehaus.jettison.json.JSONException;
  */
 
 public class BloodGroupObject implements Cloneable {
+	private SimpleDateFormat dateFormatter = new SimpleDateFormat(Constants.DATE_FORMAT_STR);
 	private int blood_group_id;
 	private String blood_group_name;
 	
@@ -38,10 +39,11 @@ public class BloodGroupObject implements Cloneable {
 	 */
     
 	public String toString() {
-	   return	"blood_group_id : " + blood_group_id + "\n" +
-		"blood_group_name : " + blood_group_name + "\n";
+		String buf="";
+		buf += "blood_group_id : " + blood_group_id + "\n";
+		return buf;
 	}
-    
+
 	/**
 	 *
 	 * Returns the JSON representation of the BloodGroupObject.

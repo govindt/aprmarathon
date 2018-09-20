@@ -26,6 +26,7 @@ import org.codehaus.jettison.json.JSONException;
  */
 
 public class SiteObject implements Cloneable {
+	private SimpleDateFormat dateFormatter = new SimpleDateFormat(Constants.DATE_FORMAT_STR);
 	private int site_id;
 	private String site_name;
 	private String site_url;
@@ -39,9 +40,11 @@ public class SiteObject implements Cloneable {
 	 */
     
 	public String toString() {
-	   return	"site_id : " + site_id + "\n" +
-		"site_name : " + site_name + "\n" +
-		"site_url : " + site_url + "\n";
+		String buf="";
+		buf += "site_id : " + site_id + "\n";
+		buf += "site_name : " + site_name + "\n";
+		buf += "site_url : " + site_url + "\n";
+		return buf;
 	}
     
 	/**

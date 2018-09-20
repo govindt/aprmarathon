@@ -26,6 +26,7 @@ import org.codehaus.jettison.json.JSONException;
  */
 
 public class BeneficiaryObject implements Cloneable {
+	private SimpleDateFormat dateFormatter = new SimpleDateFormat(Constants.DATE_FORMAT_STR);
 	private int beneficiary_id;
 	private String beneficiary_name;
 	private int beneficiary_event;
@@ -39,11 +40,12 @@ public class BeneficiaryObject implements Cloneable {
 	 */
     
 	public String toString() {
-	   return	"beneficiary_id : " + beneficiary_id + "\n" +
-		"beneficiary_name : " + beneficiary_name + "\n" +
-		"beneficiary_event : " + beneficiary_event + "\n";
+		String buf="";
+		buf += "beneficiary_id : " + beneficiary_id + "\n";
+		buf += "beneficiary_name : " + beneficiary_name + "\n";
+		return buf;
 	}
-    
+
 	/**
 	 *
 	 * Returns the JSON representation of the BeneficiaryObject.

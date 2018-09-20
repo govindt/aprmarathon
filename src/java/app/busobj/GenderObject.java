@@ -26,6 +26,7 @@ import org.codehaus.jettison.json.JSONException;
  */
 
 public class GenderObject implements Cloneable {
+	private SimpleDateFormat dateFormatter = new SimpleDateFormat(Constants.DATE_FORMAT_STR);
 	private int gender_id;
 	private String gender_name;
 	
@@ -38,10 +39,11 @@ public class GenderObject implements Cloneable {
 	 */
     
 	public String toString() {
-	   return	"gender_id : " + gender_id + "\n" +
-		"gender_name : " + gender_name + "\n";
+		String buf="";
+		buf += "gender_id : " + gender_id + "\n";
+		return buf;
 	}
-    
+
 	/**
 	 *
 	 * Returns the JSON representation of the GenderObject.

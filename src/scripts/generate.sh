@@ -859,7 +859,7 @@ ${NAWK} -v QUOTE="'" -v logname=${LOGNAME} -v version=1.0 -v since=1.0 -v proj_n
 	# End - Initial Comments for the Class
 
 	printf("public class %sObject implements Cloneable {\n", tmp_file_name)>>file_name;
-
+	printf("\tprivate SimpleDateFormat dateFormatter = new SimpleDateFormat(Constants.DATE_FORMAT_STR);\n") >> file_name;
 	for ( j = 1; j <= i; ++j ) 
 	  printf("\tprivate %s %s;\n", field_types[j], field_names[j])>>file_name;
 
@@ -877,14 +877,24 @@ ${NAWK} -v QUOTE="'" -v logname=${LOGNAME} -v version=1.0 -v since=1.0 -v proj_n
 
 	# toString method	
 	printf("\tpublic String toString() {\n")>>file_name;
-	printf("\t   return")>>file_name;
+	printf("\t\tString buf=\"\";\n")>>file_name;
 	for ( j = 1; j < i; ++j )
-            if ( j == 1 )
-		printf("\t\"%s : \" + %s + \"\\n\" +\n", field_names[j], field_names[j])>>file_name;
-            else
-                printf("\t\t\"%s : \" + %s + \"\\n\" +\n", field_names[j], field_names[j])>>file_name;
-	printf("\t\t\"%s : \" + %s + \"\\n\";\n", field_names[j], field_names[j])>>file_name;	
-	printf("\t}\n    \n")>> file_name;
+        #if ( j == 1 )
+			#printf("\t\"%s : \" + %s + \"\\n\" +\n", field_names[j], field_names[j])>>file_name;
+        #else
+            #printf("\t\t\"%s : \" + %s + \"\\n\" +\n", field_names[j], field_names[j])>>file_name;
+	#printf("\t\t\"%s : \" + %s + \"\\n\";\n", field_names[j], field_names[j])>>file_name;
+	if ( field_types[j] == "Date" ) {
+		printf("\t\tif (%s != null)\n",field_names[j])>>file_name;
+		printf("\t\t\tbuf += \"%s : \" + dateFormatter.format(%s) + \"\\n\";\n",field_names[j], field_names[j])>>file_name;
+		printf("\t\telse\n")>>file_name;
+		printf("\t\t\tbuf += \"%s : \" + \"\\n\";\n",field_names[j], field_names[j])>>file_name;
+	} else {
+		printf("\t\tbuf += \"%s : \" + %s + \"\\n\";\n", field_names[j], field_names[j])>>file_name;
+	}
+	printf("\t\treturn buf;\n")>>file_name;
+	printf("\t}\n\n")>> file_name;
+	
 	# End toString method	
 
 	# Comments for toJSON Method
