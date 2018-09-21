@@ -33,56 +33,56 @@ public class PersistentRegistrantEvent extends PersistentObject {
 	private RegistrantEventObject registrantEventObject;
 	
 	
-    /**
+	/**
 	 * Constructs a Persistent Object for the RegistrantEventObject
 	 *
-	 * @param registrantEventObject    the RegistrantEventObject 
+	 * @param registrantEventObject	the RegistrantEventObject 
 	 */
-    
-	public PersistentRegistrantEvent (RegistrantEventObject registrantEventObject) {
-	    this.registrantEventObject = registrantEventObject;
-	}
-    
 	
-    /**
+	public PersistentRegistrantEvent (RegistrantEventObject registrantEventObject) {
+		this.registrantEventObject = registrantEventObject;
+	}
+	
+	
+	/**
 	 * Returns the ArrayList of RegistrantEventObject.
 	 * It is Usually all the rows in the database.
 	 * This calls getResultObjects method in the super class.
 	 *
-	 * @return     ArrayList of RegistrantEventObject 
+	 * @return	ArrayList of RegistrantEventObject 
 	 *
-	 * @throws     DBException     If a database error occurs
+	 * @throws	DBException	 If a database error occurs
 	 *
-	 * @see     #getResultObjects(ResultSet)
+	 * @see	 #getResultObjects(ResultSet)
 	 */
-    
-	public Object list() throws DBException {
-	    PreparedSQLStatement sql = new PreparedSQLStatement();
-	    String statement = "SELECT registrant_event_id, registrant_id, registrant_event, registrant_type, registrant_source, registrant_class, registrant_beneficiary, registrant_emergency_contact, registrant_emergency_phone from Registrant_Event";
-	    int index = 1;
-	    sql.setStatement(statement);
-        
-	    setSQLStatement(sql);
-        
-	    @SuppressWarnings("unchecked")
-	    ArrayList<RegistrantEventObject> result = (ArrayList<RegistrantEventObject>) super.list();
-        
-	    return result;
-	}
-    
 	
-    /**
+	public Object list() throws DBException {
+		PreparedSQLStatement sql = new PreparedSQLStatement();
+		String statement = "SELECT registrant_event_id, registrant_id, registrant_event, registrant_type, registrant_source, registrant_class, registrant_beneficiary, registrant_emergency_contact, registrant_emergency_phone from Registrant_Event";
+		int index = 1;
+		sql.setStatement(statement);
+		
+		setSQLStatement(sql);
+		
+		@SuppressWarnings("unchecked")
+		ArrayList<RegistrantEventObject> result = (ArrayList<RegistrantEventObject>) super.list();
+		
+	return result;
+	}
+	
+	
+	/**
 	 * Returns the ArrayList of RegistrantEventObjects.
 	 * It is Usually all the rows that match the criteria in the database.
 	 * This calls getResultObjects method in the super class.
 	 *
-	 * @return     ArrayList of RegistrantEventObject 
+	 * @return	 ArrayList of RegistrantEventObject 
 	 *
-	 * @throws     DBException     If a database error occurs
+	 * @throws	 DBException	 If a database error occurs
 	 *
-	 * @see     #getResultObjects(ResultSet)
+	 * @see	 #getResultObjects(ResultSet)
 	 */
-    
+	
 	public Object list(Object args) throws DBException {
 		PreparedSQLStatement sql = new PreparedSQLStatement();
 		String statement = "SELECT registrant_event_id, registrant_id, registrant_event, registrant_type, registrant_source, registrant_class, registrant_beneficiary, registrant_emergency_contact, registrant_emergency_phone from Registrant_Event";
@@ -169,207 +169,206 @@ public class PersistentRegistrantEvent extends PersistentObject {
 			sql.setInParams(new SQLParam(index++,  passedRegistrantEventObject.getRegistrantEmergencyPhone(), Types.VARCHAR));
 		}
 		sql.setStatement(statement);
-        
+		
 		DebugHandler.debug(statement);
 		setSQLStatement(sql);
-        
+		
 		@SuppressWarnings("unchecked")
 		ArrayList<RegistrantEventObject> result = (ArrayList<RegistrantEventObject>) super.list();
-        
+		
 		return result;
 	}
-    
 	
-    /**
+	
+	/**
 	 * Returns the ArrayList of one RegistrantEventObject.
 	 * It is Usually the row that matches primary key.
 	 * This calls getResultSetObject method in the super class.
 	 *
-	 * @return     ArrayList of one RegistrantEventObject 
+	 * @return	 ArrayList of one RegistrantEventObject 
 	 *
-	 * @throws     DBException     If a database error occurs
+	 * @throws	 DBException	 If a database error occurs
 	 *
-	 * @see     #getResultSetObject(ResultSet)
+	 * @see	 #getResultSetObject(ResultSet)
 	 */
-    
-	public Object fetch() throws DBException {
-	    PreparedSQLStatement sql = new PreparedSQLStatement();
-	    String statement = "SELECT registrant_event_id, registrant_id, registrant_event, registrant_type, registrant_source, registrant_class, registrant_beneficiary, registrant_emergency_contact, registrant_emergency_phone from Registrant_Event where registrant_event_id = ? ";
-	    int index = 1;
-	    sql.setStatement(statement);
-	    sql.setInParams(new SQLParam(index++, new Integer(registrantEventObject.getRegistrantEventId()), Types.INTEGER));
-	    setSQLStatement(sql);
-        
-	    @SuppressWarnings("unchecked")
-	    ArrayList<RegistrantEventObject> result = (ArrayList<RegistrantEventObject>) super.fetch();
-        
-	    return result;
-	}
-    
 	
-    /**
+	public Object fetch() throws DBException {
+		PreparedSQLStatement sql = new PreparedSQLStatement();
+		String statement = "SELECT registrant_event_id, registrant_id, registrant_event, registrant_type, registrant_source, registrant_class, registrant_beneficiary, registrant_emergency_contact, registrant_emergency_phone from Registrant_Event where registrant_event_id = ? ";
+		int index = 1;
+		sql.setStatement(statement);
+		sql.setInParams(new SQLParam(index++, new Integer(registrantEventObject.getRegistrantEventId()), Types.INTEGER));
+		setSQLStatement(sql);
+		
+		@SuppressWarnings("unchecked")
+		ArrayList<RegistrantEventObject> result = (ArrayList<RegistrantEventObject>) super.fetch();
+		
+		return result;
+	}
+	
+	
+	/**
 	 *
 	 * Inserts a row in the database.  The values
 	 * are got from the registrantEventObject.
 	 * Returns an Integer Object with value 0 on success
 	 * and -1 on faliure.
 	 *
-	 * @return      Returns an Integer indicating success/failure of the database operation
+	 * @return	  Returns an Integer indicating success/failure of the database operation
 	 *
-	 * @throws     DBException     If a database error occurs
+	 * @throws	 DBException	 If a database error occurs
 	 */
-    
-	public Object insert() throws DBException {
-	    PreparedSQLStatement sql = new PreparedSQLStatement();
-	    String statement;
-	    int index = 1;
-
-	    if ( AppConstants.DB_TYPE.equalsIgnoreCase(Constants.ORACLE) ) {
-	        statement = "INSERT INTO Registrant_Event (registrant_event_id, registrant_id, registrant_event, registrant_type, registrant_source, registrant_class, registrant_beneficiary, registrant_emergency_contact, registrant_emergency_phone) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?) ";
-	        sql.setStatement(statement);
-	        sql.setInParams(new SQLParam(index++, new Integer(registrantEventObject.getRegistrantEventId()), Types.INTEGER));
-	    } else {
-	        statement = "INSERT INTO Registrant_Event (registrant_id, registrant_event, registrant_type, registrant_source, registrant_class, registrant_beneficiary, registrant_emergency_contact, registrant_emergency_phone) VALUES(?, ?, ?, ?, ?, ?, ?, ?) ";
-	        sql.setStatement(statement);
-	    }
-	    sql.setInParams(new SQLParam(index++, new Integer(registrantEventObject.getRegistrantId()), Types.INTEGER));
-	    sql.setInParams(new SQLParam(index++, new Integer(registrantEventObject.getRegistrantEvent()), Types.INTEGER));
-	    sql.setInParams(new SQLParam(index++, new Integer(registrantEventObject.getRegistrantType()), Types.INTEGER));
-	    sql.setInParams(new SQLParam(index++, new Integer(registrantEventObject.getRegistrantSource()), Types.INTEGER));
-	    sql.setInParams(new SQLParam(index++, new Integer(registrantEventObject.getRegistrantClass()), Types.INTEGER));
-	    sql.setInParams(new SQLParam(index++, new Integer(registrantEventObject.getRegistrantBeneficiary()), Types.INTEGER));
-	    sql.setInParams(new SQLParam(index++,  registrantEventObject.getRegistrantEmergencyContact(), Types.VARCHAR));
-	    sql.setInParams(new SQLParam(index++,  registrantEventObject.getRegistrantEmergencyPhone(), Types.VARCHAR));
-	    setSQLStatement(sql);
-        
-	    Integer result = (Integer) super.insert();
-        
-	    return result;
-	}
-    
 	
-    /**
+	public Object insert() throws DBException {
+		PreparedSQLStatement sql = new PreparedSQLStatement();
+		String statement;
+		int index = 1;
+
+		if ( AppConstants.DB_TYPE.equalsIgnoreCase(Constants.ORACLE) ) {
+			statement = "INSERT INTO Registrant_Event (registrant_event_id, registrant_id, registrant_event, registrant_type, registrant_source, registrant_class, registrant_beneficiary, registrant_emergency_contact, registrant_emergency_phone) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?) ";
+			sql.setStatement(statement);
+			sql.setInParams(new SQLParam(index++, new Integer(registrantEventObject.getRegistrantEventId()), Types.INTEGER));
+		} else {
+			statement = "INSERT INTO Registrant_Event (registrant_id, registrant_event, registrant_type, registrant_source, registrant_class, registrant_beneficiary, registrant_emergency_contact, registrant_emergency_phone) VALUES(?, ?, ?, ?, ?, ?, ?, ?) ";
+			sql.setStatement(statement);
+		}
+		sql.setInParams(new SQLParam(index++, new Integer(registrantEventObject.getRegistrantId()), Types.INTEGER));
+		sql.setInParams(new SQLParam(index++, new Integer(registrantEventObject.getRegistrantEvent()), Types.INTEGER));
+		sql.setInParams(new SQLParam(index++, new Integer(registrantEventObject.getRegistrantType()), Types.INTEGER));
+		sql.setInParams(new SQLParam(index++, new Integer(registrantEventObject.getRegistrantSource()), Types.INTEGER));
+		sql.setInParams(new SQLParam(index++, new Integer(registrantEventObject.getRegistrantClass()), Types.INTEGER));
+		sql.setInParams(new SQLParam(index++, new Integer(registrantEventObject.getRegistrantBeneficiary()), Types.INTEGER));
+		sql.setInParams(new SQLParam(index++,  registrantEventObject.getRegistrantEmergencyContact(), Types.VARCHAR));
+		sql.setInParams(new SQLParam(index++,  registrantEventObject.getRegistrantEmergencyPhone(), Types.VARCHAR));
+		setSQLStatement(sql);
+		
+		Integer result = (Integer) super.insert();
+		
+		return result;
+	}
+	
+	
+	/**
 	 *
 	 * Deletes a row in the database. The key is 
 	 * in the registrantEventObject.
 	 * Returns an Integer Object with value 0 on success
 	 * and -1 on faliure.
 	 *
-	 * @return      Returns an Integer indicating success/failure of the database operation
+	 * @return	  Returns an Integer indicating success/failure of the database operation
 	 *
-	 * @throws     DBException     If a database error occurs
+	 * @throws	 DBException	 If a database error occurs
 	 */
-    
-	public Object delete() throws DBException {
-	    PreparedSQLStatement sql = new PreparedSQLStatement();
-	    String statement = "DELETE FROM Registrant_Event WHERE registrant_event_id = ? ";
-	    int index = 1;
-	    sql.setStatement(statement);
-	    sql.setInParams(new SQLParam(index++, new Integer(registrantEventObject.getRegistrantEventId()), Types.INTEGER));
-	    setSQLStatement(sql);
-        
-	    Integer result = (Integer) super.delete();
-        
-	    return result;
-	}
-    
 	
-    /**
+	public Object delete() throws DBException {
+		PreparedSQLStatement sql = new PreparedSQLStatement();
+		String statement = "DELETE FROM Registrant_Event WHERE registrant_event_id = ? ";
+		int index = 1;
+		sql.setStatement(statement);
+		sql.setInParams(new SQLParam(index++, new Integer(registrantEventObject.getRegistrantEventId()), Types.INTEGER));
+		setSQLStatement(sql);
+		
+		Integer result = (Integer) super.delete();
+		
+		return result;
+	}
+	
+	
+	/**
 	 *
 	 * Updates a row in the database. The values are 
 	 * got from the registrantEventObject.
 	 * Returns an Integer Object with value 0 on success
 	 * and -1 on faliure.
 	 *
-	 * @return      Returns an Integer indicating success/failure of the database operation
+	 * @return	  Returns an Integer indicating success/failure of the database operation
 	 *
-	 * @throws     DBException     If a database error occurs
+	 * @throws	 DBException	 If a database error occurs
 	 */
-    
-	public Object update() throws DBException {
-	    PreparedSQLStatement sql = new PreparedSQLStatement();
-	    String statement = "UPDATE Registrant_Event SET registrant_event_id = ?, registrant_id = ?, registrant_event = ?, registrant_type = ?, registrant_source = ?, registrant_class = ?, registrant_beneficiary = ?, registrant_emergency_contact = ?, registrant_emergency_phone = ? where registrant_event_id = ? ";
-	    int index = 1;
-	    sql.setStatement(statement);
-	    sql.setInParams(new SQLParam(index++, new Integer(registrantEventObject.getRegistrantEventId()), Types.INTEGER));
-	    sql.setInParams(new SQLParam(index++, new Integer(registrantEventObject.getRegistrantId()), Types.INTEGER));
-	    sql.setInParams(new SQLParam(index++, new Integer(registrantEventObject.getRegistrantEvent()), Types.INTEGER));
-	    sql.setInParams(new SQLParam(index++, new Integer(registrantEventObject.getRegistrantType()), Types.INTEGER));
-	    sql.setInParams(new SQLParam(index++, new Integer(registrantEventObject.getRegistrantSource()), Types.INTEGER));
-	    sql.setInParams(new SQLParam(index++, new Integer(registrantEventObject.getRegistrantClass()), Types.INTEGER));
-	    sql.setInParams(new SQLParam(index++, new Integer(registrantEventObject.getRegistrantBeneficiary()), Types.INTEGER));
-	    sql.setInParams(new SQLParam(index++,  registrantEventObject.getRegistrantEmergencyContact(), Types.VARCHAR));
-	    sql.setInParams(new SQLParam(index++,  registrantEventObject.getRegistrantEmergencyPhone(), Types.VARCHAR));
-	    sql.setInParams(new SQLParam(index++, new Integer(registrantEventObject.getRegistrantEventId()), Types.INTEGER));
-	    setSQLStatement(sql);
-        
-	    Integer result = (Integer) super.update();
-        
-	    return result;
-	}
-    
 	
-    /**
+	public Object update() throws DBException {
+		PreparedSQLStatement sql = new PreparedSQLStatement();
+		String statement = "UPDATE Registrant_Event SET registrant_event_id = ?, registrant_id = ?, registrant_event = ?, registrant_type = ?, registrant_source = ?, registrant_class = ?, registrant_beneficiary = ?, registrant_emergency_contact = ?, registrant_emergency_phone = ? where registrant_event_id = ? ";
+		int index = 1;
+		sql.setStatement(statement);
+		sql.setInParams(new SQLParam(index++, new Integer(registrantEventObject.getRegistrantEventId()), Types.INTEGER));
+		sql.setInParams(new SQLParam(index++, new Integer(registrantEventObject.getRegistrantId()), Types.INTEGER));
+		sql.setInParams(new SQLParam(index++, new Integer(registrantEventObject.getRegistrantEvent()), Types.INTEGER));
+		sql.setInParams(new SQLParam(index++, new Integer(registrantEventObject.getRegistrantType()), Types.INTEGER));
+		sql.setInParams(new SQLParam(index++, new Integer(registrantEventObject.getRegistrantSource()), Types.INTEGER));
+		sql.setInParams(new SQLParam(index++, new Integer(registrantEventObject.getRegistrantClass()), Types.INTEGER));
+		sql.setInParams(new SQLParam(index++, new Integer(registrantEventObject.getRegistrantBeneficiary()), Types.INTEGER));
+		sql.setInParams(new SQLParam(index++,  registrantEventObject.getRegistrantEmergencyContact(), Types.VARCHAR));
+		sql.setInParams(new SQLParam(index++,  registrantEventObject.getRegistrantEmergencyPhone(), Types.VARCHAR));
+		sql.setInParams(new SQLParam(index++, new Integer(registrantEventObject.getRegistrantEventId()), Types.INTEGER));
+		setSQLStatement(sql);
+		
+		Integer result = (Integer) super.update();
+		
+		return result;
+	}
+	
+	
+	/**
 	 *
 	 * Returns a ArrayList of RegistrantEventObject from the ResultSet. The values for 
 	 * each object is got from the ResultSet.
 	 * This is used by the list method.
 	 *
-	 * @param rs      the ResultSet.
+	 * @param rs	  the ResultSet.
 	 *
-	 * @return      Returns a ArrayList of RegistrantEventObject from the ResultSet.
+	 * @return	  Returns a ArrayList of RegistrantEventObject from the ResultSet.
 	 *
-	 * @see     #list()
+	 * @see	 #list()
 	 *
 	 */
-    
-	public Object getResultObjects(ResultSet rs) {
-	    ArrayList<RegistrantEventObject> result = new ArrayList<RegistrantEventObject>();
-        
-	    try {
-	        while(rs.next()) {
-	            int index = 1;
-	            RegistrantEventObject f = new RegistrantEventObject();
-	            f.setRegistrantEventId(rs.getInt(index++));
-	            f.setRegistrantId(rs.getInt(index++));
-	            f.setRegistrantEvent(rs.getInt(index++));
-	            f.setRegistrantType(rs.getInt(index++));
-	            f.setRegistrantSource(rs.getInt(index++));
-	            f.setRegistrantClass(rs.getInt(index++));
-	            f.setRegistrantBeneficiary(rs.getInt(index++));
-	            f.setRegistrantEmergencyContact(rs.getString(index++));
-	            f.setRegistrantEmergencyPhone(rs.getString(index++));
-	            result.add(f);
-	        }
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	    }
-	    return result;
-	}
-    
 	
-    /**
+	public Object getResultObjects(ResultSet rs) {
+		ArrayList<RegistrantEventObject> result = new ArrayList<RegistrantEventObject>();
+		try {
+			while(rs.next()) {
+				int index = 1;
+				RegistrantEventObject f = new RegistrantEventObject();
+				f.setRegistrantEventId(rs.getInt(index++));
+				f.setRegistrantId(rs.getInt(index++));
+				f.setRegistrantEvent(rs.getInt(index++));
+				f.setRegistrantType(rs.getInt(index++));
+				f.setRegistrantSource(rs.getInt(index++));
+				f.setRegistrantClass(rs.getInt(index++));
+				f.setRegistrantBeneficiary(rs.getInt(index++));
+				f.setRegistrantEmergencyContact(rs.getString(index++));
+				f.setRegistrantEmergencyPhone(rs.getString(index++));
+				result.add(f);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
+	
+	/**
 	 *
 	 * Returns a RegistrantEventObject from the ResultSet. The values for 
 	 * each object is got from the ResultSet.
 	 *
 	 * This is used by the fetch method.
-	 * @param rs      the ResultSet.
+	 * @param rs	  the ResultSet.
 	 *
-	 * @return      Returns a RegistrantEventObject from the ResultSet.
+	 * @return	  Returns a RegistrantEventObject from the ResultSet.
 	 *
-	 * @see     #fetch()
+	 * @see	 #fetch()
 	 *
 	 */
-    
+	
 	public Object getResultSetObject(ResultSet rs) {
-	    try {
-	    @SuppressWarnings("unchecked")
-	        ArrayList<RegistrantEventObject> result = (ArrayList<RegistrantEventObject>) getResultObjects(rs);
-	        return result.get(0);
-	    } catch (Exception e) {
-	        return null;
-	    }
+		try {
+			@SuppressWarnings("unchecked")
+			ArrayList<RegistrantEventObject> result = (ArrayList<RegistrantEventObject>) getResultObjects(rs);
+			return result.get(0);
+		} catch (Exception e) {
+			return null;
+		}
 	}
 }
-    
+	

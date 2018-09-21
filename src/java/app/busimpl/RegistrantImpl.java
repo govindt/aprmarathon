@@ -29,18 +29,18 @@ import app.util.AppConstants;
 public class RegistrantImpl implements RegistrantInterface  {
 	private String REGISTRANT = "RegistrantInterface.getAllRegistrant";
 	
-    /**
+	/**
 	 *
 	 * Implementation that returns the RegistrantObject given a RegistrantObject filled with values that will be used for query from the underlying datasource.
 	 *
 	 * @param registrant_obj	RegistrantObject
 	 *
-	 * @return      Returns the ArrayList of RegistrantObjects
+	 * @return	  Returns the ArrayList of RegistrantObjects
 	 *
 	 * @throws AppException if the underlying operation fails
 	 *
 	 */
-    
+	
 	public ArrayList<RegistrantObject> getRegistrants(RegistrantObject registrant_obj) throws AppException{
 		RegistrantObject[] registrantObjectArr = getAllRegistrants();
 		if ( registrant_obj.getRegistrantId() == Constants.GET_ALL ) {
@@ -60,19 +60,19 @@ public class RegistrantImpl implements RegistrantInterface  {
 		}
 	}
 	
-    /**
+	/**
 	 *
 	 * Implementation of the method that returns the RegistrantObject from the underlying datasource.
 	 * given registrant_id.
 	 *
-	 * @param registrant_id     int
+	 * @param registrant_id	 int
 	 *
-	 * @return      Returns the RegistrantObject
+	 * @return	  Returns the RegistrantObject
 	 *
 	 * @throws AppException if the operation fails
 	 *
 	 */
-    
+	
 	public RegistrantObject getRegistrant(int registrant_id) throws AppException{
 		RegistrantObject[] registrantObjectArr = getAllRegistrants();
 		if ( registrantObjectArr == null )
@@ -97,18 +97,18 @@ public class RegistrantImpl implements RegistrantInterface  {
 		}
 		return null;
 	}
-    
 	
-    /**
+	
+	/**
 	 *
 	 * Implementation that returns all the <code>RegistrantObjects</code> from the underlying datasource.
 	 *
-	 * @return      Returns an Array of <code>RegistrantObject</code>
+	 * @return	  Returns an Array of <code>RegistrantObject</code>
 	 *
 	 * @throws AppException if the operation fails
 	 *
 	 */
-    
+	
 	public RegistrantObject[] getAllRegistrants() throws AppException{
 		RegistrantObject registrantObject = new RegistrantObject();
 		RegistrantObject[] registrantObjectArr = (RegistrantObject[])Util.getAppCache().get(REGISTRANT);
@@ -127,18 +127,18 @@ public class RegistrantImpl implements RegistrantInterface  {
 		}
 		return registrantObjectArr;
 	}
-    
 	
-    /**
+	
+	/**
 	 *
 	 * Implementation to add the <code>RegistrantObject</code> to the underlying datasource.
 	 *
-	 * @param registrantObject     RegistrantObject
+	 * @param registrantObject	 RegistrantObject
 	 *
 	 * @throws AppException if the operation fails
 	 *
 	 */
-    
+	
 	public Integer addRegistrant(RegistrantObject registrantObject) throws AppException{
 		if ( AppConstants.DB_TYPE.equalsIgnoreCase(Constants.ORACLE) ) {
 			long l = DBUtil.getNextId("Registrant_seq");
@@ -181,16 +181,16 @@ public class RegistrantImpl implements RegistrantInterface  {
 	}
 	
 	
-    /**
+	/**
 	 *
 	 * Implementation to update the <code>RegistrantObject</code> in the underlying datasource.
 	 *
-	 * @param registrantObject     RegistrantObject
+	 * @param registrantObject	 RegistrantObject
 	 *
 	 * @throws AppException if the operation fails
 	 *
 	 */
-    
+	
 	public Integer updateRegistrant(RegistrantObject registrantObject) throws AppException{
 		RegistrantObject newRegistrantObject = getRegistrant(registrantObject.getRegistrantId()); // This call will make sure cache/db are in sync
 		Integer i = (Integer)DBUtil.update(registrantObject);
@@ -209,18 +209,18 @@ public class RegistrantImpl implements RegistrantInterface  {
 		}
 		return i;
 	}
-    
 	
-    /**
+	
+	/**
 	 *
 	 * Implementation to delete the <code>RegistrantObject</code> in the underlying datasource.
 	 *
-	 * @param registrantObject     RegistrantObject
+	 * @param registrantObject	 RegistrantObject
 	 *
 	 * @throws AppException if the operation fails
 	 *
 	 */
-    
+	
 	public Integer deleteRegistrant(RegistrantObject registrantObject) throws AppException{
 	RegistrantObject newRegistrantObject = getRegistrant(registrantObject.getRegistrantId()); // This call will make sure cache/db are in sync
 	RegistrantObject[] registrantObjectArr = getAllRegistrants();

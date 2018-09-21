@@ -29,18 +29,18 @@ import app.util.AppConstants;
 public class ResultImpl implements ResultInterface  {
 	private String RESULT = "ResultInterface.getAllResult";
 	
-    /**
+	/**
 	 *
 	 * Implementation that returns the ResultObject given a ResultObject filled with values that will be used for query from the underlying datasource.
 	 *
 	 * @param result_obj	ResultObject
 	 *
-	 * @return      Returns the ArrayList of ResultObjects
+	 * @return	  Returns the ArrayList of ResultObjects
 	 *
 	 * @throws AppException if the underlying operation fails
 	 *
 	 */
-    
+	
 	public ArrayList<ResultObject> getResults(ResultObject result_obj) throws AppException{
 		ResultObject[] resultObjectArr = getAllResults();
 		if ( result_obj.getResultId() == Constants.GET_ALL ) {
@@ -60,19 +60,19 @@ public class ResultImpl implements ResultInterface  {
 		}
 	}
 	
-    /**
+	/**
 	 *
 	 * Implementation of the method that returns the ResultObject from the underlying datasource.
 	 * given result_id.
 	 *
-	 * @param result_id     int
+	 * @param result_id	 int
 	 *
-	 * @return      Returns the ResultObject
+	 * @return	  Returns the ResultObject
 	 *
 	 * @throws AppException if the operation fails
 	 *
 	 */
-    
+	
 	public ResultObject getResult(int result_id) throws AppException{
 		ResultObject[] resultObjectArr = getAllResults();
 		if ( resultObjectArr == null )
@@ -97,18 +97,18 @@ public class ResultImpl implements ResultInterface  {
 		}
 		return null;
 	}
-    
 	
-    /**
+	
+	/**
 	 *
 	 * Implementation that returns all the <code>ResultObjects</code> from the underlying datasource.
 	 *
-	 * @return      Returns an Array of <code>ResultObject</code>
+	 * @return	  Returns an Array of <code>ResultObject</code>
 	 *
 	 * @throws AppException if the operation fails
 	 *
 	 */
-    
+	
 	public ResultObject[] getAllResults() throws AppException{
 		ResultObject resultObject = new ResultObject();
 		ResultObject[] resultObjectArr = (ResultObject[])Util.getAppCache().get(RESULT);
@@ -127,18 +127,18 @@ public class ResultImpl implements ResultInterface  {
 		}
 		return resultObjectArr;
 	}
-    
 	
-    /**
+	
+	/**
 	 *
 	 * Implementation to add the <code>ResultObject</code> to the underlying datasource.
 	 *
-	 * @param resultObject     ResultObject
+	 * @param resultObject	 ResultObject
 	 *
 	 * @throws AppException if the operation fails
 	 *
 	 */
-    
+	
 	public Integer addResult(ResultObject resultObject) throws AppException{
 		if ( AppConstants.DB_TYPE.equalsIgnoreCase(Constants.ORACLE) ) {
 			long l = DBUtil.getNextId("Result_seq");
@@ -181,16 +181,16 @@ public class ResultImpl implements ResultInterface  {
 	}
 	
 	
-    /**
+	/**
 	 *
 	 * Implementation to update the <code>ResultObject</code> in the underlying datasource.
 	 *
-	 * @param resultObject     ResultObject
+	 * @param resultObject	 ResultObject
 	 *
 	 * @throws AppException if the operation fails
 	 *
 	 */
-    
+	
 	public Integer updateResult(ResultObject resultObject) throws AppException{
 		ResultObject newResultObject = getResult(resultObject.getResultId()); // This call will make sure cache/db are in sync
 		Integer i = (Integer)DBUtil.update(resultObject);
@@ -209,18 +209,18 @@ public class ResultImpl implements ResultInterface  {
 		}
 		return i;
 	}
-    
 	
-    /**
+	
+	/**
 	 *
 	 * Implementation to delete the <code>ResultObject</code> in the underlying datasource.
 	 *
-	 * @param resultObject     ResultObject
+	 * @param resultObject	 ResultObject
 	 *
 	 * @throws AppException if the operation fails
 	 *
 	 */
-    
+	
 	public Integer deleteResult(ResultObject resultObject) throws AppException{
 	ResultObject newResultObject = getResult(resultObject.getResultId()); // This call will make sure cache/db are in sync
 	ResultObject[] resultObjectArr = getAllResults();

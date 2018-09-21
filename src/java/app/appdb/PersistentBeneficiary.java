@@ -33,56 +33,56 @@ public class PersistentBeneficiary extends PersistentObject {
 	private BeneficiaryObject beneficiaryObject;
 	
 	
-    /**
+	/**
 	 * Constructs a Persistent Object for the BeneficiaryObject
 	 *
-	 * @param beneficiaryObject    the BeneficiaryObject 
+	 * @param beneficiaryObject	the BeneficiaryObject 
 	 */
-    
-	public PersistentBeneficiary (BeneficiaryObject beneficiaryObject) {
-	    this.beneficiaryObject = beneficiaryObject;
-	}
-    
 	
-    /**
+	public PersistentBeneficiary (BeneficiaryObject beneficiaryObject) {
+		this.beneficiaryObject = beneficiaryObject;
+	}
+	
+	
+	/**
 	 * Returns the ArrayList of BeneficiaryObject.
 	 * It is Usually all the rows in the database.
 	 * This calls getResultObjects method in the super class.
 	 *
-	 * @return     ArrayList of BeneficiaryObject 
+	 * @return	ArrayList of BeneficiaryObject 
 	 *
-	 * @throws     DBException     If a database error occurs
+	 * @throws	DBException	 If a database error occurs
 	 *
-	 * @see     #getResultObjects(ResultSet)
+	 * @see	 #getResultObjects(ResultSet)
 	 */
-    
-	public Object list() throws DBException {
-	    PreparedSQLStatement sql = new PreparedSQLStatement();
-	    String statement = "SELECT beneficiary_id, beneficiary_name, beneficiary_event from Beneficiary";
-	    int index = 1;
-	    sql.setStatement(statement);
-        
-	    setSQLStatement(sql);
-        
-	    @SuppressWarnings("unchecked")
-	    ArrayList<BeneficiaryObject> result = (ArrayList<BeneficiaryObject>) super.list();
-        
-	    return result;
-	}
-    
 	
-    /**
+	public Object list() throws DBException {
+		PreparedSQLStatement sql = new PreparedSQLStatement();
+		String statement = "SELECT beneficiary_id, beneficiary_name, beneficiary_event from Beneficiary";
+		int index = 1;
+		sql.setStatement(statement);
+		
+		setSQLStatement(sql);
+		
+		@SuppressWarnings("unchecked")
+		ArrayList<BeneficiaryObject> result = (ArrayList<BeneficiaryObject>) super.list();
+		
+	return result;
+	}
+	
+	
+	/**
 	 * Returns the ArrayList of BeneficiaryObjects.
 	 * It is Usually all the rows that match the criteria in the database.
 	 * This calls getResultObjects method in the super class.
 	 *
-	 * @return     ArrayList of BeneficiaryObject 
+	 * @return	 ArrayList of BeneficiaryObject 
 	 *
-	 * @throws     DBException     If a database error occurs
+	 * @throws	 DBException	 If a database error occurs
 	 *
-	 * @see     #getResultObjects(ResultSet)
+	 * @see	 #getResultObjects(ResultSet)
 	 */
-    
+	
 	public Object list(Object args) throws DBException {
 		PreparedSQLStatement sql = new PreparedSQLStatement();
 		String statement = "SELECT beneficiary_id, beneficiary_name, beneficiary_event from Beneficiary";
@@ -115,189 +115,188 @@ public class PersistentBeneficiary extends PersistentObject {
 			sql.setInParams(new SQLParam(index++, new Integer(passedBeneficiaryObject.getBeneficiaryEvent()), Types.INTEGER));
 		}
 		sql.setStatement(statement);
-        
+		
 		DebugHandler.debug(statement);
 		setSQLStatement(sql);
-        
+		
 		@SuppressWarnings("unchecked")
 		ArrayList<BeneficiaryObject> result = (ArrayList<BeneficiaryObject>) super.list();
-        
+		
 		return result;
 	}
-    
 	
-    /**
+	
+	/**
 	 * Returns the ArrayList of one BeneficiaryObject.
 	 * It is Usually the row that matches primary key.
 	 * This calls getResultSetObject method in the super class.
 	 *
-	 * @return     ArrayList of one BeneficiaryObject 
+	 * @return	 ArrayList of one BeneficiaryObject 
 	 *
-	 * @throws     DBException     If a database error occurs
+	 * @throws	 DBException	 If a database error occurs
 	 *
-	 * @see     #getResultSetObject(ResultSet)
+	 * @see	 #getResultSetObject(ResultSet)
 	 */
-    
-	public Object fetch() throws DBException {
-	    PreparedSQLStatement sql = new PreparedSQLStatement();
-	    String statement = "SELECT beneficiary_id, beneficiary_name, beneficiary_event from Beneficiary where beneficiary_id = ? ";
-	    int index = 1;
-	    sql.setStatement(statement);
-	    sql.setInParams(new SQLParam(index++, new Integer(beneficiaryObject.getBeneficiaryId()), Types.INTEGER));
-	    setSQLStatement(sql);
-        
-	    @SuppressWarnings("unchecked")
-	    ArrayList<BeneficiaryObject> result = (ArrayList<BeneficiaryObject>) super.fetch();
-        
-	    return result;
-	}
-    
 	
-    /**
+	public Object fetch() throws DBException {
+		PreparedSQLStatement sql = new PreparedSQLStatement();
+		String statement = "SELECT beneficiary_id, beneficiary_name, beneficiary_event from Beneficiary where beneficiary_id = ? ";
+		int index = 1;
+		sql.setStatement(statement);
+		sql.setInParams(new SQLParam(index++, new Integer(beneficiaryObject.getBeneficiaryId()), Types.INTEGER));
+		setSQLStatement(sql);
+		
+		@SuppressWarnings("unchecked")
+		ArrayList<BeneficiaryObject> result = (ArrayList<BeneficiaryObject>) super.fetch();
+		
+		return result;
+	}
+	
+	
+	/**
 	 *
 	 * Inserts a row in the database.  The values
 	 * are got from the beneficiaryObject.
 	 * Returns an Integer Object with value 0 on success
 	 * and -1 on faliure.
 	 *
-	 * @return      Returns an Integer indicating success/failure of the database operation
+	 * @return	  Returns an Integer indicating success/failure of the database operation
 	 *
-	 * @throws     DBException     If a database error occurs
+	 * @throws	 DBException	 If a database error occurs
 	 */
-    
-	public Object insert() throws DBException {
-	    PreparedSQLStatement sql = new PreparedSQLStatement();
-	    String statement;
-	    int index = 1;
-
-	    if ( AppConstants.DB_TYPE.equalsIgnoreCase(Constants.ORACLE) ) {
-	        statement = "INSERT INTO Beneficiary (beneficiary_id, beneficiary_name, beneficiary_event) VALUES(?, ?, ?) ";
-	        sql.setStatement(statement);
-	        sql.setInParams(new SQLParam(index++, new Integer(beneficiaryObject.getBeneficiaryId()), Types.INTEGER));
-	    } else {
-	        statement = "INSERT INTO Beneficiary (beneficiary_name, beneficiary_event) VALUES(?, ?) ";
-	        sql.setStatement(statement);
-	    }
-	    sql.setInParams(new SQLParam(index++,  beneficiaryObject.getBeneficiaryName(), Types.VARCHAR));
-	    sql.setInParams(new SQLParam(index++, new Integer(beneficiaryObject.getBeneficiaryEvent()), Types.INTEGER));
-	    setSQLStatement(sql);
-        
-	    Integer result = (Integer) super.insert();
-        
-	    return result;
-	}
-    
 	
-    /**
+	public Object insert() throws DBException {
+		PreparedSQLStatement sql = new PreparedSQLStatement();
+		String statement;
+		int index = 1;
+
+		if ( AppConstants.DB_TYPE.equalsIgnoreCase(Constants.ORACLE) ) {
+			statement = "INSERT INTO Beneficiary (beneficiary_id, beneficiary_name, beneficiary_event) VALUES(?, ?, ?) ";
+			sql.setStatement(statement);
+			sql.setInParams(new SQLParam(index++, new Integer(beneficiaryObject.getBeneficiaryId()), Types.INTEGER));
+		} else {
+			statement = "INSERT INTO Beneficiary (beneficiary_name, beneficiary_event) VALUES(?, ?) ";
+			sql.setStatement(statement);
+		}
+		sql.setInParams(new SQLParam(index++,  beneficiaryObject.getBeneficiaryName(), Types.VARCHAR));
+		sql.setInParams(new SQLParam(index++, new Integer(beneficiaryObject.getBeneficiaryEvent()), Types.INTEGER));
+		setSQLStatement(sql);
+		
+		Integer result = (Integer) super.insert();
+		
+		return result;
+	}
+	
+	
+	/**
 	 *
 	 * Deletes a row in the database. The key is 
 	 * in the beneficiaryObject.
 	 * Returns an Integer Object with value 0 on success
 	 * and -1 on faliure.
 	 *
-	 * @return      Returns an Integer indicating success/failure of the database operation
+	 * @return	  Returns an Integer indicating success/failure of the database operation
 	 *
-	 * @throws     DBException     If a database error occurs
+	 * @throws	 DBException	 If a database error occurs
 	 */
-    
-	public Object delete() throws DBException {
-	    PreparedSQLStatement sql = new PreparedSQLStatement();
-	    String statement = "DELETE FROM Beneficiary WHERE beneficiary_id = ? ";
-	    int index = 1;
-	    sql.setStatement(statement);
-	    sql.setInParams(new SQLParam(index++, new Integer(beneficiaryObject.getBeneficiaryId()), Types.INTEGER));
-	    setSQLStatement(sql);
-        
-	    Integer result = (Integer) super.delete();
-        
-	    return result;
-	}
-    
 	
-    /**
+	public Object delete() throws DBException {
+		PreparedSQLStatement sql = new PreparedSQLStatement();
+		String statement = "DELETE FROM Beneficiary WHERE beneficiary_id = ? ";
+		int index = 1;
+		sql.setStatement(statement);
+		sql.setInParams(new SQLParam(index++, new Integer(beneficiaryObject.getBeneficiaryId()), Types.INTEGER));
+		setSQLStatement(sql);
+		
+		Integer result = (Integer) super.delete();
+		
+		return result;
+	}
+	
+	
+	/**
 	 *
 	 * Updates a row in the database. The values are 
 	 * got from the beneficiaryObject.
 	 * Returns an Integer Object with value 0 on success
 	 * and -1 on faliure.
 	 *
-	 * @return      Returns an Integer indicating success/failure of the database operation
+	 * @return	  Returns an Integer indicating success/failure of the database operation
 	 *
-	 * @throws     DBException     If a database error occurs
+	 * @throws	 DBException	 If a database error occurs
 	 */
-    
-	public Object update() throws DBException {
-	    PreparedSQLStatement sql = new PreparedSQLStatement();
-	    String statement = "UPDATE Beneficiary SET beneficiary_id = ?, beneficiary_name = ?, beneficiary_event = ? where beneficiary_id = ? ";
-	    int index = 1;
-	    sql.setStatement(statement);
-	    sql.setInParams(new SQLParam(index++, new Integer(beneficiaryObject.getBeneficiaryId()), Types.INTEGER));
-	    sql.setInParams(new SQLParam(index++,  beneficiaryObject.getBeneficiaryName(), Types.VARCHAR));
-	    sql.setInParams(new SQLParam(index++, new Integer(beneficiaryObject.getBeneficiaryEvent()), Types.INTEGER));
-	    sql.setInParams(new SQLParam(index++, new Integer(beneficiaryObject.getBeneficiaryId()), Types.INTEGER));
-	    setSQLStatement(sql);
-        
-	    Integer result = (Integer) super.update();
-        
-	    return result;
-	}
-    
 	
-    /**
+	public Object update() throws DBException {
+		PreparedSQLStatement sql = new PreparedSQLStatement();
+		String statement = "UPDATE Beneficiary SET beneficiary_id = ?, beneficiary_name = ?, beneficiary_event = ? where beneficiary_id = ? ";
+		int index = 1;
+		sql.setStatement(statement);
+		sql.setInParams(new SQLParam(index++, new Integer(beneficiaryObject.getBeneficiaryId()), Types.INTEGER));
+		sql.setInParams(new SQLParam(index++,  beneficiaryObject.getBeneficiaryName(), Types.VARCHAR));
+		sql.setInParams(new SQLParam(index++, new Integer(beneficiaryObject.getBeneficiaryEvent()), Types.INTEGER));
+		sql.setInParams(new SQLParam(index++, new Integer(beneficiaryObject.getBeneficiaryId()), Types.INTEGER));
+		setSQLStatement(sql);
+		
+		Integer result = (Integer) super.update();
+		
+		return result;
+	}
+	
+	
+	/**
 	 *
 	 * Returns a ArrayList of BeneficiaryObject from the ResultSet. The values for 
 	 * each object is got from the ResultSet.
 	 * This is used by the list method.
 	 *
-	 * @param rs      the ResultSet.
+	 * @param rs	  the ResultSet.
 	 *
-	 * @return      Returns a ArrayList of BeneficiaryObject from the ResultSet.
+	 * @return	  Returns a ArrayList of BeneficiaryObject from the ResultSet.
 	 *
-	 * @see     #list()
+	 * @see	 #list()
 	 *
 	 */
-    
-	public Object getResultObjects(ResultSet rs) {
-	    ArrayList<BeneficiaryObject> result = new ArrayList<BeneficiaryObject>();
-        
-	    try {
-	        while(rs.next()) {
-	            int index = 1;
-	            BeneficiaryObject f = new BeneficiaryObject();
-	            f.setBeneficiaryId(rs.getInt(index++));
-	            f.setBeneficiaryName(rs.getString(index++));
-	            f.setBeneficiaryEvent(rs.getInt(index++));
-	            result.add(f);
-	        }
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	    }
-	    return result;
-	}
-    
 	
-    /**
+	public Object getResultObjects(ResultSet rs) {
+		ArrayList<BeneficiaryObject> result = new ArrayList<BeneficiaryObject>();
+		try {
+			while(rs.next()) {
+				int index = 1;
+				BeneficiaryObject f = new BeneficiaryObject();
+				f.setBeneficiaryId(rs.getInt(index++));
+				f.setBeneficiaryName(rs.getString(index++));
+				f.setBeneficiaryEvent(rs.getInt(index++));
+				result.add(f);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
+	
+	/**
 	 *
 	 * Returns a BeneficiaryObject from the ResultSet. The values for 
 	 * each object is got from the ResultSet.
 	 *
 	 * This is used by the fetch method.
-	 * @param rs      the ResultSet.
+	 * @param rs	  the ResultSet.
 	 *
-	 * @return      Returns a BeneficiaryObject from the ResultSet.
+	 * @return	  Returns a BeneficiaryObject from the ResultSet.
 	 *
-	 * @see     #fetch()
+	 * @see	 #fetch()
 	 *
 	 */
-    
+	
 	public Object getResultSetObject(ResultSet rs) {
-	    try {
-	    @SuppressWarnings("unchecked")
-	        ArrayList<BeneficiaryObject> result = (ArrayList<BeneficiaryObject>) getResultObjects(rs);
-	        return result.get(0);
-	    } catch (Exception e) {
-	        return null;
-	    }
+		try {
+			@SuppressWarnings("unchecked")
+			ArrayList<BeneficiaryObject> result = (ArrayList<BeneficiaryObject>) getResultObjects(rs);
+			return result.get(0);
+		} catch (Exception e) {
+			return null;
+		}
 	}
 }
-    
+	

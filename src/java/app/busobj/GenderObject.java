@@ -37,10 +37,11 @@ public class GenderObject implements Cloneable {
 	 * @return	 Returns the String representation of the GenderObject.
 	 *
 	 */
-    
+	
 	public String toString() {
 		String buf="";
 		buf += "gender_id : " + gender_id + "\n";
+		buf += "gender_name : " + gender_name + "\n";
 		return buf;
 	}
 
@@ -48,10 +49,10 @@ public class GenderObject implements Cloneable {
 	 *
 	 * Returns the JSON representation of the GenderObject.
 	 *
-	 * @return      Returns the JSON representation of the GenderObject.
+	 * @return  	Returns the JSON representation of the GenderObject.
 	 *
 	 */
-    
+	
 	public JSONObject toJSON() {
 		JSONObject jo = new JSONObject();
 		try {
@@ -60,34 +61,34 @@ public class GenderObject implements Cloneable {
 		} catch (JSONException je) {}
 		return jo;
 	}
-    
+	
 	/**
 	 *
 	 * Returns the hashCode representation of the GenderObject.
 	 *
-	 * @return      Returns the hashCode.
+	 * @return	Returns the hashCode.
 	 *
 	*/
-    
+	
 	public int hashCode() {
 		return gender_id;
 	}
-    
+	
 	/**
 	 * Constructs the GenderObject
 	 *
 	 */
-    
+	
 	public GenderObject () {
 		setGenderId(0);
 		setGenderName("");
 	}
-    
+	
 	/**
 	 * Constructs the GenderObject from JSONObject
 	 *
 	 */
-    
+	
 	public GenderObject (JSONObject jObject) {
 		try {
 			gender_id = jObject.getInt("gender_id");
@@ -96,92 +97,92 @@ public class GenderObject implements Cloneable {
 			gender_name = jObject.getString("gender_name");
 		} catch (JSONException je) {gender_name = "";}
 	}
-    
 	
-    /**
+	
+	/**
 	 *
 	 * Sets the <code>gender_id</code> field
 	 *
-	 * @param gender_id      int
+	 * @param gender_id	  int
 	 *
 	 */
-    
-	public void setGenderId(int gender_id) {
-	    this.gender_id = gender_id;
-	}
-    
 	
-    /**
+	public void setGenderId(int gender_id) {
+		this.gender_id = gender_id;
+	}
+	
+	
+	/**
 	 *
 	 * Gets the <code>gender_id</code> field
 	 *
 	 * @returns gender_id
 	 *
 	 */
-    
+	
 	public int getGenderId() {
-	    return gender_id;
+		return gender_id;
 	}
 
 	
-    /**
+	/**
 	 *
 	 * Sets the <code>gender_name</code> field
 	 *
-	 * @param gender_name      String
+	 * @param gender_name	  String
 	 *
 	 */
-    
-	public void setGenderName(String gender_name) {
-	    this.gender_name = gender_name;
-	}
-    
 	
-    /**
+	public void setGenderName(String gender_name) {
+		this.gender_name = gender_name;
+	}
+	
+	
+	/**
 	 *
 	 * Gets the <code>gender_name</code> field
 	 *
 	 * @returns gender_name
 	 *
 	 */
-    
+	
 	public String getGenderName() {
-	    return gender_name;
+		return gender_name;
 	}
 
 	
-    /**
+	/**
 	 *
 	 * Tests if this object equals <code>obj</code>
 	 *
 	 * @returns true if equals
 	 *
 	 */
-    
+	
 	public boolean equals(Object obj) {
-	    GenderObject other = (GenderObject)obj;
-	    DebugHandler.finest("This: " + this);
-	    DebugHandler.finest("Other: " + other);
-	    return
-	        gender_id == other.getGenderId() &&
-	        Util.trim(gender_name).equals(Util.trim(other.getGenderName()));
+		GenderObject other = (GenderObject)obj;
+		DebugHandler.finest("This: " + this);
+		DebugHandler.finest("Other: " + other);
+		return
+			gender_id == other.getGenderId() &&
+			Util.trim(gender_name).equals(Util.trim(other.getGenderName()));
 	}
 	
-    /**
+	/**
 	 *
 	 * Clones this object
 	 *
 	 * @returns the clone of this object
 	 *
 	 */
-    
+	
 	public Object clone() {
-	    Object theClone = null;
-	    try {
-	   theClone = super.clone();
-	    } catch (CloneNotSupportedException ce) {
-	   DebugHandler.severe("Cannot clone " + this);
-	    }
-	    return theClone;
+		Object theClone = null;
+		try {
+			theClone = super.clone();
+		} catch (CloneNotSupportedException ce) {
+			DebugHandler.severe("Cannot clone " + this);
+		}
+		return theClone;
 	}
 }

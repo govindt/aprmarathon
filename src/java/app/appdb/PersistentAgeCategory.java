@@ -33,56 +33,56 @@ public class PersistentAgeCategory extends PersistentObject {
 	private AgeCategoryObject ageCategoryObject;
 	
 	
-    /**
+	/**
 	 * Constructs a Persistent Object for the AgeCategoryObject
 	 *
-	 * @param ageCategoryObject    the AgeCategoryObject 
+	 * @param ageCategoryObject	the AgeCategoryObject 
 	 */
-    
-	public PersistentAgeCategory (AgeCategoryObject ageCategoryObject) {
-	    this.ageCategoryObject = ageCategoryObject;
-	}
-    
 	
-    /**
+	public PersistentAgeCategory (AgeCategoryObject ageCategoryObject) {
+		this.ageCategoryObject = ageCategoryObject;
+	}
+	
+	
+	/**
 	 * Returns the ArrayList of AgeCategoryObject.
 	 * It is Usually all the rows in the database.
 	 * This calls getResultObjects method in the super class.
 	 *
-	 * @return     ArrayList of AgeCategoryObject 
+	 * @return	ArrayList of AgeCategoryObject 
 	 *
-	 * @throws     DBException     If a database error occurs
+	 * @throws	DBException	 If a database error occurs
 	 *
-	 * @see     #getResultObjects(ResultSet)
+	 * @see	 #getResultObjects(ResultSet)
 	 */
-    
-	public Object list() throws DBException {
-	    PreparedSQLStatement sql = new PreparedSQLStatement();
-	    String statement = "SELECT age_category_id, age_category from Age_Category";
-	    int index = 1;
-	    sql.setStatement(statement);
-        
-	    setSQLStatement(sql);
-        
-	    @SuppressWarnings("unchecked")
-	    ArrayList<AgeCategoryObject> result = (ArrayList<AgeCategoryObject>) super.list();
-        
-	    return result;
-	}
-    
 	
-    /**
+	public Object list() throws DBException {
+		PreparedSQLStatement sql = new PreparedSQLStatement();
+		String statement = "SELECT age_category_id, age_category from Age_Category";
+		int index = 1;
+		sql.setStatement(statement);
+		
+		setSQLStatement(sql);
+		
+		@SuppressWarnings("unchecked")
+		ArrayList<AgeCategoryObject> result = (ArrayList<AgeCategoryObject>) super.list();
+		
+	return result;
+	}
+	
+	
+	/**
 	 * Returns the ArrayList of AgeCategoryObjects.
 	 * It is Usually all the rows that match the criteria in the database.
 	 * This calls getResultObjects method in the super class.
 	 *
-	 * @return     ArrayList of AgeCategoryObject 
+	 * @return	 ArrayList of AgeCategoryObject 
 	 *
-	 * @throws     DBException     If a database error occurs
+	 * @throws	 DBException	 If a database error occurs
 	 *
-	 * @see     #getResultObjects(ResultSet)
+	 * @see	 #getResultObjects(ResultSet)
 	 */
-    
+	
 	public Object list(Object args) throws DBException {
 		PreparedSQLStatement sql = new PreparedSQLStatement();
 		String statement = "SELECT age_category_id, age_category from Age_Category";
@@ -106,186 +106,185 @@ public class PersistentAgeCategory extends PersistentObject {
 			sql.setInParams(new SQLParam(index++,  passedAgeCategoryObject.getAgeCategory(), Types.VARCHAR));
 		}
 		sql.setStatement(statement);
-        
+		
 		DebugHandler.debug(statement);
 		setSQLStatement(sql);
-        
+		
 		@SuppressWarnings("unchecked")
 		ArrayList<AgeCategoryObject> result = (ArrayList<AgeCategoryObject>) super.list();
-        
+		
 		return result;
 	}
-    
 	
-    /**
+	
+	/**
 	 * Returns the ArrayList of one AgeCategoryObject.
 	 * It is Usually the row that matches primary key.
 	 * This calls getResultSetObject method in the super class.
 	 *
-	 * @return     ArrayList of one AgeCategoryObject 
+	 * @return	 ArrayList of one AgeCategoryObject 
 	 *
-	 * @throws     DBException     If a database error occurs
+	 * @throws	 DBException	 If a database error occurs
 	 *
-	 * @see     #getResultSetObject(ResultSet)
+	 * @see	 #getResultSetObject(ResultSet)
 	 */
-    
-	public Object fetch() throws DBException {
-	    PreparedSQLStatement sql = new PreparedSQLStatement();
-	    String statement = "SELECT age_category_id, age_category from Age_Category where age_category_id = ? ";
-	    int index = 1;
-	    sql.setStatement(statement);
-	    sql.setInParams(new SQLParam(index++, new Integer(ageCategoryObject.getAgeCategoryId()), Types.INTEGER));
-	    setSQLStatement(sql);
-        
-	    @SuppressWarnings("unchecked")
-	    ArrayList<AgeCategoryObject> result = (ArrayList<AgeCategoryObject>) super.fetch();
-        
-	    return result;
-	}
-    
 	
-    /**
+	public Object fetch() throws DBException {
+		PreparedSQLStatement sql = new PreparedSQLStatement();
+		String statement = "SELECT age_category_id, age_category from Age_Category where age_category_id = ? ";
+		int index = 1;
+		sql.setStatement(statement);
+		sql.setInParams(new SQLParam(index++, new Integer(ageCategoryObject.getAgeCategoryId()), Types.INTEGER));
+		setSQLStatement(sql);
+		
+		@SuppressWarnings("unchecked")
+		ArrayList<AgeCategoryObject> result = (ArrayList<AgeCategoryObject>) super.fetch();
+		
+		return result;
+	}
+	
+	
+	/**
 	 *
 	 * Inserts a row in the database.  The values
 	 * are got from the ageCategoryObject.
 	 * Returns an Integer Object with value 0 on success
 	 * and -1 on faliure.
 	 *
-	 * @return      Returns an Integer indicating success/failure of the database operation
+	 * @return	  Returns an Integer indicating success/failure of the database operation
 	 *
-	 * @throws     DBException     If a database error occurs
+	 * @throws	 DBException	 If a database error occurs
 	 */
-    
-	public Object insert() throws DBException {
-	    PreparedSQLStatement sql = new PreparedSQLStatement();
-	    String statement;
-	    int index = 1;
-
-	    if ( AppConstants.DB_TYPE.equalsIgnoreCase(Constants.ORACLE) ) {
-	        statement = "INSERT INTO Age_Category (age_category_id, age_category) VALUES(?, ?) ";
-	        sql.setStatement(statement);
-	        sql.setInParams(new SQLParam(index++, new Integer(ageCategoryObject.getAgeCategoryId()), Types.INTEGER));
-	    } else {
-	        statement = "INSERT INTO Age_Category (age_category) VALUES(?) ";
-	        sql.setStatement(statement);
-	    }
-	    sql.setInParams(new SQLParam(index++,  ageCategoryObject.getAgeCategory(), Types.VARCHAR));
-	    setSQLStatement(sql);
-        
-	    Integer result = (Integer) super.insert();
-        
-	    return result;
-	}
-    
 	
-    /**
+	public Object insert() throws DBException {
+		PreparedSQLStatement sql = new PreparedSQLStatement();
+		String statement;
+		int index = 1;
+
+		if ( AppConstants.DB_TYPE.equalsIgnoreCase(Constants.ORACLE) ) {
+			statement = "INSERT INTO Age_Category (age_category_id, age_category) VALUES(?, ?) ";
+			sql.setStatement(statement);
+			sql.setInParams(new SQLParam(index++, new Integer(ageCategoryObject.getAgeCategoryId()), Types.INTEGER));
+		} else {
+			statement = "INSERT INTO Age_Category (age_category) VALUES(?) ";
+			sql.setStatement(statement);
+		}
+		sql.setInParams(new SQLParam(index++,  ageCategoryObject.getAgeCategory(), Types.VARCHAR));
+		setSQLStatement(sql);
+		
+		Integer result = (Integer) super.insert();
+		
+		return result;
+	}
+	
+	
+	/**
 	 *
 	 * Deletes a row in the database. The key is 
 	 * in the ageCategoryObject.
 	 * Returns an Integer Object with value 0 on success
 	 * and -1 on faliure.
 	 *
-	 * @return      Returns an Integer indicating success/failure of the database operation
+	 * @return	  Returns an Integer indicating success/failure of the database operation
 	 *
-	 * @throws     DBException     If a database error occurs
+	 * @throws	 DBException	 If a database error occurs
 	 */
-    
-	public Object delete() throws DBException {
-	    PreparedSQLStatement sql = new PreparedSQLStatement();
-	    String statement = "DELETE FROM Age_Category WHERE age_category_id = ? ";
-	    int index = 1;
-	    sql.setStatement(statement);
-	    sql.setInParams(new SQLParam(index++, new Integer(ageCategoryObject.getAgeCategoryId()), Types.INTEGER));
-	    setSQLStatement(sql);
-        
-	    Integer result = (Integer) super.delete();
-        
-	    return result;
-	}
-    
 	
-    /**
+	public Object delete() throws DBException {
+		PreparedSQLStatement sql = new PreparedSQLStatement();
+		String statement = "DELETE FROM Age_Category WHERE age_category_id = ? ";
+		int index = 1;
+		sql.setStatement(statement);
+		sql.setInParams(new SQLParam(index++, new Integer(ageCategoryObject.getAgeCategoryId()), Types.INTEGER));
+		setSQLStatement(sql);
+		
+		Integer result = (Integer) super.delete();
+		
+		return result;
+	}
+	
+	
+	/**
 	 *
 	 * Updates a row in the database. The values are 
 	 * got from the ageCategoryObject.
 	 * Returns an Integer Object with value 0 on success
 	 * and -1 on faliure.
 	 *
-	 * @return      Returns an Integer indicating success/failure of the database operation
+	 * @return	  Returns an Integer indicating success/failure of the database operation
 	 *
-	 * @throws     DBException     If a database error occurs
+	 * @throws	 DBException	 If a database error occurs
 	 */
-    
-	public Object update() throws DBException {
-	    PreparedSQLStatement sql = new PreparedSQLStatement();
-	    String statement = "UPDATE Age_Category SET age_category_id = ?, age_category = ? where age_category_id = ? ";
-	    int index = 1;
-	    sql.setStatement(statement);
-	    sql.setInParams(new SQLParam(index++, new Integer(ageCategoryObject.getAgeCategoryId()), Types.INTEGER));
-	    sql.setInParams(new SQLParam(index++,  ageCategoryObject.getAgeCategory(), Types.VARCHAR));
-	    sql.setInParams(new SQLParam(index++, new Integer(ageCategoryObject.getAgeCategoryId()), Types.INTEGER));
-	    setSQLStatement(sql);
-        
-	    Integer result = (Integer) super.update();
-        
-	    return result;
-	}
-    
 	
-    /**
+	public Object update() throws DBException {
+		PreparedSQLStatement sql = new PreparedSQLStatement();
+		String statement = "UPDATE Age_Category SET age_category_id = ?, age_category = ? where age_category_id = ? ";
+		int index = 1;
+		sql.setStatement(statement);
+		sql.setInParams(new SQLParam(index++, new Integer(ageCategoryObject.getAgeCategoryId()), Types.INTEGER));
+		sql.setInParams(new SQLParam(index++,  ageCategoryObject.getAgeCategory(), Types.VARCHAR));
+		sql.setInParams(new SQLParam(index++, new Integer(ageCategoryObject.getAgeCategoryId()), Types.INTEGER));
+		setSQLStatement(sql);
+		
+		Integer result = (Integer) super.update();
+		
+		return result;
+	}
+	
+	
+	/**
 	 *
 	 * Returns a ArrayList of AgeCategoryObject from the ResultSet. The values for 
 	 * each object is got from the ResultSet.
 	 * This is used by the list method.
 	 *
-	 * @param rs      the ResultSet.
+	 * @param rs	  the ResultSet.
 	 *
-	 * @return      Returns a ArrayList of AgeCategoryObject from the ResultSet.
+	 * @return	  Returns a ArrayList of AgeCategoryObject from the ResultSet.
 	 *
-	 * @see     #list()
+	 * @see	 #list()
 	 *
 	 */
-    
-	public Object getResultObjects(ResultSet rs) {
-	    ArrayList<AgeCategoryObject> result = new ArrayList<AgeCategoryObject>();
-        
-	    try {
-	        while(rs.next()) {
-	            int index = 1;
-	            AgeCategoryObject f = new AgeCategoryObject();
-	            f.setAgeCategoryId(rs.getInt(index++));
-	            f.setAgeCategory(rs.getString(index++));
-	            result.add(f);
-	        }
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	    }
-	    return result;
-	}
-    
 	
-    /**
+	public Object getResultObjects(ResultSet rs) {
+		ArrayList<AgeCategoryObject> result = new ArrayList<AgeCategoryObject>();
+		try {
+			while(rs.next()) {
+				int index = 1;
+				AgeCategoryObject f = new AgeCategoryObject();
+				f.setAgeCategoryId(rs.getInt(index++));
+				f.setAgeCategory(rs.getString(index++));
+				result.add(f);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
+	
+	/**
 	 *
 	 * Returns a AgeCategoryObject from the ResultSet. The values for 
 	 * each object is got from the ResultSet.
 	 *
 	 * This is used by the fetch method.
-	 * @param rs      the ResultSet.
+	 * @param rs	  the ResultSet.
 	 *
-	 * @return      Returns a AgeCategoryObject from the ResultSet.
+	 * @return	  Returns a AgeCategoryObject from the ResultSet.
 	 *
-	 * @see     #fetch()
+	 * @see	 #fetch()
 	 *
 	 */
-    
+	
 	public Object getResultSetObject(ResultSet rs) {
-	    try {
-	    @SuppressWarnings("unchecked")
-	        ArrayList<AgeCategoryObject> result = (ArrayList<AgeCategoryObject>) getResultObjects(rs);
-	        return result.get(0);
-	    } catch (Exception e) {
-	        return null;
-	    }
+		try {
+			@SuppressWarnings("unchecked")
+			ArrayList<AgeCategoryObject> result = (ArrayList<AgeCategoryObject>) getResultObjects(rs);
+			return result.get(0);
+		} catch (Exception e) {
+			return null;
+		}
 	}
 }
-    
+	

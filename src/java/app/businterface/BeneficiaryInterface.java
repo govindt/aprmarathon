@@ -23,79 +23,79 @@ import app.busobj.BeneficiaryObject;
 
 public interface BeneficiaryInterface {
 	
-    /**
+	/**
 	 *
 	 * Interface that returns the BeneficiaryObject given a BeneficiaryObject filled with values that will be used for query from the underlying datasource.
 	 *
 	 * @param beneficiary_obj	BeneficiaryObject
 	 *
-	 * @return      Returns the ArrayList of BeneficiaryObjects
+	 * @return	  Returns the ArrayList of BeneficiaryObjects
 	 *
 	 * @throws AppException if the underlying operation fails
 	 *
 	 */
-    
+	
 	public ArrayList<BeneficiaryObject> getBeneficiarys(BeneficiaryObject beneficiary_obj) throws AppException;
 	
-    /**
+	/**
 	 *
 	 * Interface that returns the BeneficiaryObject given beneficiary_id from the underlying datasource.
 	 *
-	 * @param beneficiary_id     int
+	 * @param beneficiary_id	 int
 	 *
-	 * @return      Returns the BeneficiaryObject
+	 * @return	  Returns the BeneficiaryObject
 	 *
 	 * @throws AppException if the underlying operation fails
 	 *
 	 */
-    
+	
 	public BeneficiaryObject getBeneficiary(int beneficiary_id) throws AppException;
 	
-    /**
+	/**
 	 *
 	 * Interface that returns all the <code>BeneficiaryObject</code> from the underlying datasource.
 	 *
-	 * @return      Returns an Array of <code>BeneficiaryObject</code>
+	 * @return	  Returns an Array of <code>BeneficiaryObject</code>
 	 *
 	 * @throws AppException if the underlying operation fails
 	 *
 	 */
-    
+	
 	public BeneficiaryObject[] getAllBeneficiarys() throws AppException;
 	
-    /**
+	/**
 	 *
 	 * Interface to add the <code>BeneficiaryObject</code> to the underlying datasource.
 	 *
-	 * @param beneficiaryObject     BeneficiaryObject
+	 * @param beneficiaryObject	 BeneficiaryObject
 	 *
 	 * @throws AppException if the underlying operation fails
 	 *
 	 */
-    
+	
 	public Integer addBeneficiary(BeneficiaryObject beneficiaryObject) throws AppException;
 	
-    /**
+	/**
 	 *
 	 * Interface to update the <code>BeneficiaryObject</code> in the underlying datasource.
 	 *
-	 * @param beneficiaryObject     BeneficiaryObject
+	 * @param beneficiaryObject	 BeneficiaryObject
 	 *
 	 * @throws AppException if the underlying operation fails
 	 *
 	 */
-    
+	
 	public Integer updateBeneficiary(BeneficiaryObject beneficiaryObject) throws AppException;
 	
-    /**
+	/**
 	 *
 	 * Interface to delete the <code>BeneficiaryObject</code> in the underlying datasource.
 	 *
-	 * @param beneficiaryObject     BeneficiaryObject
+	 * @param beneficiaryObject	 BeneficiaryObject
 	 *
 	 * @throws AppException if the underlying operation fails
 	 *
 	 */
-    
+	
 	public Integer deleteBeneficiary(BeneficiaryObject beneficiaryObject) throws AppException;
 }

@@ -29,18 +29,18 @@ import app.util.AppConstants;
 public class BeneficiaryImpl implements BeneficiaryInterface  {
 	private String BENEFICIARY = "BeneficiaryInterface.getAllBeneficiary";
 	
-    /**
+	/**
 	 *
 	 * Implementation that returns the BeneficiaryObject given a BeneficiaryObject filled with values that will be used for query from the underlying datasource.
 	 *
 	 * @param beneficiary_obj	BeneficiaryObject
 	 *
-	 * @return      Returns the ArrayList of BeneficiaryObjects
+	 * @return	  Returns the ArrayList of BeneficiaryObjects
 	 *
 	 * @throws AppException if the underlying operation fails
 	 *
 	 */
-    
+	
 	public ArrayList<BeneficiaryObject> getBeneficiarys(BeneficiaryObject beneficiary_obj) throws AppException{
 		BeneficiaryObject[] beneficiaryObjectArr = getAllBeneficiarys();
 		if ( beneficiary_obj.getBeneficiaryId() == Constants.GET_ALL ) {
@@ -60,19 +60,19 @@ public class BeneficiaryImpl implements BeneficiaryInterface  {
 		}
 	}
 	
-    /**
+	/**
 	 *
 	 * Implementation of the method that returns the BeneficiaryObject from the underlying datasource.
 	 * given beneficiary_id.
 	 *
-	 * @param beneficiary_id     int
+	 * @param beneficiary_id	 int
 	 *
-	 * @return      Returns the BeneficiaryObject
+	 * @return	  Returns the BeneficiaryObject
 	 *
 	 * @throws AppException if the operation fails
 	 *
 	 */
-    
+	
 	public BeneficiaryObject getBeneficiary(int beneficiary_id) throws AppException{
 		BeneficiaryObject[] beneficiaryObjectArr = getAllBeneficiarys();
 		if ( beneficiaryObjectArr == null )
@@ -97,18 +97,18 @@ public class BeneficiaryImpl implements BeneficiaryInterface  {
 		}
 		return null;
 	}
-    
 	
-    /**
+	
+	/**
 	 *
 	 * Implementation that returns all the <code>BeneficiaryObjects</code> from the underlying datasource.
 	 *
-	 * @return      Returns an Array of <code>BeneficiaryObject</code>
+	 * @return	  Returns an Array of <code>BeneficiaryObject</code>
 	 *
 	 * @throws AppException if the operation fails
 	 *
 	 */
-    
+	
 	public BeneficiaryObject[] getAllBeneficiarys() throws AppException{
 		BeneficiaryObject beneficiaryObject = new BeneficiaryObject();
 		BeneficiaryObject[] beneficiaryObjectArr = (BeneficiaryObject[])Util.getAppCache().get(BENEFICIARY);
@@ -127,18 +127,18 @@ public class BeneficiaryImpl implements BeneficiaryInterface  {
 		}
 		return beneficiaryObjectArr;
 	}
-    
 	
-    /**
+	
+	/**
 	 *
 	 * Implementation to add the <code>BeneficiaryObject</code> to the underlying datasource.
 	 *
-	 * @param beneficiaryObject     BeneficiaryObject
+	 * @param beneficiaryObject	 BeneficiaryObject
 	 *
 	 * @throws AppException if the operation fails
 	 *
 	 */
-    
+	
 	public Integer addBeneficiary(BeneficiaryObject beneficiaryObject) throws AppException{
 		if ( AppConstants.DB_TYPE.equalsIgnoreCase(Constants.ORACLE) ) {
 			long l = DBUtil.getNextId("Beneficiary_seq");
@@ -181,16 +181,16 @@ public class BeneficiaryImpl implements BeneficiaryInterface  {
 	}
 	
 	
-    /**
+	/**
 	 *
 	 * Implementation to update the <code>BeneficiaryObject</code> in the underlying datasource.
 	 *
-	 * @param beneficiaryObject     BeneficiaryObject
+	 * @param beneficiaryObject	 BeneficiaryObject
 	 *
 	 * @throws AppException if the operation fails
 	 *
 	 */
-    
+	
 	public Integer updateBeneficiary(BeneficiaryObject beneficiaryObject) throws AppException{
 		BeneficiaryObject newBeneficiaryObject = getBeneficiary(beneficiaryObject.getBeneficiaryId()); // This call will make sure cache/db are in sync
 		Integer i = (Integer)DBUtil.update(beneficiaryObject);
@@ -209,18 +209,18 @@ public class BeneficiaryImpl implements BeneficiaryInterface  {
 		}
 		return i;
 	}
-    
 	
-    /**
+	
+	/**
 	 *
 	 * Implementation to delete the <code>BeneficiaryObject</code> in the underlying datasource.
 	 *
-	 * @param beneficiaryObject     BeneficiaryObject
+	 * @param beneficiaryObject	 BeneficiaryObject
 	 *
 	 * @throws AppException if the operation fails
 	 *
 	 */
-    
+	
 	public Integer deleteBeneficiary(BeneficiaryObject beneficiaryObject) throws AppException{
 	BeneficiaryObject newBeneficiaryObject = getBeneficiary(beneficiaryObject.getBeneficiaryId()); // This call will make sure cache/db are in sync
 	BeneficiaryObject[] beneficiaryObjectArr = getAllBeneficiarys();

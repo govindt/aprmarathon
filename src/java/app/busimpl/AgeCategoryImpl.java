@@ -29,18 +29,18 @@ import app.util.AppConstants;
 public class AgeCategoryImpl implements AgeCategoryInterface  {
 	private String AGECATEGORY = "AgeCategoryInterface.getAllAgeCategory";
 	
-    /**
+	/**
 	 *
 	 * Implementation that returns the AgeCategoryObject given a AgeCategoryObject filled with values that will be used for query from the underlying datasource.
 	 *
 	 * @param agecategory_obj	AgeCategoryObject
 	 *
-	 * @return      Returns the ArrayList of AgeCategoryObjects
+	 * @return	  Returns the ArrayList of AgeCategoryObjects
 	 *
 	 * @throws AppException if the underlying operation fails
 	 *
 	 */
-    
+	
 	public ArrayList<AgeCategoryObject> getAgeCategorys(AgeCategoryObject agecategory_obj) throws AppException{
 		AgeCategoryObject[] ageCategoryObjectArr = getAllAgeCategorys();
 		if ( agecategory_obj.getAgeCategoryId() == Constants.GET_ALL ) {
@@ -60,19 +60,19 @@ public class AgeCategoryImpl implements AgeCategoryInterface  {
 		}
 	}
 	
-    /**
+	/**
 	 *
 	 * Implementation of the method that returns the AgeCategoryObject from the underlying datasource.
 	 * given age_category_id.
 	 *
-	 * @param age_category_id     int
+	 * @param age_category_id	 int
 	 *
-	 * @return      Returns the AgeCategoryObject
+	 * @return	  Returns the AgeCategoryObject
 	 *
 	 * @throws AppException if the operation fails
 	 *
 	 */
-    
+	
 	public AgeCategoryObject getAgeCategory(int age_category_id) throws AppException{
 		AgeCategoryObject[] ageCategoryObjectArr = getAllAgeCategorys();
 		if ( ageCategoryObjectArr == null )
@@ -97,18 +97,18 @@ public class AgeCategoryImpl implements AgeCategoryInterface  {
 		}
 		return null;
 	}
-    
 	
-    /**
+	
+	/**
 	 *
 	 * Implementation that returns all the <code>AgeCategoryObjects</code> from the underlying datasource.
 	 *
-	 * @return      Returns an Array of <code>AgeCategoryObject</code>
+	 * @return	  Returns an Array of <code>AgeCategoryObject</code>
 	 *
 	 * @throws AppException if the operation fails
 	 *
 	 */
-    
+	
 	public AgeCategoryObject[] getAllAgeCategorys() throws AppException{
 		AgeCategoryObject ageCategoryObject = new AgeCategoryObject();
 		AgeCategoryObject[] ageCategoryObjectArr = (AgeCategoryObject[])Util.getAppCache().get(AGECATEGORY);
@@ -127,18 +127,18 @@ public class AgeCategoryImpl implements AgeCategoryInterface  {
 		}
 		return ageCategoryObjectArr;
 	}
-    
 	
-    /**
+	
+	/**
 	 *
 	 * Implementation to add the <code>AgeCategoryObject</code> to the underlying datasource.
 	 *
-	 * @param ageCategoryObject     AgeCategoryObject
+	 * @param ageCategoryObject	 AgeCategoryObject
 	 *
 	 * @throws AppException if the operation fails
 	 *
 	 */
-    
+	
 	public Integer addAgeCategory(AgeCategoryObject ageCategoryObject) throws AppException{
 		if ( AppConstants.DB_TYPE.equalsIgnoreCase(Constants.ORACLE) ) {
 			long l = DBUtil.getNextId("Age_Category_seq");
@@ -181,16 +181,16 @@ public class AgeCategoryImpl implements AgeCategoryInterface  {
 	}
 	
 	
-    /**
+	/**
 	 *
 	 * Implementation to update the <code>AgeCategoryObject</code> in the underlying datasource.
 	 *
-	 * @param ageCategoryObject     AgeCategoryObject
+	 * @param ageCategoryObject	 AgeCategoryObject
 	 *
 	 * @throws AppException if the operation fails
 	 *
 	 */
-    
+	
 	public Integer updateAgeCategory(AgeCategoryObject ageCategoryObject) throws AppException{
 		AgeCategoryObject newAgeCategoryObject = getAgeCategory(ageCategoryObject.getAgeCategoryId()); // This call will make sure cache/db are in sync
 		Integer i = (Integer)DBUtil.update(ageCategoryObject);
@@ -209,18 +209,18 @@ public class AgeCategoryImpl implements AgeCategoryInterface  {
 		}
 		return i;
 	}
-    
 	
-    /**
+	
+	/**
 	 *
 	 * Implementation to delete the <code>AgeCategoryObject</code> in the underlying datasource.
 	 *
-	 * @param ageCategoryObject     AgeCategoryObject
+	 * @param ageCategoryObject	 AgeCategoryObject
 	 *
 	 * @throws AppException if the operation fails
 	 *
 	 */
-    
+	
 	public Integer deleteAgeCategory(AgeCategoryObject ageCategoryObject) throws AppException{
 	AgeCategoryObject newAgeCategoryObject = getAgeCategory(ageCategoryObject.getAgeCategoryId()); // This call will make sure cache/db are in sync
 	AgeCategoryObject[] ageCategoryObjectArr = getAllAgeCategorys();

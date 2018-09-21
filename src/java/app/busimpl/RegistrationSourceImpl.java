@@ -29,18 +29,18 @@ import app.util.AppConstants;
 public class RegistrationSourceImpl implements RegistrationSourceInterface  {
 	private String REGISTRATIONSOURCE = "RegistrationSourceInterface.getAllRegistrationSource";
 	
-    /**
+	/**
 	 *
 	 * Implementation that returns the RegistrationSourceObject given a RegistrationSourceObject filled with values that will be used for query from the underlying datasource.
 	 *
 	 * @param registrationsource_obj	RegistrationSourceObject
 	 *
-	 * @return      Returns the ArrayList of RegistrationSourceObjects
+	 * @return	  Returns the ArrayList of RegistrationSourceObjects
 	 *
 	 * @throws AppException if the underlying operation fails
 	 *
 	 */
-    
+	
 	public ArrayList<RegistrationSourceObject> getRegistrationSources(RegistrationSourceObject registrationsource_obj) throws AppException{
 		RegistrationSourceObject[] registrationSourceObjectArr = getAllRegistrationSources();
 		if ( registrationsource_obj.getRegistrationSourceId() == Constants.GET_ALL ) {
@@ -60,19 +60,19 @@ public class RegistrationSourceImpl implements RegistrationSourceInterface  {
 		}
 	}
 	
-    /**
+	/**
 	 *
 	 * Implementation of the method that returns the RegistrationSourceObject from the underlying datasource.
 	 * given registration_source_id.
 	 *
-	 * @param registration_source_id     int
+	 * @param registration_source_id	 int
 	 *
-	 * @return      Returns the RegistrationSourceObject
+	 * @return	  Returns the RegistrationSourceObject
 	 *
 	 * @throws AppException if the operation fails
 	 *
 	 */
-    
+	
 	public RegistrationSourceObject getRegistrationSource(int registration_source_id) throws AppException{
 		RegistrationSourceObject[] registrationSourceObjectArr = getAllRegistrationSources();
 		if ( registrationSourceObjectArr == null )
@@ -97,18 +97,18 @@ public class RegistrationSourceImpl implements RegistrationSourceInterface  {
 		}
 		return null;
 	}
-    
 	
-    /**
+	
+	/**
 	 *
 	 * Implementation that returns all the <code>RegistrationSourceObjects</code> from the underlying datasource.
 	 *
-	 * @return      Returns an Array of <code>RegistrationSourceObject</code>
+	 * @return	  Returns an Array of <code>RegistrationSourceObject</code>
 	 *
 	 * @throws AppException if the operation fails
 	 *
 	 */
-    
+	
 	public RegistrationSourceObject[] getAllRegistrationSources() throws AppException{
 		RegistrationSourceObject registrationSourceObject = new RegistrationSourceObject();
 		RegistrationSourceObject[] registrationSourceObjectArr = (RegistrationSourceObject[])Util.getAppCache().get(REGISTRATIONSOURCE);
@@ -127,18 +127,18 @@ public class RegistrationSourceImpl implements RegistrationSourceInterface  {
 		}
 		return registrationSourceObjectArr;
 	}
-    
 	
-    /**
+	
+	/**
 	 *
 	 * Implementation to add the <code>RegistrationSourceObject</code> to the underlying datasource.
 	 *
-	 * @param registrationSourceObject     RegistrationSourceObject
+	 * @param registrationSourceObject	 RegistrationSourceObject
 	 *
 	 * @throws AppException if the operation fails
 	 *
 	 */
-    
+	
 	public Integer addRegistrationSource(RegistrationSourceObject registrationSourceObject) throws AppException{
 		if ( AppConstants.DB_TYPE.equalsIgnoreCase(Constants.ORACLE) ) {
 			long l = DBUtil.getNextId("Registration_Source_seq");
@@ -181,16 +181,16 @@ public class RegistrationSourceImpl implements RegistrationSourceInterface  {
 	}
 	
 	
-    /**
+	/**
 	 *
 	 * Implementation to update the <code>RegistrationSourceObject</code> in the underlying datasource.
 	 *
-	 * @param registrationSourceObject     RegistrationSourceObject
+	 * @param registrationSourceObject	 RegistrationSourceObject
 	 *
 	 * @throws AppException if the operation fails
 	 *
 	 */
-    
+	
 	public Integer updateRegistrationSource(RegistrationSourceObject registrationSourceObject) throws AppException{
 		RegistrationSourceObject newRegistrationSourceObject = getRegistrationSource(registrationSourceObject.getRegistrationSourceId()); // This call will make sure cache/db are in sync
 		Integer i = (Integer)DBUtil.update(registrationSourceObject);
@@ -209,18 +209,18 @@ public class RegistrationSourceImpl implements RegistrationSourceInterface  {
 		}
 		return i;
 	}
-    
 	
-    /**
+	
+	/**
 	 *
 	 * Implementation to delete the <code>RegistrationSourceObject</code> in the underlying datasource.
 	 *
-	 * @param registrationSourceObject     RegistrationSourceObject
+	 * @param registrationSourceObject	 RegistrationSourceObject
 	 *
 	 * @throws AppException if the operation fails
 	 *
 	 */
-    
+	
 	public Integer deleteRegistrationSource(RegistrationSourceObject registrationSourceObject) throws AppException{
 	RegistrationSourceObject newRegistrationSourceObject = getRegistrationSource(registrationSourceObject.getRegistrationSourceId()); // This call will make sure cache/db are in sync
 	RegistrationSourceObject[] registrationSourceObjectArr = getAllRegistrationSources();

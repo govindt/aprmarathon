@@ -29,18 +29,18 @@ import app.util.AppConstants;
 public class RegistrationClassImpl implements RegistrationClassInterface  {
 	private String REGISTRATIONCLASS = "RegistrationClassInterface.getAllRegistrationClass";
 	
-    /**
+	/**
 	 *
 	 * Implementation that returns the RegistrationClassObject given a RegistrationClassObject filled with values that will be used for query from the underlying datasource.
 	 *
 	 * @param registrationclass_obj	RegistrationClassObject
 	 *
-	 * @return      Returns the ArrayList of RegistrationClassObjects
+	 * @return	  Returns the ArrayList of RegistrationClassObjects
 	 *
 	 * @throws AppException if the underlying operation fails
 	 *
 	 */
-    
+	
 	public ArrayList<RegistrationClassObject> getRegistrationClass(RegistrationClassObject registrationclass_obj) throws AppException{
 		RegistrationClassObject[] registrationClassObjectArr = getAllRegistrationClass();
 		if ( registrationclass_obj.getRegistrationClassId() == Constants.GET_ALL ) {
@@ -60,19 +60,19 @@ public class RegistrationClassImpl implements RegistrationClassInterface  {
 		}
 	}
 	
-    /**
+	/**
 	 *
 	 * Implementation of the method that returns the RegistrationClassObject from the underlying datasource.
 	 * given registration_class_id.
 	 *
-	 * @param registration_class_id     int
+	 * @param registration_class_id	 int
 	 *
-	 * @return      Returns the RegistrationClassObject
+	 * @return	  Returns the RegistrationClassObject
 	 *
 	 * @throws AppException if the operation fails
 	 *
 	 */
-    
+	
 	public RegistrationClassObject getRegistrationClas(int registration_class_id) throws AppException{
 		RegistrationClassObject[] registrationClassObjectArr = getAllRegistrationClass();
 		if ( registrationClassObjectArr == null )
@@ -97,18 +97,18 @@ public class RegistrationClassImpl implements RegistrationClassInterface  {
 		}
 		return null;
 	}
-    
 	
-    /**
+	
+	/**
 	 *
 	 * Implementation that returns all the <code>RegistrationClassObjects</code> from the underlying datasource.
 	 *
-	 * @return      Returns an Array of <code>RegistrationClassObject</code>
+	 * @return	  Returns an Array of <code>RegistrationClassObject</code>
 	 *
 	 * @throws AppException if the operation fails
 	 *
 	 */
-    
+	
 	public RegistrationClassObject[] getAllRegistrationClass() throws AppException{
 		RegistrationClassObject registrationClassObject = new RegistrationClassObject();
 		RegistrationClassObject[] registrationClassObjectArr = (RegistrationClassObject[])Util.getAppCache().get(REGISTRATIONCLASS);
@@ -127,18 +127,18 @@ public class RegistrationClassImpl implements RegistrationClassInterface  {
 		}
 		return registrationClassObjectArr;
 	}
-    
 	
-    /**
+	
+	/**
 	 *
 	 * Implementation to add the <code>RegistrationClassObject</code> to the underlying datasource.
 	 *
-	 * @param registrationClassObject     RegistrationClassObject
+	 * @param registrationClassObject	 RegistrationClassObject
 	 *
 	 * @throws AppException if the operation fails
 	 *
 	 */
-    
+	
 	public Integer addRegistrationClass(RegistrationClassObject registrationClassObject) throws AppException{
 		if ( AppConstants.DB_TYPE.equalsIgnoreCase(Constants.ORACLE) ) {
 			long l = DBUtil.getNextId("Registration_Class_seq");
@@ -181,16 +181,16 @@ public class RegistrationClassImpl implements RegistrationClassInterface  {
 	}
 	
 	
-    /**
+	/**
 	 *
 	 * Implementation to update the <code>RegistrationClassObject</code> in the underlying datasource.
 	 *
-	 * @param registrationClassObject     RegistrationClassObject
+	 * @param registrationClassObject	 RegistrationClassObject
 	 *
 	 * @throws AppException if the operation fails
 	 *
 	 */
-    
+	
 	public Integer updateRegistrationClass(RegistrationClassObject registrationClassObject) throws AppException{
 		RegistrationClassObject newRegistrationClassObject = getRegistrationClas(registrationClassObject.getRegistrationClassId()); // This call will make sure cache/db are in sync
 		Integer i = (Integer)DBUtil.update(registrationClassObject);
@@ -209,18 +209,18 @@ public class RegistrationClassImpl implements RegistrationClassInterface  {
 		}
 		return i;
 	}
-    
 	
-    /**
+	
+	/**
 	 *
 	 * Implementation to delete the <code>RegistrationClassObject</code> in the underlying datasource.
 	 *
-	 * @param registrationClassObject     RegistrationClassObject
+	 * @param registrationClassObject	 RegistrationClassObject
 	 *
 	 * @throws AppException if the operation fails
 	 *
 	 */
-    
+	
 	public Integer deleteRegistrationClass(RegistrationClassObject registrationClassObject) throws AppException{
 	RegistrationClassObject newRegistrationClassObject = getRegistrationClas(registrationClassObject.getRegistrationClassId()); // This call will make sure cache/db are in sync
 	RegistrationClassObject[] registrationClassObjectArr = getAllRegistrationClass();
