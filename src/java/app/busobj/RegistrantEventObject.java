@@ -44,7 +44,7 @@ public class RegistrantEventObject implements Cloneable {
 	 * @return	 Returns the String representation of the RegistrantEventObject.
 	 *
 	 */
-    
+	
 	public String toString() {
 		String buf="";
 		buf += "registrant_event_id : " + registrant_event_id + "\n";
@@ -55,6 +55,7 @@ public class RegistrantEventObject implements Cloneable {
 		buf += "registrant_class : " + registrant_class + "\n";
 		buf += "registrant_beneficiary : " + registrant_beneficiary + "\n";
 		buf += "registrant_emergency_contact : " + registrant_emergency_contact + "\n";
+		buf += "registrant_emergency_phone : " + registrant_emergency_phone + "\n";
 		return buf;
 	}
 
@@ -62,10 +63,10 @@ public class RegistrantEventObject implements Cloneable {
 	 *
 	 * Returns the JSON representation of the RegistrantEventObject.
 	 *
-	 * @return      Returns the JSON representation of the RegistrantEventObject.
+	 * @return  	Returns the JSON representation of the RegistrantEventObject.
 	 *
 	 */
-    
+	
 	public JSONObject toJSON() {
 		JSONObject jo = new JSONObject();
 		try {
@@ -81,24 +82,24 @@ public class RegistrantEventObject implements Cloneable {
 		} catch (JSONException je) {}
 		return jo;
 	}
-    
+	
 	/**
 	 *
 	 * Returns the hashCode representation of the RegistrantEventObject.
 	 *
-	 * @return      Returns the hashCode.
+	 * @return	Returns the hashCode.
 	 *
 	*/
-    
+	
 	public int hashCode() {
 		return registrant_event_id;
 	}
-    
+	
 	/**
 	 * Constructs the RegistrantEventObject
 	 *
 	 */
-    
+	
 	public RegistrantEventObject () {
 		setRegistrantEventId(0);
 		setRegistrantId(0);
@@ -110,12 +111,12 @@ public class RegistrantEventObject implements Cloneable {
 		setRegistrantEmergencyContact("");
 		setRegistrantEmergencyPhone("");
 	}
-    
+	
 	/**
 	 * Constructs the RegistrantEventObject from JSONObject
 	 *
 	 */
-    
+	
 	public RegistrantEventObject (JSONObject jObject) {
 		try {
 			registrant_event_id = jObject.getInt("registrant_event_id");
@@ -145,281 +146,281 @@ public class RegistrantEventObject implements Cloneable {
 			registrant_emergency_phone = jObject.getString("registrant_emergency_phone");
 		} catch (JSONException je) {registrant_emergency_phone = "";}
 	}
-    
 	
-    /**
+	
+	/**
 	 *
 	 * Sets the <code>registrant_event_id</code> field
 	 *
-	 * @param registrant_event_id      int
+	 * @param registrant_event_id	  int
 	 *
 	 */
-    
-	public void setRegistrantEventId(int registrant_event_id) {
-	    this.registrant_event_id = registrant_event_id;
-	}
-    
 	
-    /**
+	public void setRegistrantEventId(int registrant_event_id) {
+		this.registrant_event_id = registrant_event_id;
+	}
+	
+	
+	/**
 	 *
 	 * Gets the <code>registrant_event_id</code> field
 	 *
 	 * @returns registrant_event_id
 	 *
 	 */
-    
+	
 	public int getRegistrantEventId() {
-	    return registrant_event_id;
+		return registrant_event_id;
 	}
 
 	
-    /**
+	/**
 	 *
 	 * Sets the <code>registrant_id</code> field
 	 *
-	 * @param registrant_id      int
+	 * @param registrant_id	  int
 	 *
 	 */
-    
-	public void setRegistrantId(int registrant_id) {
-	    this.registrant_id = registrant_id;
-	}
-    
 	
-    /**
+	public void setRegistrantId(int registrant_id) {
+		this.registrant_id = registrant_id;
+	}
+	
+	
+	/**
 	 *
 	 * Gets the <code>registrant_id</code> field
 	 *
 	 * @returns registrant_id
 	 *
 	 */
-    
+	
 	public int getRegistrantId() {
-	    return registrant_id;
+		return registrant_id;
 	}
 
 	
-    /**
+	/**
 	 *
 	 * Sets the <code>registrant_event</code> field
 	 *
-	 * @param registrant_event      int
+	 * @param registrant_event	  int
 	 *
 	 */
-    
-	public void setRegistrantEvent(int registrant_event) {
-	    this.registrant_event = registrant_event;
-	}
-    
 	
-    /**
+	public void setRegistrantEvent(int registrant_event) {
+		this.registrant_event = registrant_event;
+	}
+	
+	
+	/**
 	 *
 	 * Gets the <code>registrant_event</code> field
 	 *
 	 * @returns registrant_event
 	 *
 	 */
-    
+	
 	public int getRegistrantEvent() {
-	    return registrant_event;
+		return registrant_event;
 	}
 
 	
-    /**
+	/**
 	 *
 	 * Sets the <code>registrant_type</code> field
 	 *
-	 * @param registrant_type      int
+	 * @param registrant_type	  int
 	 *
 	 */
-    
-	public void setRegistrantType(int registrant_type) {
-	    this.registrant_type = registrant_type;
-	}
-    
 	
-    /**
+	public void setRegistrantType(int registrant_type) {
+		this.registrant_type = registrant_type;
+	}
+	
+	
+	/**
 	 *
 	 * Gets the <code>registrant_type</code> field
 	 *
 	 * @returns registrant_type
 	 *
 	 */
-    
+	
 	public int getRegistrantType() {
-	    return registrant_type;
+		return registrant_type;
 	}
 
 	
-    /**
+	/**
 	 *
 	 * Sets the <code>registrant_source</code> field
 	 *
-	 * @param registrant_source      int
+	 * @param registrant_source	  int
 	 *
 	 */
-    
-	public void setRegistrantSource(int registrant_source) {
-	    this.registrant_source = registrant_source;
-	}
-    
 	
-    /**
+	public void setRegistrantSource(int registrant_source) {
+		this.registrant_source = registrant_source;
+	}
+	
+	
+	/**
 	 *
 	 * Gets the <code>registrant_source</code> field
 	 *
 	 * @returns registrant_source
 	 *
 	 */
-    
+	
 	public int getRegistrantSource() {
-	    return registrant_source;
+		return registrant_source;
 	}
 
 	
-    /**
+	/**
 	 *
 	 * Sets the <code>registrant_class</code> field
 	 *
-	 * @param registrant_class      int
+	 * @param registrant_class	  int
 	 *
 	 */
-    
-	public void setRegistrantClass(int registrant_class) {
-	    this.registrant_class = registrant_class;
-	}
-    
 	
-    /**
+	public void setRegistrantClass(int registrant_class) {
+		this.registrant_class = registrant_class;
+	}
+	
+	
+	/**
 	 *
 	 * Gets the <code>registrant_class</code> field
 	 *
 	 * @returns registrant_class
 	 *
 	 */
-    
+	
 	public int getRegistrantClass() {
-	    return registrant_class;
+		return registrant_class;
 	}
 
 	
-    /**
+	/**
 	 *
 	 * Sets the <code>registrant_beneficiary</code> field
 	 *
-	 * @param registrant_beneficiary      int
+	 * @param registrant_beneficiary	  int
 	 *
 	 */
-    
-	public void setRegistrantBeneficiary(int registrant_beneficiary) {
-	    this.registrant_beneficiary = registrant_beneficiary;
-	}
-    
 	
-    /**
+	public void setRegistrantBeneficiary(int registrant_beneficiary) {
+		this.registrant_beneficiary = registrant_beneficiary;
+	}
+	
+	
+	/**
 	 *
 	 * Gets the <code>registrant_beneficiary</code> field
 	 *
 	 * @returns registrant_beneficiary
 	 *
 	 */
-    
+	
 	public int getRegistrantBeneficiary() {
-	    return registrant_beneficiary;
+		return registrant_beneficiary;
 	}
 
 	
-    /**
+	/**
 	 *
 	 * Sets the <code>registrant_emergency_contact</code> field
 	 *
-	 * @param registrant_emergency_contact      String
+	 * @param registrant_emergency_contact	  String
 	 *
 	 */
-    
-	public void setRegistrantEmergencyContact(String registrant_emergency_contact) {
-	    this.registrant_emergency_contact = registrant_emergency_contact;
-	}
-    
 	
-    /**
+	public void setRegistrantEmergencyContact(String registrant_emergency_contact) {
+		this.registrant_emergency_contact = registrant_emergency_contact;
+	}
+	
+	
+	/**
 	 *
 	 * Gets the <code>registrant_emergency_contact</code> field
 	 *
 	 * @returns registrant_emergency_contact
 	 *
 	 */
-    
+	
 	public String getRegistrantEmergencyContact() {
-	    return registrant_emergency_contact;
+		return registrant_emergency_contact;
 	}
 
 	
-    /**
+	/**
 	 *
 	 * Sets the <code>registrant_emergency_phone</code> field
 	 *
-	 * @param registrant_emergency_phone      String
+	 * @param registrant_emergency_phone	  String
 	 *
 	 */
-    
-	public void setRegistrantEmergencyPhone(String registrant_emergency_phone) {
-	    this.registrant_emergency_phone = registrant_emergency_phone;
-	}
-    
 	
-    /**
+	public void setRegistrantEmergencyPhone(String registrant_emergency_phone) {
+		this.registrant_emergency_phone = registrant_emergency_phone;
+	}
+	
+	
+	/**
 	 *
 	 * Gets the <code>registrant_emergency_phone</code> field
 	 *
 	 * @returns registrant_emergency_phone
 	 *
 	 */
-    
+	
 	public String getRegistrantEmergencyPhone() {
-	    return registrant_emergency_phone;
+		return registrant_emergency_phone;
 	}
 
 	
-    /**
+	/**
 	 *
 	 * Tests if this object equals <code>obj</code>
 	 *
 	 * @returns true if equals
 	 *
 	 */
-    
+	
 	public boolean equals(Object obj) {
-	    RegistrantEventObject other = (RegistrantEventObject)obj;
-	    DebugHandler.finest("This: " + this);
-	    DebugHandler.finest("Other: " + other);
-	    return
-	        registrant_event_id == other.getRegistrantEventId() &&
-	        registrant_id == other.getRegistrantId() &&
-	        registrant_event == other.getRegistrantEvent() &&
-	        registrant_type == other.getRegistrantType() &&
-	        registrant_source == other.getRegistrantSource() &&
-	        registrant_class == other.getRegistrantClass() &&
-	        registrant_beneficiary == other.getRegistrantBeneficiary() &&
-	   Util.trim(registrant_emergency_contact).equals(Util.trim(other.getRegistrantEmergencyContact())) &&
-	        Util.trim(registrant_emergency_phone).equals(Util.trim(other.getRegistrantEmergencyPhone()));
+		RegistrantEventObject other = (RegistrantEventObject)obj;
+		DebugHandler.finest("This: " + this);
+		DebugHandler.finest("Other: " + other);
+		return
+			registrant_event_id == other.getRegistrantEventId() &&
+			registrant_id == other.getRegistrantId() &&
+			registrant_event == other.getRegistrantEvent() &&
+			registrant_type == other.getRegistrantType() &&
+			registrant_source == other.getRegistrantSource() &&
+			registrant_class == other.getRegistrantClass() &&
+			registrant_beneficiary == other.getRegistrantBeneficiary() &&
+			Util.trim(registrant_emergency_contact).equals(Util.trim(other.getRegistrantEmergencyContact())) &&
+			Util.trim(registrant_emergency_phone).equals(Util.trim(other.getRegistrantEmergencyPhone()));
 	}
 	
-    /**
+	/**
 	 *
 	 * Clones this object
 	 *
 	 * @returns the clone of this object
 	 *
 	 */
-    
+	
 	public Object clone() {
-	    Object theClone = null;
-	    try {
-	   theClone = super.clone();
-	    } catch (CloneNotSupportedException ce) {
-	   DebugHandler.severe("Cannot clone " + this);
-	    }
-	    return theClone;
+		Object theClone = null;
+		try {
+			theClone = super.clone();
+		} catch (CloneNotSupportedException ce) {
+			DebugHandler.severe("Cannot clone " + this);
+		}
+		return theClone;
 	}
 }

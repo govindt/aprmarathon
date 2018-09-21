@@ -37,10 +37,11 @@ public class AgeCategoryObject implements Cloneable {
 	 * @return	 Returns the String representation of the AgeCategoryObject.
 	 *
 	 */
-    
+	
 	public String toString() {
 		String buf="";
 		buf += "age_category_id : " + age_category_id + "\n";
+		buf += "age_category : " + age_category + "\n";
 		return buf;
 	}
 
@@ -48,10 +49,10 @@ public class AgeCategoryObject implements Cloneable {
 	 *
 	 * Returns the JSON representation of the AgeCategoryObject.
 	 *
-	 * @return      Returns the JSON representation of the AgeCategoryObject.
+	 * @return  	Returns the JSON representation of the AgeCategoryObject.
 	 *
 	 */
-    
+	
 	public JSONObject toJSON() {
 		JSONObject jo = new JSONObject();
 		try {
@@ -60,34 +61,34 @@ public class AgeCategoryObject implements Cloneable {
 		} catch (JSONException je) {}
 		return jo;
 	}
-    
+	
 	/**
 	 *
 	 * Returns the hashCode representation of the AgeCategoryObject.
 	 *
-	 * @return      Returns the hashCode.
+	 * @return	Returns the hashCode.
 	 *
 	*/
-    
+	
 	public int hashCode() {
 		return age_category_id;
 	}
-    
+	
 	/**
 	 * Constructs the AgeCategoryObject
 	 *
 	 */
-    
+	
 	public AgeCategoryObject () {
 		setAgeCategoryId(0);
 		setAgeCategory("");
 	}
-    
+	
 	/**
 	 * Constructs the AgeCategoryObject from JSONObject
 	 *
 	 */
-    
+	
 	public AgeCategoryObject (JSONObject jObject) {
 		try {
 			age_category_id = jObject.getInt("age_category_id");
@@ -96,92 +97,92 @@ public class AgeCategoryObject implements Cloneable {
 			age_category = jObject.getString("age_category");
 		} catch (JSONException je) {age_category = "";}
 	}
-    
 	
-    /**
+	
+	/**
 	 *
 	 * Sets the <code>age_category_id</code> field
 	 *
-	 * @param age_category_id      int
+	 * @param age_category_id	  int
 	 *
 	 */
-    
-	public void setAgeCategoryId(int age_category_id) {
-	    this.age_category_id = age_category_id;
-	}
-    
 	
-    /**
+	public void setAgeCategoryId(int age_category_id) {
+		this.age_category_id = age_category_id;
+	}
+	
+	
+	/**
 	 *
 	 * Gets the <code>age_category_id</code> field
 	 *
 	 * @returns age_category_id
 	 *
 	 */
-    
+	
 	public int getAgeCategoryId() {
-	    return age_category_id;
+		return age_category_id;
 	}
 
 	
-    /**
+	/**
 	 *
 	 * Sets the <code>age_category</code> field
 	 *
-	 * @param age_category      String
+	 * @param age_category	  String
 	 *
 	 */
-    
-	public void setAgeCategory(String age_category) {
-	    this.age_category = age_category;
-	}
-    
 	
-    /**
+	public void setAgeCategory(String age_category) {
+		this.age_category = age_category;
+	}
+	
+	
+	/**
 	 *
 	 * Gets the <code>age_category</code> field
 	 *
 	 * @returns age_category
 	 *
 	 */
-    
+	
 	public String getAgeCategory() {
-	    return age_category;
+		return age_category;
 	}
 
 	
-    /**
+	/**
 	 *
 	 * Tests if this object equals <code>obj</code>
 	 *
 	 * @returns true if equals
 	 *
 	 */
-    
+	
 	public boolean equals(Object obj) {
-	    AgeCategoryObject other = (AgeCategoryObject)obj;
-	    DebugHandler.finest("This: " + this);
-	    DebugHandler.finest("Other: " + other);
-	    return
-	        age_category_id == other.getAgeCategoryId() &&
-	        Util.trim(age_category).equals(Util.trim(other.getAgeCategory()));
+		AgeCategoryObject other = (AgeCategoryObject)obj;
+		DebugHandler.finest("This: " + this);
+		DebugHandler.finest("Other: " + other);
+		return
+			age_category_id == other.getAgeCategoryId() &&
+			Util.trim(age_category).equals(Util.trim(other.getAgeCategory()));
 	}
 	
-    /**
+	/**
 	 *
 	 * Clones this object
 	 *
 	 * @returns the clone of this object
 	 *
 	 */
-    
+	
 	public Object clone() {
-	    Object theClone = null;
-	    try {
-	   theClone = super.clone();
-	    } catch (CloneNotSupportedException ce) {
-	   DebugHandler.severe("Cannot clone " + this);
-	    }
-	    return theClone;
+		Object theClone = null;
+		try {
+			theClone = super.clone();
+		} catch (CloneNotSupportedException ce) {
+			DebugHandler.severe("Cannot clone " + this);
+		}
+		return theClone;
 	}
 }

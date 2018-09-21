@@ -29,18 +29,18 @@ import app.util.AppConstants;
 public class EventTypeImpl implements EventTypeInterface  {
 	private String EVENTTYPE = "EventTypeInterface.getAllEventType";
 	
-    /**
+	/**
 	 *
 	 * Implementation that returns the EventTypeObject given a EventTypeObject filled with values that will be used for query from the underlying datasource.
 	 *
 	 * @param eventtype_obj	EventTypeObject
 	 *
-	 * @return      Returns the ArrayList of EventTypeObjects
+	 * @return	  Returns the ArrayList of EventTypeObjects
 	 *
 	 * @throws AppException if the underlying operation fails
 	 *
 	 */
-    
+	
 	public ArrayList<EventTypeObject> getEventTypes(EventTypeObject eventtype_obj) throws AppException{
 		EventTypeObject[] eventTypeObjectArr = getAllEventTypes();
 		if ( eventtype_obj.getEventTypeId() == Constants.GET_ALL ) {
@@ -60,19 +60,19 @@ public class EventTypeImpl implements EventTypeInterface  {
 		}
 	}
 	
-    /**
+	/**
 	 *
 	 * Implementation of the method that returns the EventTypeObject from the underlying datasource.
 	 * given event_type_id.
 	 *
-	 * @param event_type_id     int
+	 * @param event_type_id	 int
 	 *
-	 * @return      Returns the EventTypeObject
+	 * @return	  Returns the EventTypeObject
 	 *
 	 * @throws AppException if the operation fails
 	 *
 	 */
-    
+	
 	public EventTypeObject getEventType(int event_type_id) throws AppException{
 		EventTypeObject[] eventTypeObjectArr = getAllEventTypes();
 		if ( eventTypeObjectArr == null )
@@ -97,18 +97,18 @@ public class EventTypeImpl implements EventTypeInterface  {
 		}
 		return null;
 	}
-    
 	
-    /**
+	
+	/**
 	 *
 	 * Implementation that returns all the <code>EventTypeObjects</code> from the underlying datasource.
 	 *
-	 * @return      Returns an Array of <code>EventTypeObject</code>
+	 * @return	  Returns an Array of <code>EventTypeObject</code>
 	 *
 	 * @throws AppException if the operation fails
 	 *
 	 */
-    
+	
 	public EventTypeObject[] getAllEventTypes() throws AppException{
 		EventTypeObject eventTypeObject = new EventTypeObject();
 		EventTypeObject[] eventTypeObjectArr = (EventTypeObject[])Util.getAppCache().get(EVENTTYPE);
@@ -127,18 +127,18 @@ public class EventTypeImpl implements EventTypeInterface  {
 		}
 		return eventTypeObjectArr;
 	}
-    
 	
-    /**
+	
+	/**
 	 *
 	 * Implementation to add the <code>EventTypeObject</code> to the underlying datasource.
 	 *
-	 * @param eventTypeObject     EventTypeObject
+	 * @param eventTypeObject	 EventTypeObject
 	 *
 	 * @throws AppException if the operation fails
 	 *
 	 */
-    
+	
 	public Integer addEventType(EventTypeObject eventTypeObject) throws AppException{
 		if ( AppConstants.DB_TYPE.equalsIgnoreCase(Constants.ORACLE) ) {
 			long l = DBUtil.getNextId("Event_Type_seq");
@@ -181,16 +181,16 @@ public class EventTypeImpl implements EventTypeInterface  {
 	}
 	
 	
-    /**
+	/**
 	 *
 	 * Implementation to update the <code>EventTypeObject</code> in the underlying datasource.
 	 *
-	 * @param eventTypeObject     EventTypeObject
+	 * @param eventTypeObject	 EventTypeObject
 	 *
 	 * @throws AppException if the operation fails
 	 *
 	 */
-    
+	
 	public Integer updateEventType(EventTypeObject eventTypeObject) throws AppException{
 		EventTypeObject newEventTypeObject = getEventType(eventTypeObject.getEventTypeId()); // This call will make sure cache/db are in sync
 		Integer i = (Integer)DBUtil.update(eventTypeObject);
@@ -209,18 +209,18 @@ public class EventTypeImpl implements EventTypeInterface  {
 		}
 		return i;
 	}
-    
 	
-    /**
+	
+	/**
 	 *
 	 * Implementation to delete the <code>EventTypeObject</code> in the underlying datasource.
 	 *
-	 * @param eventTypeObject     EventTypeObject
+	 * @param eventTypeObject	 EventTypeObject
 	 *
 	 * @throws AppException if the operation fails
 	 *
 	 */
-    
+	
 	public Integer deleteEventType(EventTypeObject eventTypeObject) throws AppException{
 	EventTypeObject newEventTypeObject = getEventType(eventTypeObject.getEventTypeId()); // This call will make sure cache/db are in sync
 	EventTypeObject[] eventTypeObjectArr = getAllEventTypes();

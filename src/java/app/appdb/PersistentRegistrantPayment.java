@@ -33,56 +33,56 @@ public class PersistentRegistrantPayment extends PersistentObject {
 	private RegistrantPaymentObject registrantPaymentObject;
 	
 	
-    /**
+	/**
 	 * Constructs a Persistent Object for the RegistrantPaymentObject
 	 *
-	 * @param registrantPaymentObject    the RegistrantPaymentObject 
+	 * @param registrantPaymentObject	the RegistrantPaymentObject 
 	 */
-    
-	public PersistentRegistrantPayment (RegistrantPaymentObject registrantPaymentObject) {
-	    this.registrantPaymentObject = registrantPaymentObject;
-	}
-    
 	
-    /**
+	public PersistentRegistrantPayment (RegistrantPaymentObject registrantPaymentObject) {
+		this.registrantPaymentObject = registrantPaymentObject;
+	}
+	
+	
+	/**
 	 * Returns the ArrayList of RegistrantPaymentObject.
 	 * It is Usually all the rows in the database.
 	 * This calls getResultObjects method in the super class.
 	 *
-	 * @return     ArrayList of RegistrantPaymentObject 
+	 * @return	ArrayList of RegistrantPaymentObject 
 	 *
-	 * @throws     DBException     If a database error occurs
+	 * @throws	DBException	 If a database error occurs
 	 *
-	 * @see     #getResultObjects(ResultSet)
+	 * @see	 #getResultObjects(ResultSet)
 	 */
-    
-	public Object list() throws DBException {
-	    PreparedSQLStatement sql = new PreparedSQLStatement();
-	    String statement = "SELECT registrant_payment_id, registrant_event, registrant, payment_type, payment_status, payment_amount, payment_additional_amount, payment_date, receipt_date, payment_details, payment_towards, payment_reference_id, payment_tax, payment_fee from Registrant_Payment";
-	    int index = 1;
-	    sql.setStatement(statement);
-        
-	    setSQLStatement(sql);
-        
-	    @SuppressWarnings("unchecked")
-	    ArrayList<RegistrantPaymentObject> result = (ArrayList<RegistrantPaymentObject>) super.list();
-        
-	    return result;
-	}
-    
 	
-    /**
+	public Object list() throws DBException {
+		PreparedSQLStatement sql = new PreparedSQLStatement();
+		String statement = "SELECT registrant_payment_id, registrant_event, registrant, payment_type, payment_status, payment_amount, payment_additional_amount, payment_date, receipt_date, payment_details, payment_towards, payment_reference_id, payment_tax, payment_fee from Registrant_Payment";
+		int index = 1;
+		sql.setStatement(statement);
+		
+		setSQLStatement(sql);
+		
+		@SuppressWarnings("unchecked")
+		ArrayList<RegistrantPaymentObject> result = (ArrayList<RegistrantPaymentObject>) super.list();
+		
+	return result;
+	}
+	
+	
+	/**
 	 * Returns the ArrayList of RegistrantPaymentObjects.
 	 * It is Usually all the rows that match the criteria in the database.
 	 * This calls getResultObjects method in the super class.
 	 *
-	 * @return     ArrayList of RegistrantPaymentObject 
+	 * @return	 ArrayList of RegistrantPaymentObject 
 	 *
-	 * @throws     DBException     If a database error occurs
+	 * @throws	 DBException	 If a database error occurs
 	 *
-	 * @see     #getResultObjects(ResultSet)
+	 * @see	 #getResultObjects(ResultSet)
 	 */
-    
+	
 	public Object list(Object args) throws DBException {
 		PreparedSQLStatement sql = new PreparedSQLStatement();
 		String statement = "SELECT registrant_payment_id, registrant_event, registrant, payment_type, payment_status, payment_amount, payment_additional_amount, payment_date, receipt_date, payment_details, payment_towards, payment_reference_id, payment_tax, payment_fee from Registrant_Payment";
@@ -214,222 +214,221 @@ public class PersistentRegistrantPayment extends PersistentObject {
 			sql.setInParams(new SQLParam(index++,  new Double(passedRegistrantPaymentObject.getPaymentFee()), Types.DOUBLE));
 		}
 		sql.setStatement(statement);
-        
+		
 		DebugHandler.debug(statement);
 		setSQLStatement(sql);
-        
+		
 		@SuppressWarnings("unchecked")
 		ArrayList<RegistrantPaymentObject> result = (ArrayList<RegistrantPaymentObject>) super.list();
-        
+		
 		return result;
 	}
-    
 	
-    /**
+	
+	/**
 	 * Returns the ArrayList of one RegistrantPaymentObject.
 	 * It is Usually the row that matches primary key.
 	 * This calls getResultSetObject method in the super class.
 	 *
-	 * @return     ArrayList of one RegistrantPaymentObject 
+	 * @return	 ArrayList of one RegistrantPaymentObject 
 	 *
-	 * @throws     DBException     If a database error occurs
+	 * @throws	 DBException	 If a database error occurs
 	 *
-	 * @see     #getResultSetObject(ResultSet)
+	 * @see	 #getResultSetObject(ResultSet)
 	 */
-    
-	public Object fetch() throws DBException {
-	    PreparedSQLStatement sql = new PreparedSQLStatement();
-	    String statement = "SELECT registrant_payment_id, registrant_event, registrant, payment_type, payment_status, payment_amount, payment_additional_amount, payment_date, receipt_date, payment_details, payment_towards, payment_reference_id, payment_tax, payment_fee from Registrant_Payment where registrant_payment_id = ? ";
-	    int index = 1;
-	    sql.setStatement(statement);
-	    sql.setInParams(new SQLParam(index++, new Integer(registrantPaymentObject.getRegistrantPaymentId()), Types.INTEGER));
-	    setSQLStatement(sql);
-        
-	    @SuppressWarnings("unchecked")
-	    ArrayList<RegistrantPaymentObject> result = (ArrayList<RegistrantPaymentObject>) super.fetch();
-        
-	    return result;
-	}
-    
 	
-    /**
+	public Object fetch() throws DBException {
+		PreparedSQLStatement sql = new PreparedSQLStatement();
+		String statement = "SELECT registrant_payment_id, registrant_event, registrant, payment_type, payment_status, payment_amount, payment_additional_amount, payment_date, receipt_date, payment_details, payment_towards, payment_reference_id, payment_tax, payment_fee from Registrant_Payment where registrant_payment_id = ? ";
+		int index = 1;
+		sql.setStatement(statement);
+		sql.setInParams(new SQLParam(index++, new Integer(registrantPaymentObject.getRegistrantPaymentId()), Types.INTEGER));
+		setSQLStatement(sql);
+		
+		@SuppressWarnings("unchecked")
+		ArrayList<RegistrantPaymentObject> result = (ArrayList<RegistrantPaymentObject>) super.fetch();
+		
+		return result;
+	}
+	
+	
+	/**
 	 *
 	 * Inserts a row in the database.  The values
 	 * are got from the registrantPaymentObject.
 	 * Returns an Integer Object with value 0 on success
 	 * and -1 on faliure.
 	 *
-	 * @return      Returns an Integer indicating success/failure of the database operation
+	 * @return	  Returns an Integer indicating success/failure of the database operation
 	 *
-	 * @throws     DBException     If a database error occurs
+	 * @throws	 DBException	 If a database error occurs
 	 */
-    
-	public Object insert() throws DBException {
-	    PreparedSQLStatement sql = new PreparedSQLStatement();
-	    String statement;
-	    int index = 1;
-
-	    if ( AppConstants.DB_TYPE.equalsIgnoreCase(Constants.ORACLE) ) {
-	        statement = "INSERT INTO Registrant_Payment (registrant_payment_id, registrant_event, registrant, payment_type, payment_status, payment_amount, payment_additional_amount, payment_date, receipt_date, payment_details, payment_towards, payment_reference_id, payment_tax, payment_fee) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ";
-	        sql.setStatement(statement);
-	        sql.setInParams(new SQLParam(index++, new Integer(registrantPaymentObject.getRegistrantPaymentId()), Types.INTEGER));
-	    } else {
-	        statement = "INSERT INTO Registrant_Payment (registrant_event, registrant, payment_type, payment_status, payment_amount, payment_additional_amount, payment_date, receipt_date, payment_details, payment_towards, payment_reference_id, payment_tax, payment_fee) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ";
-	        sql.setStatement(statement);
-	    }
-	    sql.setInParams(new SQLParam(index++, new Integer(registrantPaymentObject.getRegistrantEvent()), Types.INTEGER));
-	    sql.setInParams(new SQLParam(index++, new Integer(registrantPaymentObject.getRegistrant()), Types.INTEGER));
-	    sql.setInParams(new SQLParam(index++, new Integer(registrantPaymentObject.getPaymentType()), Types.INTEGER));
-	    sql.setInParams(new SQLParam(index++, new Integer(registrantPaymentObject.getPaymentStatus()), Types.INTEGER));
-	    sql.setInParams(new SQLParam(index++,  new Double(registrantPaymentObject.getPaymentAmount()), Types.DOUBLE));
-	    sql.setInParams(new SQLParam(index++,  new Double(registrantPaymentObject.getPaymentAdditionalAmount()), Types.DOUBLE));
-	    sql.setInParams(new SQLParam(index++,  registrantPaymentObject.getPaymentDate(), Types.TIMESTAMP));
-	    sql.setInParams(new SQLParam(index++,  registrantPaymentObject.getReceiptDate(), Types.TIMESTAMP));
-	    sql.setInParams(new SQLParam(index++,  registrantPaymentObject.getPaymentDetails(), Types.VARCHAR));
-	    sql.setInParams(new SQLParam(index++,  registrantPaymentObject.getPaymentTowards(), Types.VARCHAR));
-	    sql.setInParams(new SQLParam(index++,  registrantPaymentObject.getPaymentReferenceId(), Types.VARCHAR));
-	    sql.setInParams(new SQLParam(index++,  new Double(registrantPaymentObject.getPaymentTax()), Types.DOUBLE));
-	    sql.setInParams(new SQLParam(index++,  new Double(registrantPaymentObject.getPaymentFee()), Types.DOUBLE));
-	    setSQLStatement(sql);
-        
-	    Integer result = (Integer) super.insert();
-        
-	    return result;
-	}
-    
 	
-    /**
+	public Object insert() throws DBException {
+		PreparedSQLStatement sql = new PreparedSQLStatement();
+		String statement;
+		int index = 1;
+
+		if ( AppConstants.DB_TYPE.equalsIgnoreCase(Constants.ORACLE) ) {
+			statement = "INSERT INTO Registrant_Payment (registrant_payment_id, registrant_event, registrant, payment_type, payment_status, payment_amount, payment_additional_amount, payment_date, receipt_date, payment_details, payment_towards, payment_reference_id, payment_tax, payment_fee) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ";
+			sql.setStatement(statement);
+			sql.setInParams(new SQLParam(index++, new Integer(registrantPaymentObject.getRegistrantPaymentId()), Types.INTEGER));
+		} else {
+			statement = "INSERT INTO Registrant_Payment (registrant_event, registrant, payment_type, payment_status, payment_amount, payment_additional_amount, payment_date, receipt_date, payment_details, payment_towards, payment_reference_id, payment_tax, payment_fee) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ";
+			sql.setStatement(statement);
+		}
+		sql.setInParams(new SQLParam(index++, new Integer(registrantPaymentObject.getRegistrantEvent()), Types.INTEGER));
+		sql.setInParams(new SQLParam(index++, new Integer(registrantPaymentObject.getRegistrant()), Types.INTEGER));
+		sql.setInParams(new SQLParam(index++, new Integer(registrantPaymentObject.getPaymentType()), Types.INTEGER));
+		sql.setInParams(new SQLParam(index++, new Integer(registrantPaymentObject.getPaymentStatus()), Types.INTEGER));
+		sql.setInParams(new SQLParam(index++,  new Double(registrantPaymentObject.getPaymentAmount()), Types.DOUBLE));
+		sql.setInParams(new SQLParam(index++,  new Double(registrantPaymentObject.getPaymentAdditionalAmount()), Types.DOUBLE));
+		sql.setInParams(new SQLParam(index++,  registrantPaymentObject.getPaymentDate(), Types.TIMESTAMP));
+		sql.setInParams(new SQLParam(index++,  registrantPaymentObject.getReceiptDate(), Types.TIMESTAMP));
+		sql.setInParams(new SQLParam(index++,  registrantPaymentObject.getPaymentDetails(), Types.VARCHAR));
+		sql.setInParams(new SQLParam(index++,  registrantPaymentObject.getPaymentTowards(), Types.VARCHAR));
+		sql.setInParams(new SQLParam(index++,  registrantPaymentObject.getPaymentReferenceId(), Types.VARCHAR));
+		sql.setInParams(new SQLParam(index++,  new Double(registrantPaymentObject.getPaymentTax()), Types.DOUBLE));
+		sql.setInParams(new SQLParam(index++,  new Double(registrantPaymentObject.getPaymentFee()), Types.DOUBLE));
+		setSQLStatement(sql);
+		
+		Integer result = (Integer) super.insert();
+		
+		return result;
+	}
+	
+	
+	/**
 	 *
 	 * Deletes a row in the database. The key is 
 	 * in the registrantPaymentObject.
 	 * Returns an Integer Object with value 0 on success
 	 * and -1 on faliure.
 	 *
-	 * @return      Returns an Integer indicating success/failure of the database operation
+	 * @return	  Returns an Integer indicating success/failure of the database operation
 	 *
-	 * @throws     DBException     If a database error occurs
+	 * @throws	 DBException	 If a database error occurs
 	 */
-    
-	public Object delete() throws DBException {
-	    PreparedSQLStatement sql = new PreparedSQLStatement();
-	    String statement = "DELETE FROM Registrant_Payment WHERE registrant_payment_id = ? ";
-	    int index = 1;
-	    sql.setStatement(statement);
-	    sql.setInParams(new SQLParam(index++, new Integer(registrantPaymentObject.getRegistrantPaymentId()), Types.INTEGER));
-	    setSQLStatement(sql);
-        
-	    Integer result = (Integer) super.delete();
-        
-	    return result;
-	}
-    
 	
-    /**
+	public Object delete() throws DBException {
+		PreparedSQLStatement sql = new PreparedSQLStatement();
+		String statement = "DELETE FROM Registrant_Payment WHERE registrant_payment_id = ? ";
+		int index = 1;
+		sql.setStatement(statement);
+		sql.setInParams(new SQLParam(index++, new Integer(registrantPaymentObject.getRegistrantPaymentId()), Types.INTEGER));
+		setSQLStatement(sql);
+		
+		Integer result = (Integer) super.delete();
+		
+		return result;
+	}
+	
+	
+	/**
 	 *
 	 * Updates a row in the database. The values are 
 	 * got from the registrantPaymentObject.
 	 * Returns an Integer Object with value 0 on success
 	 * and -1 on faliure.
 	 *
-	 * @return      Returns an Integer indicating success/failure of the database operation
+	 * @return	  Returns an Integer indicating success/failure of the database operation
 	 *
-	 * @throws     DBException     If a database error occurs
+	 * @throws	 DBException	 If a database error occurs
 	 */
-    
-	public Object update() throws DBException {
-	    PreparedSQLStatement sql = new PreparedSQLStatement();
-	    String statement = "UPDATE Registrant_Payment SET registrant_payment_id = ?, registrant_event = ?, registrant = ?, payment_type = ?, payment_status = ?, payment_amount = ?, payment_additional_amount = ?, payment_date = ?, receipt_date = ?, payment_details = ?, payment_towards = ?, payment_reference_id = ?, payment_tax = ?, payment_fee = ? where registrant_payment_id = ? ";
-	    int index = 1;
-	    sql.setStatement(statement);
-	    sql.setInParams(new SQLParam(index++, new Integer(registrantPaymentObject.getRegistrantPaymentId()), Types.INTEGER));
-	    sql.setInParams(new SQLParam(index++, new Integer(registrantPaymentObject.getRegistrantEvent()), Types.INTEGER));
-	    sql.setInParams(new SQLParam(index++, new Integer(registrantPaymentObject.getRegistrant()), Types.INTEGER));
-	    sql.setInParams(new SQLParam(index++, new Integer(registrantPaymentObject.getPaymentType()), Types.INTEGER));
-	    sql.setInParams(new SQLParam(index++, new Integer(registrantPaymentObject.getPaymentStatus()), Types.INTEGER));
-	    sql.setInParams(new SQLParam(index++,  new Double(registrantPaymentObject.getPaymentAmount()), Types.DOUBLE));
-	    sql.setInParams(new SQLParam(index++,  new Double(registrantPaymentObject.getPaymentAdditionalAmount()), Types.DOUBLE));
-	    sql.setInParams(new SQLParam(index++,  registrantPaymentObject.getPaymentDate(), Types.TIMESTAMP));
-	    sql.setInParams(new SQLParam(index++,  registrantPaymentObject.getReceiptDate(), Types.TIMESTAMP));
-	    sql.setInParams(new SQLParam(index++,  registrantPaymentObject.getPaymentDetails(), Types.VARCHAR));
-	    sql.setInParams(new SQLParam(index++,  registrantPaymentObject.getPaymentTowards(), Types.VARCHAR));
-	    sql.setInParams(new SQLParam(index++,  registrantPaymentObject.getPaymentReferenceId(), Types.VARCHAR));
-	    sql.setInParams(new SQLParam(index++,  new Double(registrantPaymentObject.getPaymentTax()), Types.DOUBLE));
-	    sql.setInParams(new SQLParam(index++,  new Double(registrantPaymentObject.getPaymentFee()), Types.DOUBLE));
-	    sql.setInParams(new SQLParam(index++, new Integer(registrantPaymentObject.getRegistrantPaymentId()), Types.INTEGER));
-	    setSQLStatement(sql);
-        
-	    Integer result = (Integer) super.update();
-        
-	    return result;
-	}
-    
 	
-    /**
+	public Object update() throws DBException {
+		PreparedSQLStatement sql = new PreparedSQLStatement();
+		String statement = "UPDATE Registrant_Payment SET registrant_payment_id = ?, registrant_event = ?, registrant = ?, payment_type = ?, payment_status = ?, payment_amount = ?, payment_additional_amount = ?, payment_date = ?, receipt_date = ?, payment_details = ?, payment_towards = ?, payment_reference_id = ?, payment_tax = ?, payment_fee = ? where registrant_payment_id = ? ";
+		int index = 1;
+		sql.setStatement(statement);
+		sql.setInParams(new SQLParam(index++, new Integer(registrantPaymentObject.getRegistrantPaymentId()), Types.INTEGER));
+		sql.setInParams(new SQLParam(index++, new Integer(registrantPaymentObject.getRegistrantEvent()), Types.INTEGER));
+		sql.setInParams(new SQLParam(index++, new Integer(registrantPaymentObject.getRegistrant()), Types.INTEGER));
+		sql.setInParams(new SQLParam(index++, new Integer(registrantPaymentObject.getPaymentType()), Types.INTEGER));
+		sql.setInParams(new SQLParam(index++, new Integer(registrantPaymentObject.getPaymentStatus()), Types.INTEGER));
+		sql.setInParams(new SQLParam(index++,  new Double(registrantPaymentObject.getPaymentAmount()), Types.DOUBLE));
+		sql.setInParams(new SQLParam(index++,  new Double(registrantPaymentObject.getPaymentAdditionalAmount()), Types.DOUBLE));
+		sql.setInParams(new SQLParam(index++,  registrantPaymentObject.getPaymentDate(), Types.TIMESTAMP));
+		sql.setInParams(new SQLParam(index++,  registrantPaymentObject.getReceiptDate(), Types.TIMESTAMP));
+		sql.setInParams(new SQLParam(index++,  registrantPaymentObject.getPaymentDetails(), Types.VARCHAR));
+		sql.setInParams(new SQLParam(index++,  registrantPaymentObject.getPaymentTowards(), Types.VARCHAR));
+		sql.setInParams(new SQLParam(index++,  registrantPaymentObject.getPaymentReferenceId(), Types.VARCHAR));
+		sql.setInParams(new SQLParam(index++,  new Double(registrantPaymentObject.getPaymentTax()), Types.DOUBLE));
+		sql.setInParams(new SQLParam(index++,  new Double(registrantPaymentObject.getPaymentFee()), Types.DOUBLE));
+		sql.setInParams(new SQLParam(index++, new Integer(registrantPaymentObject.getRegistrantPaymentId()), Types.INTEGER));
+		setSQLStatement(sql);
+		
+		Integer result = (Integer) super.update();
+		
+		return result;
+	}
+	
+	
+	/**
 	 *
 	 * Returns a ArrayList of RegistrantPaymentObject from the ResultSet. The values for 
 	 * each object is got from the ResultSet.
 	 * This is used by the list method.
 	 *
-	 * @param rs      the ResultSet.
+	 * @param rs	  the ResultSet.
 	 *
-	 * @return      Returns a ArrayList of RegistrantPaymentObject from the ResultSet.
+	 * @return	  Returns a ArrayList of RegistrantPaymentObject from the ResultSet.
 	 *
-	 * @see     #list()
+	 * @see	 #list()
 	 *
 	 */
-    
-	public Object getResultObjects(ResultSet rs) {
-	    ArrayList<RegistrantPaymentObject> result = new ArrayList<RegistrantPaymentObject>();
-        
-	    try {
-	        while(rs.next()) {
-	            int index = 1;
-	            RegistrantPaymentObject f = new RegistrantPaymentObject();
-	            f.setRegistrantPaymentId(rs.getInt(index++));
-	            f.setRegistrantEvent(rs.getInt(index++));
-	            f.setRegistrant(rs.getInt(index++));
-	            f.setPaymentType(rs.getInt(index++));
-	            f.setPaymentStatus(rs.getInt(index++));
-	            f.setPaymentAmount(rs.getDouble(index++));
-	            f.setPaymentAdditionalAmount(rs.getDouble(index++));
-	            f.setPaymentDate(rs.getDate(index++));
-	            f.setReceiptDate(rs.getDate(index++));
-	            f.setPaymentDetails(rs.getString(index++));
-	            f.setPaymentTowards(rs.getString(index++));
-	            f.setPaymentReferenceId(rs.getString(index++));
-	            f.setPaymentTax(rs.getDouble(index++));
-	            f.setPaymentFee(rs.getDouble(index++));
-	            result.add(f);
-	        }
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	    }
-	    return result;
-	}
-    
 	
-    /**
+	public Object getResultObjects(ResultSet rs) {
+		ArrayList<RegistrantPaymentObject> result = new ArrayList<RegistrantPaymentObject>();
+		try {
+			while(rs.next()) {
+				int index = 1;
+				RegistrantPaymentObject f = new RegistrantPaymentObject();
+				f.setRegistrantPaymentId(rs.getInt(index++));
+				f.setRegistrantEvent(rs.getInt(index++));
+				f.setRegistrant(rs.getInt(index++));
+				f.setPaymentType(rs.getInt(index++));
+				f.setPaymentStatus(rs.getInt(index++));
+				f.setPaymentAmount(rs.getDouble(index++));
+				f.setPaymentAdditionalAmount(rs.getDouble(index++));
+				f.setPaymentDate(rs.getDate(index++));
+				f.setReceiptDate(rs.getDate(index++));
+				f.setPaymentDetails(rs.getString(index++));
+				f.setPaymentTowards(rs.getString(index++));
+				f.setPaymentReferenceId(rs.getString(index++));
+				f.setPaymentTax(rs.getDouble(index++));
+				f.setPaymentFee(rs.getDouble(index++));
+				result.add(f);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
+	
+	/**
 	 *
 	 * Returns a RegistrantPaymentObject from the ResultSet. The values for 
 	 * each object is got from the ResultSet.
 	 *
 	 * This is used by the fetch method.
-	 * @param rs      the ResultSet.
+	 * @param rs	  the ResultSet.
 	 *
-	 * @return      Returns a RegistrantPaymentObject from the ResultSet.
+	 * @return	  Returns a RegistrantPaymentObject from the ResultSet.
 	 *
-	 * @see     #fetch()
+	 * @see	 #fetch()
 	 *
 	 */
-    
+	
 	public Object getResultSetObject(ResultSet rs) {
-	    try {
-	    @SuppressWarnings("unchecked")
-	        ArrayList<RegistrantPaymentObject> result = (ArrayList<RegistrantPaymentObject>) getResultObjects(rs);
-	        return result.get(0);
-	    } catch (Exception e) {
-	        return null;
-	    }
+		try {
+			@SuppressWarnings("unchecked")
+			ArrayList<RegistrantPaymentObject> result = (ArrayList<RegistrantPaymentObject>) getResultObjects(rs);
+			return result.get(0);
+		} catch (Exception e) {
+			return null;
+		}
 	}
 }
-    
+	

@@ -47,7 +47,7 @@ public class RegistrantObject implements Cloneable {
 	 * @return	 Returns the String representation of the RegistrantObject.
 	 *
 	 */
-    
+	
 	public String toString() {
 		String buf="";
 		buf += "registrant_id : " + registrant_id + "\n";
@@ -61,6 +61,7 @@ public class RegistrantObject implements Cloneable {
 		buf += "registrant_city : " + registrant_city + "\n";
 		buf += "registrant_state : " + registrant_state + "\n";
 		buf += "registrant_pincode : " + registrant_pincode + "\n";
+		buf += "registrant_pan : " + registrant_pan + "\n";
 		return buf;
 	}
 
@@ -68,10 +69,10 @@ public class RegistrantObject implements Cloneable {
 	 *
 	 * Returns the JSON representation of the RegistrantObject.
 	 *
-	 * @return      Returns the JSON representation of the RegistrantObject.
+	 * @return  	Returns the JSON representation of the RegistrantObject.
 	 *
 	 */
-    
+	
 	public JSONObject toJSON() {
 		JSONObject jo = new JSONObject();
 		try {
@@ -90,24 +91,24 @@ public class RegistrantObject implements Cloneable {
 		} catch (JSONException je) {}
 		return jo;
 	}
-    
+	
 	/**
 	 *
 	 * Returns the hashCode representation of the RegistrantObject.
 	 *
-	 * @return      Returns the hashCode.
+	 * @return	Returns the hashCode.
 	 *
 	*/
-    
+	
 	public int hashCode() {
 		return registrant_id;
 	}
-    
+	
 	/**
 	 * Constructs the RegistrantObject
 	 *
 	 */
-    
+	
 	public RegistrantObject () {
 		setRegistrantId(0);
 		setRegistrantName("");
@@ -122,12 +123,12 @@ public class RegistrantObject implements Cloneable {
 		setRegistrantPincode("");
 		setRegistrantPan("");
 	}
-    
+	
 	/**
 	 * Constructs the RegistrantObject from JSONObject
 	 *
 	 */
-    
+	
 	public RegistrantObject (JSONObject jObject) {
 		try {
 			registrant_id = jObject.getInt("registrant_id");
@@ -166,362 +167,362 @@ public class RegistrantObject implements Cloneable {
 			registrant_pan = jObject.getString("registrant_pan");
 		} catch (JSONException je) {registrant_pan = "";}
 	}
-    
 	
-    /**
+	
+	/**
 	 *
 	 * Sets the <code>registrant_id</code> field
 	 *
-	 * @param registrant_id      int
+	 * @param registrant_id	  int
 	 *
 	 */
-    
-	public void setRegistrantId(int registrant_id) {
-	    this.registrant_id = registrant_id;
-	}
-    
 	
-    /**
+	public void setRegistrantId(int registrant_id) {
+		this.registrant_id = registrant_id;
+	}
+	
+	
+	/**
 	 *
 	 * Gets the <code>registrant_id</code> field
 	 *
 	 * @returns registrant_id
 	 *
 	 */
-    
+	
 	public int getRegistrantId() {
-	    return registrant_id;
+		return registrant_id;
 	}
 
 	
-    /**
+	/**
 	 *
 	 * Sets the <code>registrant_name</code> field
 	 *
-	 * @param registrant_name      String
+	 * @param registrant_name	  String
 	 *
 	 */
-    
-	public void setRegistrantName(String registrant_name) {
-	    this.registrant_name = registrant_name;
-	}
-    
 	
-    /**
+	public void setRegistrantName(String registrant_name) {
+		this.registrant_name = registrant_name;
+	}
+	
+	
+	/**
 	 *
 	 * Gets the <code>registrant_name</code> field
 	 *
 	 * @returns registrant_name
 	 *
 	 */
-    
+	
 	public String getRegistrantName() {
-	    return registrant_name;
+		return registrant_name;
 	}
 
 	
-    /**
+	/**
 	 *
 	 * Sets the <code>registrant_middle_name</code> field
 	 *
-	 * @param registrant_middle_name      String
+	 * @param registrant_middle_name	  String
 	 *
 	 */
-    
-	public void setRegistrantMiddleName(String registrant_middle_name) {
-	    this.registrant_middle_name = registrant_middle_name;
-	}
-    
 	
-    /**
+	public void setRegistrantMiddleName(String registrant_middle_name) {
+		this.registrant_middle_name = registrant_middle_name;
+	}
+	
+	
+	/**
 	 *
 	 * Gets the <code>registrant_middle_name</code> field
 	 *
 	 * @returns registrant_middle_name
 	 *
 	 */
-    
+	
 	public String getRegistrantMiddleName() {
-	    return registrant_middle_name;
+		return registrant_middle_name;
 	}
 
 	
-    /**
+	/**
 	 *
 	 * Sets the <code>registrant_last_name</code> field
 	 *
-	 * @param registrant_last_name      String
+	 * @param registrant_last_name	  String
 	 *
 	 */
-    
-	public void setRegistrantLastName(String registrant_last_name) {
-	    this.registrant_last_name = registrant_last_name;
-	}
-    
 	
-    /**
+	public void setRegistrantLastName(String registrant_last_name) {
+		this.registrant_last_name = registrant_last_name;
+	}
+	
+	
+	/**
 	 *
 	 * Gets the <code>registrant_last_name</code> field
 	 *
 	 * @returns registrant_last_name
 	 *
 	 */
-    
+	
 	public String getRegistrantLastName() {
-	    return registrant_last_name;
+		return registrant_last_name;
 	}
 
 	
-    /**
+	/**
 	 *
 	 * Sets the <code>registrant_email</code> field
 	 *
-	 * @param registrant_email      String
+	 * @param registrant_email	  String
 	 *
 	 */
-    
-	public void setRegistrantEmail(String registrant_email) {
-	    this.registrant_email = registrant_email;
-	}
-    
 	
-    /**
+	public void setRegistrantEmail(String registrant_email) {
+		this.registrant_email = registrant_email;
+	}
+	
+	
+	/**
 	 *
 	 * Gets the <code>registrant_email</code> field
 	 *
 	 * @returns registrant_email
 	 *
 	 */
-    
+	
 	public String getRegistrantEmail() {
-	    return registrant_email;
+		return registrant_email;
 	}
 
 	
-    /**
+	/**
 	 *
 	 * Sets the <code>registrant_additional_email</code> field
 	 *
-	 * @param registrant_additional_email      String
+	 * @param registrant_additional_email	  String
 	 *
 	 */
-    
-	public void setRegistrantAdditionalEmail(String registrant_additional_email) {
-	    this.registrant_additional_email = registrant_additional_email;
-	}
-    
 	
-    /**
+	public void setRegistrantAdditionalEmail(String registrant_additional_email) {
+		this.registrant_additional_email = registrant_additional_email;
+	}
+	
+	
+	/**
 	 *
 	 * Gets the <code>registrant_additional_email</code> field
 	 *
 	 * @returns registrant_additional_email
 	 *
 	 */
-    
+	
 	public String getRegistrantAdditionalEmail() {
-	    return registrant_additional_email;
+		return registrant_additional_email;
 	}
 
 	
-    /**
+	/**
 	 *
 	 * Sets the <code>registrant_phone</code> field
 	 *
-	 * @param registrant_phone      String
+	 * @param registrant_phone	  String
 	 *
 	 */
-    
-	public void setRegistrantPhone(String registrant_phone) {
-	    this.registrant_phone = registrant_phone;
-	}
-    
 	
-    /**
+	public void setRegistrantPhone(String registrant_phone) {
+		this.registrant_phone = registrant_phone;
+	}
+	
+	
+	/**
 	 *
 	 * Gets the <code>registrant_phone</code> field
 	 *
 	 * @returns registrant_phone
 	 *
 	 */
-    
+	
 	public String getRegistrantPhone() {
-	    return registrant_phone;
+		return registrant_phone;
 	}
 
 	
-    /**
+	/**
 	 *
 	 * Sets the <code>registrant_address</code> field
 	 *
-	 * @param registrant_address      String
+	 * @param registrant_address	  String
 	 *
 	 */
-    
-	public void setRegistrantAddress(String registrant_address) {
-	    this.registrant_address = registrant_address;
-	}
-    
 	
-    /**
+	public void setRegistrantAddress(String registrant_address) {
+		this.registrant_address = registrant_address;
+	}
+	
+	
+	/**
 	 *
 	 * Gets the <code>registrant_address</code> field
 	 *
 	 * @returns registrant_address
 	 *
 	 */
-    
+	
 	public String getRegistrantAddress() {
-	    return registrant_address;
+		return registrant_address;
 	}
 
 	
-    /**
+	/**
 	 *
 	 * Sets the <code>registrant_city</code> field
 	 *
-	 * @param registrant_city      String
+	 * @param registrant_city	  String
 	 *
 	 */
-    
-	public void setRegistrantCity(String registrant_city) {
-	    this.registrant_city = registrant_city;
-	}
-    
 	
-    /**
+	public void setRegistrantCity(String registrant_city) {
+		this.registrant_city = registrant_city;
+	}
+	
+	
+	/**
 	 *
 	 * Gets the <code>registrant_city</code> field
 	 *
 	 * @returns registrant_city
 	 *
 	 */
-    
+	
 	public String getRegistrantCity() {
-	    return registrant_city;
+		return registrant_city;
 	}
 
 	
-    /**
+	/**
 	 *
 	 * Sets the <code>registrant_state</code> field
 	 *
-	 * @param registrant_state      String
+	 * @param registrant_state	  String
 	 *
 	 */
-    
-	public void setRegistrantState(String registrant_state) {
-	    this.registrant_state = registrant_state;
-	}
-    
 	
-    /**
+	public void setRegistrantState(String registrant_state) {
+		this.registrant_state = registrant_state;
+	}
+	
+	
+	/**
 	 *
 	 * Gets the <code>registrant_state</code> field
 	 *
 	 * @returns registrant_state
 	 *
 	 */
-    
+	
 	public String getRegistrantState() {
-	    return registrant_state;
+		return registrant_state;
 	}
 
 	
-    /**
+	/**
 	 *
 	 * Sets the <code>registrant_pincode</code> field
 	 *
-	 * @param registrant_pincode      String
+	 * @param registrant_pincode	  String
 	 *
 	 */
-    
-	public void setRegistrantPincode(String registrant_pincode) {
-	    this.registrant_pincode = registrant_pincode;
-	}
-    
 	
-    /**
+	public void setRegistrantPincode(String registrant_pincode) {
+		this.registrant_pincode = registrant_pincode;
+	}
+	
+	
+	/**
 	 *
 	 * Gets the <code>registrant_pincode</code> field
 	 *
 	 * @returns registrant_pincode
 	 *
 	 */
-    
+	
 	public String getRegistrantPincode() {
-	    return registrant_pincode;
+		return registrant_pincode;
 	}
 
 	
-    /**
+	/**
 	 *
 	 * Sets the <code>registrant_pan</code> field
 	 *
-	 * @param registrant_pan      String
+	 * @param registrant_pan	  String
 	 *
 	 */
-    
-	public void setRegistrantPan(String registrant_pan) {
-	    this.registrant_pan = registrant_pan;
-	}
-    
 	
-    /**
+	public void setRegistrantPan(String registrant_pan) {
+		this.registrant_pan = registrant_pan;
+	}
+	
+	
+	/**
 	 *
 	 * Gets the <code>registrant_pan</code> field
 	 *
 	 * @returns registrant_pan
 	 *
 	 */
-    
+	
 	public String getRegistrantPan() {
-	    return registrant_pan;
+		return registrant_pan;
 	}
 
 	
-    /**
+	/**
 	 *
 	 * Tests if this object equals <code>obj</code>
 	 *
 	 * @returns true if equals
 	 *
 	 */
-    
+	
 	public boolean equals(Object obj) {
-	    RegistrantObject other = (RegistrantObject)obj;
-	    DebugHandler.finest("This: " + this);
-	    DebugHandler.finest("Other: " + other);
-	    return
-	        registrant_id == other.getRegistrantId() &&
-	   Util.trim(registrant_name).equals(Util.trim(other.getRegistrantName())) &&
-	   Util.trim(registrant_middle_name).equals(Util.trim(other.getRegistrantMiddleName())) &&
-	   Util.trim(registrant_last_name).equals(Util.trim(other.getRegistrantLastName())) &&
-	   Util.trim(registrant_email).equals(Util.trim(other.getRegistrantEmail())) &&
-	   Util.trim(registrant_additional_email).equals(Util.trim(other.getRegistrantAdditionalEmail())) &&
-	   Util.trim(registrant_phone).equals(Util.trim(other.getRegistrantPhone())) &&
-	   Util.trim(registrant_address).equals(Util.trim(other.getRegistrantAddress())) &&
-	   Util.trim(registrant_city).equals(Util.trim(other.getRegistrantCity())) &&
-	   Util.trim(registrant_state).equals(Util.trim(other.getRegistrantState())) &&
-	   Util.trim(registrant_pincode).equals(Util.trim(other.getRegistrantPincode())) &&
-	        Util.trim(registrant_pan).equals(Util.trim(other.getRegistrantPan()));
+		RegistrantObject other = (RegistrantObject)obj;
+		DebugHandler.finest("This: " + this);
+		DebugHandler.finest("Other: " + other);
+		return
+			registrant_id == other.getRegistrantId() &&
+			Util.trim(registrant_name).equals(Util.trim(other.getRegistrantName())) &&
+			Util.trim(registrant_middle_name).equals(Util.trim(other.getRegistrantMiddleName())) &&
+			Util.trim(registrant_last_name).equals(Util.trim(other.getRegistrantLastName())) &&
+			Util.trim(registrant_email).equals(Util.trim(other.getRegistrantEmail())) &&
+			Util.trim(registrant_additional_email).equals(Util.trim(other.getRegistrantAdditionalEmail())) &&
+			Util.trim(registrant_phone).equals(Util.trim(other.getRegistrantPhone())) &&
+			Util.trim(registrant_address).equals(Util.trim(other.getRegistrantAddress())) &&
+			Util.trim(registrant_city).equals(Util.trim(other.getRegistrantCity())) &&
+			Util.trim(registrant_state).equals(Util.trim(other.getRegistrantState())) &&
+			Util.trim(registrant_pincode).equals(Util.trim(other.getRegistrantPincode())) &&
+			Util.trim(registrant_pan).equals(Util.trim(other.getRegistrantPan()));
 	}
 	
-    /**
+	/**
 	 *
 	 * Clones this object
 	 *
 	 * @returns the clone of this object
 	 *
 	 */
-    
+	
 	public Object clone() {
-	    Object theClone = null;
-	    try {
-	   theClone = super.clone();
-	    } catch (CloneNotSupportedException ce) {
-	   DebugHandler.severe("Cannot clone " + this);
-	    }
-	    return theClone;
+		Object theClone = null;
+		try {
+			theClone = super.clone();
+		} catch (CloneNotSupportedException ce) {
+			DebugHandler.severe("Cannot clone " + this);
+		}
+		return theClone;
 	}
 }

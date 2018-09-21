@@ -33,56 +33,56 @@ public class PersistentBloodGroup extends PersistentObject {
 	private BloodGroupObject bloodGroupObject;
 	
 	
-    /**
+	/**
 	 * Constructs a Persistent Object for the BloodGroupObject
 	 *
-	 * @param bloodGroupObject    the BloodGroupObject 
+	 * @param bloodGroupObject	the BloodGroupObject 
 	 */
-    
-	public PersistentBloodGroup (BloodGroupObject bloodGroupObject) {
-	    this.bloodGroupObject = bloodGroupObject;
-	}
-    
 	
-    /**
+	public PersistentBloodGroup (BloodGroupObject bloodGroupObject) {
+		this.bloodGroupObject = bloodGroupObject;
+	}
+	
+	
+	/**
 	 * Returns the ArrayList of BloodGroupObject.
 	 * It is Usually all the rows in the database.
 	 * This calls getResultObjects method in the super class.
 	 *
-	 * @return     ArrayList of BloodGroupObject 
+	 * @return	ArrayList of BloodGroupObject 
 	 *
-	 * @throws     DBException     If a database error occurs
+	 * @throws	DBException	 If a database error occurs
 	 *
-	 * @see     #getResultObjects(ResultSet)
+	 * @see	 #getResultObjects(ResultSet)
 	 */
-    
-	public Object list() throws DBException {
-	    PreparedSQLStatement sql = new PreparedSQLStatement();
-	    String statement = "SELECT blood_group_id, blood_group_name from Blood_Group";
-	    int index = 1;
-	    sql.setStatement(statement);
-        
-	    setSQLStatement(sql);
-        
-	    @SuppressWarnings("unchecked")
-	    ArrayList<BloodGroupObject> result = (ArrayList<BloodGroupObject>) super.list();
-        
-	    return result;
-	}
-    
 	
-    /**
+	public Object list() throws DBException {
+		PreparedSQLStatement sql = new PreparedSQLStatement();
+		String statement = "SELECT blood_group_id, blood_group_name from Blood_Group";
+		int index = 1;
+		sql.setStatement(statement);
+		
+		setSQLStatement(sql);
+		
+		@SuppressWarnings("unchecked")
+		ArrayList<BloodGroupObject> result = (ArrayList<BloodGroupObject>) super.list();
+		
+	return result;
+	}
+	
+	
+	/**
 	 * Returns the ArrayList of BloodGroupObjects.
 	 * It is Usually all the rows that match the criteria in the database.
 	 * This calls getResultObjects method in the super class.
 	 *
-	 * @return     ArrayList of BloodGroupObject 
+	 * @return	 ArrayList of BloodGroupObject 
 	 *
-	 * @throws     DBException     If a database error occurs
+	 * @throws	 DBException	 If a database error occurs
 	 *
-	 * @see     #getResultObjects(ResultSet)
+	 * @see	 #getResultObjects(ResultSet)
 	 */
-    
+	
 	public Object list(Object args) throws DBException {
 		PreparedSQLStatement sql = new PreparedSQLStatement();
 		String statement = "SELECT blood_group_id, blood_group_name from Blood_Group";
@@ -106,186 +106,185 @@ public class PersistentBloodGroup extends PersistentObject {
 			sql.setInParams(new SQLParam(index++,  passedBloodGroupObject.getBloodGroupName(), Types.VARCHAR));
 		}
 		sql.setStatement(statement);
-        
+		
 		DebugHandler.debug(statement);
 		setSQLStatement(sql);
-        
+		
 		@SuppressWarnings("unchecked")
 		ArrayList<BloodGroupObject> result = (ArrayList<BloodGroupObject>) super.list();
-        
+		
 		return result;
 	}
-    
 	
-    /**
+	
+	/**
 	 * Returns the ArrayList of one BloodGroupObject.
 	 * It is Usually the row that matches primary key.
 	 * This calls getResultSetObject method in the super class.
 	 *
-	 * @return     ArrayList of one BloodGroupObject 
+	 * @return	 ArrayList of one BloodGroupObject 
 	 *
-	 * @throws     DBException     If a database error occurs
+	 * @throws	 DBException	 If a database error occurs
 	 *
-	 * @see     #getResultSetObject(ResultSet)
+	 * @see	 #getResultSetObject(ResultSet)
 	 */
-    
-	public Object fetch() throws DBException {
-	    PreparedSQLStatement sql = new PreparedSQLStatement();
-	    String statement = "SELECT blood_group_id, blood_group_name from Blood_Group where blood_group_id = ? ";
-	    int index = 1;
-	    sql.setStatement(statement);
-	    sql.setInParams(new SQLParam(index++, new Integer(bloodGroupObject.getBloodGroupId()), Types.INTEGER));
-	    setSQLStatement(sql);
-        
-	    @SuppressWarnings("unchecked")
-	    ArrayList<BloodGroupObject> result = (ArrayList<BloodGroupObject>) super.fetch();
-        
-	    return result;
-	}
-    
 	
-    /**
+	public Object fetch() throws DBException {
+		PreparedSQLStatement sql = new PreparedSQLStatement();
+		String statement = "SELECT blood_group_id, blood_group_name from Blood_Group where blood_group_id = ? ";
+		int index = 1;
+		sql.setStatement(statement);
+		sql.setInParams(new SQLParam(index++, new Integer(bloodGroupObject.getBloodGroupId()), Types.INTEGER));
+		setSQLStatement(sql);
+		
+		@SuppressWarnings("unchecked")
+		ArrayList<BloodGroupObject> result = (ArrayList<BloodGroupObject>) super.fetch();
+		
+		return result;
+	}
+	
+	
+	/**
 	 *
 	 * Inserts a row in the database.  The values
 	 * are got from the bloodGroupObject.
 	 * Returns an Integer Object with value 0 on success
 	 * and -1 on faliure.
 	 *
-	 * @return      Returns an Integer indicating success/failure of the database operation
+	 * @return	  Returns an Integer indicating success/failure of the database operation
 	 *
-	 * @throws     DBException     If a database error occurs
+	 * @throws	 DBException	 If a database error occurs
 	 */
-    
-	public Object insert() throws DBException {
-	    PreparedSQLStatement sql = new PreparedSQLStatement();
-	    String statement;
-	    int index = 1;
-
-	    if ( AppConstants.DB_TYPE.equalsIgnoreCase(Constants.ORACLE) ) {
-	        statement = "INSERT INTO Blood_Group (blood_group_id, blood_group_name) VALUES(?, ?) ";
-	        sql.setStatement(statement);
-	        sql.setInParams(new SQLParam(index++, new Integer(bloodGroupObject.getBloodGroupId()), Types.INTEGER));
-	    } else {
-	        statement = "INSERT INTO Blood_Group (blood_group_name) VALUES(?) ";
-	        sql.setStatement(statement);
-	    }
-	    sql.setInParams(new SQLParam(index++,  bloodGroupObject.getBloodGroupName(), Types.VARCHAR));
-	    setSQLStatement(sql);
-        
-	    Integer result = (Integer) super.insert();
-        
-	    return result;
-	}
-    
 	
-    /**
+	public Object insert() throws DBException {
+		PreparedSQLStatement sql = new PreparedSQLStatement();
+		String statement;
+		int index = 1;
+
+		if ( AppConstants.DB_TYPE.equalsIgnoreCase(Constants.ORACLE) ) {
+			statement = "INSERT INTO Blood_Group (blood_group_id, blood_group_name) VALUES(?, ?) ";
+			sql.setStatement(statement);
+			sql.setInParams(new SQLParam(index++, new Integer(bloodGroupObject.getBloodGroupId()), Types.INTEGER));
+		} else {
+			statement = "INSERT INTO Blood_Group (blood_group_name) VALUES(?) ";
+			sql.setStatement(statement);
+		}
+		sql.setInParams(new SQLParam(index++,  bloodGroupObject.getBloodGroupName(), Types.VARCHAR));
+		setSQLStatement(sql);
+		
+		Integer result = (Integer) super.insert();
+		
+		return result;
+	}
+	
+	
+	/**
 	 *
 	 * Deletes a row in the database. The key is 
 	 * in the bloodGroupObject.
 	 * Returns an Integer Object with value 0 on success
 	 * and -1 on faliure.
 	 *
-	 * @return      Returns an Integer indicating success/failure of the database operation
+	 * @return	  Returns an Integer indicating success/failure of the database operation
 	 *
-	 * @throws     DBException     If a database error occurs
+	 * @throws	 DBException	 If a database error occurs
 	 */
-    
-	public Object delete() throws DBException {
-	    PreparedSQLStatement sql = new PreparedSQLStatement();
-	    String statement = "DELETE FROM Blood_Group WHERE blood_group_id = ? ";
-	    int index = 1;
-	    sql.setStatement(statement);
-	    sql.setInParams(new SQLParam(index++, new Integer(bloodGroupObject.getBloodGroupId()), Types.INTEGER));
-	    setSQLStatement(sql);
-        
-	    Integer result = (Integer) super.delete();
-        
-	    return result;
-	}
-    
 	
-    /**
+	public Object delete() throws DBException {
+		PreparedSQLStatement sql = new PreparedSQLStatement();
+		String statement = "DELETE FROM Blood_Group WHERE blood_group_id = ? ";
+		int index = 1;
+		sql.setStatement(statement);
+		sql.setInParams(new SQLParam(index++, new Integer(bloodGroupObject.getBloodGroupId()), Types.INTEGER));
+		setSQLStatement(sql);
+		
+		Integer result = (Integer) super.delete();
+		
+		return result;
+	}
+	
+	
+	/**
 	 *
 	 * Updates a row in the database. The values are 
 	 * got from the bloodGroupObject.
 	 * Returns an Integer Object with value 0 on success
 	 * and -1 on faliure.
 	 *
-	 * @return      Returns an Integer indicating success/failure of the database operation
+	 * @return	  Returns an Integer indicating success/failure of the database operation
 	 *
-	 * @throws     DBException     If a database error occurs
+	 * @throws	 DBException	 If a database error occurs
 	 */
-    
-	public Object update() throws DBException {
-	    PreparedSQLStatement sql = new PreparedSQLStatement();
-	    String statement = "UPDATE Blood_Group SET blood_group_id = ?, blood_group_name = ? where blood_group_id = ? ";
-	    int index = 1;
-	    sql.setStatement(statement);
-	    sql.setInParams(new SQLParam(index++, new Integer(bloodGroupObject.getBloodGroupId()), Types.INTEGER));
-	    sql.setInParams(new SQLParam(index++,  bloodGroupObject.getBloodGroupName(), Types.VARCHAR));
-	    sql.setInParams(new SQLParam(index++, new Integer(bloodGroupObject.getBloodGroupId()), Types.INTEGER));
-	    setSQLStatement(sql);
-        
-	    Integer result = (Integer) super.update();
-        
-	    return result;
-	}
-    
 	
-    /**
+	public Object update() throws DBException {
+		PreparedSQLStatement sql = new PreparedSQLStatement();
+		String statement = "UPDATE Blood_Group SET blood_group_id = ?, blood_group_name = ? where blood_group_id = ? ";
+		int index = 1;
+		sql.setStatement(statement);
+		sql.setInParams(new SQLParam(index++, new Integer(bloodGroupObject.getBloodGroupId()), Types.INTEGER));
+		sql.setInParams(new SQLParam(index++,  bloodGroupObject.getBloodGroupName(), Types.VARCHAR));
+		sql.setInParams(new SQLParam(index++, new Integer(bloodGroupObject.getBloodGroupId()), Types.INTEGER));
+		setSQLStatement(sql);
+		
+		Integer result = (Integer) super.update();
+		
+		return result;
+	}
+	
+	
+	/**
 	 *
 	 * Returns a ArrayList of BloodGroupObject from the ResultSet. The values for 
 	 * each object is got from the ResultSet.
 	 * This is used by the list method.
 	 *
-	 * @param rs      the ResultSet.
+	 * @param rs	  the ResultSet.
 	 *
-	 * @return      Returns a ArrayList of BloodGroupObject from the ResultSet.
+	 * @return	  Returns a ArrayList of BloodGroupObject from the ResultSet.
 	 *
-	 * @see     #list()
+	 * @see	 #list()
 	 *
 	 */
-    
-	public Object getResultObjects(ResultSet rs) {
-	    ArrayList<BloodGroupObject> result = new ArrayList<BloodGroupObject>();
-        
-	    try {
-	        while(rs.next()) {
-	            int index = 1;
-	            BloodGroupObject f = new BloodGroupObject();
-	            f.setBloodGroupId(rs.getInt(index++));
-	            f.setBloodGroupName(rs.getString(index++));
-	            result.add(f);
-	        }
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	    }
-	    return result;
-	}
-    
 	
-    /**
+	public Object getResultObjects(ResultSet rs) {
+		ArrayList<BloodGroupObject> result = new ArrayList<BloodGroupObject>();
+		try {
+			while(rs.next()) {
+				int index = 1;
+				BloodGroupObject f = new BloodGroupObject();
+				f.setBloodGroupId(rs.getInt(index++));
+				f.setBloodGroupName(rs.getString(index++));
+				result.add(f);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
+	
+	/**
 	 *
 	 * Returns a BloodGroupObject from the ResultSet. The values for 
 	 * each object is got from the ResultSet.
 	 *
 	 * This is used by the fetch method.
-	 * @param rs      the ResultSet.
+	 * @param rs	  the ResultSet.
 	 *
-	 * @return      Returns a BloodGroupObject from the ResultSet.
+	 * @return	  Returns a BloodGroupObject from the ResultSet.
 	 *
-	 * @see     #fetch()
+	 * @see	 #fetch()
 	 *
 	 */
-    
+	
 	public Object getResultSetObject(ResultSet rs) {
-	    try {
-	    @SuppressWarnings("unchecked")
-	        ArrayList<BloodGroupObject> result = (ArrayList<BloodGroupObject>) getResultObjects(rs);
-	        return result.get(0);
-	    } catch (Exception e) {
-	        return null;
-	    }
+		try {
+			@SuppressWarnings("unchecked")
+			ArrayList<BloodGroupObject> result = (ArrayList<BloodGroupObject>) getResultObjects(rs);
+			return result.get(0);
+		} catch (Exception e) {
+			return null;
+		}
 	}
 }
-    
+	

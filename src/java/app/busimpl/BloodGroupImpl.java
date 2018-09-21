@@ -29,18 +29,18 @@ import app.util.AppConstants;
 public class BloodGroupImpl implements BloodGroupInterface  {
 	private String BLOODGROUP = "BloodGroupInterface.getAllBloodGroup";
 	
-    /**
+	/**
 	 *
 	 * Implementation that returns the BloodGroupObject given a BloodGroupObject filled with values that will be used for query from the underlying datasource.
 	 *
 	 * @param bloodgroup_obj	BloodGroupObject
 	 *
-	 * @return      Returns the ArrayList of BloodGroupObjects
+	 * @return	  Returns the ArrayList of BloodGroupObjects
 	 *
 	 * @throws AppException if the underlying operation fails
 	 *
 	 */
-    
+	
 	public ArrayList<BloodGroupObject> getBloodGroups(BloodGroupObject bloodgroup_obj) throws AppException{
 		BloodGroupObject[] bloodGroupObjectArr = getAllBloodGroups();
 		if ( bloodgroup_obj.getBloodGroupId() == Constants.GET_ALL ) {
@@ -60,19 +60,19 @@ public class BloodGroupImpl implements BloodGroupInterface  {
 		}
 	}
 	
-    /**
+	/**
 	 *
 	 * Implementation of the method that returns the BloodGroupObject from the underlying datasource.
 	 * given blood_group_id.
 	 *
-	 * @param blood_group_id     int
+	 * @param blood_group_id	 int
 	 *
-	 * @return      Returns the BloodGroupObject
+	 * @return	  Returns the BloodGroupObject
 	 *
 	 * @throws AppException if the operation fails
 	 *
 	 */
-    
+	
 	public BloodGroupObject getBloodGroup(int blood_group_id) throws AppException{
 		BloodGroupObject[] bloodGroupObjectArr = getAllBloodGroups();
 		if ( bloodGroupObjectArr == null )
@@ -97,18 +97,18 @@ public class BloodGroupImpl implements BloodGroupInterface  {
 		}
 		return null;
 	}
-    
 	
-    /**
+	
+	/**
 	 *
 	 * Implementation that returns all the <code>BloodGroupObjects</code> from the underlying datasource.
 	 *
-	 * @return      Returns an Array of <code>BloodGroupObject</code>
+	 * @return	  Returns an Array of <code>BloodGroupObject</code>
 	 *
 	 * @throws AppException if the operation fails
 	 *
 	 */
-    
+	
 	public BloodGroupObject[] getAllBloodGroups() throws AppException{
 		BloodGroupObject bloodGroupObject = new BloodGroupObject();
 		BloodGroupObject[] bloodGroupObjectArr = (BloodGroupObject[])Util.getAppCache().get(BLOODGROUP);
@@ -127,18 +127,18 @@ public class BloodGroupImpl implements BloodGroupInterface  {
 		}
 		return bloodGroupObjectArr;
 	}
-    
 	
-    /**
+	
+	/**
 	 *
 	 * Implementation to add the <code>BloodGroupObject</code> to the underlying datasource.
 	 *
-	 * @param bloodGroupObject     BloodGroupObject
+	 * @param bloodGroupObject	 BloodGroupObject
 	 *
 	 * @throws AppException if the operation fails
 	 *
 	 */
-    
+	
 	public Integer addBloodGroup(BloodGroupObject bloodGroupObject) throws AppException{
 		if ( AppConstants.DB_TYPE.equalsIgnoreCase(Constants.ORACLE) ) {
 			long l = DBUtil.getNextId("Blood_Group_seq");
@@ -181,16 +181,16 @@ public class BloodGroupImpl implements BloodGroupInterface  {
 	}
 	
 	
-    /**
+	/**
 	 *
 	 * Implementation to update the <code>BloodGroupObject</code> in the underlying datasource.
 	 *
-	 * @param bloodGroupObject     BloodGroupObject
+	 * @param bloodGroupObject	 BloodGroupObject
 	 *
 	 * @throws AppException if the operation fails
 	 *
 	 */
-    
+	
 	public Integer updateBloodGroup(BloodGroupObject bloodGroupObject) throws AppException{
 		BloodGroupObject newBloodGroupObject = getBloodGroup(bloodGroupObject.getBloodGroupId()); // This call will make sure cache/db are in sync
 		Integer i = (Integer)DBUtil.update(bloodGroupObject);
@@ -209,18 +209,18 @@ public class BloodGroupImpl implements BloodGroupInterface  {
 		}
 		return i;
 	}
-    
 	
-    /**
+	
+	/**
 	 *
 	 * Implementation to delete the <code>BloodGroupObject</code> in the underlying datasource.
 	 *
-	 * @param bloodGroupObject     BloodGroupObject
+	 * @param bloodGroupObject	 BloodGroupObject
 	 *
 	 * @throws AppException if the operation fails
 	 *
 	 */
-    
+	
 	public Integer deleteBloodGroup(BloodGroupObject bloodGroupObject) throws AppException{
 	BloodGroupObject newBloodGroupObject = getBloodGroup(bloodGroupObject.getBloodGroupId()); // This call will make sure cache/db are in sync
 	BloodGroupObject[] bloodGroupObjectArr = getAllBloodGroups();

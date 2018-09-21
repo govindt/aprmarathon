@@ -29,18 +29,18 @@ import app.util.AppConstants;
 public class PaymentTypeImpl implements PaymentTypeInterface  {
 	private String PAYMENTTYPE = "PaymentTypeInterface.getAllPaymentType";
 	
-    /**
+	/**
 	 *
 	 * Implementation that returns the PaymentTypeObject given a PaymentTypeObject filled with values that will be used for query from the underlying datasource.
 	 *
 	 * @param paymenttype_obj	PaymentTypeObject
 	 *
-	 * @return      Returns the ArrayList of PaymentTypeObjects
+	 * @return	  Returns the ArrayList of PaymentTypeObjects
 	 *
 	 * @throws AppException if the underlying operation fails
 	 *
 	 */
-    
+	
 	public ArrayList<PaymentTypeObject> getPaymentTypes(PaymentTypeObject paymenttype_obj) throws AppException{
 		PaymentTypeObject[] paymentTypeObjectArr = getAllPaymentTypes();
 		if ( paymenttype_obj.getPaymentTypeId() == Constants.GET_ALL ) {
@@ -60,19 +60,19 @@ public class PaymentTypeImpl implements PaymentTypeInterface  {
 		}
 	}
 	
-    /**
+	/**
 	 *
 	 * Implementation of the method that returns the PaymentTypeObject from the underlying datasource.
 	 * given payment_type_id.
 	 *
-	 * @param payment_type_id     int
+	 * @param payment_type_id	 int
 	 *
-	 * @return      Returns the PaymentTypeObject
+	 * @return	  Returns the PaymentTypeObject
 	 *
 	 * @throws AppException if the operation fails
 	 *
 	 */
-    
+	
 	public PaymentTypeObject getPaymentType(int payment_type_id) throws AppException{
 		PaymentTypeObject[] paymentTypeObjectArr = getAllPaymentTypes();
 		if ( paymentTypeObjectArr == null )
@@ -97,18 +97,18 @@ public class PaymentTypeImpl implements PaymentTypeInterface  {
 		}
 		return null;
 	}
-    
 	
-    /**
+	
+	/**
 	 *
 	 * Implementation that returns all the <code>PaymentTypeObjects</code> from the underlying datasource.
 	 *
-	 * @return      Returns an Array of <code>PaymentTypeObject</code>
+	 * @return	  Returns an Array of <code>PaymentTypeObject</code>
 	 *
 	 * @throws AppException if the operation fails
 	 *
 	 */
-    
+	
 	public PaymentTypeObject[] getAllPaymentTypes() throws AppException{
 		PaymentTypeObject paymentTypeObject = new PaymentTypeObject();
 		PaymentTypeObject[] paymentTypeObjectArr = (PaymentTypeObject[])Util.getAppCache().get(PAYMENTTYPE);
@@ -127,18 +127,18 @@ public class PaymentTypeImpl implements PaymentTypeInterface  {
 		}
 		return paymentTypeObjectArr;
 	}
-    
 	
-    /**
+	
+	/**
 	 *
 	 * Implementation to add the <code>PaymentTypeObject</code> to the underlying datasource.
 	 *
-	 * @param paymentTypeObject     PaymentTypeObject
+	 * @param paymentTypeObject	 PaymentTypeObject
 	 *
 	 * @throws AppException if the operation fails
 	 *
 	 */
-    
+	
 	public Integer addPaymentType(PaymentTypeObject paymentTypeObject) throws AppException{
 		if ( AppConstants.DB_TYPE.equalsIgnoreCase(Constants.ORACLE) ) {
 			long l = DBUtil.getNextId("Payment_Type_seq");
@@ -181,16 +181,16 @@ public class PaymentTypeImpl implements PaymentTypeInterface  {
 	}
 	
 	
-    /**
+	/**
 	 *
 	 * Implementation to update the <code>PaymentTypeObject</code> in the underlying datasource.
 	 *
-	 * @param paymentTypeObject     PaymentTypeObject
+	 * @param paymentTypeObject	 PaymentTypeObject
 	 *
 	 * @throws AppException if the operation fails
 	 *
 	 */
-    
+	
 	public Integer updatePaymentType(PaymentTypeObject paymentTypeObject) throws AppException{
 		PaymentTypeObject newPaymentTypeObject = getPaymentType(paymentTypeObject.getPaymentTypeId()); // This call will make sure cache/db are in sync
 		Integer i = (Integer)DBUtil.update(paymentTypeObject);
@@ -209,18 +209,18 @@ public class PaymentTypeImpl implements PaymentTypeInterface  {
 		}
 		return i;
 	}
-    
 	
-    /**
+	
+	/**
 	 *
 	 * Implementation to delete the <code>PaymentTypeObject</code> in the underlying datasource.
 	 *
-	 * @param paymentTypeObject     PaymentTypeObject
+	 * @param paymentTypeObject	 PaymentTypeObject
 	 *
 	 * @throws AppException if the operation fails
 	 *
 	 */
-    
+	
 	public Integer deletePaymentType(PaymentTypeObject paymentTypeObject) throws AppException{
 	PaymentTypeObject newPaymentTypeObject = getPaymentType(paymentTypeObject.getPaymentTypeId()); // This call will make sure cache/db are in sync
 	PaymentTypeObject[] paymentTypeObjectArr = getAllPaymentTypes();

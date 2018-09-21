@@ -29,18 +29,18 @@ import app.util.AppConstants;
 public class GenderImpl implements GenderInterface  {
 	private String GENDER = "GenderInterface.getAllGender";
 	
-    /**
+	/**
 	 *
 	 * Implementation that returns the GenderObject given a GenderObject filled with values that will be used for query from the underlying datasource.
 	 *
 	 * @param gender_obj	GenderObject
 	 *
-	 * @return      Returns the ArrayList of GenderObjects
+	 * @return	  Returns the ArrayList of GenderObjects
 	 *
 	 * @throws AppException if the underlying operation fails
 	 *
 	 */
-    
+	
 	public ArrayList<GenderObject> getGenders(GenderObject gender_obj) throws AppException{
 		GenderObject[] genderObjectArr = getAllGenders();
 		if ( gender_obj.getGenderId() == Constants.GET_ALL ) {
@@ -60,19 +60,19 @@ public class GenderImpl implements GenderInterface  {
 		}
 	}
 	
-    /**
+	/**
 	 *
 	 * Implementation of the method that returns the GenderObject from the underlying datasource.
 	 * given gender_id.
 	 *
-	 * @param gender_id     int
+	 * @param gender_id	 int
 	 *
-	 * @return      Returns the GenderObject
+	 * @return	  Returns the GenderObject
 	 *
 	 * @throws AppException if the operation fails
 	 *
 	 */
-    
+	
 	public GenderObject getGender(int gender_id) throws AppException{
 		GenderObject[] genderObjectArr = getAllGenders();
 		if ( genderObjectArr == null )
@@ -97,18 +97,18 @@ public class GenderImpl implements GenderInterface  {
 		}
 		return null;
 	}
-    
 	
-    /**
+	
+	/**
 	 *
 	 * Implementation that returns all the <code>GenderObjects</code> from the underlying datasource.
 	 *
-	 * @return      Returns an Array of <code>GenderObject</code>
+	 * @return	  Returns an Array of <code>GenderObject</code>
 	 *
 	 * @throws AppException if the operation fails
 	 *
 	 */
-    
+	
 	public GenderObject[] getAllGenders() throws AppException{
 		GenderObject genderObject = new GenderObject();
 		GenderObject[] genderObjectArr = (GenderObject[])Util.getAppCache().get(GENDER);
@@ -127,18 +127,18 @@ public class GenderImpl implements GenderInterface  {
 		}
 		return genderObjectArr;
 	}
-    
 	
-    /**
+	
+	/**
 	 *
 	 * Implementation to add the <code>GenderObject</code> to the underlying datasource.
 	 *
-	 * @param genderObject     GenderObject
+	 * @param genderObject	 GenderObject
 	 *
 	 * @throws AppException if the operation fails
 	 *
 	 */
-    
+	
 	public Integer addGender(GenderObject genderObject) throws AppException{
 		if ( AppConstants.DB_TYPE.equalsIgnoreCase(Constants.ORACLE) ) {
 			long l = DBUtil.getNextId("Gender_seq");
@@ -181,16 +181,16 @@ public class GenderImpl implements GenderInterface  {
 	}
 	
 	
-    /**
+	/**
 	 *
 	 * Implementation to update the <code>GenderObject</code> in the underlying datasource.
 	 *
-	 * @param genderObject     GenderObject
+	 * @param genderObject	 GenderObject
 	 *
 	 * @throws AppException if the operation fails
 	 *
 	 */
-    
+	
 	public Integer updateGender(GenderObject genderObject) throws AppException{
 		GenderObject newGenderObject = getGender(genderObject.getGenderId()); // This call will make sure cache/db are in sync
 		Integer i = (Integer)DBUtil.update(genderObject);
@@ -209,18 +209,18 @@ public class GenderImpl implements GenderInterface  {
 		}
 		return i;
 	}
-    
 	
-    /**
+	
+	/**
 	 *
 	 * Implementation to delete the <code>GenderObject</code> in the underlying datasource.
 	 *
-	 * @param genderObject     GenderObject
+	 * @param genderObject	 GenderObject
 	 *
 	 * @throws AppException if the operation fails
 	 *
 	 */
-    
+	
 	public Integer deleteGender(GenderObject genderObject) throws AppException{
 	GenderObject newGenderObject = getGender(genderObject.getGenderId()); // This call will make sure cache/db are in sync
 	GenderObject[] genderObjectArr = getAllGenders();

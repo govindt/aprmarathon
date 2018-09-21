@@ -29,18 +29,18 @@ import app.util.AppConstants;
 public class EventImpl implements EventInterface  {
 	private String EVENT = "EventInterface.getAllEvent";
 	
-    /**
+	/**
 	 *
 	 * Implementation that returns the EventObject given a EventObject filled with values that will be used for query from the underlying datasource.
 	 *
 	 * @param event_obj	EventObject
 	 *
-	 * @return      Returns the ArrayList of EventObjects
+	 * @return	  Returns the ArrayList of EventObjects
 	 *
 	 * @throws AppException if the underlying operation fails
 	 *
 	 */
-    
+	
 	public ArrayList<EventObject> getEvents(EventObject event_obj) throws AppException{
 		EventObject[] eventObjectArr = getAllEvents();
 		if ( event_obj.getEventId() == Constants.GET_ALL ) {
@@ -60,19 +60,19 @@ public class EventImpl implements EventInterface  {
 		}
 	}
 	
-    /**
+	/**
 	 *
 	 * Implementation of the method that returns the EventObject from the underlying datasource.
 	 * given event_id.
 	 *
-	 * @param event_id     int
+	 * @param event_id	 int
 	 *
-	 * @return      Returns the EventObject
+	 * @return	  Returns the EventObject
 	 *
 	 * @throws AppException if the operation fails
 	 *
 	 */
-    
+	
 	public EventObject getEvent(int event_id) throws AppException{
 		EventObject[] eventObjectArr = getAllEvents();
 		if ( eventObjectArr == null )
@@ -97,18 +97,18 @@ public class EventImpl implements EventInterface  {
 		}
 		return null;
 	}
-    
 	
-    /**
+	
+	/**
 	 *
 	 * Implementation that returns all the <code>EventObjects</code> from the underlying datasource.
 	 *
-	 * @return      Returns an Array of <code>EventObject</code>
+	 * @return	  Returns an Array of <code>EventObject</code>
 	 *
 	 * @throws AppException if the operation fails
 	 *
 	 */
-    
+	
 	public EventObject[] getAllEvents() throws AppException{
 		EventObject eventObject = new EventObject();
 		EventObject[] eventObjectArr = (EventObject[])Util.getAppCache().get(EVENT);
@@ -127,18 +127,18 @@ public class EventImpl implements EventInterface  {
 		}
 		return eventObjectArr;
 	}
-    
 	
-    /**
+	
+	/**
 	 *
 	 * Implementation to add the <code>EventObject</code> to the underlying datasource.
 	 *
-	 * @param eventObject     EventObject
+	 * @param eventObject	 EventObject
 	 *
 	 * @throws AppException if the operation fails
 	 *
 	 */
-    
+	
 	public Integer addEvent(EventObject eventObject) throws AppException{
 		if ( AppConstants.DB_TYPE.equalsIgnoreCase(Constants.ORACLE) ) {
 			long l = DBUtil.getNextId("Event_seq");
@@ -181,16 +181,16 @@ public class EventImpl implements EventInterface  {
 	}
 	
 	
-    /**
+	/**
 	 *
 	 * Implementation to update the <code>EventObject</code> in the underlying datasource.
 	 *
-	 * @param eventObject     EventObject
+	 * @param eventObject	 EventObject
 	 *
 	 * @throws AppException if the operation fails
 	 *
 	 */
-    
+	
 	public Integer updateEvent(EventObject eventObject) throws AppException{
 		EventObject newEventObject = getEvent(eventObject.getEventId()); // This call will make sure cache/db are in sync
 		Integer i = (Integer)DBUtil.update(eventObject);
@@ -209,18 +209,18 @@ public class EventImpl implements EventInterface  {
 		}
 		return i;
 	}
-    
 	
-    /**
+	
+	/**
 	 *
 	 * Implementation to delete the <code>EventObject</code> in the underlying datasource.
 	 *
-	 * @param eventObject     EventObject
+	 * @param eventObject	 EventObject
 	 *
 	 * @throws AppException if the operation fails
 	 *
 	 */
-    
+	
 	public Integer deleteEvent(EventObject eventObject) throws AppException{
 	EventObject newEventObject = getEvent(eventObject.getEventId()); // This call will make sure cache/db are in sync
 	EventObject[] eventObjectArr = getAllEvents();

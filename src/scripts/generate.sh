@@ -13,29 +13,29 @@ if [ ! -f ${SCHEMA_FILE} ]; then
 fi
 ######################################################################################################
 CreateMakefileEntry() {
-    return;
-    module_name=$1
-    file_types="$2"
-    dest_dir=$3
-    last_file=$4
-    # Begin Edits Makefile 
-    cp /dev/null ${MAKEFILE}.${module_name}
-    for f in `ls ${file_types}`; do
+	return;
+	module_name=$1
+	file_types="$2"
+	dest_dir=$3
+	last_file=$4
+	# Begin Edits Makefile 
+	cp /dev/null ${MAKEFILE}.${module_name}
+	for f in `ls ${file_types}`; do
 	printf "${f}\n" >> ${MAKEFILE}.${module_name}
-    done
-    cp /dev/null /tmp/${MAKEFILE}.${module_name}
-    exec 3<&0
-    exec 0<${MAKEFILE}.${module_name}
-    while read line; do
+	done
+	cp /dev/null /tmp/${MAKEFILE}.${module_name}
+	exec 3<&0
+	exec 0<${MAKEFILE}.${module_name}
+	while read line; do
 	line=`echo $line`;
 	if [ -z "`grep \"${line}\" ${dest_dir}/${MAKEFILE}`" ]; then
-	    printf "\t$line %s\n" "\\" >> /tmp/${MAKEFILE}.${module_name}
+		printf "\t$line %s\n" "\\" >> /tmp/${MAKEFILE}.${module_name}
 	fi
-    done
-    exec 0<&3
-    mv /tmp/${MAKEFILE}.${module_name} .
-    sed "/$last_file/r ${MAKEFILE}.${module_name}" ${dest_dir}/${MAKEFILE} > /tmp/${MAKEFILE}.${module_name}
-    mv /tmp/${MAKEFILE}.${module_name} .
+	done
+	exec 0<&3
+	mv /tmp/${MAKEFILE}.${module_name} .
+	sed "/$last_file/r ${MAKEFILE}.${module_name}" ${dest_dir}/${MAKEFILE} > /tmp/${MAKEFILE}.${module_name}
+	mv /tmp/${MAKEFILE}.${module_name} .
 }
 ######################################################################################################
 
@@ -94,10 +94,10 @@ ${NAWK} -v QUOTE="'" -v logname=${LOGNAME} -v version=1.0 -v since=1.0 -v proj_n
 					temp = "number";
 				else
 					temp = orig_field_types[j];
-                                if ( keys[j] == "not" )
-				        printf("\t%s %s not null", field_names[j], temp) >> create_name;
-                                else
-				        printf("\t%s %s", field_names[j], temp) >> create_name;
+				if ( keys[j] == "not" )
+					printf("\t%s %s not null", field_names[j], temp) >> create_name;
+				else
+					printf("\t%s %s", field_names[j], temp) >> create_name;
 				if ( keys[j] != "" && keys[j] != "not" ) {
 					ref = keys[j];
 					dot_idx = index(ref, ".");
@@ -176,11 +176,11 @@ ${NAWK} -v QUOTE="'" -v logname=${LOGNAME} -v version=1.0 -v since=1.0 -v proj_n
 	printf("import %s.busobj.%sObject;\n\n", proj_name, tmp_file_name)>>persistent_filename;
 	FIRSTCHAR = substr(tmp_file_name,1,1);
 	if (CHAR = index(upper, FIRSTCHAR)) {
-	  tmp = substr(lower, CHAR, 1) substr(tmp_file_name, 2) "Object";
-	  tmp1 = substr(lower, CHAR, 1) substr(tmp_file_name, 2);
-        }
+		tmp = substr(lower, CHAR, 1) substr(tmp_file_name, 2) "Object";
+		tmp1 = substr(lower, CHAR, 1) substr(tmp_file_name, 2);
+	}
 	else {
-	  tmp = tmp_file_name "Object";
+		tmp = tmp_file_name "Object";
 	}
 
 	# Initial Comments for the Class
@@ -200,64 +200,64 @@ ${NAWK} -v QUOTE="'" -v logname=${LOGNAME} -v version=1.0 -v since=1.0 -v proj_n
 	printf("\t\n")>>persistent_filename;
 
 	# Comments for Constructor
-	printf("\t\n    /**\n") >> persistent_filename;
+	printf("\t\n\t/**\n") >> persistent_filename;
 	printf("\t * Constructs a Persistent Object for the %sObject\n", tmp_file_name) >> persistent_filename;
 	printf("\t *\n") >> persistent_filename;
-	printf("\t * @param %s    the %sObject \n", tmp, tmp_file_name) >> persistent_filename;
-	printf("\t */\n    \n") >> persistent_filename;
+	printf("\t * @param %s\tthe %sObject \n", tmp, tmp_file_name) >> persistent_filename;
+	printf("\t */\n\t\n") >> persistent_filename;
 	# End - Comments for Constructor
 
 
 	printf("\tpublic Persistent%s (%sObject %s) {\n", tmp_file_name, tmp_file_name, tmp)>>persistent_filename;
-	printf("\t    this.%s = %s;\n", tmp, tmp)>>persistent_filename;
-	printf("\t}\n    \n")>>persistent_filename;
+	printf("\t\tthis.%s = %s;\n", tmp, tmp)>>persistent_filename;
+	printf("\t}\n\t\n")>>persistent_filename;
 
 	# Comments for list method	
-	printf("\t\n    /**\n") >> persistent_filename;
+	printf("\t\n\t/**\n") >> persistent_filename;
 	printf("\t * Returns the ArrayList of %sObject.\n", tmp_file_name) >> persistent_filename;
 	printf("\t * It is Usually all the rows in the database.\n") >> persistent_filename;
 	printf("\t * This calls getResultObjects method in the super class.\n") >> persistent_filename;
 	printf("\t *\n") >> persistent_filename;
-	printf("\t * @return     ArrayList of %sObject \n", tmp_file_name) >> persistent_filename;
+	printf("\t * @return\tArrayList of %sObject \n", tmp_file_name) >> persistent_filename;
 	printf("\t *\n") >> persistent_filename;
-	printf("\t * @throws     DBException     If a database error occurs\n") >> persistent_filename;
+	printf("\t * @throws\tDBException\t If a database error occurs\n") >> persistent_filename;
 	printf("\t *\n") >> persistent_filename;
-	printf("\t * @see     #getResultObjects(ResultSet)\n") >> persistent_filename;
-	printf("\t */\n    \n") >> persistent_filename;
+	printf("\t * @see\t #getResultObjects(ResultSet)\n") >> persistent_filename;
+	printf("\t */\n\t\n") >> persistent_filename;
 	# End - Comments for list method	
 
 
 	# list Method
 	printf("\tpublic Object list() throws DBException {\n")>>persistent_filename;
-	printf("\t    PreparedSQLStatement sql = new PreparedSQLStatement();\n")>>persistent_filename;
-	printf("\t    String statement = \"SELECT ")>>persistent_filename;
+	printf("\t\tPreparedSQLStatement sql = new PreparedSQLStatement();\n")>>persistent_filename;
+	printf("\t\tString statement = \"SELECT ")>>persistent_filename;
 	for ( j = 1; j < i; j++ ) {
 	  printf("%s, ", field_names[j])>>persistent_filename;
 	}
 	printf("%s from %s\";\n", field_names[j], table_name)>>persistent_filename;
 
-	printf("\t    int index = 1;\n")>>persistent_filename;
-        printf("\t    sql.setStatement(statement);\n        \n")>>persistent_filename;
-	printf("\t    setSQLStatement(sql);\n        \n")>>persistent_filename;
+	printf("\t\tint index = 1;\n")>>persistent_filename;
+	printf("\t\tsql.setStatement(statement);\n\t\t\n")>>persistent_filename;
+	printf("\t\tsetSQLStatement(sql);\n\t\t\n")>>persistent_filename;
 
-        printf("\t    @SuppressWarnings(\"unchecked\")\n")>>persistent_filename;
-	printf("\t    ArrayList<%sObject> result = (ArrayList<%sObject>) super.list();\n        \n", tmp_file_name, tmp_file_name)>>persistent_filename;
-	printf("\t    return result;\n")>>persistent_filename;
-	printf("\t}\n    \n")>>persistent_filename;
+	printf("\t\t@SuppressWarnings(\"unchecked\")\n")>>persistent_filename;
+	printf("\t\tArrayList<%sObject> result = (ArrayList<%sObject>) super.list();\n\t\t\n", tmp_file_name, tmp_file_name)>>persistent_filename;
+	printf("\t\rreturn result;\n")>>persistent_filename;
+	printf("\t}\n\t\n")>>persistent_filename;
 	# End - list Method
 
 	# Comments for list overloaded method	
-	printf("\t\n    /**\n") >> persistent_filename;
+	printf("\t\n\t/**\n") >> persistent_filename;
 	printf("\t * Returns the ArrayList of %sObjects.\n", tmp_file_name) >> persistent_filename;
 	printf("\t * It is Usually all the rows that match the criteria in the database.\n") >> persistent_filename;
 	printf("\t * This calls getResultObjects method in the super class.\n") >> persistent_filename;
 	printf("\t *\n") >> persistent_filename;
-	printf("\t * @return     ArrayList of %sObject \n", tmp_file_name) >> persistent_filename;
+	printf("\t * @return\t ArrayList of %sObject \n", tmp_file_name) >> persistent_filename;
 	printf("\t *\n") >> persistent_filename;
-	printf("\t * @throws     DBException     If a database error occurs\n") >> persistent_filename;
+	printf("\t * @throws\t DBException\t If a database error occurs\n") >> persistent_filename;
 	printf("\t *\n") >> persistent_filename;
-	printf("\t * @see     #getResultObjects(ResultSet)\n") >> persistent_filename;
-	printf("\t */\n    \n") >> persistent_filename;
+	printf("\t * @see\t #getResultObjects(ResultSet)\n") >> persistent_filename;
+	printf("\t */\n\t\n") >> persistent_filename;
 	# End - Comments for list method	
 
 
@@ -274,77 +274,77 @@ ${NAWK} -v QUOTE="'" -v logname=${LOGNAME} -v version=1.0 -v since=1.0 -v proj_n
 	printf("\t\t%sObject passed%sObject = (%sObject)args;\n", tmp_file_name, tmp_file_name, tmp_file_name)>>persistent_filename;
 	printf("\t\tboolean whereSpecified = false;\n\n", tmp_file_name, tmp_file_name)>>persistent_filename;
 	for ( j = 1; j <= i; j++ ) {
-	    if ( field_types[j] == "int" ) {
+		if ( field_types[j] == "int" ) {
 			printf("\t\tif ( passed%sObject.get%s() != 0 ) {\n", tmp_file_name, new_field_names[j])>>persistent_filename; 
-	    }
-	    else if ( field_types[j] == "String" ) {
+		}
+		else if ( field_types[j] == "String" ) {
 			printf("\t\tif ( ! passed%sObject.get%s().equals(\"\") ) {\n", tmp_file_name, new_field_names[j])>>persistent_filename; 
-	    }
-	    else if ( field_types[j] == "Date" ) {
+		}
+		else if ( field_types[j] == "Date" ) {
 			printf("\t\tif ( passed%sObject.get%s() != null ) {\n", tmp_file_name, new_field_names[j])>>persistent_filename; 
-	    }
-	    else if ( field_types[j] == "double" ) {
+		}
+		else if ( field_types[j] == "double" ) {
 			printf("\t\tif ( passed%sObject.get%s() != 0.0 ) {\n", tmp_file_name, new_field_names[j])>>persistent_filename; 
-	    }
-	    else if ( field_types[j] == "float" ) {
+		}
+		else if ( field_types[j] == "float" ) {
 			printf("\t\tif ( passed%sObject.get%s() != 0.0f ) {\n", tmp_file_name, new_field_names[j])>>persistent_filename; 
-	    }
-	    if ( j == 1 ) {
+		}
+		if ( j == 1 ) {
 			printf("\t\t\tstatement += \" where %s = ?\";\n", field_names[j])>>persistent_filename;
 			printf("\t\t\twhereSpecified = true;\n")>>persistent_filename;
-	    } else {
+		} else {
 			printf("\t\t\tif ( ! whereSpecified ) {\n")>>persistent_filename;
 			printf("\t\t\t\tstatement += \" where %s = ?\";\n", field_names[j])>>persistent_filename;
 			printf("\t\t\t\twhereSpecified = true;\n")>>persistent_filename;
 			printf("\t\t\t} else\n")>>persistent_filename;
 			printf("\t\t\t\tstatement += \" and %s = ?\";\n", field_names[j])>>persistent_filename;
-	    }
-	    printf("\t\t\tsql.setStatement(statement);\n")>>persistent_filename;
+		}
+		printf("\t\t\tsql.setStatement(statement);\n")>>persistent_filename;
 			if ( field_types[j] == "int" ) {
 			printf("\t\t\tsql.setInParams(new SQLParam(index++, new Integer(passed%sObject.get%s()), Types.INTEGER));\n", tmp_file_name, new_field_names[j])>>persistent_filename;;
-	    }
-	    else if ( field_types[j] == "String" ) {
+		}
+		else if ( field_types[j] == "String" ) {
 			printf("\t\t\tsql.setInParams(new SQLParam(index++,  passed%sObject.get%s(), Types.VARCHAR));\n", tmp_file_name, new_field_names[j])>>persistent_filename;;
-	    }
-	    else if ( field_types[j] == "Date" ) {
+		}
+		else if ( field_types[j] == "Date" ) {
 			printf("\t\t\tsql.setInParams(new SQLParam(index++,  passed%sObject.get%s(), Types.TIMESTAMP));\n", tmp_file_name, new_field_names[j])>>persistent_filename;;
-	    }
-	    else if ( field_types[j] == "double" ) {
+		}
+		else if ( field_types[j] == "double" ) {
 			printf("\t\t\tsql.setInParams(new SQLParam(index++,  new Double(passed%sObject.get%s()), Types.DOUBLE));\n", tmp_file_name, new_field_names[j])>>persistent_filename;;
-	    }
-	    else if ( field_types[j] == "float" ) {
+		}
+		else if ( field_types[j] == "float" ) {
 			printf("\t\t\tsql.setInParams(new SQLParam(index++,  new Float(passed%sObject.get%s()), Types.FLOAT));\n", tmp_file_name, new_field_names[j])>>persistent_filename;;
-	    }
-	    printf("\t\t}\n")>>persistent_filename;
+		}
+		printf("\t\t}\n")>>persistent_filename;
 	}
-    printf("\t\tsql.setStatement(statement);\n        \n")>>persistent_filename;
+	printf("\t\tsql.setStatement(statement);\n\t\t\n")>>persistent_filename;
 	printf("\t\tDebugHandler.debug(statement);\n")>>persistent_filename;
-	printf("\t\tsetSQLStatement(sql);\n        \n")>>persistent_filename;
+	printf("\t\tsetSQLStatement(sql);\n\t\t\n")>>persistent_filename;
 
-    printf("\t\t@SuppressWarnings(\"unchecked\")\n")>>persistent_filename;
-	printf("\t\tArrayList<%sObject> result = (ArrayList<%sObject>) super.list();\n        \n", tmp_file_name, tmp_file_name)>>persistent_filename;
+	printf("\t\t@SuppressWarnings(\"unchecked\")\n")>>persistent_filename;
+	printf("\t\tArrayList<%sObject> result = (ArrayList<%sObject>) super.list();\n\t\t\n", tmp_file_name, tmp_file_name)>>persistent_filename;
 	printf("\t\treturn result;\n")>>persistent_filename;
-	printf("\t}\n    \n")>>persistent_filename;
+	printf("\t}\n\t\n")>>persistent_filename;
 	# End - list Method
 
 	# Comments for fetch Method
-	printf("\t\n    /**\n") >> persistent_filename;
+	printf("\t\n\t/**\n") >> persistent_filename;
 	printf("\t * Returns the ArrayList of one %sObject.\n", tmp_file_name) >> persistent_filename;
 	printf("\t * It is Usually the row that matches primary key.\n") >> persistent_filename;
 	printf("\t * This calls getResultSetObject method in the super class.\n") >> persistent_filename;
 	printf("\t *\n") >> persistent_filename;
-	printf("\t * @return     ArrayList of one %sObject \n", tmp_file_name) >> persistent_filename;
+	printf("\t * @return\t ArrayList of one %sObject \n", tmp_file_name) >> persistent_filename;
 	printf("\t *\n") >> persistent_filename;
-	printf("\t * @throws     DBException     If a database error occurs\n") >> persistent_filename;
+	printf("\t * @throws\t DBException\t If a database error occurs\n") >> persistent_filename;
 	printf("\t *\n") >> persistent_filename;
-	printf("\t * @see     #getResultSetObject(ResultSet)\n") >> persistent_filename;
-	printf("\t */\n    \n") >> persistent_filename;
+	printf("\t * @see\t #getResultSetObject(ResultSet)\n") >> persistent_filename;
+	printf("\t */\n\t\n") >> persistent_filename;
 	# End - Comments for fetch Method
 
 	# fetch Method
 	printf("\tpublic Object fetch() throws DBException {\n")>>persistent_filename;
-	printf("\t    PreparedSQLStatement sql = new PreparedSQLStatement();\n")>>persistent_filename;
-	printf("\t    String statement = \"SELECT ")>>persistent_filename;
+	printf("\t\tPreparedSQLStatement sql = new PreparedSQLStatement();\n")>>persistent_filename;
+	printf("\t\tString statement = \"SELECT ")>>persistent_filename;
 	for ( j = 1; j < i; j++ ) {
 	  printf("%s, ", field_names[j])>>persistent_filename;
 	}
@@ -363,59 +363,59 @@ ${NAWK} -v QUOTE="'" -v logname=${LOGNAME} -v version=1.0 -v since=1.0 -v proj_n
 	  }
 	}
 	printf("\";\n")>>persistent_filename;
-	printf("\t    int index = 1;\n")>>persistent_filename;
-        printf("\t    sql.setStatement(statement);\n")>>persistent_filename;
+	printf("\t\tint index = 1;\n")>>persistent_filename;
+	printf("\t\tsql.setStatement(statement);\n")>>persistent_filename;
 
 	for ( j = 1; j <= i; ++j ) {
 	  if (keys[j]  == "key" ) {  
 		if ( field_types[j] == "int" ) {
-		  printf("\t    sql.setInParams(new SQLParam(index++, new Integer(%s.get%s()), Types.INTEGER));\n", tmp, new_field_names[j])>>persistent_filename;;
+		  printf("\t\tsql.setInParams(new SQLParam(index++, new Integer(%s.get%s()), Types.INTEGER));\n", tmp, new_field_names[j])>>persistent_filename;;
 		}
 		else if ( field_types[j] == "String" ) {
-		  printf("\t    sql.setInParams(new SQLParam(index++,  %s.get%s(), Types.VARCHAR));\n", tmp, new_field_names[j])>>persistent_filename;;
+		  printf("\t\tsql.setInParams(new SQLParam(index++,  %s.get%s(), Types.VARCHAR));\n", tmp, new_field_names[j])>>persistent_filename;;
 		}
 		else if ( field_types[j] == "Date" ) {
-		  printf("\t    sql.setInParams(new SQLParam(index++,  %s.get%s(), Types.TIMESTAMP));\n", tmp, new_field_names[j])>>persistent_filename;;
+		  printf("\t\tsql.setInParams(new SQLParam(index++,  %s.get%s(), Types.TIMESTAMP));\n", tmp, new_field_names[j])>>persistent_filename;;
 		}
 		else if ( field_types[j] == "double" ) {
-		  printf("\t    sql.setInParams(new SQLParam(index++, new Double(%s.get%s()), Types.DOUBLE));\n", tmp, new_field_names[j])>>persistent_filename;;
+		  printf("\t\tsql.setInParams(new SQLParam(index++, new Double(%s.get%s()), Types.DOUBLE));\n", tmp, new_field_names[j])>>persistent_filename;;
 		}
 		else if ( field_types[j] == "float" ) {
-		  printf("\t    sql.setInParams(new SQLParam(index++, new Float(%s.get%s()), Types.FLOAT));\n", tmp, new_field_names[j])>>persistent_filename;;
+		  printf("\t\tsql.setInParams(new SQLParam(index++, new Float(%s.get%s()), Types.FLOAT));\n", tmp, new_field_names[j])>>persistent_filename;;
 		}
 	  }
 	}
-	printf("\t    setSQLStatement(sql);\n        \n")>>persistent_filename;
+	printf("\t\tsetSQLStatement(sql);\n\t\t\n")>>persistent_filename;
 
-        printf("\t    @SuppressWarnings(\"unchecked\")\n")>>persistent_filename;
-	printf("\t    ArrayList<%sObject> result = (ArrayList<%sObject>) super.fetch();\n        \n", tmp_file_name, tmp_file_name)>>persistent_filename;
-	printf("\t    return result;\n")>>persistent_filename;
-	printf("\t}\n    \n")>>persistent_filename;
+	printf("\t\t@SuppressWarnings(\"unchecked\")\n")>>persistent_filename;
+	printf("\t\tArrayList<%sObject> result = (ArrayList<%sObject>) super.fetch();\n\t\t\n", tmp_file_name, tmp_file_name)>>persistent_filename;
+	printf("\t\treturn result;\n")>>persistent_filename;
+	printf("\t}\n\t\n")>>persistent_filename;
 	# End - fetch Method
 
 	# Comments for insert Method
-	printf("\t\n    /**\n") >> persistent_filename;
+	printf("\t\n\t/**\n") >> persistent_filename;
 	printf("\t *\n") >> persistent_filename;
 	printf("\t * Inserts a row in the database.  The values\n", tmp_file_name) >> persistent_filename;
 	printf("\t * are got from the %s.\n", tmp) >> persistent_filename;
 	printf("\t * Returns an Integer Object with value 0 on success\n") >> persistent_filename;
 	printf("\t * and -1 on faliure.\n") >> persistent_filename;
 	printf("\t *\n") >> persistent_filename;
-	printf("\t * @return      Returns an Integer indicating success/failure of the database operation\n") >> persistent_filename;
+	printf("\t * @return\t  Returns an Integer indicating success/failure of the database operation\n") >> persistent_filename;
 	printf("\t *\n") >> persistent_filename;
-	printf("\t * @throws     DBException     If a database error occurs\n") >> persistent_filename;
-	printf("\t */\n    \n") >> persistent_filename;
+	printf("\t * @throws\t DBException\t If a database error occurs\n") >> persistent_filename;
+	printf("\t */\n\t\n") >> persistent_filename;
 	# End - Comments for insert Method
 
 	# insert Method
 	printf("\tpublic Object insert() throws DBException {\n")>>persistent_filename;
-	printf("\t    PreparedSQLStatement sql = new PreparedSQLStatement();\n")>>persistent_filename;
-	printf("\t    String statement;\n")>> persistent_filename;
-	printf("\t    int index = 1;\n\n")>> persistent_filename;
-	printf("\t    if ( AppConstants.DB_TYPE.equalsIgnoreCase(Constants.ORACLE) ) {\n")>> persistent_filename;
-	printf("\t        statement = \"INSERT INTO %s (", table_name)>> persistent_filename;
-        for ( j = 1; j < i; j++ ) {
-	  printf("%s, ", field_names[j])>>persistent_filename;
+	printf("\t\tPreparedSQLStatement sql = new PreparedSQLStatement();\n")>>persistent_filename;
+	printf("\t\tString statement;\n")>> persistent_filename;
+	printf("\t\tint index = 1;\n\n")>> persistent_filename;
+	printf("\t\tif ( AppConstants.DB_TYPE.equalsIgnoreCase(Constants.ORACLE) ) {\n")>> persistent_filename;
+	printf("\t\t\tstatement = \"INSERT INTO %s (", table_name)>> persistent_filename;
+	for ( j = 1; j < i; j++ ) {
+		printf("%s, ", field_names[j])>>persistent_filename;
 	}
 	printf("%s) ", field_names[j], table_name)>>persistent_filename;
 	printf("VALUES(")>>persistent_filename;
@@ -425,80 +425,80 @@ ${NAWK} -v QUOTE="'" -v logname=${LOGNAME} -v version=1.0 -v since=1.0 -v proj_n
 	printf("?) ")>>persistent_filename;
 	printf("\";\n")>>persistent_filename;
 
-        printf("\t        sql.setStatement(statement);\n")>>persistent_filename;
-        if ( field_types[1] == "int" ) {
-		printf("\t        sql.setInParams(new SQLParam(index++, new Integer(%s.get%s()), Types.INTEGER));\n", tmp, new_field_names[1])>>persistent_filename;;
+	printf("\t\t\tsql.setStatement(statement);\n")>>persistent_filename;
+	if ( field_types[1] == "int" ) {
+		printf("\t\t\tsql.setInParams(new SQLParam(index++, new Integer(%s.get%s()), Types.INTEGER));\n", tmp, new_field_names[1])>>persistent_filename;;
 	}
 	else if ( field_types[1] == "String" ) {
-		printf("\t        sql.setInParams(new SQLParam(index++,  %s.get%s(), Types.VARCHAR));\n", tmp, new_field_names[1])>>persistent_filename;;
+		printf("\t\t\tsql.setInParams(new SQLParam(index++,  %s.get%s(), Types.VARCHAR));\n", tmp, new_field_names[1])>>persistent_filename;;
 	}
 	else if ( field_types[1] == "Date" ) {
-		printf("\t        sql.setInParams(new SQLParam(index++,  %s.get%s(), Types.TIMESTAMP));\n", tmp, new_field_names[1])>>persistent_filename;;
+		printf("\t\t\tsql.setInParams(new SQLParam(index++,  %s.get%s(), Types.TIMESTAMP));\n", tmp, new_field_names[1])>>persistent_filename;;
 	}
 	else if ( field_types[1] == "double" ) {
-		printf("\t        sql.setInParams(new SQLParam(index++,  new Double(%s.get%s()), Types.DOUBLE));\n", tmp, new_field_names[j])>>persistent_filename;;
+		printf("\t\t\tsql.setInParams(new SQLParam(index++,  new Double(%s.get%s()), Types.DOUBLE));\n", tmp, new_field_names[j])>>persistent_filename;;
 	}
 	else if ( field_types[1] == "float" ) {
-		printf("\t        sql.setInParams(new SQLParam(index++,  new Float(%s.get%s()), Types.FLOAT));\n", tmp, new_field_names[j])>>persistent_filename;;
+		printf("\t\t\tsql.setInParams(new SQLParam(index++,  new Float(%s.get%s()), Types.FLOAT));\n", tmp, new_field_names[j])>>persistent_filename;;
 	}
-        printf("\t    } else {\n")>> persistent_filename;
-        printf("\t        statement = \"INSERT INTO %s (", table_name)>> persistent_filename;
-        for ( j = 2; j < i; j++ ) {
-	  printf("%s, ", field_names[j])>>persistent_filename;
+	printf("\t\t} else {\n")>> persistent_filename;
+	printf("\t\t\tstatement = \"INSERT INTO %s (", table_name)>> persistent_filename;
+	for ( j = 2; j < i; j++ ) {
+		printf("%s, ", field_names[j])>>persistent_filename;
 	}
 	printf("%s) ", field_names[j], table_name)>>persistent_filename;
 	printf("VALUES(")>>persistent_filename;
 	for ( j = 2; j < i; j++ ) {
-	  printf("?, ")>>persistent_filename;
+		printf("?, ")>>persistent_filename;
 	}
 	printf("?) ")>>persistent_filename;
 	printf("\";\n")>>persistent_filename;
 
-        printf("\t        sql.setStatement(statement);\n")>>persistent_filename;
-        printf("\t    }\n")>> persistent_filename;
+	printf("\t\t\tsql.setStatement(statement);\n")>>persistent_filename;
+	printf("\t\t}\n")>> persistent_filename;
 	for ( j = 2; j <= i; ++j ) {
-	  if ( field_types[j] == "int" ) {
-		printf("\t    sql.setInParams(new SQLParam(index++, new Integer(%s.get%s()), Types.INTEGER));\n", tmp, new_field_names[j])>>persistent_filename;;
-	  }
-	  else if ( field_types[j] == "String" ) {
-		printf("\t    sql.setInParams(new SQLParam(index++,  %s.get%s(), Types.VARCHAR));\n", tmp, new_field_names[j])>>persistent_filename;;
-	  }
-	  else if ( field_types[j] == "Date" ) {
-		printf("\t    sql.setInParams(new SQLParam(index++,  %s.get%s(), Types.TIMESTAMP));\n", tmp, new_field_names[j])>>persistent_filename;;
-	  }
-	  else if ( field_types[j] == "double" ) {
-		printf("\t    sql.setInParams(new SQLParam(index++,  new Double(%s.get%s()), Types.DOUBLE));\n", tmp, new_field_names[j])>>persistent_filename;;
-	  }
-	  else if ( field_types[j] == "float" ) {
-		printf("\t    sql.setInParams(new SQLParam(index++,  new Float(%s.get%s()), Types.FLOAT));\n", tmp, new_field_names[j])>>persistent_filename;;
-	  }
+		if ( field_types[j] == "int" ) {
+			printf("\t\tsql.setInParams(new SQLParam(index++, new Integer(%s.get%s()), Types.INTEGER));\n", tmp, new_field_names[j])>>persistent_filename;;
+		}
+		else if ( field_types[j] == "String" ) {
+			printf("\t\tsql.setInParams(new SQLParam(index++,  %s.get%s(), Types.VARCHAR));\n", tmp, new_field_names[j])>>persistent_filename;;
+		}
+		else if ( field_types[j] == "Date" ) {
+			printf("\t\tsql.setInParams(new SQLParam(index++,  %s.get%s(), Types.TIMESTAMP));\n", tmp, new_field_names[j])>>persistent_filename;;
+		}
+		else if ( field_types[j] == "double" ) {
+			printf("\t\tsql.setInParams(new SQLParam(index++,  new Double(%s.get%s()), Types.DOUBLE));\n", tmp, new_field_names[j])>>persistent_filename;;
+		}
+		else if ( field_types[j] == "float" ) {
+			printf("\t\tsql.setInParams(new SQLParam(index++,  new Float(%s.get%s()), Types.FLOAT));\n", tmp, new_field_names[j])>>persistent_filename;;
+		}
 	}
 	
-	printf("\t    setSQLStatement(sql);\n        \n")>>persistent_filename;
+	printf("\t\tsetSQLStatement(sql);\n\t\t\n")>>persistent_filename;
 
-	printf("\t    Integer result = (Integer) super.insert();\n        \n")>>persistent_filename;
-	printf("\t    return result;\n")>>persistent_filename;
-	printf("\t}\n    \n")>>persistent_filename;
+	printf("\t\tInteger result = (Integer) super.insert();\n\t\t\n")>>persistent_filename;
+	printf("\t\treturn result;\n")>>persistent_filename;
+	printf("\t}\n\t\n")>>persistent_filename;
 	# End insert Method
 	
 	# Comments for delete Method
-	printf("\t\n    /**\n") >> persistent_filename;
+	printf("\t\n\t/**\n") >> persistent_filename;
 	printf("\t *\n") >> persistent_filename;
 	printf("\t * Deletes a row in the database. The key is \n") >> persistent_filename;
 	printf("\t * in the %s.\n", tmp) >> persistent_filename;
 	printf("\t * Returns an Integer Object with value 0 on success\n") >> persistent_filename;
 	printf("\t * and -1 on faliure.\n") >> persistent_filename;
 	printf("\t *\n") >> persistent_filename;
-	printf("\t * @return      Returns an Integer indicating success/failure of the database operation\n") >> persistent_filename;
+	printf("\t * @return\t  Returns an Integer indicating success/failure of the database operation\n") >> persistent_filename;
 	printf("\t *\n") >> persistent_filename;
-	printf("\t * @throws     DBException     If a database error occurs\n") >> persistent_filename;
-	printf("\t */\n    \n") >> persistent_filename;
+	printf("\t * @throws\t DBException\t If a database error occurs\n") >> persistent_filename;
+	printf("\t */\n\t\n") >> persistent_filename;
 	# End - Comments for delete Method
 
 	# delete method
 	printf("\tpublic Object delete() throws DBException {\n")>>persistent_filename;
-	printf("\t    PreparedSQLStatement sql = new PreparedSQLStatement();\n")>>persistent_filename;
-	printf("\t    String statement = \"DELETE FROM %s WHERE ", table_name)>>persistent_filename;
+	printf("\t\tPreparedSQLStatement sql = new PreparedSQLStatement();\n")>>persistent_filename;
+	printf("\t\tString statement = \"DELETE FROM %s WHERE ", table_name)>>persistent_filename;
 
 	one_found = 0;
 	for ( j = 1; j <= i; ++j ) {
@@ -513,53 +513,53 @@ ${NAWK} -v QUOTE="'" -v logname=${LOGNAME} -v version=1.0 -v since=1.0 -v proj_n
 	  }
 	}
 	printf("\";\n")>>persistent_filename;
-	printf("\t    int index = 1;\n")>>persistent_filename;
-    printf("\t    sql.setStatement(statement);\n")>>persistent_filename;
+	printf("\t\tint index = 1;\n")>>persistent_filename;
+	printf("\t\tsql.setStatement(statement);\n")>>persistent_filename;
 
 	for ( j = 1; j <= i; ++j ) {
 	  if (keys[j]  == "key" ) {  
 		if ( field_types[j] == "int" ) {
-		  printf("\t    sql.setInParams(new SQLParam(index++, new Integer(%s.get%s()), Types.INTEGER));\n", tmp, new_field_names[j])>>persistent_filename;;
+		  printf("\t\tsql.setInParams(new SQLParam(index++, new Integer(%s.get%s()), Types.INTEGER));\n", tmp, new_field_names[j])>>persistent_filename;;
 		}
 		else if ( field_types[j] == "String" ) {
-		  printf("\t    sql.setInParams(new SQLParam(index++,  %s.get%s(), Types.VARCHAR));\n", tmp, new_field_names[j])>>persistent_filename;;
+		  printf("\t\tsql.setInParams(new SQLParam(index++,  %s.get%s(), Types.VARCHAR));\n", tmp, new_field_names[j])>>persistent_filename;;
 		}
 		else if ( field_types[j] == "Date" ) {
-		  printf("\t    sql.setInParams(new SQLParam(index++,  %s.get%s(), Types.TIMESTAMP));\n", tmp, new_field_names[j])>>persistent_filename;;
+		  printf("\t\tsql.setInParams(new SQLParam(index++,  %s.get%s(), Types.TIMESTAMP));\n", tmp, new_field_names[j])>>persistent_filename;;
 		}
 		else if ( field_types[j] == "double" ) {
-		  printf("\t    sql.setInParams(new SQLParam(index++,  new Double(%s.get%s()), Types.DOUBLE));\n", tmp, new_field_names[j])>>persistent_filename;;
+		  printf("\t\tsql.setInParams(new SQLParam(index++,  new Double(%s.get%s()), Types.DOUBLE));\n", tmp, new_field_names[j])>>persistent_filename;;
 		}
 		else if ( field_types[j] == "float" ) {
-		  printf("\t    sql.setInParams(new SQLParam(index++,  new Float(%s.get%s()), Types.FLOAT));\n", tmp, new_field_names[j])>>persistent_filename;;
+		  printf("\t\tsql.setInParams(new SQLParam(index++,  new Float(%s.get%s()), Types.FLOAT));\n", tmp, new_field_names[j])>>persistent_filename;;
 		}
 	  }
 	}
-	printf("\t    setSQLStatement(sql);\n        \n")>>persistent_filename;
+	printf("\t\tsetSQLStatement(sql);\n\t\t\n")>>persistent_filename;
 
-	printf("\t    Integer result = (Integer) super.delete();\n        \n")>>persistent_filename;
-	printf("\t    return result;\n")>>persistent_filename;
-	printf("\t}\n    \n")>>persistent_filename;
+	printf("\t\tInteger result = (Integer) super.delete();\n\t\t\n")>>persistent_filename;
+	printf("\t\treturn result;\n")>>persistent_filename;
+	printf("\t}\n\t\n")>>persistent_filename;
 	# End delete method
 
 	# Comments for update Method
-	printf("\t\n    /**\n") >> persistent_filename;
+	printf("\t\n\t/**\n") >> persistent_filename;
 	printf("\t *\n") >> persistent_filename;
 	printf("\t * Updates a row in the database. The values are \n") >> persistent_filename;
 	printf("\t * got from the %s.\n", tmp) >> persistent_filename;
 	printf("\t * Returns an Integer Object with value 0 on success\n") >> persistent_filename;
 	printf("\t * and -1 on faliure.\n") >> persistent_filename;
 	printf("\t *\n") >> persistent_filename;
-	printf("\t * @return      Returns an Integer indicating success/failure of the database operation\n") >> persistent_filename;
+	printf("\t * @return\t  Returns an Integer indicating success/failure of the database operation\n") >> persistent_filename;
 	printf("\t *\n") >> persistent_filename;
-	printf("\t * @throws     DBException     If a database error occurs\n") >> persistent_filename;
-	printf("\t */\n    \n") >> persistent_filename;
+	printf("\t * @throws\t DBException\t If a database error occurs\n") >> persistent_filename;
+	printf("\t */\n\t\n") >> persistent_filename;
 	# End - Comments for update Method
 
 	# update method
 	printf("\tpublic Object update() throws DBException {\n")>>persistent_filename;
-	printf("\t    PreparedSQLStatement sql = new PreparedSQLStatement();\n")>>persistent_filename;
-	printf("\t    String statement = \"UPDATE %s SET ", table_name)>>persistent_filename;
+	printf("\t\tPreparedSQLStatement sql = new PreparedSQLStatement();\n")>>persistent_filename;
+	printf("\t\tString statement = \"UPDATE %s SET ", table_name)>>persistent_filename;
 	for ( j = 1; j < i; j++ ) {
 	  printf("%s = ?, ", field_names[j])>>persistent_filename;
 	}
@@ -578,130 +578,130 @@ ${NAWK} -v QUOTE="'" -v logname=${LOGNAME} -v version=1.0 -v since=1.0 -v proj_n
 	  }
 	}
 	printf("\";\n")>>persistent_filename;
-	printf("\t    int index = 1;\n")>>persistent_filename;
-    printf("\t    sql.setStatement(statement);\n")>>persistent_filename;
+	printf("\t\tint index = 1;\n")>>persistent_filename;
+	printf("\t\tsql.setStatement(statement);\n")>>persistent_filename;
 
 	for ( j = 1; j <= i; ++j ) {
-	  if ( field_types[j] == "int" ) {
-		printf("\t    sql.setInParams(new SQLParam(index++, new Integer(%s.get%s()), Types.INTEGER));\n", tmp, new_field_names[j])>>persistent_filename;;
-	  }
-	  else if ( field_types[j] == "String" ) {
-		printf("\t    sql.setInParams(new SQLParam(index++,  %s.get%s(), Types.VARCHAR));\n", tmp, new_field_names[j])>>persistent_filename;;
-	  }
-	  else if ( field_types[j] == "Date" ) {
-		printf("\t    sql.setInParams(new SQLParam(index++,  %s.get%s(), Types.TIMESTAMP));\n", tmp, new_field_names[j])>>persistent_filename;;
-	  }
-	  else if ( field_types[j] == "double" ) {
-		printf("\t    sql.setInParams(new SQLParam(index++,  new Double(%s.get%s()), Types.DOUBLE));\n", tmp, new_field_names[j])>>persistent_filename;;
-	  }
-	  else if ( field_types[j] == "float" ) {
-		printf("\t    sql.setInParams(new SQLParam(index++,  new Float(%s.get%s()), Types.FLOAT));\n", tmp, new_field_names[j])>>persistent_filename;;
-	  }
-	}
-	for ( j = 1; j <= i; ++j ) {
-	  if (keys[j]  == "key" ) {  
 		if ( field_types[j] == "int" ) {
-		  printf("\t    sql.setInParams(new SQLParam(index++, new Integer(%s.get%s()), Types.INTEGER));\n", tmp, new_field_names[j])>>persistent_filename;;
+			printf("\t\tsql.setInParams(new SQLParam(index++, new Integer(%s.get%s()), Types.INTEGER));\n", tmp, new_field_names[j])>>persistent_filename;;
 		}
 		else if ( field_types[j] == "String" ) {
-		  printf("\t    sql.setInParams(new SQLParam(index++,  %s.get%s(), Types.VARCHAR));\n", tmp, new_field_names[j])>>persistent_filename;;
+			printf("\t\tsql.setInParams(new SQLParam(index++,  %s.get%s(), Types.VARCHAR));\n", tmp, new_field_names[j])>>persistent_filename;;
 		}
 		else if ( field_types[j] == "Date" ) {
-		  printf("\t    sql.setInParams(new SQLParam(index++,  %s.get%s(), Types.TIMESTAMP));\n", tmp, new_field_names[j])>>persistent_filename;;
+			printf("\t\tsql.setInParams(new SQLParam(index++,  %s.get%s(), Types.TIMESTAMP));\n", tmp, new_field_names[j])>>persistent_filename;;
 		}
 		else if ( field_types[j] == "double" ) {
-		  printf("\t    sql.setInParams(new SQLParam(index++,  new Double(%s.get%s()), Types.DOUBLE));\n", tmp, new_field_names[j])>>persistent_filename;;
+			printf("\t\tsql.setInParams(new SQLParam(index++,  new Double(%s.get%s()), Types.DOUBLE));\n", tmp, new_field_names[j])>>persistent_filename;;
 		}
 		else if ( field_types[j] == "float" ) {
-		  printf("\t    sql.setInParams(new SQLParam(index++,  new Float(%s.get%s()), Types.FLOAT));\n", tmp, new_field_names[j])>>persistent_filename;;
+			printf("\t\tsql.setInParams(new SQLParam(index++,  new Float(%s.get%s()), Types.FLOAT));\n", tmp, new_field_names[j])>>persistent_filename;;
 		}
-	  }
 	}
-	printf("\t    setSQLStatement(sql);\n        \n")>>persistent_filename;
+	for ( j = 1; j <= i; ++j ) {
+		if (keys[j]  == "key" ) {  
+			if ( field_types[j] == "int" ) {
+				printf("\t\tsql.setInParams(new SQLParam(index++, new Integer(%s.get%s()), Types.INTEGER));\n", tmp, new_field_names[j])>>persistent_filename;;
+			}
+			else if ( field_types[j] == "String" ) {
+				printf("\t\tsql.setInParams(new SQLParam(index++,  %s.get%s(), Types.VARCHAR));\n", tmp, new_field_names[j])>>persistent_filename;;
+			}
+			else if ( field_types[j] == "Date" ) {
+				printf("\t\tsql.setInParams(new SQLParam(index++,  %s.get%s(), Types.TIMESTAMP));\n", tmp, new_field_names[j])>>persistent_filename;;
+			}
+			else if ( field_types[j] == "double" ) {
+				printf("\t\tsql.setInParams(new SQLParam(index++,  new Double(%s.get%s()), Types.DOUBLE));\n", tmp, new_field_names[j])>>persistent_filename;;
+			}
+			else if ( field_types[j] == "float" ) {
+				printf("\t\tsql.setInParams(new SQLParam(index++,  new Float(%s.get%s()), Types.FLOAT));\n", tmp, new_field_names[j])>>persistent_filename;;
+			}
+		}
+	}
+	printf("\t\tsetSQLStatement(sql);\n\t\t\n")>>persistent_filename;
 
-	printf("\t    Integer result = (Integer) super.update();\n        \n")>>persistent_filename;
-	printf("\t    return result;\n")>>persistent_filename;
-	printf("\t}\n    \n")>>persistent_filename;
+	printf("\t\tInteger result = (Integer) super.update();\n\t\t\n")>>persistent_filename;
+	printf("\t\treturn result;\n")>>persistent_filename;
+	printf("\t}\n\t\n")>>persistent_filename;
 	# End update method
 
 	# Comments for getResultsObjects Method
-	printf("\t\n    /**\n") >> persistent_filename;
+	printf("\t\n\t/**\n") >> persistent_filename;
 	printf("\t *\n") >> persistent_filename;
 	printf("\t * Returns a ArrayList of %sObject from the ResultSet. The values for \n", tmp_file_name) >> persistent_filename;
 	printf("\t * each object is got from the ResultSet.\n") >> persistent_filename;
 	printf("\t * This is used by the list method.\n") >> persistent_filename;
 	printf("\t *\n") >> persistent_filename;
-	printf("\t * @param rs      the ResultSet.\n") >> persistent_filename;
+	printf("\t * @param rs\t  the ResultSet.\n") >> persistent_filename;
 	printf("\t *\n") >> persistent_filename;
-	printf("\t * @return      Returns a ArrayList of %sObject from the ResultSet.\n", tmp_file_name) >> persistent_filename;
+	printf("\t * @return\t  Returns a ArrayList of %sObject from the ResultSet.\n", tmp_file_name) >> persistent_filename;
 	printf("\t *\n") >> persistent_filename;
-	printf("\t * @see     #list()\n") >> persistent_filename;
+	printf("\t * @see\t #list()\n") >> persistent_filename;
 	printf("\t *\n") >> persistent_filename;
-	printf("\t */\n    \n") >> persistent_filename;
+	printf("\t */\n\t\n") >> persistent_filename;
 	# End - Comments for getResultsObjects Method
 
 	# getResultObjects method
 	printf("\tpublic Object getResultObjects(ResultSet rs) {\n")>>persistent_filename;
-	printf("\t    ArrayList<%sObject> result = new ArrayList<%sObject>();\n        \n", tmp_file_name, tmp_file_name)>>persistent_filename;
-	printf("\t    try {\n")>>persistent_filename;
-	printf("\t        while(rs.next()) {\n")>>persistent_filename;
-	printf("\t            int index = 1;\n")>>persistent_filename;
-	printf("\t            %sObject f = new %sObject();\n", tmp_file_name, tmp_file_name)>>persistent_filename;
+	printf("\t\tArrayList<%sObject> result = new ArrayList<%sObject>();\n", tmp_file_name, tmp_file_name)>>persistent_filename;
+	printf("\t\ttry {\n")>>persistent_filename;
+	printf("\t\t\twhile(rs.next()) {\n")>>persistent_filename;
+	printf("\t\t\t\tint index = 1;\n")>>persistent_filename;
+	printf("\t\t\t\t%sObject f = new %sObject();\n", tmp_file_name, tmp_file_name)>>persistent_filename;
 
 	for ( j = 1; j <= i; ++j ) {
 	  if ( field_types[j] == "int" ) {
-		printf("\t            f.set%s(rs.getInt(index++));\n", new_field_names[j])>>persistent_filename;
+		printf("\t\t\t\tf.set%s(rs.getInt(index++));\n", new_field_names[j])>>persistent_filename;
 	  }
 	  else if ( field_types[j] == "String" ) {
-		printf("\t            f.set%s(rs.getString(index++));\n", new_field_names[j])>>persistent_filename;
+		printf("\t\t\t\tf.set%s(rs.getString(index++));\n", new_field_names[j])>>persistent_filename;
 	  }
 	  else if ( field_types[j] == "Date" ) {
-		printf("\t            f.set%s(rs.getDate(index++));\n", new_field_names[j])>>persistent_filename;
+		printf("\t\t\t\tf.set%s(rs.getDate(index++));\n", new_field_names[j])>>persistent_filename;
 	  }
 	  else if ( field_types[j] == "double" ) {
-		printf("\t            f.set%s(rs.getDouble(index++));\n", new_field_names[j])>>persistent_filename;
+		printf("\t\t\t\tf.set%s(rs.getDouble(index++));\n", new_field_names[j])>>persistent_filename;
 	  }
 	  else if ( field_types[j] == "float" ) {
-		printf("\t            f.set%s(rs.getFloat(index++));\n", new_field_names[j])>>persistent_filename;
+		printf("\t\t\t\tf.set%s(rs.getFloat(index++));\n", new_field_names[j])>>persistent_filename;
 	  }
 	}
-	printf("\t            result.add(f);\n")>>persistent_filename;
-	printf("\t        }\n")>>persistent_filename;
-	printf("\t    } catch (Exception e) {\n")>>persistent_filename;
-	printf("\t        e.printStackTrace();\n")>>persistent_filename;
-	printf("\t    }\n")>>persistent_filename;
-	printf("\t    return result;\n")>>persistent_filename;
-	printf("\t}\n    \n")>>persistent_filename;
+	printf("\t\t\t\tresult.add(f);\n")>>persistent_filename;
+	printf("\t\t\t}\n")>>persistent_filename;
+	printf("\t\t} catch (Exception e) {\n")>>persistent_filename;
+	printf("\t\t\te.printStackTrace();\n")>>persistent_filename;
+	printf("\t\t}\n")>>persistent_filename;
+	printf("\t\treturn result;\n")>>persistent_filename;
+	printf("\t}\n\t\n")>>persistent_filename;
 	# End getResultObjects method
 	
 	# Comments for getResultsObject Method
-	printf("\t\n    /**\n") >> persistent_filename;
+	printf("\t\n\t/**\n") >> persistent_filename;
 	printf("\t *\n") >> persistent_filename;
 	printf("\t * Returns a %sObject from the ResultSet. The values for \n", tmp_file_name) >> persistent_filename;
 	printf("\t * each object is got from the ResultSet.\n") >> persistent_filename;
 	printf("\t *\n") >> persistent_filename;
 	printf("\t * This is used by the fetch method.\n") >> persistent_filename;
-	printf("\t * @param rs      the ResultSet.\n") >> persistent_filename;
+	printf("\t * @param rs\t  the ResultSet.\n") >> persistent_filename;
 	printf("\t *\n") >> persistent_filename;
-	printf("\t * @return      Returns a %sObject from the ResultSet.\n", tmp_file_name) >> persistent_filename;
+	printf("\t * @return\t  Returns a %sObject from the ResultSet.\n", tmp_file_name) >> persistent_filename;
 	printf("\t *\n") >> persistent_filename;
-	printf("\t * @see     #fetch()\n") >> persistent_filename;
+	printf("\t * @see\t #fetch()\n") >> persistent_filename;
 	printf("\t *\n") >> persistent_filename;
-	printf("\t */\n    \n") >> persistent_filename;
+	printf("\t */\n\t\n") >> persistent_filename;
 	# End - Comments for getResultsObject Method
 
 	# getResultSetObject method
 	printf("\tpublic Object getResultSetObject(ResultSet rs) {\n")>>persistent_filename;
-	printf("\t    try {\n")>>persistent_filename;
-        printf("\t    @SuppressWarnings(\"unchecked\")\n")>>persistent_filename;
-	printf("\t        ArrayList<%sObject> result = (ArrayList<%sObject>) getResultObjects(rs);\n", tmp_file_name, tmp_file_name)>>persistent_filename;
-	printf("\t        return result.get(0);\n")>>persistent_filename;
-	printf("\t    } catch (Exception e) {\n")>>persistent_filename;
-    printf("\t        return null;\n")>>persistent_filename;
-	printf("\t    }\n")>>persistent_filename;
+	printf("\t\ttry {\n")>>persistent_filename;
+	printf("\t\t\t@SuppressWarnings(\"unchecked\")\n")>>persistent_filename;
+	printf("\t\t\tArrayList<%sObject> result = (ArrayList<%sObject>) getResultObjects(rs);\n", tmp_file_name, tmp_file_name)>>persistent_filename;
+	printf("\t\t\treturn result.get(0);\n")>>persistent_filename;
+	printf("\t\t} catch (Exception e) {\n")>>persistent_filename;
+	printf("\t\t\treturn null;\n")>>persistent_filename;
+	printf("\t\t}\n")>>persistent_filename;
 	printf("\t}\n")>>persistent_filename;
 	
-	printf("}\n    \n")>>persistent_filename; 
+	printf("}\n\t\n")>>persistent_filename; 
 	# End getResultSetObject method
 	close(persistent_filename);
   }
@@ -872,25 +872,28 @@ ${NAWK} -v QUOTE="'" -v logname=${LOGNAME} -v version=1.0 -v since=1.0 -v proj_n
 	printf("\t *\n") >> file_name;
 	printf("\t * @return\t Returns the String representation of the %sObject.\n", tmp_file_name) >> file_name;
 	printf("\t *\n") >> file_name;
-	printf("\t */\n    \n") >> file_name;
+	printf("\t */\n\t\n") >> file_name;
 	# End - Comments for toString Method
 
 	# toString method	
 	printf("\tpublic String toString() {\n")>>file_name;
 	printf("\t\tString buf=\"\";\n")>>file_name;
-	for ( j = 1; j < i; ++j )
-        #if ( j == 1 )
+	#for ( j = 1; j < i; ++j ) {
+	for ( j = 1; j <= i; ++j ) {
+		#if ( j == 1 )
 			#printf("\t\"%s : \" + %s + \"\\n\" +\n", field_names[j], field_names[j])>>file_name;
-        #else
-            #printf("\t\t\"%s : \" + %s + \"\\n\" +\n", field_names[j], field_names[j])>>file_name;
-	#printf("\t\t\"%s : \" + %s + \"\\n\";\n", field_names[j], field_names[j])>>file_name;
-	if ( field_types[j] == "Date" ) {
-		printf("\t\tif (%s != null)\n",field_names[j])>>file_name;
-		printf("\t\t\tbuf += \"%s : \" + dateFormatter.format(%s) + \"\\n\";\n",field_names[j], field_names[j])>>file_name;
-		printf("\t\telse\n")>>file_name;
-		printf("\t\t\tbuf += \"%s : \" + \"\\n\";\n",field_names[j], field_names[j])>>file_name;
-	} else {
-		printf("\t\tbuf += \"%s : \" + %s + \"\\n\";\n", field_names[j], field_names[j])>>file_name;
+		#else
+			#printf("\t\t\"%s : \" + %s + \"\\n\" +\n", field_names[j], field_names[j])>>file_name;
+		#printf("\t\t\"%s : \" + %s + \"\\n\";\n", field_names[j], field_names[j])>>file_name;
+	
+		if ( field_types[j] == "Date" ) {
+			printf("\t\tif (%s != null)\n",field_names[j])>>file_name;
+			printf("\t\t\tbuf += \"%s : \" + dateFormatter.format(%s) + \"\\n\";\n",field_names[j], field_names[j])>>file_name;
+			printf("\t\telse\n")>>file_name;
+			printf("\t\t\tbuf += \"%s : \" + \"\\n\";\n",field_names[j], field_names[j])>>file_name;
+		} else {
+			printf("\t\tbuf += \"%s : \" + %s + \"\\n\";\n", field_names[j], field_names[j])>>file_name;
+		}
 	}
 	printf("\t\treturn buf;\n")>>file_name;
 	printf("\t}\n\n")>> file_name;
@@ -902,9 +905,9 @@ ${NAWK} -v QUOTE="'" -v logname=${LOGNAME} -v version=1.0 -v since=1.0 -v proj_n
 	printf("\t *\n") >> file_name;
 	printf("\t * Returns the JSON representation of the %sObject.\n", tmp_file_name) >> file_name;
 	printf("\t *\n") >> file_name;
-	printf("\t * @return      Returns the JSON representation of the %sObject.\n", tmp_file_name) >> file_name;
+	printf("\t * @return  \tReturns the JSON representation of the %sObject.\n", tmp_file_name) >> file_name;
 	printf("\t *\n") >> file_name;
-	printf("\t */\n    \n") >> file_name;
+	printf("\t */\n\t\n") >> file_name;
 	# End - Comments for toString Method
 
 	# toString method	
@@ -916,7 +919,7 @@ ${NAWK} -v QUOTE="'" -v logname=${LOGNAME} -v version=1.0 -v since=1.0 -v proj_n
 	}
 	printf("\t\t} catch (JSONException je) {}\n")>>file_name;
 	printf("\t\treturn jo;\n")>>file_name;
-	printf("\t}\n    \n")>> file_name;
+	printf("\t}\n\t\n")>> file_name;
 	# End toJSON method	
 
 	# Comments for hashCode
@@ -924,22 +927,22 @@ ${NAWK} -v QUOTE="'" -v logname=${LOGNAME} -v version=1.0 -v since=1.0 -v proj_n
 	printf("\t *\n") >> file_name;
 	printf("\t * Returns the hashCode representation of the %sObject.\n", tmp_file_name) >> file_name;
 	printf("\t *\n") >> file_name;
-	printf("\t * @return      Returns the hashCode.\n") >> file_name;
+	printf("\t * @return\tReturns the hashCode.\n") >> file_name;
 	printf("\t *\n") >> file_name;
-	printf("\t*/\n    \n") >> file_name;
+	printf("\t*/\n\t\n") >> file_name;
 	# End - Comments for hashCode Method
 
 	# hashCode method	
 	printf("\tpublic int hashCode() {\n")>>file_name;
 	printf("\t\treturn %s;\n", field_names[1])>> file_name;
-	printf("\t}\n    \n")>> file_name;
+	printf("\t}\n\t\n")>> file_name;
 	# End toJSON method
 
 	# Comments for Constructor
 	printf("\t/**\n") >> file_name;
 	printf("\t * Constructs the %sObject\n", tmp_file_name) >> file_name;
 	printf("\t *\n") >> file_name;
-	printf("\t */\n    \n") >> file_name;
+	printf("\t */\n\t\n") >> file_name;
 	# End - Comments for Constructor
 
 	
@@ -977,14 +980,14 @@ ${NAWK} -v QUOTE="'" -v logname=${LOGNAME} -v version=1.0 -v since=1.0 -v proj_n
 		printf("\t\tset%s(0.0f);\n", new_field_names[j])>>file_name;
 	  }
 	}
-	printf("\t}\n    \n")>>file_name;
+	printf("\t}\n\t\n")>>file_name;
 	# End Constructor
 	
 	# Comments for JSON Constructor
 	printf("\t/**\n") >> file_name;
 	printf("\t * Constructs the %sObject from JSONObject\n", tmp_file_name) >> file_name;
 	printf("\t *\n") >> file_name;
-	printf("\t */\n    \n") >> file_name;
+	printf("\t */\n\t\n") >> file_name;
 	# End - Comments for JSON Constructor
 	# Constructor
 	printf("\tpublic %sObject (JSONObject jObject) {\n", tmp_file_name)>>file_name;
@@ -1040,110 +1043,110 @@ ${NAWK} -v QUOTE="'" -v logname=${LOGNAME} -v version=1.0 -v since=1.0 -v proj_n
 	  }
 	  
 	}
-	printf("\t}\n    \n")>>file_name;
+	printf("\t}\n\t\n")>>file_name;
 	# End Constructor
 	
 
 	for ( j = 1; j <= i; ++j ) {
 	  if (keys[j] == "key" ) {  
 		#printf("\tpublic %sObject (%s %s) {\n", tmp_file_name, field_types[j], field_names[j])>>file_name;
-		#printf("\t    set%s(%s);\n", new_field_names[j], field_names[j])>>file_name;
-		#printf("\t}\n    \n")>>file_name;
+		#printf("\t\tset%s(%s);\n", new_field_names[j], field_names[j])>>file_name;
+		#printf("\t}\n\t\n")>>file_name;
 	  }
 	}
 	
 	for ( j = 1; j <= i; ++j ) { 
 	  # Comments for setMethod
-	  printf("\t\n    /**\n") >> file_name;
+	  printf("\t\n\t/**\n") >> file_name;
 	  printf("\t *\n") >> file_name;
 	  printf("\t * Sets the <code>%s</code> field\n", field_names[j]) >> file_name;
 	  printf("\t *\n") >> file_name;
-	  printf("\t * @param %s      %s\n", field_names[j], field_types[j]) >> file_name;
+	  printf("\t * @param %s\t  %s\n", field_names[j], field_types[j]) >> file_name;
 	  printf("\t *\n") >> file_name;
-	  printf("\t */\n    \n") >> file_name;
+	  printf("\t */\n\t\n") >> file_name;
 	  # End Comments for setMethod
 
 	  # setMethod
 	  printf("\tpublic void set%s(%s %s) {\n", new_field_names[j], field_types[j], field_names[j])>>file_name;
-	  printf("\t    this.%s = %s;\n", field_names[j], field_names[j])>>file_name;
-	  printf("\t}\n    \n")>>file_name;
+	  printf("\t\tthis.%s = %s;\n", field_names[j], field_names[j])>>file_name;
+	  printf("\t}\n\t\n")>>file_name;
 	  # End setMethod
 	  
 	  # Comments for getMethod
-	  printf("\t\n    /**\n") >> file_name;
+	  printf("\t\n\t/**\n") >> file_name;
 	  printf("\t *\n") >> file_name;
 	  printf("\t * Gets the <code>%s</code> field\n", field_names[j]) >> file_name;
 	  printf("\t *\n") >> file_name;
 	  printf("\t * @returns %s\n", field_names[j]) >> file_name;
 	  printf("\t *\n") >> file_name;
-	  printf("\t */\n    \n") >> file_name;
+	  printf("\t */\n\t\n") >> file_name;
 	  # End Comments for getMethod
 
 	  # getMethod
 	  printf("\tpublic %s get%s() {\n", field_types[j], new_field_names[j])>>file_name;
-	  printf("\t    return %s;\n", field_names[j])>>file_name;
+	  printf("\t\treturn %s;\n", field_names[j])>>file_name;
 	  printf("\t}\n\n")>>file_name;
 	  # End getMethod
 	  
 	}
 	# Comments for equalsMethod
-	printf("\t\n    /**\n") >> file_name;
+	printf("\t\n\t/**\n") >> file_name;
 	printf("\t *\n") >> file_name;
 	printf("\t * Tests if this object equals <code>obj</code>\n") >> file_name;
 	printf("\t *\n") >> file_name;
 	printf("\t * @returns true if equals\n") >> file_name;
 	printf("\t *\n") >> file_name;
-	printf("\t */\n    \n") >> file_name;
+	printf("\t */\n\t\n") >> file_name;
 	# End Comments for equalsMethod
 
 	# equals Method
-        printf("\tpublic boolean equals(Object obj) {\n")>>file_name;
-        printf("\t    %sObject other = (%sObject)obj;\n", tmp_file_name, tmp_file_name)>>file_name;
-        printf("\t    DebugHandler.finest(\"This: \" + this);\n", tmp_file_name)>>file_name;
-        printf("\t    DebugHandler.finest(\"Other: \" + other);\n", tmp_file_name)>>file_name;
-	printf("\t    return\n")>>file_name;
+	printf("\tpublic boolean equals(Object obj) {\n")>>file_name;
+	printf("\t\t%sObject other = (%sObject)obj;\n", tmp_file_name, tmp_file_name)>>file_name;
+	printf("\t\tDebugHandler.finest(\"This: \" + this);\n", tmp_file_name)>>file_name;
+	printf("\t\tDebugHandler.finest(\"Other: \" + other);\n", tmp_file_name)>>file_name;
+	printf("\t\treturn\n")>>file_name;
 	for ( j = 1; j <= i; ++j ) { 
-	    if (field_types[j]  == "int" || field_types[j] == "double" || field_types[j] == "float" ) { 
+		if (field_types[j]  == "int" || field_types[j] == "double" || field_types[j] == "float" ) { 
+			if ( j == i )
+				printf("\t\t\t%s == other.get%s();\n", field_names[j], new_field_names[j])>>file_name;
+			else
+				printf("\t\t\t%s == other.get%s() &&\n", field_names[j], new_field_names[j])>>file_name;
+		} else if ( field_types[j] == "String" ) {
 		if ( j == i )
-		    printf("\t        %s == other.get%s();\n", field_names[j], new_field_names[j])>>file_name;
-		else
-		    printf("\t        %s == other.get%s() &&\n", field_names[j], new_field_names[j])>>file_name;
-	    } else if ( field_types[j] == "String" ) {
-		if ( j == i )
-		    printf("\t        Util.trim(%s).equals(Util.trim(other.get%s()));\n", field_names[j], new_field_names[j])>>file_name;
-		else
-		    printf("\t   Util.trim(%s).equals(Util.trim(other.get%s())) &&\n", field_names[j], new_field_names[j])>>file_name;
-	    }
-	    else if ( field_types[j] == "Date" ) {
-		if ( j == i )
-		    printf("\t   %s.equals(other.get%s());\n", field_names[j], new_field_names[j])>>file_name;
-		else
-		    printf("\t   %s.equals(other.get%s()) &&\n", field_names[j], new_field_names[j])>>file_name;
-	    }
+				printf("\t\t\tUtil.trim(%s).equals(Util.trim(other.get%s()));\n", field_names[j], new_field_names[j])>>file_name;
+			else
+				printf("\t\t\tUtil.trim(%s).equals(Util.trim(other.get%s())) &&\n", field_names[j], new_field_names[j])>>file_name;
+		}
+		else if ( field_types[j] == "Date" ) {
+			if ( j == i )
+				printf("\t\t\t%s.equals(other.get%s());\n", field_names[j], new_field_names[j])>>file_name;
+			else
+				printf("\t\t\t%s.equals(other.get%s()) &&\n", field_names[j], new_field_names[j])>>file_name;
+		}
 	}
 	printf("\t}\n")>>file_name;
 	# End equals Method
 
 	# Comments for clone Method
-	printf("\t\n    /**\n") >> file_name;
+	printf("\t\n\t/**\n") >> file_name;
 	printf("\t *\n") >> file_name;
 	printf("\t * Clones this object\n") >> file_name;
 	printf("\t *\n") >> file_name;
 	printf("\t * @returns the clone of this object\n") >> file_name;
 	printf("\t *\n") >> file_name;
-	printf("\t */\n    \n") >> file_name;
+	printf("\t */\n\t\n") >> file_name;
 	# End Comments for clone Method
 
 	# Clone Method
-        printf("\tpublic Object clone() {\n") >>file_name;
-        printf("\t    Object theClone = null;\n") >>file_name;
-        printf("\t    try {\n") >>file_name;
-        printf("\t   theClone = super.clone();\n")>>file_name;
-        printf("\t    } catch (CloneNotSupportedException ce) {\n")>>file_name;
-        printf("\t   DebugHandler.severe(\"Cannot clone \" + this);\n")>>file_name;
-        printf("\t    }\n")>>file_name;
-        printf("\t    return theClone;\n")>>file_name;
-        printf("\t}\n")>>file_name;
+	printf("\tpublic Object clone() {\n") >>file_name;
+	printf("\t\tObject theClone = null;\n") >>file_name;
+	printf("\t\ttry {\n") >>file_name;
+	printf("\t\t\ttheClone = super.clone();\n")>>file_name;
+	printf("\t\t} catch (CloneNotSupportedException ce) {\n")>>file_name;
+	printf("\t\t\tDebugHandler.severe(\"Cannot clone \" + this);\n")>>file_name;
+	printf("\t\t}\n")>>file_name;
+	printf("\t\treturn theClone;\n")>>file_name;
+	printf("\t}\n")>>file_name;
 
 	printf("}\n")>>file_name; 
 	close(filename);
@@ -1175,24 +1178,24 @@ ${NAWK} -v QUOTE="'" -v logname=${LOGNAME} -v version=1.0 -v since=1.0 -v proj_n
 	printf("public class %sImpl implements %sInterface  {\n", tmp_file_name, tmp_file_name)>>impl_file_name;
 	printf("\tprivate String %s = \"%sInterface.getAll%s\";\n", toupper(tmp_file_name), tmp_file_name, tmp_file_name)>>impl_file_name;
 	# Start get Method Comments
-	printf("\t\n    /**\n") >> impl_file_name;
+	printf("\t\n\t/**\n") >> impl_file_name;
 	printf("\t *\n") >> impl_file_name;
 	printf("\t * Implementation that returns the %sObject given a %sObject filled with values that will be used for query from the underlying datasource.\n", tmp_file_name, tmp_file_name) >> impl_file_name;
 	printf("\t *\n") >> impl_file_name;
 	printf("\t * @param %s_obj\t%sObject\n", tolower(tmp_file_name), tmp_file_name) >> impl_file_name;
 	printf("\t *\n") >> impl_file_name;
-	printf("\t * @return      Returns the ArrayList of %sObjects\n", tmp_file_name) >> impl_file_name;
+	printf("\t * @return\t  Returns the ArrayList of %sObjects\n", tmp_file_name) >> impl_file_name;
 	printf("\t *\n") >> impl_file_name;
 	printf("\t * @throws AppException if the underlying operation fails\n") >> impl_file_name;
 	printf("\t *\n") >> impl_file_name;
-	printf("\t */\n    \n") >> impl_file_name;
+	printf("\t */\n\t\n") >> impl_file_name;
 	# End get Method Comments
 	if (last_char == "s") {
-	    printf("\tpublic ArrayList<%sObject> get%s(%sObject %s_obj) throws AppException{\n", tmp_file_name, tmp_file_name, tmp_file_name, tolower(tmp_file_name)) >> impl_file_name;
-	    printf("\t\t%sObject[] %sArr = getAll%s();\n",tmp_file_name, tmp, tmp_file_name) >> impl_file_name;
+		printf("\tpublic ArrayList<%sObject> get%s(%sObject %s_obj) throws AppException{\n", tmp_file_name, tmp_file_name, tmp_file_name, tolower(tmp_file_name)) >> impl_file_name;
+		printf("\t\t%sObject[] %sArr = getAll%s();\n",tmp_file_name, tmp, tmp_file_name) >> impl_file_name;
 	} else {
-	    printf("\tpublic ArrayList<%sObject> get%ss(%sObject %s_obj) throws AppException{\n", tmp_file_name, tmp_file_name, tmp_file_name, tolower(tmp_file_name)) >> impl_file_name;
-	    printf("\t\t%sObject[] %sArr = getAll%ss();\n",tmp_file_name, tmp, tmp_file_name) >> impl_file_name;
+		printf("\tpublic ArrayList<%sObject> get%ss(%sObject %s_obj) throws AppException{\n", tmp_file_name, tmp_file_name, tmp_file_name, tolower(tmp_file_name)) >> impl_file_name;
+		printf("\t\t%sObject[] %sArr = getAll%ss();\n",tmp_file_name, tmp, tmp_file_name) >> impl_file_name;
 	}
 	printf("\t\tif ( %s_obj.get%s() == Constants.GET_ALL ) {\n", tolower(tmp_file_name), new_field_names[1]) >> impl_file_name;
 	printf("\t\t\tif ( %sArr == null )\n", tmp) >> impl_file_name;
@@ -1217,18 +1220,18 @@ ${NAWK} -v QUOTE="'" -v logname=${LOGNAME} -v version=1.0 -v since=1.0 -v proj_n
 	#printf("\t\t\t\tif ( ")>>impl_file_name; 
 	#for ( j = 1; j <= i; j++ ) {
 	#   if ( field_types[j] != "String" && field_types[j]  != "Date" ) {
-	#	printf("(%s_obj.get%s() != 0 && %s_obj.get%s() == %sArr[i].get%s())\n", tolower(tmp_file_name), new_field_names[j], tolower(tmp_file_name), new_field_names[j], tmp, new_field_names[j])>>impl_file_name; 
-	#    } 
-	#    else {
-	#	if ( filed_typed[j]  == "String" ) {
-	#	    printf("(!Util.trim(%s_obj.get%s()).equals(Constants.SPACE) && %s_obj.get%s().equals(%sArr[i].get%s()))\n", tolower(tmp_file_name), new_field_names[j], tolower(tmp_file_name), new_field_names[j], tmp, new_field_names[j])>>impl_file_name;
-	#	} else {
-	#	    printf("(%s_obj.get%s() != null && %s_obj.get%s().equals(%sArr[i].get%s()))\n", tolower(tmp_file_name), new_field_names[j], tolower(tmp_file_name), new_field_names[j], tmp, new_field_names[j])>>impl_file_name;
+	#		printf("(%s_obj.get%s() != 0 && %s_obj.get%s() == %sArr[i].get%s())\n", tolower(tmp_file_name), new_field_names[j], tolower(tmp_file_name), new_field_names[j], tmp, new_field_names[j])>>impl_file_name; 
+	#	} 
+	#	else {
+	#		if ( filed_typed[j]  == "String" ) {
+	#			printf("(!Util.trim(%s_obj.get%s()).equals(Constants.SPACE) && %s_obj.get%s().equals(%sArr[i].get%s()))\n", tolower(tmp_file_name), new_field_names[j], tolower(tmp_file_name), new_field_names[j], tmp, new_field_names[j])>>impl_file_name;
+	#		} else {
+	#			printf("(%s_obj.get%s() != null && %s_obj.get%s().equals(%sArr[i].get%s()))\n", tolower(tmp_file_name), new_field_names[j], tolower(tmp_file_name), new_field_names[j], tmp, new_field_names[j])>>impl_file_name;
+	#		}
 	#	}
-	#    }
-	#    if ( j != i ) {
-	#	printf(" || ")>>impl_file_name;
-	#    }
+	#	if ( j != i ) {
+	#		printf(" || ")>>impl_file_name;
+	#	}
 	#}
 	#printf(") {\n")>>impl_file_name;
 	#printf("\t\t\t\t\tv.add((%sObject)%sArr[i].clone());\n", tmp_file_name, tmp)>>impl_file_name;
@@ -1244,18 +1247,18 @@ ${NAWK} -v QUOTE="'" -v logname=${LOGNAME} -v version=1.0 -v since=1.0 -v proj_n
 	for ( j = 1; j <= i; ++j ) {
 	  if (keys[j]  == "key" ) {  
 		# Start get Method Comments
-		printf("\t\n    /**\n") >> impl_file_name;
+		printf("\t\n\t/**\n") >> impl_file_name;
 		printf("\t *\n") >> impl_file_name;
 		printf("\t * Implementation of the method that returns the %sObject from the underlying datasource.\n", tmp_file_name) >> impl_file_name;
 		printf("\t * given %s.\n", field_names[j]) >> impl_file_name;
 		printf("\t *\n") >> impl_file_name;
-		printf("\t * @param %s     %s\n", field_names[j], field_types[j]) >> impl_file_name;
+		printf("\t * @param %s\t %s\n", field_names[j], field_types[j]) >> impl_file_name;
 		printf("\t *\n") >> impl_file_name;
-		printf("\t * @return      Returns the %sObject\n", tmp_file_name) >> impl_file_name;
+		printf("\t * @return\t  Returns the %sObject\n", tmp_file_name) >> impl_file_name;
 		printf("\t *\n") >> impl_file_name;
 		printf("\t * @throws AppException if the operation fails\n") >> impl_file_name;
 		printf("\t *\n") >> impl_file_name;
-		printf("\t */\n    \n") >> impl_file_name;
+		printf("\t */\n\t\n") >> impl_file_name;
 		# End get Method Comments
 
 		table_length=length(tmp_file_name);
@@ -1274,7 +1277,7 @@ ${NAWK} -v QUOTE="'" -v logname=${LOGNAME} -v version=1.0 -v since=1.0 -v proj_n
 		printf("\t\t\tif ( %sArr[i] == null ) { // Try database and add to cache if found.\n", tmp) >> impl_file_name;
 		printf("\t\t\t\t%sObject %sObj = new %sObject();\n", tmp_file_name, tolower(tmp_file_name), tmp_file_name) >> impl_file_name;
 		printf("\t\t\t\t%sObj.set%s(%s);\n", tolower(tmp_file_name), new_field_names[j], field_names[j]) >> impl_file_name;
-	    printf("\t\t\t\t@SuppressWarnings(\"unchecked\")\n") >> impl_file_name;
+		printf("\t\t\t\t@SuppressWarnings(\"unchecked\")\n") >> impl_file_name;
 		printf("\t\t\t\tArrayList<%sObject> v = (ArrayList)DBUtil.fetch(%sObj);\n", tmp_file_name, tolower(tmp_file_name))>> impl_file_name;
 		printf("\t\t\t\tif ( v == null || v.size() == 0 )\n")>> impl_file_name;
 		printf("\t\t\t\t\treturn null;\n")>> impl_file_name;
@@ -1289,21 +1292,21 @@ ${NAWK} -v QUOTE="'" -v logname=${LOGNAME} -v version=1.0 -v since=1.0 -v proj_n
 		printf("\t\t\t}\n")>> impl_file_name;
 		printf("\t\t}\n")>> impl_file_name;
 		printf("\t\treturn null;\n")>> impl_file_name;
-		printf("\t}\n    \n")>> impl_file_name;
+		printf("\t}\n\t\n")>> impl_file_name;
 	  }
 	}
 	# End get Method
 
 	# Start getAll Method Comments
-	printf("\t\n    /**\n") >> impl_file_name;
+	printf("\t\n\t/**\n") >> impl_file_name;
 	printf("\t *\n") >> impl_file_name;
 	printf("\t * Implementation that returns all the <code>%sObjects</code> from the underlying datasource.\n", tmp_file_name) >> impl_file_name;
 	printf("\t *\n") >> impl_file_name;
-	printf("\t * @return      Returns an Array of <code>%sObject</code>\n", tmp_file_name) >> impl_file_name;
+	printf("\t * @return\t  Returns an Array of <code>%sObject</code>\n", tmp_file_name) >> impl_file_name;
 	printf("\t *\n") >> impl_file_name;
 	printf("\t * @throws AppException if the operation fails\n") >> impl_file_name;
 	printf("\t *\n") >> impl_file_name;
-	printf("\t */\n    \n") >> impl_file_name;
+	printf("\t */\n\t\n") >> impl_file_name;
 	# End getAll Method Comments
 
 	# getAll Method
@@ -1331,19 +1334,19 @@ ${NAWK} -v QUOTE="'" -v logname=${LOGNAME} -v version=1.0 -v since=1.0 -v proj_n
 	printf("\t\t\tUtil.putInCache(%s, %sArr);\n", toupper(tmp_file_name), tmp)>> impl_file_name;
 	printf("\t\t}\n")>> impl_file_name;
 	printf("\t\treturn %sArr;\n", tmp)>> impl_file_name;
-	printf("\t}\n    \n")>> impl_file_name;
+	printf("\t}\n\t\n")>> impl_file_name;
 	# End getAll Method
 
 	# Start add Method Comments
-	printf("\t\n    /**\n") >> impl_file_name;
+	printf("\t\n\t/**\n") >> impl_file_name;
 	printf("\t *\n") >> impl_file_name;
 	printf("\t * Implementation to add the <code>%sObject</code> to the underlying datasource.\n", tmp_file_name) >> impl_file_name;
 	printf("\t *\n") >> impl_file_name;
-	printf("\t * @param %s     %sObject\n", tmp, tmp_file_name) >> impl_file_name;
+	printf("\t * @param %s\t %sObject\n", tmp, tmp_file_name) >> impl_file_name;
 	printf("\t *\n") >> impl_file_name;
 	printf("\t * @throws AppException if the operation fails\n") >> impl_file_name;
 	printf("\t *\n") >> impl_file_name;
-	printf("\t */\n    \n") >> impl_file_name;
+	printf("\t */\n\t\n") >> impl_file_name;
 	# End add Method Comments
 
 	# add Method
@@ -1367,9 +1370,9 @@ ${NAWK} -v QUOTE="'" -v logname=${LOGNAME} -v version=1.0 -v since=1.0 -v proj_n
 	table_length=length(tmp_file_name);
 	last_char=substr(tmp_file_name, table_length, 1);
 	if (last_char == "s") {
-	    printf("\t\t%sObject[] %sArr = getAll%s();\n", tmp_file_name, tmp, tmp_file_name)>> impl_file_name;
+		printf("\t\t%sObject[] %sArr = getAll%s();\n", tmp_file_name, tmp, tmp_file_name)>> impl_file_name;
 	} else {
-	    printf("\t\t%sObject[] %sArr = getAll%ss();\n", tmp_file_name, tmp, tmp_file_name)>> impl_file_name;
+		printf("\t\t%sObject[] %sArr = getAll%ss();\n", tmp_file_name, tmp, tmp_file_name)>> impl_file_name;
 	}
 	printf("\t\tboolean foundSpace = false;\n")>> impl_file_name;
 	printf("\n")>> impl_file_name;
@@ -1397,15 +1400,15 @@ ${NAWK} -v QUOTE="'" -v logname=${LOGNAME} -v version=1.0 -v since=1.0 -v proj_n
 	# End add Method
 
 	# Start update Method Comments
-	printf("\t\n    /**\n") >> impl_file_name;
+	printf("\t\n\t/**\n") >> impl_file_name;
 	printf("\t *\n") >> impl_file_name;
 	printf("\t * Implementation to update the <code>%sObject</code> in the underlying datasource.\n", tmp_file_name) >> impl_file_name;
 	printf("\t *\n") >> impl_file_name;
-	printf("\t * @param %s     %sObject\n", tmp, tmp_file_name) >> impl_file_name;
+	printf("\t * @param %s\t %sObject\n", tmp, tmp_file_name) >> impl_file_name;
 	printf("\t *\n") >> impl_file_name;
 	printf("\t * @throws AppException if the operation fails\n") >> impl_file_name;
 	printf("\t *\n") >> impl_file_name;
-	printf("\t */\n    \n") >> impl_file_name;
+	printf("\t */\n\t\n") >> impl_file_name;
 	# End update Method Comments
 
 	# updateMethod
@@ -1413,17 +1416,17 @@ ${NAWK} -v QUOTE="'" -v logname=${LOGNAME} -v version=1.0 -v since=1.0 -v proj_n
 	table_length=length(tmp_file_name);
 	last_char=substr(tmp_file_name, table_length, 1);
 	if (last_char == "s") {
-	    newmethod=substr(tmp_file_name,1,table_length - 1);
-	    printf("\t\t%sObject new%sObject = get%s(%s.get%s()); // This call will make sure cache/db are in sync\n", tmp_file_name, tmp_file_name, newmethod, tmp, new_field_names[1])>> impl_file_name;
+		newmethod=substr(tmp_file_name,1,table_length - 1);
+		printf("\t\t%sObject new%sObject = get%s(%s.get%s()); // This call will make sure cache/db are in sync\n", tmp_file_name, tmp_file_name, newmethod, tmp, new_field_names[1])>> impl_file_name;
 	} else {
-	    printf("\t\t%sObject new%sObject = get%s(%s.get%s()); // This call will make sure cache/db are in sync\n", tmp_file_name, tmp_file_name, tmp_file_name, tmp, new_field_names[1])>> impl_file_name;
+		printf("\t\t%sObject new%sObject = get%s(%s.get%s()); // This call will make sure cache/db are in sync\n", tmp_file_name, tmp_file_name, tmp_file_name, tmp, new_field_names[1])>> impl_file_name;
 	}
 	printf("\t\tInteger i = (Integer)DBUtil.update(%s);\n", tmp)>> impl_file_name;
 	printf("\t\tDebugHandler.fine(\"i: \" +  i);\n")>> impl_file_name;
 	if (last_char == "s") {
-	    printf("\t\t%sObject[] %sArr = getAll%s();\n", tmp_file_name, tmp, tmp_file_name)>> impl_file_name;
+		printf("\t\t%sObject[] %sArr = getAll%s();\n", tmp_file_name, tmp, tmp_file_name)>> impl_file_name;
 	} else {
-	    printf("\t\t%sObject[] %sArr = getAll%ss();\n", tmp_file_name, tmp, tmp_file_name)>> impl_file_name;
+		printf("\t\t%sObject[] %sArr = getAll%ss();\n", tmp_file_name, tmp, tmp_file_name)>> impl_file_name;
 	}
 	printf("\t\tif ( %sArr == null )\n", tmp) >> impl_file_name;
 	printf("\t\t\treturn null;\n") >> impl_file_name;
@@ -1437,19 +1440,19 @@ ${NAWK} -v QUOTE="'" -v logname=${LOGNAME} -v version=1.0 -v since=1.0 -v proj_n
 	printf("\t\t\t}\n")>> impl_file_name;
 	printf("\t\t}\n")>> impl_file_name;
 	printf("\t\treturn i;\n", tmp)>> impl_file_name;
-	printf("\t}\n    \n")>> impl_file_name;
+	printf("\t}\n\t\n")>> impl_file_name;
 	# End updateMethod
 	
 	# Start delete Method Comments
-	printf("\t\n    /**\n") >> impl_file_name;
+	printf("\t\n\t/**\n") >> impl_file_name;
 	printf("\t *\n") >> impl_file_name;
 	printf("\t * Implementation to delete the <code>%sObject</code> in the underlying datasource.\n", tmp_file_name) >> impl_file_name;
 	printf("\t *\n") >> impl_file_name;
-	printf("\t * @param %s     %sObject\n", tmp, tmp_file_name) >> impl_file_name;
+	printf("\t * @param %s\t %sObject\n", tmp, tmp_file_name) >> impl_file_name;
 	printf("\t *\n") >> impl_file_name;
 	printf("\t * @throws AppException if the operation fails\n") >> impl_file_name;
 	printf("\t *\n") >> impl_file_name;
-	printf("\t */\n    \n") >> impl_file_name;
+	printf("\t */\n\t\n") >> impl_file_name;
 	# End delete Method Comments
 
 	# delete Method
@@ -1457,16 +1460,16 @@ ${NAWK} -v QUOTE="'" -v logname=${LOGNAME} -v version=1.0 -v since=1.0 -v proj_n
 	table_length=length(tmp_file_name);
 	last_char=substr(tmp_file_name, table_length, 1);
 	if (last_char == "s") {
-	    newmethod=substr(tmp_file_name,1,table_length - 1);
-	    printf("\t%sObject new%sObject = get%s(%s.get%s()); // This call will make sure cache/db are in sync\n", tmp_file_name, tmp_file_name, newmethod, tmp, new_field_names[1])>> impl_file_name;
+		newmethod=substr(tmp_file_name,1,table_length - 1);
+		printf("\t%sObject new%sObject = get%s(%s.get%s()); // This call will make sure cache/db are in sync\n", tmp_file_name, tmp_file_name, newmethod, tmp, new_field_names[1])>> impl_file_name;
 	} else {
-	    printf("\t%sObject new%sObject = get%s(%s.get%s()); // This call will make sure cache/db are in sync\n", tmp_file_name, tmp_file_name, tmp_file_name, tmp, new_field_names[1])>> impl_file_name;
+		printf("\t%sObject new%sObject = get%s(%s.get%s()); // This call will make sure cache/db are in sync\n", tmp_file_name, tmp_file_name, tmp_file_name, tmp, new_field_names[1])>> impl_file_name;
 	}
 
 	if (last_char == "s") {
-	    printf("\t%sObject[] %sArr = getAll%s();\n", tmp_file_name, tmp, tmp_file_name)>> impl_file_name;
+		printf("\t%sObject[] %sArr = getAll%s();\n", tmp_file_name, tmp, tmp_file_name)>> impl_file_name;
 	} else {
-	    printf("\t%sObject[] %sArr = getAll%ss();\n", tmp_file_name, tmp, tmp_file_name)>> impl_file_name;
+		printf("\t%sObject[] %sArr = getAll%ss();\n", tmp_file_name, tmp, tmp_file_name)>> impl_file_name;
 	}
 	printf("\tInteger i = new Integer(0);\n")>> impl_file_name;
 	printf("\tif ( %s != null ) {\n", tmp)>> impl_file_name;
@@ -1517,40 +1520,40 @@ ${NAWK} -v QUOTE="'" -v logname=${LOGNAME} -v version=1.0 -v since=1.0 -v proj_n
 
 	printf("public interface %sInterface {\n", tmp_file_name)>>if_file_name;
 	# Start get Method Comments
-	printf("\t\n    /**\n") >> if_file_name;
+	printf("\t\n\t/**\n") >> if_file_name;
 	printf("\t *\n") >> if_file_name;
 	printf("\t * Interface that returns the %sObject given a %sObject filled with values that will be used for query from the underlying datasource.\n", tmp_file_name, tmp_file_name) >> if_file_name;
 	printf("\t *\n") >> if_file_name;
 	printf("\t * @param %s_obj\t%sObject\n", tolower(tmp_file_name), tmp_file_name) >> if_file_name;
 	printf("\t *\n") >> if_file_name;
-	printf("\t * @return      Returns the ArrayList of %sObjects\n", tmp_file_name) >> if_file_name;
+	printf("\t * @return\t  Returns the ArrayList of %sObjects\n", tmp_file_name) >> if_file_name;
 	printf("\t *\n") >> if_file_name;
 	printf("\t * @throws AppException if the underlying operation fails\n") >> if_file_name;
 	printf("\t *\n") >> if_file_name;
-	printf("\t */\n    \n") >> if_file_name;
+	printf("\t */\n\t\n") >> if_file_name;
 	# End get Method Comments
 	table_length=length(tmp_file_name);
 	last_char=substr(tmp_file_name, table_length, 1);
 	if (last_char == "s") {
-	    printf("\tpublic ArrayList<%sObject> get%s(%sObject %s_obj) throws AppException;\n", tmp_file_name, tmp_file_name, tmp_file_name, tolower(tmp_file_name)) >> if_file_name;
+		printf("\tpublic ArrayList<%sObject> get%s(%sObject %s_obj) throws AppException;\n", tmp_file_name, tmp_file_name, tmp_file_name, tolower(tmp_file_name)) >> if_file_name;
 	} else {
-	    printf("\tpublic ArrayList<%sObject> get%ss(%sObject %s_obj) throws AppException;\n", tmp_file_name, tmp_file_name, tmp_file_name, tolower(tmp_file_name)) >> if_file_name;
+		printf("\tpublic ArrayList<%sObject> get%ss(%sObject %s_obj) throws AppException;\n", tmp_file_name, tmp_file_name, tmp_file_name, tolower(tmp_file_name)) >> if_file_name;
 	}
 
 	for ( j = 1; j <= i; ++j ) {
 	  if (keys[j] == "key" ) {  
 		# Start get Method Comments
-		printf("\t\n    /**\n") >> if_file_name;
+		printf("\t\n\t/**\n") >> if_file_name;
 		printf("\t *\n") >> if_file_name;
 		printf("\t * Interface that returns the %sObject given %s from the underlying datasource.\n", tmp_file_name, field_names[j]) >> if_file_name;
 		printf("\t *\n") >> if_file_name;
-		printf("\t * @param %s     %s\n", field_names[j], field_types[j]) >> if_file_name;
+		printf("\t * @param %s\t %s\n", field_names[j], field_types[j]) >> if_file_name;
 		printf("\t *\n") >> if_file_name;
-		printf("\t * @return      Returns the %sObject\n", tmp_file_name) >> if_file_name;
+		printf("\t * @return\t  Returns the %sObject\n", tmp_file_name) >> if_file_name;
 		printf("\t *\n") >> if_file_name;
 		printf("\t * @throws AppException if the underlying operation fails\n") >> if_file_name;
 		printf("\t *\n") >> if_file_name;
-		printf("\t */\n    \n") >> if_file_name;
+		printf("\t */\n\t\n") >> if_file_name;
 		# End get Method Comments
 		table_length=length(tmp_file_name);
 		last_char=substr(tmp_file_name, table_length, 1);
@@ -1564,15 +1567,15 @@ ${NAWK} -v QUOTE="'" -v logname=${LOGNAME} -v version=1.0 -v since=1.0 -v proj_n
 	}
 
 	# Start getAll Method Comments
-	printf("\t\n    /**\n") >> if_file_name;
+	printf("\t\n\t/**\n") >> if_file_name;
 	printf("\t *\n") >> if_file_name;
 	printf("\t * Interface that returns all the <code>%sObject</code> from the underlying datasource.\n", tmp_file_name) >> if_file_name;
 	printf("\t *\n") >> if_file_name;
-	printf("\t * @return      Returns an Array of <code>%sObject</code>\n", tmp_file_name) >> if_file_name;
+	printf("\t * @return\t  Returns an Array of <code>%sObject</code>\n", tmp_file_name) >> if_file_name;
 	printf("\t *\n") >> if_file_name;
 	printf("\t * @throws AppException if the underlying operation fails\n") >> if_file_name;
 	printf("\t *\n") >> if_file_name;
-	printf("\t */\n    \n") >> if_file_name;
+	printf("\t */\n\t\n") >> if_file_name;
 	# End getAll Method Comments
 
 	table_length=length(tmp_file_name);
@@ -1585,43 +1588,43 @@ ${NAWK} -v QUOTE="'" -v logname=${LOGNAME} -v version=1.0 -v since=1.0 -v proj_n
 
 
 	# Start add Method Comments
-	printf("\t\n    /**\n") >> if_file_name;
+	printf("\t\n\t/**\n") >> if_file_name;
 	printf("\t *\n") >> if_file_name;
 	printf("\t * Interface to add the <code>%sObject</code> to the underlying datasource.\n", tmp_file_name) >> if_file_name;
 	printf("\t *\n") >> if_file_name;
-	printf("\t * @param %s     %sObject\n", tmp, tmp_file_name) >> if_file_name;
+	printf("\t * @param %s\t %sObject\n", tmp, tmp_file_name) >> if_file_name;
 	printf("\t *\n") >> if_file_name;
 	printf("\t * @throws AppException if the underlying operation fails\n") >> if_file_name;
 	printf("\t *\n") >> if_file_name;
-	printf("\t */\n    \n") >> if_file_name;
+	printf("\t */\n\t\n") >> if_file_name;
 	# End add Method Comments
 
 	printf("\tpublic Integer add%s(%sObject %s) throws AppException;\n",tmp_file_name, tmp_file_name, tmp) >> if_file_name;
 	
 	# Start update Method Comments
-	printf("\t\n    /**\n") >> if_file_name;
+	printf("\t\n\t/**\n") >> if_file_name;
 	printf("\t *\n") >> if_file_name;
 	printf("\t * Interface to update the <code>%sObject</code> in the underlying datasource.\n", tmp_file_name) >> if_file_name;
 	printf("\t *\n") >> if_file_name;
-	printf("\t * @param %s     %sObject\n", tmp, tmp_file_name) >> if_file_name;
+	printf("\t * @param %s\t %sObject\n", tmp, tmp_file_name) >> if_file_name;
 	printf("\t *\n") >> if_file_name;
 	printf("\t * @throws AppException if the underlying operation fails\n") >> if_file_name;
 	printf("\t *\n") >> if_file_name;
-	printf("\t */\n    \n") >> if_file_name;
+	printf("\t */\n\t\n") >> if_file_name;
 	# End update Method Comments
 
 	printf("\tpublic Integer update%s(%sObject %s) throws AppException;\n",tmp_file_name, tmp_file_name, tmp) >> if_file_name;
 
 	# Start delete Method Comments
-	printf("\t\n    /**\n") >> if_file_name;
+	printf("\t\n\t/**\n") >> if_file_name;
 	printf("\t *\n") >> if_file_name;
 	printf("\t * Interface to delete the <code>%sObject</code> in the underlying datasource.\n", tmp_file_name) >> if_file_name;
 	printf("\t *\n") >> if_file_name;
-	printf("\t * @param %s     %sObject\n", tmp, tmp_file_name) >> if_file_name;
+	printf("\t * @param %s\t %sObject\n", tmp, tmp_file_name) >> if_file_name;
 	printf("\t *\n") >> if_file_name;
 	printf("\t * @throws AppException if the underlying operation fails\n") >> if_file_name;
 	printf("\t *\n") >> if_file_name;
-	printf("\t */\n    \n") >> if_file_name;
+	printf("\t */\n\t\n") >> if_file_name;
 	# End delete Method Comments
 	printf("\tpublic Integer delete%s(%sObject %s) throws AppException;\n",tmp_file_name, tmp_file_name, tmp) >> if_file_name;
 	printf("}\n")>>if_file_name; 
@@ -1635,7 +1638,7 @@ ${NAWK} -v QUOTE="'" -v logname=${LOGNAME} -v version=1.0 -v since=1.0 -v proj_n
 	  write_if_file();
 	  write_impl_file();
 	  write_rest_file();
-    	}
+	}
 	write_sql_file();
 	i = 0;
 	table_name=$1; 

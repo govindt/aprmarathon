@@ -113,11 +113,11 @@ public class RegistrationTypeBean implements SpreadSheetInterface {
 	nameArrayList.add(AppConstants.NEW_REGISTRATIONTYPE);
 	valueArrayList.add(new Integer(0));
 	for (int iterator = 0; iterator < registrationTypeArr.length; iterator++) {
-	    RegistrationTypeObject registrationTypeObject = registrationTypeArr[iterator];
-	    if ( registrationTypeObject == null )
-		break;
-	    nameArrayList.add(registrationTypeObject.getRegistrationTypeName());
-	    valueArrayList.add(new Integer(registrationTypeObject.getRegistrationTypeId()));
+		RegistrationTypeObject registrationTypeObject = registrationTypeArr[iterator];
+		if ( registrationTypeObject == null )
+			break;
+		nameArrayList.add(registrationTypeObject.getRegistrationTypeName());
+		valueArrayList.add(new Integer(registrationTypeObject.getRegistrationTypeId()));
 	}
 	se = new SelectElement(AppConstants.REGISTRATION_TYPE_ID_STR, nameArrayList, valueArrayList, String.valueOf(registrationTypeId), 0);
 	se.setOnChange(UtilBean.JS_SUBMIT_FORM);
