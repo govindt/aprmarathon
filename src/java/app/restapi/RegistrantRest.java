@@ -1,5 +1,5 @@
 /*
- * RegistrantRest.java
+ * RegistrantRest.java - MANUAL EDIT
  *
  * APR Marathon Registration App Project
  *
@@ -70,7 +70,7 @@ public class RegistrantRest {
 	};
 	
 	/* Get all Registrants who are not Online */
-	
+	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("getOfflineRegistrants")
