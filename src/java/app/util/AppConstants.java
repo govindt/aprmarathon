@@ -444,5 +444,6 @@ public class AppConstants {
 	public static String RECEIPT_NO_PREFIX;
 	public static String RECEIPT_TEMPLATE;
 	public static int SITE_ID = 1;
+	public static int ONLINE_REGISTRANT_ID = 1;
 };
 

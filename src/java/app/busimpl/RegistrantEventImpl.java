@@ -1,5 +1,5 @@
 /*
- * RegistrantEventImpl.java
+ * RegistrantEventImpl.java - MANUAL EDIT
  *
  * APR Marathon Registration App Project
  *
@@ -16,6 +16,7 @@ import core.db.DBUtil;
 import core.util.AppException;
 import core.util.Util;
 import app.busobj.RegistrantEventObject;
+import app.busobj.RegistrationTypeObject;
 import app.businterface.RegistrantEventInterface;
 import app.util.AppConstants;
 
@@ -28,6 +29,36 @@ import app.util.AppConstants;
 
 public class RegistrantEventImpl implements RegistrantEventInterface  {
 	private String REGISTRANTEVENT = "RegistrantEventInterface.getAllRegistrantEvent";
+	
+	/**
+	 *
+	 * Implementation that returns the RegistrantEventObject given a RegistrantEventObject filled with values that will be used for query from the underlying datasource.
+	 *
+	 * @param registranttype_obj	ArrayList<RegistrantTypeObject>
+	 *
+	 * @return	  Returns the ArrayList of RegistrantEventObjects for the registranttypes
+	 *
+	 * @throws AppException if the underlying operation fails
+	 *
+	 */
+	
+	public ArrayList<RegistrantEventObject> getRegistrantEvents(RegistrationTypeObject[] registranttype_obj) throws AppException{
+		RegistrantEventObject[] registrantEventObjectArr = getAllRegistrantEvents();
+		if ( registrantEventObjectArr == null )
+			return null;
+		else {
+			ArrayList<RegistrantEventObject> v = new ArrayList<RegistrantEventObject>();
+			for ( int i = 0; i < registranttype_obj.length; i++) {
+				for ( int j = 0; j < registrantEventObjectArr.length; j++ ) {
+					if ( registranttype_obj[i] != null )
+						if ( registrantEventObjectArr[j].getRegistrantType() == registranttype_obj[i].getRegistrationTypeId() )
+							v.add((RegistrantEventObject)registrantEventObjectArr[j].clone());
+				}
+			}
+			DebugHandler.finest("v: " + v);
+			return v;
+		}
+	}
 	
 	/**
 	 *

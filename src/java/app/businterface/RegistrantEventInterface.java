@@ -1,5 +1,5 @@
 /*
- * RegistrantEventInterface.java
+ * RegistrantEventInterface.java - MANUAL EDIT
  *
  * APR Marathon Registration App Project
  *
@@ -12,6 +12,7 @@ import java.lang.*;
 import java.util.*;
 import core.util.AppException;
 import app.busobj.RegistrantEventObject;
+import app.busobj.RegistrationTypeObject;
 
 /**
  * The interface which encapsulates the access of database tables
@@ -22,6 +23,18 @@ import app.busobj.RegistrantEventObject;
  */
 
 public interface RegistrantEventInterface {
+	/**
+	 *
+	 * Interface that returns the RegistrantEventObject given a RegistrantEventObject filled with values that will be used for query from the underlying datasource.
+	 *
+	 * @param registranttype_obj	ArrayList<RegistrantTypeObject>
+	 *
+	 * @return	  Returns the ArrayList of RegistrantEventObjects for the registranttypes
+	 *
+	 * @throws AppException if the underlying operation fails
+	 *
+	 */
+	public ArrayList<RegistrantEventObject> getRegistrantEvents(RegistrationTypeObject[] registranttype_obj) throws AppException;
 	
 	/**
 	 *
