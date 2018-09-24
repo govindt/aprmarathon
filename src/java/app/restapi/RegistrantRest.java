@@ -110,6 +110,7 @@ public class RegistrantRest {
 		}
 		return Response.status(200).entity(joArr.toString()).type(MediaType.APPLICATION_JSON).build();
 	};
+	
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
