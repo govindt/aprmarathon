@@ -62,7 +62,6 @@ public class MassEntry {
 		}
 	}
     public static void main(String argv[]) throws IOException, InvalidFormatException, ParseException, AppException { 
-		
 		App.getInstance();
 		sDateFormat = new SimpleDateFormat(Constants.DATE_FORMAT_STR);
 		if ( argv.length != 3 ) {
