@@ -117,11 +117,11 @@ public class MedalBean implements SpreadSheetInterface {
 	nameArrayList.add(AppConstants.NEW_MEDAL);
 	valueArrayList.add(new Integer(0));
 	for (int iterator = 0; iterator < medalArr.length; iterator++) {
-	    MedalObject medalObject = medalArr[iterator];
-	    if ( medalObject == null )
-		break;
-	    nameArrayList.add(medalObject.getMedalName());
-	    valueArrayList.add(new Integer(medalObject.getMedalId()));
+		MedalObject medalObject = medalArr[iterator];
+		if ( medalObject == null )
+			break;
+		nameArrayList.add(medalObject.getMedalName());
+		valueArrayList.add(new Integer(medalObject.getMedalId()));
 	}
 	se = new SelectElement(AppConstants.MEDAL_ID_STR, nameArrayList, valueArrayList, String.valueOf(medalId), 0);
 	se.setOnChange(UtilBean.JS_SUBMIT_FORM);

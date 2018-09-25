@@ -177,11 +177,11 @@ public class ResultBean implements SpreadSheetInterface {
 	nameArrayList.add(AppConstants.NEW_RESULT);
 	valueArrayList.add(new Integer(0));
 	for (int iterator = 0; iterator < resultArr.length; iterator++) {
-	    ResultObject resultObject = resultArr[iterator];
-	    if ( resultObject == null )
-		break;
-	    nameArrayList.add(String.valueOf(resultObject.getResultEvent()));
-	    valueArrayList.add(new Integer(resultObject.getResultId()));
+		ResultObject resultObject = resultArr[iterator];
+		if ( resultObject == null )
+			break;
+		nameArrayList.add(String.valueOf(resultObject.getResultEvent()));
+		valueArrayList.add(new Integer(resultObject.getResultId()));
 	}
 	se = new SelectElement(AppConstants.RESULT_ID_STR, nameArrayList, valueArrayList, String.valueOf(resultId), 0);
 	se.setOnChange(UtilBean.JS_SUBMIT_FORM);

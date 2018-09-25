@@ -113,11 +113,11 @@ public class PaymentStatusBean implements SpreadSheetInterface {
 	nameArrayList.add(AppConstants.NEW_PAYMENTSTATUS);
 	valueArrayList.add(new Integer(0));
 	for (int iterator = 0; iterator < paymentStatusArr.length; iterator++) {
-	    PaymentStatusObject paymentStatusObject = paymentStatusArr[iterator];
-	    if ( paymentStatusObject == null )
-		break;
-	    nameArrayList.add(paymentStatusObject.getPaymentStatusName());
-	    valueArrayList.add(new Integer(paymentStatusObject.getPaymentStatusId()));
+		PaymentStatusObject paymentStatusObject = paymentStatusArr[iterator];
+		if ( paymentStatusObject == null )
+			break;
+		nameArrayList.add(paymentStatusObject.getPaymentStatusName());
+		valueArrayList.add(new Integer(paymentStatusObject.getPaymentStatusId()));
 	}
 	se = new SelectElement(AppConstants.PAYMENT_STATUS_ID_STR, nameArrayList, valueArrayList, String.valueOf(paymentStatusId), 0);
 	se.setOnChange(UtilBean.JS_SUBMIT_FORM);

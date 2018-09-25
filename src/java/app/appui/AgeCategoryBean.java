@@ -113,11 +113,11 @@ public class AgeCategoryBean implements SpreadSheetInterface {
 	nameArrayList.add(AppConstants.NEW_AGECATEGORY);
 	valueArrayList.add(new Integer(0));
 	for (int iterator = 0; iterator < ageCategoryArr.length; iterator++) {
-	    AgeCategoryObject ageCategoryObject = ageCategoryArr[iterator];
-	    if ( ageCategoryObject == null )
-		break;
-	    nameArrayList.add(ageCategoryObject.getAgeCategory());
-	    valueArrayList.add(new Integer(ageCategoryObject.getAgeCategoryId()));
+		AgeCategoryObject ageCategoryObject = ageCategoryArr[iterator];
+		if ( ageCategoryObject == null )
+			break;
+		nameArrayList.add(ageCategoryObject.getAgeCategory());
+		valueArrayList.add(new Integer(ageCategoryObject.getAgeCategoryId()));
 	}
 	se = new SelectElement(AppConstants.AGE_CATEGORY_ID_STR, nameArrayList, valueArrayList, String.valueOf(ageCategoryId), 0);
 	se.setOnChange(UtilBean.JS_SUBMIT_FORM);

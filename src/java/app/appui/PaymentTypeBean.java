@@ -113,11 +113,11 @@ public class PaymentTypeBean implements SpreadSheetInterface {
 	nameArrayList.add(AppConstants.NEW_PAYMENTTYPE);
 	valueArrayList.add(new Integer(0));
 	for (int iterator = 0; iterator < paymentTypeArr.length; iterator++) {
-	    PaymentTypeObject paymentTypeObject = paymentTypeArr[iterator];
-	    if ( paymentTypeObject == null )
-		break;
-	    nameArrayList.add(paymentTypeObject.getPaymentTypeName());
-	    valueArrayList.add(new Integer(paymentTypeObject.getPaymentTypeId()));
+		PaymentTypeObject paymentTypeObject = paymentTypeArr[iterator];
+		if ( paymentTypeObject == null )
+			break;
+		nameArrayList.add(paymentTypeObject.getPaymentTypeName());
+		valueArrayList.add(new Integer(paymentTypeObject.getPaymentTypeId()));
 	}
 	se = new SelectElement(AppConstants.PAYMENT_TYPE_ID_STR, nameArrayList, valueArrayList, String.valueOf(paymentTypeId), 0);
 	se.setOnChange(UtilBean.JS_SUBMIT_FORM);

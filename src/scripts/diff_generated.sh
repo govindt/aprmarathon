@@ -11,9 +11,11 @@ impl_files=`echo *Impl.java`
 if_files=`echo *Interface.java`
 bo_files=`echo *Object.java`
 appdb_files=`echo Persistent*.java`
-appui_files=`echo *Bean.java`
-jsp_files=`echo *.jsp`
 pers_file="persistence.properties"
+apputil_files="App.java AppConstants.java app.properties"
+app_bean_files=`echo *Bean.java`
+jsp_files=`echo *.jsp`
+rest_files=$(echo *Rest.java)
 
 dest="${DESTDIR}/busimpl"
 for f in ${impl_files}; do
@@ -88,7 +90,21 @@ else
 fi
 
 dest="${DESTDIR}/appui"
-for f in ${appui_files}; do
+for f in ${app_bean_files}; do
+	if [ -f "$f" -a -f "${dest}/$f" ]; then
+		echo "Differences between $f and old copy."
+		echo "****************** Start of Difference ************"
+		diff $f ${dest}/$f
+		echo "****************** End of Difference ************"
+	else
+		echo "File $f is new - no previous copy found in ${dest}."
+	fi
+	echo -n "Hit Enter to continue :"
+	read dummy
+done 
+
+dest="${DESTDIR}/restapi"
+for f in ${rest_files}; do
 	if [ -f "$f" -a -f "${dest}/$f" ]; then
 		echo "Differences between $f and old copy."
 		echo "****************** Start of Difference ************"

@@ -123,11 +123,11 @@ public class TShirtSizeBean implements SpreadSheetInterface {
 	nameArrayList.add(AppConstants.NEW_TSHIRTSIZE);
 	valueArrayList.add(new Integer(0));
 	for (int iterator = 0; iterator < tShirtSizeArr.length; iterator++) {
-	    TShirtSizeObject tShirtSizeObject = tShirtSizeArr[iterator];
-	    if ( tShirtSizeObject == null )
-		break;
-	    nameArrayList.add(tShirtSizeObject.getTShirtSizeName());
-	    valueArrayList.add(new Integer(tShirtSizeObject.getTShirtSizeId()));
+		TShirtSizeObject tShirtSizeObject = tShirtSizeArr[iterator];
+		if ( tShirtSizeObject == null )
+			break;
+		nameArrayList.add(tShirtSizeObject.getTShirtSizeName());
+		valueArrayList.add(new Integer(tShirtSizeObject.getTShirtSizeId()));
 	}
 	se = new SelectElement(AppConstants.T_SHIRT_SIZE_ID_STR, nameArrayList, valueArrayList, String.valueOf(tShirtSizeId), 0);
 	se.setOnChange(UtilBean.JS_SUBMIT_FORM);

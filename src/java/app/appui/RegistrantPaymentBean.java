@@ -205,11 +205,11 @@ public class RegistrantPaymentBean implements SpreadSheetInterface {
 	nameArrayList.add(AppConstants.NEW_REGISTRANTPAYMENT);
 	valueArrayList.add(new Integer(0));
 	for (int iterator = 0; iterator < registrantPaymentArr.length; iterator++) {
-	    RegistrantPaymentObject registrantPaymentObject = registrantPaymentArr[iterator];
-	    if ( registrantPaymentObject == null )
-		break;
-	    nameArrayList.add(String.valueOf(registrantPaymentObject.getRegistrantEvent()));
-	    valueArrayList.add(new Integer(registrantPaymentObject.getRegistrantPaymentId()));
+		RegistrantPaymentObject registrantPaymentObject = registrantPaymentArr[iterator];
+		if ( registrantPaymentObject == null )
+			break;
+		nameArrayList.add(String.valueOf(registrantPaymentObject.getRegistrantEvent()));
+		valueArrayList.add(new Integer(registrantPaymentObject.getRegistrantPaymentId()));
 	}
 	se = new SelectElement(AppConstants.REGISTRANT_PAYMENT_ID_STR, nameArrayList, valueArrayList, String.valueOf(registrantPaymentId), 0);
 	se.setOnChange(UtilBean.JS_SUBMIT_FORM);

@@ -173,11 +173,11 @@ public class EventBean implements SpreadSheetInterface {
 	nameArrayList.add(AppConstants.NEW_EVENT);
 	valueArrayList.add(new Integer(0));
 	for (int iterator = 0; iterator < eventArr.length; iterator++) {
-	    EventObject eventObject = eventArr[iterator];
-	    if ( eventObject == null )
-		break;
-	    nameArrayList.add(eventObject.getEventName());
-	    valueArrayList.add(new Integer(eventObject.getEventId()));
+		EventObject eventObject = eventArr[iterator];
+		if ( eventObject == null )
+			break;
+		nameArrayList.add(eventObject.getEventName());
+		valueArrayList.add(new Integer(eventObject.getEventId()));
 	}
 	se = new SelectElement(AppConstants.EVENT_ID_STR, nameArrayList, valueArrayList, String.valueOf(eventId), 0);
 	se.setOnChange(UtilBean.JS_SUBMIT_FORM);
