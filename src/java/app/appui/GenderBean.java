@@ -113,11 +113,11 @@ public class GenderBean implements SpreadSheetInterface {
 	nameArrayList.add(AppConstants.NEW_GENDER);
 	valueArrayList.add(new Integer(0));
 	for (int iterator = 0; iterator < genderArr.length; iterator++) {
-	    GenderObject genderObject = genderArr[iterator];
-	    if ( genderObject == null )
-		break;
-	    nameArrayList.add(genderObject.getGenderName());
-	    valueArrayList.add(new Integer(genderObject.getGenderId()));
+		GenderObject genderObject = genderArr[iterator];
+		if ( genderObject == null )
+			break;
+		nameArrayList.add(genderObject.getGenderName());
+		valueArrayList.add(new Integer(genderObject.getGenderId()));
 	}
 	se = new SelectElement(AppConstants.GENDER_ID_STR, nameArrayList, valueArrayList, String.valueOf(genderId), 0);
 	se.setOnChange(UtilBean.JS_SUBMIT_FORM);

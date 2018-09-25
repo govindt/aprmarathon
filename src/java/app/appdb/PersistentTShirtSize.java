@@ -67,7 +67,7 @@ public class PersistentTShirtSize extends PersistentObject {
 		@SuppressWarnings("unchecked")
 		ArrayList<TShirtSizeObject> result = (ArrayList<TShirtSizeObject>) super.list();
 		
-	return result;
+		return result;
 	}
 	
 	

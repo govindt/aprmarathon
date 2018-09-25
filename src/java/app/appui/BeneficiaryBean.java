@@ -123,11 +123,11 @@ public class BeneficiaryBean implements SpreadSheetInterface {
 	nameArrayList.add(AppConstants.NEW_BENEFICIARY);
 	valueArrayList.add(new Integer(0));
 	for (int iterator = 0; iterator < beneficiaryArr.length; iterator++) {
-	    BeneficiaryObject beneficiaryObject = beneficiaryArr[iterator];
-	    if ( beneficiaryObject == null )
-		break;
-	    nameArrayList.add(beneficiaryObject.getBeneficiaryName());
-	    valueArrayList.add(new Integer(beneficiaryObject.getBeneficiaryId()));
+		BeneficiaryObject beneficiaryObject = beneficiaryArr[iterator];
+		if ( beneficiaryObject == null )
+			break;
+		nameArrayList.add(beneficiaryObject.getBeneficiaryName());
+		valueArrayList.add(new Integer(beneficiaryObject.getBeneficiaryId()));
 	}
 	se = new SelectElement(AppConstants.BENEFICIARY_ID_STR, nameArrayList, valueArrayList, String.valueOf(beneficiaryId), 0);
 	se.setOnChange(UtilBean.JS_SUBMIT_FORM);

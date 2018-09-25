@@ -10,6 +10,7 @@ package app.restapi;
 
 import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.Collections;
 import java.io.InputStream;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
@@ -23,6 +24,7 @@ import core.util.AppException;
 import app.busimpl.RegistrantImpl;
 import app.businterface.RegistrantInterface;
 import app.busobj.RegistrantObject;
+import app.busobj.RegistrantObjectSort;
 import app.busimpl.RegistrantEventImpl;
 import app.businterface.RegistrantEventInterface;
 import app.busobj.RegistrantEventObject;
@@ -100,6 +102,7 @@ public class RegistrantRest {
 			for ( int i = 0; i < rEObjArr.size(); i++) {
 				rObjArr.add(rIf.getRegistrant(rEObjArr.get(i).getRegistrantId()));
 			}
+			Collections.sort(rObjArr, new RegistrantObjectSort());
 		}
 		int i = 0;
 		while (i < rObjArr.size()) {

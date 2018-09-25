@@ -67,7 +67,7 @@ public class PersistentPaymentType extends PersistentObject {
 		@SuppressWarnings("unchecked")
 		ArrayList<PaymentTypeObject> result = (ArrayList<PaymentTypeObject>) super.list();
 		
-	return result;
+		return result;
 	}
 	
 	

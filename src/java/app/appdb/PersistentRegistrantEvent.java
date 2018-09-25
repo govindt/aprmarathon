@@ -67,7 +67,7 @@ public class PersistentRegistrantEvent extends PersistentObject {
 		@SuppressWarnings("unchecked")
 		ArrayList<RegistrantEventObject> result = (ArrayList<RegistrantEventObject>) super.list();
 		
-	return result;
+		return result;
 	}
 	
 	

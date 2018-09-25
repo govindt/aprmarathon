@@ -67,7 +67,7 @@ public class PersistentParticipant extends PersistentObject {
 		@SuppressWarnings("unchecked")
 		ArrayList<ParticipantObject> result = (ArrayList<ParticipantObject>) super.list();
 		
-	return result;
+		return result;
 	}
 	
 	

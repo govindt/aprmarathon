@@ -113,11 +113,11 @@ public class BloodGroupBean implements SpreadSheetInterface {
 	nameArrayList.add(AppConstants.NEW_BLOODGROUP);
 	valueArrayList.add(new Integer(0));
 	for (int iterator = 0; iterator < bloodGroupArr.length; iterator++) {
-	    BloodGroupObject bloodGroupObject = bloodGroupArr[iterator];
-	    if ( bloodGroupObject == null )
-		break;
-	    nameArrayList.add(bloodGroupObject.getBloodGroupName());
-	    valueArrayList.add(new Integer(bloodGroupObject.getBloodGroupId()));
+		BloodGroupObject bloodGroupObject = bloodGroupArr[iterator];
+		if ( bloodGroupObject == null )
+			break;
+		nameArrayList.add(bloodGroupObject.getBloodGroupName());
+		valueArrayList.add(new Integer(bloodGroupObject.getBloodGroupId()));
 	}
 	se = new SelectElement(AppConstants.BLOOD_GROUP_ID_STR, nameArrayList, valueArrayList, String.valueOf(bloodGroupId), 0);
 	se.setOnChange(UtilBean.JS_SUBMIT_FORM);

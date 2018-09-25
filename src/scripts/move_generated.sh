@@ -22,60 +22,147 @@ login_required_files="`grep login_required ${DESTDIR}/util/app.properties | awk 
 mkdir -p ${DESTDIR}/busimpl ${DESTDIR}/businterface ${DESTDIR}/appdb ${DESTDIR}/busobj
 for f in ${impl_files}; do
 	if [ -f "$f" ]; then
-		mv $f ${DESTDIR}/busimpl
+		if [ -f ${DESTDIR}/busimpl/$f ]; then
+			manual_edit_found=$(grep "MANUAL EDIT" ${DESTDIR}/busimpl/$f)
+			if [ -n "${manual_edit_found}" ]; then
+				echo "Not Moving $f. Manual Edits done"
+			else
+				mv $f ${DESTDIR}/busimpl
+			fi
+		else #First Time
+			mv $f ${DESTDIR}/busimpl
+		fi
 	fi
 done 
+
 if [ -f Makefile.busimpl ]; then
     mv Makefile.busimpl ${DESTDIR}/busimpl/Makefile
 fi
+
 for f in ${if_files}; do
 	if [ -f "$f" ]; then
-		mv $f ${DESTDIR}/businterface
+		if [ -f ${DESTDIR}/businterface/$f ]; then
+			manual_edit_found=$(grep "MANUAL EDIT" ${DESTDIR}/businterface/$f)
+			if [ -n "${manual_edit_found}" ]; then
+				echo "Not Moving $f. Manual Edits done"
+			else
+				mv $f ${DESTDIR}/businterface
+			fi
+		else 
+			mv $f ${DESTDIR}/businterface
+		fi
 	fi
-done 
+done
+
 if [ -f Makefile.businterface ]; then
     mv Makefile.businterface ${DESTDIR}/businterface/Makefile
 fi
 for f in ${bo_files}; do
 	if [ -f "$f" ]; then
-		mv $f ${DESTDIR}/busobj
+		if [ -f ${DESTDIR}/busobj/$f ]; then
+			manual_edit_found=$(grep "MANUAL EDIT" ${DESTDIR}/busobj/$f)
+			if [ -n "${manual_edit_found}" ]; then
+				echo "Not Moving $f. Manual Edits done"
+			else
+				mv $f ${DESTDIR}/busobj
+			fi
+		else 
+			mv $f ${DESTDIR}/busobj
+		fi
 	fi
-done 
+done
+
 if [ -f Makefile.busobj ]; then
     mv Makefile.busobj ${DESTDIR}/busobj/Makefile
 fi
 for f in ${appdb_files}; do
 	if [ -f "$f" ]; then
-		mv $f ${DESTDIR}/appdb
+		if [ -f ${DESTDIR}/appdb/$f ]; then
+			manual_edit_found=$(grep "MANUAL EDIT" ${DESTDIR}/appdb/$f)
+			if [ -n "${manual_edit_found}" ]; then
+				echo "Not Moving $f. Manual Edits done"
+			else
+				mv $f ${DESTDIR}/appdb
+			fi
+		else 
+			mv $f ${DESTDIR}/appdb
+		fi
 	fi
-done 
+done
+
 if [ -f Makefile.appdb ]; then
     mv Makefile.appdb ${DESTDIR}/appdb/Makefile
 fi
+
 for f in ${apputil_files}; do
 	if [ -f "$f" ]; then
-		mv $f ${DESTDIR}/util
+		if [ -f ${DESTDIR}/util/$f ]; then
+			manual_edit_found=$(grep "MANUAL EDIT" ${DESTDIR}/util/$f)
+			if [ -n "${manual_edit_found}" ]; then
+				echo "Not Moving $f. Manual Edits done"
+			else
+				mv $f ${DESTDIR}/util
+			fi
+		else 
+			mv $f ${DESTDIR}/util
+		fi
 	fi
 done 
+
+if [ -f Makefile.util ]; then
+    mv Makefile.util ${DESTDIR}/util/Makefile
+fi
 
 for f in ${app_bean_files}; do
 	if [ -f "$f" ]; then
-		mv $f ${DESTDIR}/appui
+		if [ -f ${DESTDIR}/appui/$f ]; then
+			manual_edit_found=$(grep "MANUAL EDIT" ${DESTDIR}/appui/$f)
+			if [ -n "${manual_edit_found}" ]; then
+				echo "Not Moving $f. Manual Edits done"
+			else
+				mv $f ${DESTDIR}/appui
+			fi
+		else 
+			mv $f ${DESTDIR}/appui
+		fi
 	fi
-done 
+done
 
-for f in ${rest_files}; do
-	if [ -f "$f" ]; then
-		mv $f ${DESTDIR}/restapi
-	fi
-done 
 if [ -f Makefile.appui ]; then
     mv Makefile.appui ${DESTDIR}/appui/Makefile
 fi
 
+for f in ${rest_files}; do
+	if [ -f "$f" ]; then
+		if [ -f ${DESTDIR}/restapi/$f ]; then
+			manual_edit_found=$(grep "MANUAL EDIT" ${DESTDIR}/restapi/$f)
+			if [ -n "${manual_edit_found}" ]; then
+				echo "Not Moving $f. Manual Edits done"
+			else
+				mv $f ${DESTDIR}/restapi
+			fi
+		else 
+			mv $f ${DESTDIR}/restapi
+		fi
+	fi
+done 
+
+if [ -f Makefile.rest ]; then
+    mv Makefile.rest ${DESTDIR}/appui/Makefile
+fi
+
 for f in ${jsp_files}; do
 	if [ -f "$f" ]; then
-		mv $f ${DESTDIR}/../../public_html
+		if [ -f ${DESTDIR}/restapi/$f ]; then
+			manual_edit_found=$(grep "MANUAL EDIT" ${DESTDIR}/../../public_html/$f)
+			if [ -n "${manual_edit_found}" ]; then
+				echo "Not Moving $f. Manual Edits done"
+			else
+				mv $f ${DESTDIR}/../../public_html
+			fi
+		else 
+			mv $f ${DESTDIR}/../../public_html
+		fi
 		if [ -z "`echo ${login_required_files} | grep ${f}`" ]; then
 		    login_required_files="${login_required_files} ${f}"
 		fi

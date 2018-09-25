@@ -67,7 +67,7 @@ public class PersistentMedal extends PersistentObject {
 		@SuppressWarnings("unchecked")
 		ArrayList<MedalObject> result = (ArrayList<MedalObject>) super.list();
 		
-	return result;
+		return result;
 	}
 	
 	

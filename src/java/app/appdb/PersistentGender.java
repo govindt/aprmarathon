@@ -67,7 +67,7 @@ public class PersistentGender extends PersistentObject {
 		@SuppressWarnings("unchecked")
 		ArrayList<GenderObject> result = (ArrayList<GenderObject>) super.list();
 		
-	return result;
+		return result;
 	}
 	
 	
