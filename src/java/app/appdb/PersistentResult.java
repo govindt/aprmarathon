@@ -67,7 +67,7 @@ public class PersistentResult extends PersistentObject {
 		@SuppressWarnings("unchecked")
 		ArrayList<ResultObject> result = (ArrayList<ResultObject>) super.list();
 		
-	return result;
+		return result;
 	}
 	
 	

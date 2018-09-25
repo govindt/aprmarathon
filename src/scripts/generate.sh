@@ -242,7 +242,7 @@ ${NAWK} -v QUOTE="'" -v logname=${LOGNAME} -v version=1.0 -v since=1.0 -v proj_n
 
 	printf("\t\t@SuppressWarnings(\"unchecked\")\n")>>persistent_filename;
 	printf("\t\tArrayList<%sObject> result = (ArrayList<%sObject>) super.list();\n\t\t\n", tmp_file_name, tmp_file_name)>>persistent_filename;
-	printf("\t\rreturn result;\n")>>persistent_filename;
+	printf("\t\treturn result;\n")>>persistent_filename;
 	printf("\t}\n\t\n")>>persistent_filename;
 	# End - list Method
 

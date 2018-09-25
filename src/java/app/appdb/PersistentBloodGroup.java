@@ -67,7 +67,7 @@ public class PersistentBloodGroup extends PersistentObject {
 		@SuppressWarnings("unchecked")
 		ArrayList<BloodGroupObject> result = (ArrayList<BloodGroupObject>) super.list();
 		
-	return result;
+		return result;
 	}
 	
 	

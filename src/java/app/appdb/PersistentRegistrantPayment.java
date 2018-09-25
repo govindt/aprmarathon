@@ -67,7 +67,7 @@ public class PersistentRegistrantPayment extends PersistentObject {
 		@SuppressWarnings("unchecked")
 		ArrayList<RegistrantPaymentObject> result = (ArrayList<RegistrantPaymentObject>) super.list();
 		
-	return result;
+		return result;
 	}
 	
 	

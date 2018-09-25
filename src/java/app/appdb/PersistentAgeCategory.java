@@ -67,7 +67,7 @@ public class PersistentAgeCategory extends PersistentObject {
 		@SuppressWarnings("unchecked")
 		ArrayList<AgeCategoryObject> result = (ArrayList<AgeCategoryObject>) super.list();
 		
-	return result;
+		return result;
 	}
 	
 	

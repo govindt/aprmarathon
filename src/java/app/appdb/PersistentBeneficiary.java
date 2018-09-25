@@ -67,7 +67,7 @@ public class PersistentBeneficiary extends PersistentObject {
 		@SuppressWarnings("unchecked")
 		ArrayList<BeneficiaryObject> result = (ArrayList<BeneficiaryObject>) super.list();
 		
-	return result;
+		return result;
 	}
 	
 	

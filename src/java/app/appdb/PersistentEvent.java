@@ -67,7 +67,7 @@ public class PersistentEvent extends PersistentObject {
 		@SuppressWarnings("unchecked")
 		ArrayList<EventObject> result = (ArrayList<EventObject>) super.list();
 		
-	return result;
+		return result;
 	}
 	
 	

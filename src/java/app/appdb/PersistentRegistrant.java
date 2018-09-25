@@ -67,7 +67,7 @@ public class PersistentRegistrant extends PersistentObject {
 		@SuppressWarnings("unchecked")
 		ArrayList<RegistrantObject> result = (ArrayList<RegistrantObject>) super.list();
 		
-	return result;
+		return result;
 	}
 	
 	
