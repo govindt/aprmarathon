@@ -9,6 +9,8 @@
 package app.busobj;
 
 import java.util.Date;
+import java.util.List;
+import java.util.ArrayList;
 import core.util.DebugHandler;
 import core.util.Util;
 import core.util.Constants;
@@ -47,6 +49,21 @@ public class AgeCategoryObject implements Cloneable {
 
 	/**
 	 *
+	 * Returns the List representation of the AgeCategoryObject.
+	 *
+	 * Returns the object as an array list of Strings.
+	 *
+	 */
+	
+	public List<Object> asList() {
+		List<Object> list = new ArrayList<Object>();
+		list.add(age_category_id + "");
+		list.add(age_category + "");
+		return list;
+	}
+
+	/**
+	 *
 	 * Returns the JSON representation of the AgeCategoryObject.
 	 *
 	 * @return  	Returns the JSON representation of the AgeCategoryObject.
@@ -56,8 +73,8 @@ public class AgeCategoryObject implements Cloneable {
 	public JSONObject toJSON() {
 		JSONObject jo = new JSONObject();
 		try {
-			 jo.put("age_category_id", age_category_id);
-			 jo.put("age_category", age_category);
+			jo.put("age_category_id", age_category_id);
+			jo.put("age_category", age_category);
 		} catch (JSONException je) {}
 		return jo;
 	}

@@ -9,6 +9,8 @@
 package app.busobj;
 
 import java.util.Date;
+import java.util.List;
+import java.util.ArrayList;
 import core.util.DebugHandler;
 import core.util.Util;
 import core.util.Constants;
@@ -57,6 +59,26 @@ public class ParticipantEventObject implements Cloneable {
 
 	/**
 	 *
+	 * Returns the List representation of the ParticipantEventObject.
+	 *
+	 * Returns the object as an array list of Strings.
+	 *
+	 */
+	
+	public List<Object> asList() {
+		List<Object> list = new ArrayList<Object>();
+		list.add(participant_event_id + "");
+		list.add(participant_id + "");
+		list.add(participant_event + "");
+		list.add(participant_type + "");
+		list.add(participant_event_type + "");
+		list.add(participant_bib_no + "");
+		list.add(participant_group + "");
+		return list;
+	}
+
+	/**
+	 *
 	 * Returns the JSON representation of the ParticipantEventObject.
 	 *
 	 * @return  	Returns the JSON representation of the ParticipantEventObject.
@@ -66,13 +88,13 @@ public class ParticipantEventObject implements Cloneable {
 	public JSONObject toJSON() {
 		JSONObject jo = new JSONObject();
 		try {
-			 jo.put("participant_event_id", participant_event_id);
-			 jo.put("participant_id", participant_id);
-			 jo.put("participant_event", participant_event);
-			 jo.put("participant_type", participant_type);
-			 jo.put("participant_event_type", participant_event_type);
-			 jo.put("participant_bib_no", participant_bib_no);
-			 jo.put("participant_group", participant_group);
+			jo.put("participant_event_id", participant_event_id);
+			jo.put("participant_id", participant_id);
+			jo.put("participant_event", participant_event);
+			jo.put("participant_type", participant_type);
+			jo.put("participant_event_type", participant_event_type);
+			jo.put("participant_bib_no", participant_bib_no);
+			jo.put("participant_group", participant_group);
 		} catch (JSONException je) {}
 		return jo;
 	}

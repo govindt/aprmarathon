@@ -52,6 +52,7 @@ ${TOMCAT_WEBAPP_LIB_DIR}/fr.opensagres.xdocreport.itext.extension-2.0.0.jar:\
 ${TOMCAT_WEBAPP_LIB_DIR}/com.lowagie.text-2.1.7.jar:\
 ${TOMCAT_WEBAPP_LIB_DIR}/fr.opensagres.xdocreport.itext.extension-2.0.0.jar:\
 ${TOMCAT_WEBAPP_LIB_DIR}/commons-codec-1.11.jar\
+
 "
 
 CLASSPATH="${TOMCAT_DIR}/webapps/aprmarathon/WEB-INF/classes:\
@@ -60,15 +61,10 @@ ${TOMCAT_WEBAPP_LIB_DIR}/commons-logging.jar:\
 ${TOMCAT_WEBAPP_LIB_DIR}/mysql-connector-java-5.1.6-bin.jar:\
 ${TOMCAT_WEBAPP_LIB_DIR}/jettison-1.1.jar:\
 ${TOMCAT_WEBAPP_LIB_DIR}/commons-collections4-4.1.jar:\
+${TOMCAT_WEBAPP_LIB_DIR}/servlet.jar:\
 ${GOOGLE_SHEET_CLASSPATH}"
 
-#for jar in `ls -1 "${TOMCAT_WEBAPP_LIB_DIR}/webapps/aprmarathon/WEB-INF/do
-    #if [ -n "`uname -s | grep CYGWIN_NT`" ]; then
-		#CLASSPATH="${CLASSPATH};${TOMCAT_LIB_DIR}/webapps/aprmarathon/WEB-INF/lib/$jar"
-    #else
-		#CLASSPATH="`echo ${CLASSPATH}`:${TOMCAT_DIR}/webapps/aprmarathon/WEB-INF/lib/$jar"
-    #fi
-#done
+
 
 if [ -n "${JAVA_ARGS}" ]; then
     "${JAVA_HOME}/bin/java" -cp "$CLASSPATH" "${JAVA_ARGS}" $*

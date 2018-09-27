@@ -9,6 +9,8 @@
 package app.busobj;
 
 import java.util.Date;
+import java.util.List;
+import java.util.ArrayList;
 import core.util.DebugHandler;
 import core.util.Util;
 import core.util.Constants;
@@ -49,6 +51,22 @@ public class MedalObject implements Cloneable {
 
 	/**
 	 *
+	 * Returns the List representation of the MedalObject.
+	 *
+	 * Returns the object as an array list of Strings.
+	 *
+	 */
+	
+	public List<Object> asList() {
+		List<Object> list = new ArrayList<Object>();
+		list.add(medal_id + "");
+		list.add(medal_name + "");
+		list.add(medal_rank + "");
+		return list;
+	}
+
+	/**
+	 *
 	 * Returns the JSON representation of the MedalObject.
 	 *
 	 * @return  	Returns the JSON representation of the MedalObject.
@@ -58,9 +76,9 @@ public class MedalObject implements Cloneable {
 	public JSONObject toJSON() {
 		JSONObject jo = new JSONObject();
 		try {
-			 jo.put("medal_id", medal_id);
-			 jo.put("medal_name", medal_name);
-			 jo.put("medal_rank", medal_rank);
+			jo.put("medal_id", medal_id);
+			jo.put("medal_name", medal_name);
+			jo.put("medal_rank", medal_rank);
 		} catch (JSONException je) {}
 		return jo;
 	}

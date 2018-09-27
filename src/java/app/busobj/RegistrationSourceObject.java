@@ -9,6 +9,8 @@
 package app.busobj;
 
 import java.util.Date;
+import java.util.List;
+import java.util.ArrayList;
 import core.util.DebugHandler;
 import core.util.Util;
 import core.util.Constants;
@@ -47,6 +49,21 @@ public class RegistrationSourceObject implements Cloneable {
 
 	/**
 	 *
+	 * Returns the List representation of the RegistrationSourceObject.
+	 *
+	 * Returns the object as an array list of Strings.
+	 *
+	 */
+	
+	public List<Object> asList() {
+		List<Object> list = new ArrayList<Object>();
+		list.add(registration_source_id + "");
+		list.add(registration_source_name + "");
+		return list;
+	}
+
+	/**
+	 *
 	 * Returns the JSON representation of the RegistrationSourceObject.
 	 *
 	 * @return  	Returns the JSON representation of the RegistrationSourceObject.
@@ -56,8 +73,8 @@ public class RegistrationSourceObject implements Cloneable {
 	public JSONObject toJSON() {
 		JSONObject jo = new JSONObject();
 		try {
-			 jo.put("registration_source_id", registration_source_id);
-			 jo.put("registration_source_name", registration_source_name);
+			jo.put("registration_source_id", registration_source_id);
+			jo.put("registration_source_name", registration_source_name);
 		} catch (JSONException je) {}
 		return jo;
 	}

@@ -839,6 +839,8 @@ ${NAWK} -v QUOTE="'" -v logname=${LOGNAME} -v version=1.0 -v since=1.0 -v proj_n
 	printf("Generating Java Code for : %s %d\n", table_name, i);
 	printf("package %s.busobj;\n\n", proj_name)>file_name;
 	printf("import java.util.Date;\n")>>file_name;
+	printf("import java.util.List;\n")>>file_name;
+	printf("import java.util.ArrayList;\n")>>file_name;
 	printf("import core.util.DebugHandler;\n")>>file_name;
 	printf("import core.util.Util;\n")>>file_name;
 	printf("import core.util.Constants;\n")>>file_name;
@@ -897,8 +899,27 @@ ${NAWK} -v QUOTE="'" -v logname=${LOGNAME} -v version=1.0 -v since=1.0 -v proj_n
 	}
 	printf("\t\treturn buf;\n")>>file_name;
 	printf("\t}\n\n")>> file_name;
+	# End toString method
 	
-	# End toString method	
+	# Comments for asList Method
+	printf("\t/**\n")>> file_name;
+	printf("\t *\n") >> file_name;
+	printf("\t * Returns the List representation of the %sObject.\n", tmp_file_name) >> file_name;
+	printf("\t *\n") >> file_name;
+	printf("\t * Returns the object as an array list of Strings.\n") >> file_name;
+	printf("\t *\n") >> file_name;
+	printf("\t */\n\t\n") >> file_name;
+	# End - Comments for asList Method
+	
+	# asList Method
+	printf("\tpublic List<Object> asList() {\n")>>file_name;
+	printf("\t\tList<Object> list = new ArrayList<Object>();\n")>>file_name;
+	for ( j = 1; j <= i; ++j ) {
+		printf("\t\tlist.add(%s + \"\");\n", field_names[j])>>file_name;
+	}
+	printf("\t\treturn list;\n")>>file_name;
+	printf("\t}\n\n")>> file_name;
+	# End asList Method
 
 	# Comments for toJSON Method
 	printf("\t/**\n") >> file_name;
@@ -915,7 +936,7 @@ ${NAWK} -v QUOTE="'" -v logname=${LOGNAME} -v version=1.0 -v since=1.0 -v proj_n
 	printf("\t\tJSONObject jo = new JSONObject();\n")>>file_name;
 	printf("\t\ttry {\n")>>file_name;
 	for ( j = 1; j <= i; ++j ) {
-		printf("\t\t\t jo.put(\"%s\", %s);\n", field_names[j], field_names[j])>>file_name;
+		printf("\t\t\tjo.put(\"%s\", %s);\n", field_names[j], field_names[j])>>file_name;
 	}
 	printf("\t\t} catch (JSONException je) {}\n")>>file_name;
 	printf("\t\treturn jo;\n")>>file_name;

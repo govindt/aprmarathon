@@ -9,6 +9,8 @@
 package app.busobj;
 
 import java.util.Date;
+import java.util.List;
+import java.util.ArrayList;
 import core.util.DebugHandler;
 import core.util.Util;
 import core.util.Constants;
@@ -77,6 +79,33 @@ public class RegistrantPaymentObject implements Cloneable {
 
 	/**
 	 *
+	 * Returns the List representation of the RegistrantPaymentObject.
+	 *
+	 * Returns the object as an array list of Strings.
+	 *
+	 */
+	
+	public List<Object> asList() {
+		List<Object> list = new ArrayList<Object>();
+		list.add(registrant_payment_id + "");
+		list.add(registrant_event + "");
+		list.add(registrant + "");
+		list.add(payment_type + "");
+		list.add(payment_status + "");
+		list.add(payment_amount + "");
+		list.add(payment_additional_amount + "");
+		list.add(payment_date + "");
+		list.add(receipt_date + "");
+		list.add(payment_details + "");
+		list.add(payment_towards + "");
+		list.add(payment_reference_id + "");
+		list.add(payment_tax + "");
+		list.add(payment_fee + "");
+		return list;
+	}
+
+	/**
+	 *
 	 * Returns the JSON representation of the RegistrantPaymentObject.
 	 *
 	 * @return  	Returns the JSON representation of the RegistrantPaymentObject.
@@ -86,20 +115,20 @@ public class RegistrantPaymentObject implements Cloneable {
 	public JSONObject toJSON() {
 		JSONObject jo = new JSONObject();
 		try {
-			 jo.put("registrant_payment_id", registrant_payment_id);
-			 jo.put("registrant_event", registrant_event);
-			 jo.put("registrant", registrant);
-			 jo.put("payment_type", payment_type);
-			 jo.put("payment_status", payment_status);
-			 jo.put("payment_amount", payment_amount);
-			 jo.put("payment_additional_amount", payment_additional_amount);
-			 jo.put("payment_date", payment_date);
-			 jo.put("receipt_date", receipt_date);
-			 jo.put("payment_details", payment_details);
-			 jo.put("payment_towards", payment_towards);
-			 jo.put("payment_reference_id", payment_reference_id);
-			 jo.put("payment_tax", payment_tax);
-			 jo.put("payment_fee", payment_fee);
+			jo.put("registrant_payment_id", registrant_payment_id);
+			jo.put("registrant_event", registrant_event);
+			jo.put("registrant", registrant);
+			jo.put("payment_type", payment_type);
+			jo.put("payment_status", payment_status);
+			jo.put("payment_amount", payment_amount);
+			jo.put("payment_additional_amount", payment_additional_amount);
+			jo.put("payment_date", payment_date);
+			jo.put("receipt_date", receipt_date);
+			jo.put("payment_details", payment_details);
+			jo.put("payment_towards", payment_towards);
+			jo.put("payment_reference_id", payment_reference_id);
+			jo.put("payment_tax", payment_tax);
+			jo.put("payment_fee", payment_fee);
 		} catch (JSONException je) {}
 		return jo;
 	}

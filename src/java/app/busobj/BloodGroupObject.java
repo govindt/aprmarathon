@@ -9,6 +9,8 @@
 package app.busobj;
 
 import java.util.Date;
+import java.util.List;
+import java.util.ArrayList;
 import core.util.DebugHandler;
 import core.util.Util;
 import core.util.Constants;
@@ -47,6 +49,21 @@ public class BloodGroupObject implements Cloneable {
 
 	/**
 	 *
+	 * Returns the List representation of the BloodGroupObject.
+	 *
+	 * Returns the object as an array list of Strings.
+	 *
+	 */
+	
+	public List<Object> asList() {
+		List<Object> list = new ArrayList<Object>();
+		list.add(blood_group_id + "");
+		list.add(blood_group_name + "");
+		return list;
+	}
+
+	/**
+	 *
 	 * Returns the JSON representation of the BloodGroupObject.
 	 *
 	 * @return  	Returns the JSON representation of the BloodGroupObject.
@@ -56,8 +73,8 @@ public class BloodGroupObject implements Cloneable {
 	public JSONObject toJSON() {
 		JSONObject jo = new JSONObject();
 		try {
-			 jo.put("blood_group_id", blood_group_id);
-			 jo.put("blood_group_name", blood_group_name);
+			jo.put("blood_group_id", blood_group_id);
+			jo.put("blood_group_name", blood_group_name);
 		} catch (JSONException je) {}
 		return jo;
 	}

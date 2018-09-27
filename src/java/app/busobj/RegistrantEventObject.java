@@ -9,6 +9,8 @@
 package app.busobj;
 
 import java.util.Date;
+import java.util.List;
+import java.util.ArrayList;
 import core.util.DebugHandler;
 import core.util.Util;
 import core.util.Constants;
@@ -61,6 +63,28 @@ public class RegistrantEventObject implements Cloneable {
 
 	/**
 	 *
+	 * Returns the List representation of the RegistrantEventObject.
+	 *
+	 * Returns the object as an array list of Strings.
+	 *
+	 */
+	
+	public List<Object> asList() {
+		List<Object> list = new ArrayList<Object>();
+		list.add(registrant_event_id + "");
+		list.add(registrant_id + "");
+		list.add(registrant_event + "");
+		list.add(registrant_type + "");
+		list.add(registrant_source + "");
+		list.add(registrant_class + "");
+		list.add(registrant_beneficiary + "");
+		list.add(registrant_emergency_contact + "");
+		list.add(registrant_emergency_phone + "");
+		return list;
+	}
+
+	/**
+	 *
 	 * Returns the JSON representation of the RegistrantEventObject.
 	 *
 	 * @return  	Returns the JSON representation of the RegistrantEventObject.
@@ -70,15 +94,15 @@ public class RegistrantEventObject implements Cloneable {
 	public JSONObject toJSON() {
 		JSONObject jo = new JSONObject();
 		try {
-			 jo.put("registrant_event_id", registrant_event_id);
-			 jo.put("registrant_id", registrant_id);
-			 jo.put("registrant_event", registrant_event);
-			 jo.put("registrant_type", registrant_type);
-			 jo.put("registrant_source", registrant_source);
-			 jo.put("registrant_class", registrant_class);
-			 jo.put("registrant_beneficiary", registrant_beneficiary);
-			 jo.put("registrant_emergency_contact", registrant_emergency_contact);
-			 jo.put("registrant_emergency_phone", registrant_emergency_phone);
+			jo.put("registrant_event_id", registrant_event_id);
+			jo.put("registrant_id", registrant_id);
+			jo.put("registrant_event", registrant_event);
+			jo.put("registrant_type", registrant_type);
+			jo.put("registrant_source", registrant_source);
+			jo.put("registrant_class", registrant_class);
+			jo.put("registrant_beneficiary", registrant_beneficiary);
+			jo.put("registrant_emergency_contact", registrant_emergency_contact);
+			jo.put("registrant_emergency_phone", registrant_emergency_phone);
 		} catch (JSONException je) {}
 		return jo;
 	}

@@ -9,6 +9,8 @@
 package app.busobj;
 
 import java.util.Date;
+import java.util.List;
+import java.util.ArrayList;
 import core.util.DebugHandler;
 import core.util.Util;
 import core.util.Constants;
@@ -70,6 +72,31 @@ public class ParticipantObject implements Cloneable {
 
 	/**
 	 *
+	 * Returns the List representation of the ParticipantObject.
+	 *
+	 * Returns the object as an array list of Strings.
+	 *
+	 */
+	
+	public List<Object> asList() {
+		List<Object> list = new ArrayList<Object>();
+		list.add(participant_id + "");
+		list.add(participant_first_name + "");
+		list.add(participant_middle_name + "");
+		list.add(participant_last_name + "");
+		list.add(participant_gender + "");
+		list.add(participant_date_of_birth + "");
+		list.add(participant_age_category + "");
+		list.add(participant_t_shirt_size + "");
+		list.add(participant_blood_group + "");
+		list.add(participant_cell_phone + "");
+		list.add(participant_email + "");
+		list.add(participant_group + "");
+		return list;
+	}
+
+	/**
+	 *
 	 * Returns the JSON representation of the ParticipantObject.
 	 *
 	 * @return  	Returns the JSON representation of the ParticipantObject.
@@ -79,18 +106,18 @@ public class ParticipantObject implements Cloneable {
 	public JSONObject toJSON() {
 		JSONObject jo = new JSONObject();
 		try {
-			 jo.put("participant_id", participant_id);
-			 jo.put("participant_first_name", participant_first_name);
-			 jo.put("participant_middle_name", participant_middle_name);
-			 jo.put("participant_last_name", participant_last_name);
-			 jo.put("participant_gender", participant_gender);
-			 jo.put("participant_date_of_birth", participant_date_of_birth);
-			 jo.put("participant_age_category", participant_age_category);
-			 jo.put("participant_t_shirt_size", participant_t_shirt_size);
-			 jo.put("participant_blood_group", participant_blood_group);
-			 jo.put("participant_cell_phone", participant_cell_phone);
-			 jo.put("participant_email", participant_email);
-			 jo.put("participant_group", participant_group);
+			jo.put("participant_id", participant_id);
+			jo.put("participant_first_name", participant_first_name);
+			jo.put("participant_middle_name", participant_middle_name);
+			jo.put("participant_last_name", participant_last_name);
+			jo.put("participant_gender", participant_gender);
+			jo.put("participant_date_of_birth", participant_date_of_birth);
+			jo.put("participant_age_category", participant_age_category);
+			jo.put("participant_t_shirt_size", participant_t_shirt_size);
+			jo.put("participant_blood_group", participant_blood_group);
+			jo.put("participant_cell_phone", participant_cell_phone);
+			jo.put("participant_email", participant_email);
+			jo.put("participant_group", participant_group);
 		} catch (JSONException je) {}
 		return jo;
 	}
