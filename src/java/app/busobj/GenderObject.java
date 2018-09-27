@@ -9,6 +9,8 @@
 package app.busobj;
 
 import java.util.Date;
+import java.util.List;
+import java.util.ArrayList;
 import core.util.DebugHandler;
 import core.util.Util;
 import core.util.Constants;
@@ -47,6 +49,21 @@ public class GenderObject implements Cloneable {
 
 	/**
 	 *
+	 * Returns the List representation of the GenderObject.
+	 *
+	 * Returns the object as an array list of Strings.
+	 *
+	 */
+	
+	public List<Object> asList() {
+		List<Object> list = new ArrayList<Object>();
+		list.add(gender_id + "");
+		list.add(gender_name + "");
+		return list;
+	}
+
+	/**
+	 *
 	 * Returns the JSON representation of the GenderObject.
 	 *
 	 * @return  	Returns the JSON representation of the GenderObject.
@@ -56,8 +73,8 @@ public class GenderObject implements Cloneable {
 	public JSONObject toJSON() {
 		JSONObject jo = new JSONObject();
 		try {
-			 jo.put("gender_id", gender_id);
-			 jo.put("gender_name", gender_name);
+			jo.put("gender_id", gender_id);
+			jo.put("gender_name", gender_name);
 		} catch (JSONException je) {}
 		return jo;
 	}

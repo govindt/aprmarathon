@@ -9,6 +9,8 @@
 package app.busobj;
 
 import java.util.Date;
+import java.util.List;
+import java.util.ArrayList;
 import core.util.DebugHandler;
 import core.util.Util;
 import core.util.Constants;
@@ -49,6 +51,22 @@ public class TShirtSizeObject implements Cloneable {
 
 	/**
 	 *
+	 * Returns the List representation of the TShirtSizeObject.
+	 *
+	 * Returns the object as an array list of Strings.
+	 *
+	 */
+	
+	public List<Object> asList() {
+		List<Object> list = new ArrayList<Object>();
+		list.add(t_shirt_size_id + "");
+		list.add(t_shirt_size_name + "");
+		list.add(t_shirt_gender + "");
+		return list;
+	}
+
+	/**
+	 *
 	 * Returns the JSON representation of the TShirtSizeObject.
 	 *
 	 * @return  	Returns the JSON representation of the TShirtSizeObject.
@@ -58,9 +76,9 @@ public class TShirtSizeObject implements Cloneable {
 	public JSONObject toJSON() {
 		JSONObject jo = new JSONObject();
 		try {
-			 jo.put("t_shirt_size_id", t_shirt_size_id);
-			 jo.put("t_shirt_size_name", t_shirt_size_name);
-			 jo.put("t_shirt_gender", t_shirt_gender);
+			jo.put("t_shirt_size_id", t_shirt_size_id);
+			jo.put("t_shirt_size_name", t_shirt_size_name);
+			jo.put("t_shirt_gender", t_shirt_gender);
 		} catch (JSONException je) {}
 		return jo;
 	}

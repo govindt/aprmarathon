@@ -9,6 +9,8 @@
 package app.busobj;
 
 import java.util.Date;
+import java.util.List;
+import java.util.ArrayList;
 import core.util.DebugHandler;
 import core.util.Util;
 import core.util.Constants;
@@ -55,6 +57,25 @@ public class RegistrationClassObject implements Cloneable {
 
 	/**
 	 *
+	 * Returns the List representation of the RegistrationClassObject.
+	 *
+	 * Returns the object as an array list of Strings.
+	 *
+	 */
+	
+	public List<Object> asList() {
+		List<Object> list = new ArrayList<Object>();
+		list.add(registration_class_id + "");
+		list.add(registration_class_name + "");
+		list.add(registration_type + "");
+		list.add(registration_event + "");
+		list.add(registration_class_value + "");
+		list.add(registration_free_tickets + "");
+		return list;
+	}
+
+	/**
+	 *
 	 * Returns the JSON representation of the RegistrationClassObject.
 	 *
 	 * @return  	Returns the JSON representation of the RegistrationClassObject.
@@ -64,12 +85,12 @@ public class RegistrationClassObject implements Cloneable {
 	public JSONObject toJSON() {
 		JSONObject jo = new JSONObject();
 		try {
-			 jo.put("registration_class_id", registration_class_id);
-			 jo.put("registration_class_name", registration_class_name);
-			 jo.put("registration_type", registration_type);
-			 jo.put("registration_event", registration_event);
-			 jo.put("registration_class_value", registration_class_value);
-			 jo.put("registration_free_tickets", registration_free_tickets);
+			jo.put("registration_class_id", registration_class_id);
+			jo.put("registration_class_name", registration_class_name);
+			jo.put("registration_type", registration_type);
+			jo.put("registration_event", registration_event);
+			jo.put("registration_class_value", registration_class_value);
+			jo.put("registration_free_tickets", registration_free_tickets);
 		} catch (JSONException je) {}
 		return jo;
 	}

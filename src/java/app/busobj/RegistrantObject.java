@@ -9,6 +9,8 @@
 package app.busobj;
 
 import java.util.Date;
+import java.util.List;
+import java.util.ArrayList;
 import core.util.DebugHandler;
 import core.util.Util;
 import core.util.Constants;
@@ -67,6 +69,31 @@ public class RegistrantObject implements Cloneable {
 
 	/**
 	 *
+	 * Returns the List representation of the RegistrantObject.
+	 *
+	 * Returns the object as an array list of Strings.
+	 *
+	 */
+	
+	public List<Object> asList() {
+		List<Object> list = new ArrayList<Object>();
+		list.add(registrant_id + "");
+		list.add(registrant_name + "");
+		list.add(registrant_middle_name + "");
+		list.add(registrant_last_name + "");
+		list.add(registrant_email + "");
+		list.add(registrant_additional_email + "");
+		list.add(registrant_phone + "");
+		list.add(registrant_address + "");
+		list.add(registrant_city + "");
+		list.add(registrant_state + "");
+		list.add(registrant_pincode + "");
+		list.add(registrant_pan + "");
+		return list;
+	}
+
+	/**
+	 *
 	 * Returns the JSON representation of the RegistrantObject.
 	 *
 	 * @return  	Returns the JSON representation of the RegistrantObject.
@@ -76,18 +103,18 @@ public class RegistrantObject implements Cloneable {
 	public JSONObject toJSON() {
 		JSONObject jo = new JSONObject();
 		try {
-			 jo.put("registrant_id", registrant_id);
-			 jo.put("registrant_name", registrant_name);
-			 jo.put("registrant_middle_name", registrant_middle_name);
-			 jo.put("registrant_last_name", registrant_last_name);
-			 jo.put("registrant_email", registrant_email);
-			 jo.put("registrant_additional_email", registrant_additional_email);
-			 jo.put("registrant_phone", registrant_phone);
-			 jo.put("registrant_address", registrant_address);
-			 jo.put("registrant_city", registrant_city);
-			 jo.put("registrant_state", registrant_state);
-			 jo.put("registrant_pincode", registrant_pincode);
-			 jo.put("registrant_pan", registrant_pan);
+			jo.put("registrant_id", registrant_id);
+			jo.put("registrant_name", registrant_name);
+			jo.put("registrant_middle_name", registrant_middle_name);
+			jo.put("registrant_last_name", registrant_last_name);
+			jo.put("registrant_email", registrant_email);
+			jo.put("registrant_additional_email", registrant_additional_email);
+			jo.put("registrant_phone", registrant_phone);
+			jo.put("registrant_address", registrant_address);
+			jo.put("registrant_city", registrant_city);
+			jo.put("registrant_state", registrant_state);
+			jo.put("registrant_pincode", registrant_pincode);
+			jo.put("registrant_pan", registrant_pan);
 		} catch (JSONException je) {}
 		return jo;
 	}

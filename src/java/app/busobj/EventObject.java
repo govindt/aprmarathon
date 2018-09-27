@@ -9,6 +9,8 @@
 package app.busobj;
 
 import java.util.Date;
+import java.util.List;
+import java.util.ArrayList;
 import core.util.DebugHandler;
 import core.util.Util;
 import core.util.Constants;
@@ -69,6 +71,26 @@ public class EventObject implements Cloneable {
 
 	/**
 	 *
+	 * Returns the List representation of the EventObject.
+	 *
+	 * Returns the object as an array list of Strings.
+	 *
+	 */
+	
+	public List<Object> asList() {
+		List<Object> list = new ArrayList<Object>();
+		list.add(event_id + "");
+		list.add(event_name + "");
+		list.add(event_start_date + "");
+		list.add(event_end_date + "");
+		list.add(event_description + "");
+		list.add(event_registation_close_date + "");
+		list.add(event_changes_close_date + "");
+		return list;
+	}
+
+	/**
+	 *
 	 * Returns the JSON representation of the EventObject.
 	 *
 	 * @return  	Returns the JSON representation of the EventObject.
@@ -78,13 +100,13 @@ public class EventObject implements Cloneable {
 	public JSONObject toJSON() {
 		JSONObject jo = new JSONObject();
 		try {
-			 jo.put("event_id", event_id);
-			 jo.put("event_name", event_name);
-			 jo.put("event_start_date", event_start_date);
-			 jo.put("event_end_date", event_end_date);
-			 jo.put("event_description", event_description);
-			 jo.put("event_registation_close_date", event_registation_close_date);
-			 jo.put("event_changes_close_date", event_changes_close_date);
+			jo.put("event_id", event_id);
+			jo.put("event_name", event_name);
+			jo.put("event_start_date", event_start_date);
+			jo.put("event_end_date", event_end_date);
+			jo.put("event_description", event_description);
+			jo.put("event_registation_close_date", event_registation_close_date);
+			jo.put("event_changes_close_date", event_changes_close_date);
 		} catch (JSONException je) {}
 		return jo;
 	}

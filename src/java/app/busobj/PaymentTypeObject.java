@@ -9,6 +9,8 @@
 package app.busobj;
 
 import java.util.Date;
+import java.util.List;
+import java.util.ArrayList;
 import core.util.DebugHandler;
 import core.util.Util;
 import core.util.Constants;
@@ -47,6 +49,21 @@ public class PaymentTypeObject implements Cloneable {
 
 	/**
 	 *
+	 * Returns the List representation of the PaymentTypeObject.
+	 *
+	 * Returns the object as an array list of Strings.
+	 *
+	 */
+	
+	public List<Object> asList() {
+		List<Object> list = new ArrayList<Object>();
+		list.add(payment_type_id + "");
+		list.add(payment_type_name + "");
+		return list;
+	}
+
+	/**
+	 *
 	 * Returns the JSON representation of the PaymentTypeObject.
 	 *
 	 * @return  	Returns the JSON representation of the PaymentTypeObject.
@@ -56,8 +73,8 @@ public class PaymentTypeObject implements Cloneable {
 	public JSONObject toJSON() {
 		JSONObject jo = new JSONObject();
 		try {
-			 jo.put("payment_type_id", payment_type_id);
-			 jo.put("payment_type_name", payment_type_name);
+			jo.put("payment_type_id", payment_type_id);
+			jo.put("payment_type_name", payment_type_name);
 		} catch (JSONException je) {}
 		return jo;
 	}

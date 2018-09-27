@@ -9,6 +9,8 @@
 package app.busobj;
 
 import java.util.Date;
+import java.util.List;
+import java.util.ArrayList;
 import core.util.DebugHandler;
 import core.util.Util;
 import core.util.Constants;
@@ -62,6 +64,27 @@ public class ResultObject implements Cloneable {
 
 	/**
 	 *
+	 * Returns the List representation of the ResultObject.
+	 *
+	 * Returns the object as an array list of Strings.
+	 *
+	 */
+	
+	public List<Object> asList() {
+		List<Object> list = new ArrayList<Object>();
+		list.add(result_id + "");
+		list.add(result_event + "");
+		list.add(result_event_type + "");
+		list.add(result_medal + "");
+		list.add(result_winner + "");
+		list.add(result_winner_registrant + "");
+		list.add(result_score + "");
+		list.add(result_timing + "");
+		return list;
+	}
+
+	/**
+	 *
 	 * Returns the JSON representation of the ResultObject.
 	 *
 	 * @return  	Returns the JSON representation of the ResultObject.
@@ -71,14 +94,14 @@ public class ResultObject implements Cloneable {
 	public JSONObject toJSON() {
 		JSONObject jo = new JSONObject();
 		try {
-			 jo.put("result_id", result_id);
-			 jo.put("result_event", result_event);
-			 jo.put("result_event_type", result_event_type);
-			 jo.put("result_medal", result_medal);
-			 jo.put("result_winner", result_winner);
-			 jo.put("result_winner_registrant", result_winner_registrant);
-			 jo.put("result_score", result_score);
-			 jo.put("result_timing", result_timing);
+			jo.put("result_id", result_id);
+			jo.put("result_event", result_event);
+			jo.put("result_event_type", result_event_type);
+			jo.put("result_medal", result_medal);
+			jo.put("result_winner", result_winner);
+			jo.put("result_winner_registrant", result_winner_registrant);
+			jo.put("result_score", result_score);
+			jo.put("result_timing", result_timing);
 		} catch (JSONException je) {}
 		return jo;
 	}
