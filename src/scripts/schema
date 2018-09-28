@@ -28,6 +28,8 @@ Age_Category
 
 Age_Category_Id int key
 Age_Category varchar2(50)
+Min_Age int
+Max_Age int
 
 T_Shirt_Size
 
@@ -70,7 +72,7 @@ Registration_Class
 
 Registration_Class_Id int key
 Registration_Class_Name varchar2(50) not null
-Registration_Type int references RegistrationType(Registration_Type_Id.Registration_Type_Name)
+Registration_Type int references Registration_Type(Registration_Type_Id.Registration_Type_Name)
 Registration_Event int references Event(Event_Id.Event_Name)
 Registration_Class_Value double not null
 Registration_Free_Tickets int not null

@@ -20,6 +20,10 @@ import java.util.*;
  */
 
 public class AppConstants {
+    public static String MAX_AGE_LABEL;
+    public static String MAX_AGE_STR = "maxAge";
+    public static String MIN_AGE_LABEL;
+    public static String MIN_AGE_STR = "minAge";
     public static String CURRENT_SITE_LABEL;
     public static String MANAGE_SITE_JSP_STR = "ManageSite.jsp";
     public static String MANAGE_SITE_STR = "Manage Site";
