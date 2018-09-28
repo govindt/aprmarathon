@@ -83,7 +83,9 @@ create table Gender(
 create sequence age_category_seq start with 1 increment by 1;
 create table Age_Category(
 	age_category_id number primary key,
-	age_category varchar2(50)
+	age_category varchar2(50),
+	min_age number,
+	max_age number
 );
 
 create sequence t_shirt_size_seq start with 1 increment by 1;
@@ -134,7 +136,7 @@ create sequence registration_class_seq start with 1 increment by 1;
 create table Registration_Class(
 	registration_class_id number primary key,
 	registration_class_name varchar2(50) not null,
-	registration_type number references RegistrationType(Registration_Type_Id),
+	registration_type number references Registration_Type(Registration_Type_Id),
 	registration_event number references Event(Event_Id),
 	registration_class_value number(30,2) not null,
 	registration_free_tickets number not null
