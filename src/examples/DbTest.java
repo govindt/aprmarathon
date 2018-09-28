@@ -9,6 +9,7 @@
 
 import java.lang.*;
 import java.util.*;
+import java.text.*;
 import core.db.*;
 import core.util.*;
 import core.busobj.*;
@@ -22,6 +23,7 @@ import app.busimpl.*;
 public class DbTest {
     public static void main(String args[]) throws core.util.AppException {
 		App.getInstance();
+		SimpleDateFormat sDateFormat = new SimpleDateFormat(Constants.DATE_FORMAT_STR);
 		UsersInterface uIf = new UsersImpl();
 		UsersObject[] usersObj;
 		RegistrantEventInterface rEIf = new RegistrantEventImpl();
@@ -69,5 +71,19 @@ public class DbTest {
 		usersObj = uIf.getAllUsers();
 		DebugHandler.info(usersObj.length);
 		long end = System.currentTimeMillis();
+		
+		String[] ages = { "06-16-1968", "01-01-2016", "02-04-2010", "06-18-1940", "11-12-2001" };
+		ParticipantInterface pIf = new ParticipantImpl();
+		ParticipantObject pObj = new ParticipantObject();
+		pObj.setParticipantGroup(149);
+		for ( int i = 0; i < ages.length; i++ ) {
+			try {
+				pObj.setParticipantDateOfBirth(sDateFormat.parse(ages[i]));
+				pIf.updateParticipantAgeCategory(pObj);
+			} catch (ParseException pe) {
+				System.err.println("Parse Exception " + ages[i]);
+			}
+			
+		}
     }
 }
