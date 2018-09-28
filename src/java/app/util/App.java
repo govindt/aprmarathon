@@ -120,6 +120,8 @@ public class App {
 		AppConstants.RECEIPT_TEMPLATE = siteProps.getProperty("app.receipt_template");
 
 		// INSERT GENERATED CODE
+    AppConstants.MIN_AGE_LABEL = siteProps.getProperty("app.min_age_label");
+    AppConstants.MAX_AGE_LABEL = siteProps.getProperty("app.max_age_label");
 		AppConstants.CURRENT_SITE_LABEL = siteProps.getProperty("app.current_site_label");
 		AppConstants.NEW_SITE = siteProps.getProperty("app.new_site");
 		AppConstants.SITE_ID_LABEL = siteProps.getProperty("app.site_id_label");

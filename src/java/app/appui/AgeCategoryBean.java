@@ -67,6 +67,10 @@ public class AgeCategoryBean implements SpreadSheetInterface {
 		    SimpleDateFormat dateFormatter = new SimpleDateFormat(Constants.DATE_FORMAT_STR);
 		    buf = Util.trim(valuepairs.get(AppConstants.AGE_CATEGORY_STR));
 		    selectedAgeCategoryObj.setAgeCategory(buf);
+		    buf = Util.trim(valuepairs.get(AppConstants.MIN_AGE_STR));
+		    selectedAgeCategoryObj.setMinAge(Integer.parseInt(buf));
+		    buf = Util.trim(valuepairs.get(AppConstants.MAX_AGE_STR));
+		    selectedAgeCategoryObj.setMaxAge(Integer.parseInt(buf));
 		    DebugHandler.debug("Modifying AgeCategory Object " + selectedAgeCategoryObj);
 		    ageCategoryIf.updateAgeCategory(selectedAgeCategoryObj);
 		}
@@ -77,6 +81,10 @@ public class AgeCategoryBean implements SpreadSheetInterface {
 		    AgeCategoryObject ageCategoryObj = new AgeCategoryObject();
 		    buf = Util.trim(valuepairs.get(AppConstants.AGE_CATEGORY_STR));
 		    ageCategoryObj.setAgeCategory(buf);
+		    buf = Util.trim(valuepairs.get(AppConstants.MIN_AGE_STR));
+		    ageCategoryObj.setMinAge(Integer.parseInt(buf));
+		    buf = Util.trim(valuepairs.get(AppConstants.MAX_AGE_STR));
+		    ageCategoryObj.setMaxAge(Integer.parseInt(buf));
 		    DebugHandler.debug("Adding AgeCategory Object " + ageCategoryObj);
 		    ageCategoryIf.addAgeCategory(ageCategoryObj);
 		}
@@ -134,6 +142,30 @@ public class AgeCategoryBean implements SpreadSheetInterface {
 	    td = new TableDataElement(new InputElement(InputElement.TEXT, AppConstants.AGE_CATEGORY_STR, selectedAgeCategoryObj.getAgeCategory()));
 	else
 	    td = new TableDataElement(new InputElement(InputElement.TEXT, AppConstants.AGE_CATEGORY_STR, Constants.EMPTY));
+	tr.add(td);
+	te.add(tr);
+
+	tr = new TableRowElement();
+	be = new BoldElement(AppConstants.MIN_AGE_LABEL);
+	be.setId(Constants.BODY_ROW_STYLE);
+	td = new TableDataElement(be);
+	tr.add(td);
+	if ( ageCategoryId != 0 )
+	    td = new TableDataElement(new InputElement(InputElement.TEXT, AppConstants.MIN_AGE_STR, String.valueOf(selectedAgeCategoryObj.getMinAge())));
+	else
+	    td = new TableDataElement(new InputElement(InputElement.TEXT, AppConstants.MIN_AGE_STR, Constants.EMPTY));
+	tr.add(td);
+	te.add(tr);
+
+	tr = new TableRowElement();
+	be = new BoldElement(AppConstants.MAX_AGE_LABEL);
+	be.setId(Constants.BODY_ROW_STYLE);
+	td = new TableDataElement(be);
+	tr.add(td);
+	if ( ageCategoryId != 0 )
+	    td = new TableDataElement(new InputElement(InputElement.TEXT, AppConstants.MAX_AGE_STR, String.valueOf(selectedAgeCategoryObj.getMaxAge())));
+	else
+	    td = new TableDataElement(new InputElement(InputElement.TEXT, AppConstants.MAX_AGE_STR, Constants.EMPTY));
 	tr.add(td);
 	te.add(tr);
 
@@ -212,6 +244,14 @@ public class AgeCategoryBean implements SpreadSheetInterface {
 	cell.setCellStyle(cellstyleTblHdr);
 	cell.setCellValue(AppConstants.AGE_CATEGORY_LABEL);
 
+	cell = row.createCell((short)col++);
+	cell.setCellStyle(cellstyleTblHdr);
+	cell.setCellValue(AppConstants.MIN_AGE_LABEL);
+
+	cell = row.createCell((short)col++);
+	cell.setCellStyle(cellstyleTblHdr);
+	cell.setCellValue(AppConstants.MAX_AGE_LABEL);
+
 	AgeCategoryInterface agecategoryIf = new AgeCategoryImpl();
 	AgeCategoryObject[] agecategoryArr = agecategoryIf.getAllAgeCategorys();
 	if ( agecategoryArr != null && agecategoryArr.length > 0 ) {
@@ -234,6 +274,14 @@ public class AgeCategoryBean implements SpreadSheetInterface {
 		cell = row.createCell((short)col++);
 		cell.setCellStyle(cellstyleTblLeft);
 		cell.setCellValue(agecategoryObj.getAgeCategory());
+
+		cell = row.createCell((short)col++);
+		cell.setCellStyle(cellstyleTblLeft);
+		cell.setCellValue(agecategoryObj.getMinAge());
+
+		cell = row.createCell((short)col++);
+		cell.setCellStyle(cellstyleTblLeft);
+		cell.setCellValue(agecategoryObj.getMaxAge());
 	    }
 	}
 	try {
@@ -297,6 +345,20 @@ public class AgeCategoryBean implements SpreadSheetInterface {
 		cell = row.getCell((short)col++);
 		if ( cell != null )
 		    agecategoryObject.setAgeCategory(Util.trim(cell.getStringCellValue()));
+		cell = row.getCell((short)col++);
+		if ( cell != null )
+		try {
+		    agecategoryObject.setMinAge((int)cell.getNumericCellValue());
+		} catch (NumberFormatException nfe) {
+		    agecategoryObject.setMinAge(0);
+		}
+		cell = row.getCell((short)col++);
+		if ( cell != null )
+		try {
+		    agecategoryObject.setMaxAge((int)cell.getNumericCellValue());
+		} catch (NumberFormatException nfe) {
+		    agecategoryObject.setMaxAge(0);
+		}
 		DebugHandler.fine("Updating AgeCategory " + agecategoryObject);
 		agecategoryIf.updateAgeCategory(agecategoryObject);
 	    } else if ( dbOp != null && dbOp.equalsIgnoreCase("INSERT") ) {
@@ -304,6 +366,20 @@ public class AgeCategoryBean implements SpreadSheetInterface {
 		cell = row.getCell((short)col++);
 		if ( cell != null )
 		    agecategoryObject.setAgeCategory(Util.trim(cell.getStringCellValue()));
+		cell = row.getCell((short)col++);
+		if ( cell != null )
+		try {
+		    agecategoryObject.setMinAge((int)cell.getNumericCellValue());
+		} catch (NumberFormatException nfe) {
+		    agecategoryObject.setMinAge(0);
+		}
+		cell = row.getCell((short)col++);
+		if ( cell != null )
+		try {
+		    agecategoryObject.setMaxAge((int)cell.getNumericCellValue());
+		} catch (NumberFormatException nfe) {
+		    agecategoryObject.setMaxAge(0);
+		}
 		DebugHandler.fine("Adding AgeCategory " + agecategoryObject);
 		agecategoryIf.addAgeCategory(agecategoryObject);
 	    } else if ( dbOp != null && dbOp.equalsIgnoreCase("DELETE") ) {

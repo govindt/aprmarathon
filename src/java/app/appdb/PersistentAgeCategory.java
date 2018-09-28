@@ -58,7 +58,7 @@ public class PersistentAgeCategory extends PersistentObject {
 	
 	public Object list() throws DBException {
 		PreparedSQLStatement sql = new PreparedSQLStatement();
-		String statement = "SELECT age_category_id, age_category from Age_Category";
+		String statement = "SELECT age_category_id, age_category, min_age, max_age from Age_Category";
 		int index = 1;
 		sql.setStatement(statement);
 		
@@ -85,7 +85,7 @@ public class PersistentAgeCategory extends PersistentObject {
 	
 	public Object list(Object args) throws DBException {
 		PreparedSQLStatement sql = new PreparedSQLStatement();
-		String statement = "SELECT age_category_id, age_category from Age_Category";
+		String statement = "SELECT age_category_id, age_category, min_age, max_age from Age_Category";
 		int index = 1;
 		AgeCategoryObject passedAgeCategoryObject = (AgeCategoryObject)args;
 		boolean whereSpecified = false;
@@ -104,6 +104,24 @@ public class PersistentAgeCategory extends PersistentObject {
 				statement += " and age_category = ?";
 			sql.setStatement(statement);
 			sql.setInParams(new SQLParam(index++,  passedAgeCategoryObject.getAgeCategory(), Types.VARCHAR));
+		}
+		if ( passedAgeCategoryObject.getMinAge() != 0 ) {
+			if ( ! whereSpecified ) {
+				statement += " where min_age = ?";
+				whereSpecified = true;
+			} else
+				statement += " and min_age = ?";
+			sql.setStatement(statement);
+			sql.setInParams(new SQLParam(index++, new Integer(passedAgeCategoryObject.getMinAge()), Types.INTEGER));
+		}
+		if ( passedAgeCategoryObject.getMaxAge() != 0 ) {
+			if ( ! whereSpecified ) {
+				statement += " where max_age = ?";
+				whereSpecified = true;
+			} else
+				statement += " and max_age = ?";
+			sql.setStatement(statement);
+			sql.setInParams(new SQLParam(index++, new Integer(passedAgeCategoryObject.getMaxAge()), Types.INTEGER));
 		}
 		sql.setStatement(statement);
 		
@@ -131,7 +149,7 @@ public class PersistentAgeCategory extends PersistentObject {
 	
 	public Object fetch() throws DBException {
 		PreparedSQLStatement sql = new PreparedSQLStatement();
-		String statement = "SELECT age_category_id, age_category from Age_Category where age_category_id = ? ";
+		String statement = "SELECT age_category_id, age_category, min_age, max_age from Age_Category where age_category_id = ? ";
 		int index = 1;
 		sql.setStatement(statement);
 		sql.setInParams(new SQLParam(index++, new Integer(ageCategoryObject.getAgeCategoryId()), Types.INTEGER));
@@ -162,14 +180,16 @@ public class PersistentAgeCategory extends PersistentObject {
 		int index = 1;
 
 		if ( AppConstants.DB_TYPE.equalsIgnoreCase(Constants.ORACLE) ) {
-			statement = "INSERT INTO Age_Category (age_category_id, age_category) VALUES(?, ?) ";
+			statement = "INSERT INTO Age_Category (age_category_id, age_category, min_age, max_age) VALUES(?, ?, ?, ?) ";
 			sql.setStatement(statement);
 			sql.setInParams(new SQLParam(index++, new Integer(ageCategoryObject.getAgeCategoryId()), Types.INTEGER));
 		} else {
-			statement = "INSERT INTO Age_Category (age_category) VALUES(?) ";
+			statement = "INSERT INTO Age_Category (age_category, min_age, max_age) VALUES(?, ?, ?) ";
 			sql.setStatement(statement);
 		}
 		sql.setInParams(new SQLParam(index++,  ageCategoryObject.getAgeCategory(), Types.VARCHAR));
+		sql.setInParams(new SQLParam(index++, new Integer(ageCategoryObject.getMinAge()), Types.INTEGER));
+		sql.setInParams(new SQLParam(index++, new Integer(ageCategoryObject.getMaxAge()), Types.INTEGER));
 		setSQLStatement(sql);
 		
 		Integer result = (Integer) super.insert();
@@ -218,11 +238,13 @@ public class PersistentAgeCategory extends PersistentObject {
 	
 	public Object update() throws DBException {
 		PreparedSQLStatement sql = new PreparedSQLStatement();
-		String statement = "UPDATE Age_Category SET age_category_id = ?, age_category = ? where age_category_id = ? ";
+		String statement = "UPDATE Age_Category SET age_category_id = ?, age_category = ?, min_age = ?, max_age = ? where age_category_id = ? ";
 		int index = 1;
 		sql.setStatement(statement);
 		sql.setInParams(new SQLParam(index++, new Integer(ageCategoryObject.getAgeCategoryId()), Types.INTEGER));
 		sql.setInParams(new SQLParam(index++,  ageCategoryObject.getAgeCategory(), Types.VARCHAR));
+		sql.setInParams(new SQLParam(index++, new Integer(ageCategoryObject.getMinAge()), Types.INTEGER));
+		sql.setInParams(new SQLParam(index++, new Integer(ageCategoryObject.getMaxAge()), Types.INTEGER));
 		sql.setInParams(new SQLParam(index++, new Integer(ageCategoryObject.getAgeCategoryId()), Types.INTEGER));
 		setSQLStatement(sql);
 		
@@ -254,6 +276,8 @@ public class PersistentAgeCategory extends PersistentObject {
 				AgeCategoryObject f = new AgeCategoryObject();
 				f.setAgeCategoryId(rs.getInt(index++));
 				f.setAgeCategory(rs.getString(index++));
+				f.setMinAge(rs.getInt(index++));
+				f.setMaxAge(rs.getInt(index++));
 				result.add(f);
 			}
 		} catch (Exception e) {
