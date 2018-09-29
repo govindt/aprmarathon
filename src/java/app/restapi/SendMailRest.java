@@ -1,5 +1,5 @@
 /*
- * TShirtSizeRest.java
+ * SendMailRest.java
  *
  * APR Marathon Registration App Project
  *
