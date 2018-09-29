@@ -43,8 +43,6 @@ public class ExportToSheetsRest {
 	@Path("exportToSheets")
 	public Response exportToSheets(InputStream incomingData) throws JSONException, AppException {
 		App theApp = App.getInstance();
-		JsonConverter jc = new JsonConverter(incomingData);
-		JSONObject jObject = jc.getJsonObject();
 		GoogleSheetWrite grs = new GoogleSheetWrite();
 		DebugHandler.info(grs);
 		ExportToSheetsInterface eTSIf = new ExportToSheetsImpl();
