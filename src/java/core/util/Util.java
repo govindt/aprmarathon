@@ -254,4 +254,26 @@ public class Util {
 		inCal.set(Calendar.DAY_OF_YEAR, 1);
 		return inCal.getTime();
     }
+	
+	public static int calculateAge(Date birthDate, Date eventDate) {
+        Calendar event = Calendar.getInstance();
+		Calendar birth = Calendar.getInstance();
+		birth.setTime(birthDate);
+		event.setTime(eventDate);
+		int year1 = event.get(Calendar.YEAR);
+		int year2 = birth.get(Calendar.YEAR);
+		int age = year1 - year2;
+		int month1 = event.get(Calendar.MONTH);
+		int month2 = birth.get(Calendar.MONTH);
+		if (month2 > month1) {
+			age--;
+		} else if (month1 == month2) {
+			int day1 = event.get(Calendar.DAY_OF_MONTH);
+			int day2 = birth.get(Calendar.DAY_OF_MONTH);
+			if (day2 > day1) {
+				age--;
+			}
+		}
+		return age;
+    }
 }

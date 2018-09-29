@@ -1,7 +1,7 @@
 /*
  * ParticipantImpl.java
  *
- * APR Marathon Registration App Project
+ * APR Marathon Registration App Project - MANUAL EDIT
  *
  * Author: Govind Thirumalai
  */
@@ -16,7 +16,13 @@ import core.db.DBUtil;
 import core.util.AppException;
 import core.util.Util;
 import app.busobj.ParticipantObject;
+import app.busobj.AgeCategoryObject;
+import app.busobj.RegistrantEventObject;
+import app.busobj.EventObject;
 import app.businterface.ParticipantInterface;
+import app.businterface.RegistrantEventInterface;
+import app.businterface.AgeCategoryInterface;
+import app.businterface.EventInterface;
 import app.util.AppConstants;
 
 /**
@@ -28,6 +34,32 @@ import app.util.AppConstants;
 
 public class ParticipantImpl implements ParticipantInterface  {
 	private String PARTICIPANT = "ParticipantInterface.getAllParticipant";
+	
+	public ParticipantObject updateParticipantAgeCategory(ParticipantObject pObj) throws AppException {
+		RegistrantEventInterface rEIf = new RegistrantEventImpl();
+		RegistrantEventObject rEObj = rEIf.getRegistrantEvent(pObj.getParticipantGroup());
+		int eventId = rEObj.getRegistrantEvent();
+		EventInterface eIf = new EventImpl();
+		EventObject eObj = eIf.getEvent(eventId);
+		if ( eObj == null || eObj.getEventStartDate() == null )
+			throw new AppException("Event not in DB or Event Start Date is null");
+		if ( pObj.getParticipantDateOfBirth() == null )
+			throw new AppException("Date of Birth is null for " + pObj);
+		
+		int years = Util.calculateAge(pObj.getParticipantDateOfBirth(), eObj.getEventStartDate());
+		AgeCategoryInterface aCIf = new AgeCategoryImpl();
+		AgeCategoryObject[] aCObjArr = aCIf.getAllAgeCategorys();
+		for ( int i = 0; i < aCObjArr.length; i++) {
+			if ( years <= aCObjArr[i].getMaxAge() && years >= aCObjArr[i].getMinAge() ) {
+				ParticipantObject pObj1 = (ParticipantObject)pObj.clone();
+				pObj1.setParticipantAgeCategory(aCObjArr[i].getAgeCategoryId());
+				DebugHandler.info("DOB: " + pObj1.getParticipantDateOfBirth() + " Age : " + years + " Age Category: " + aCObjArr[i].getAgeCategory());
+				return pObj1;
+			}
+		}
+		
+		return pObj;
+	}
 	
 	/**
 	 *
@@ -144,8 +176,11 @@ public class ParticipantImpl implements ParticipantInterface  {
 			long l = DBUtil.getNextId("Participant_seq");
 			participantObject.setParticipantId((int)l);
 		}
+		
+		participantObject = updateParticipantAgeCategory(participantObject);
 		Integer i = (Integer)DBUtil.insert(participantObject);
 		DebugHandler.fine("i: " +  i);
+	
 		// Do for Non Oracle where there is auto increment
 		if ( ! AppConstants.DB_TYPE.equalsIgnoreCase(Constants.ORACLE) ) {
 			participantObject.setParticipantId(i.intValue());
@@ -193,6 +228,7 @@ public class ParticipantImpl implements ParticipantInterface  {
 	
 	public Integer updateParticipant(ParticipantObject participantObject) throws AppException{
 		ParticipantObject newParticipantObject = getParticipant(participantObject.getParticipantId()); // This call will make sure cache/db are in sync
+		participantObject = updateParticipantAgeCategory(participantObject);
 		Integer i = (Integer)DBUtil.update(participantObject);
 		DebugHandler.fine("i: " +  i);
 		ParticipantObject[] participantObjectArr = getAllParticipants();

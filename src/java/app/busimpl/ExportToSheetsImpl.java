@@ -1,15 +1,16 @@
-import com.google.api.client.auth.oauth2.Credential;
-import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp;
-import com.google.api.client.extensions.jetty.auth.oauth2.LocalServerReceiver;
-import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
-import com.google.api.client.googleapis.auth.oauth2.GoogleClientSecrets;
-import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
-import com.google.api.client.http.HttpTransport;
-import com.google.api.client.json.jackson2.JacksonFactory;
-import com.google.api.client.json.JsonFactory;
-import com.google.api.client.util.store.FileDataStoreFactory;
-import com.google.api.services.sheets.v4.SheetsScopes;
-import com.google.api.services.sheets.v4.model.*;
+/*
+ * ExportToSheetImpl.java
+ *
+ * Project Name Project
+ *
+ * Author: Govind Thirumalai
+ */
+
+package app.busimpl;
+
+import com.google.api.services.sheets.v4.model.BatchUpdateValuesRequest;
+import com.google.api.services.sheets.v4.model.BatchUpdateValuesResponse;
+import com.google.api.services.sheets.v4.model.ValueRange;
 import com.google.api.services.sheets.v4.Sheets;
 
 import java.io.IOException;
@@ -26,123 +27,23 @@ import core.util.AppException;
 import core.util.Util;
 import core.util.Constants;
 import app.util.App;
+import core.util.GoogleSheetWrite;
 import app.util.AppConstants;
 import app.busobj.*;
 import app.businterface.*;
-import app.busimpl.*;
 
+/**
+ * The implementation which downloads from database and updates
+ * google sheets
+ * @version 1.0
+ * @author Govind Thirumalai
+ * @since 1.0
+ */
 
-public class GoogleWriteSheets {
-    private static boolean debug = false;
-    private static String spreadsheetId;
-    private static String participantsRange;
-    private static String registrantsRange;
-	private static String eventsId;
-	
-
-    /** Application name. */
-    private static final String APPLICATION_NAME =
-        "Google Sheets API Java Read";
-
-    /** Directory to store user credentials for this application. */
-    private static final java.io.File DATA_STORE_DIR = new java.io.File(
-        System.getProperty("user.home"), ".credentials/sheets.googleapis.com-java-read");
-
-    /** Global instance of the {@link FileDataStoreFactory}. */
-    private static FileDataStoreFactory DATA_STORE_FACTORY;
-
-    /** Global instance of the JSON factory. */
-    private static final JsonFactory JSON_FACTORY =
-        JacksonFactory.getDefaultInstance();
-
-    /** Global instance of the HTTP transport. */
-    private static HttpTransport HTTP_TRANSPORT;
-
-    /** Global instance of the scopes required by this quickstart.
-     *
-     * If modifying these scopes, delete your previously saved credentials
-     * at ~/.credentials/sheets.googleapis.com-java-quickstart
-     */
-    private static final List<String> SCOPES =
-        Arrays.asList(SheetsScopes.SPREADSHEETS);
-	
-
-    static {
-        try {
-            HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
-            DATA_STORE_FACTORY = new FileDataStoreFactory(DATA_STORE_DIR);
-        } catch (Throwable t) {
-            t.printStackTrace();
-            System.exit(1);
-        }
-    }
-
-    public GoogleWriteSheets() {
-		init();
-    }
-
-    /**
-     * Creates an authorized Credential object.
-     * @return an authorized Credential object.
-     * @throws IOException
-     */
-    public static Credential authorize() throws IOException {
-        // Load client secrets.
-        InputStream in = GoogleWriteSheets.class.getClassLoader().getResourceAsStream("core/util/client_secret.json");
-		if ( in == null ) {
-			System.err.println("Unable to read client_secret.json from " +  GoogleReadSheets.class.getClassLoader());
-		}
-		GoogleClientSecrets clientSecrets =
-			GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(in));
-
-		// Build flow and trigger user authorization request.
-		GoogleAuthorizationCodeFlow flow =
-				new GoogleAuthorizationCodeFlow.Builder(
-						HTTP_TRANSPORT, JSON_FACTORY, clientSecrets, SCOPES)
-				.setDataStoreFactory(DATA_STORE_FACTORY)
-				.setAccessType("offline")
-				.build();
-		Credential credential = new AuthorizationCodeInstalledApp(
-			flow, new LocalServerReceiver()).authorize("user");
-		if ( debug )
-				System.out.println(
-						"Credentials saved to " + DATA_STORE_DIR.getAbsolutePath());
-		return credential;
-    }
-
-    /**
-     * Build and return an authorized Sheets API client service.
-     * @return an authorized Sheets API client service
-     * @throws IOException
-     */
-    public static Sheets getSheetsService() throws IOException {
-        Credential credential = authorize();
-        return new Sheets.Builder(HTTP_TRANSPORT, JSON_FACTORY, credential)
-                .setApplicationName(APPLICATION_NAME)
-                .build();
-    }
-
-    public static void init() {
-		Properties prop = new Properties();
-		try {
-			InputStream in = GoogleWriteSheets.class.getClassLoader().getResourceAsStream("core/util/googlesheets.properties");
-			//load a properties file from class path, inside static method
-			prop.load(in);
-
-			//get the property value and print it out
-			spreadsheetId = prop.getProperty("googlewritesheets.spreadsheetId");
-			participantsRange = prop.getProperty("googlewritesheets.participants.range");
-			registrantsRange = prop.getProperty("googlewritesheets.registrants.range");
-			eventsId = prop.getProperty("googlewritesheets.events.eventId");
-		} 
-		catch (IOException ex) {
-			ex.printStackTrace();
-		}
-    }
-	
-    public static void updateRegistrants() throws IOException, AppException {
+public class ExportToSheetsImpl implements ExportToSheetsInterface  {
+	public void updateRegistrants() throws AppException {
 		SimpleDateFormat dateFormatter = new SimpleDateFormat(Constants.DATE_FORMAT_STR);
-		Sheets service = getSheetsService();
+		Sheets service = GoogleSheetWrite.getSheetsService();
 		List<ValueRange> data = new ArrayList<>();
 		RegistrantEventInterface rEIf = new RegistrantEventImpl();
 		RegistrantInterface rIf = new RegistrantImpl();
@@ -155,13 +56,13 @@ public class GoogleWriteSheets {
 		PaymentStatusInterface pSIf = new PaymentStatusImpl();
 		
 		RegistrantEventObject rEObj = new RegistrantEventObject();
-		int event_id = Integer.parseInt(eventsId);
+		int event_id = Integer.parseInt(GoogleSheetWrite.eventsId);
 		
 		rEObj.setRegistrantEvent(event_id);
 		ArrayList<RegistrantEventObject> rEObjArr = rEIf.getRegistrantEvents(rEObj);
 		List<List<Object>> rListOfList = new ArrayList<List<Object>>();
 		ValueRange vR = new ValueRange();
-		vR.setRange(registrantsRange);
+		vR.setRange(GoogleSheetWrite.registrantsRange);
 		
 		List<Object> registrantListHeader = new ArrayList<Object>();
 		
@@ -241,15 +142,18 @@ public class GoogleWriteSheets {
 		BatchUpdateValuesRequest batchBody = new BatchUpdateValuesRequest()
 		  .setValueInputOption("USER_ENTERED")
 		  .setData(data);
-		 
-		BatchUpdateValuesResponse batchResult = service.spreadsheets().values()
-		  .batchUpdate(spreadsheetId, batchBody)
-		  .execute();
-    }
+		try {
+			BatchUpdateValuesResponse batchResult = service.spreadsheets().values()
+			  .batchUpdate(GoogleSheetWrite.spreadsheetId, batchBody)
+			  .execute();
+		} catch (IOException ioe) {
+			throw new AppException("IOException during batchUpdate. " + ioe.getMessage());
+		}
+	}
 	
-	public static void updateParticipants() throws IOException, AppException {
+	public void updateParticipants() throws AppException {
 		SimpleDateFormat dateFormatter = new SimpleDateFormat(Constants.DATE_FORMAT_STR);
-		Sheets service = getSheetsService();
+		Sheets service = GoogleSheetWrite.getSheetsService();
 		List<ValueRange> data = new ArrayList<>();
 		ParticipantEventInterface pEIf = new ParticipantEventImpl();
 		ParticipantInterface pIf = new ParticipantImpl();
@@ -262,13 +166,13 @@ public class GoogleWriteSheets {
 		BloodGroupInterface bGIf = new BloodGroupImpl();
 		ParticipantEventObject pEObj = new ParticipantEventObject();
 		
-		int event_id = Integer.parseInt(eventsId);
+		int event_id = Integer.parseInt(GoogleSheetWrite.eventsId);
 		
 		pEObj.setParticipantEvent(event_id);
 		ArrayList<ParticipantEventObject> pEObjArr = pEIf.getParticipantEvents(pEObj);
 		List<List<Object>> rListOfList = new ArrayList<List<Object>>();
 		ValueRange vR = new ValueRange();
-		vR.setRange(participantsRange);
+		vR.setRange(GoogleSheetWrite.participantsRange);
 		
 		List<Object> participantListHeader = new ArrayList<Object>();
 		
@@ -331,24 +235,12 @@ public class GoogleWriteSheets {
 		BatchUpdateValuesRequest batchBody = new BatchUpdateValuesRequest()
 		  .setValueInputOption("USER_ENTERED")
 		  .setData(data);
-		 
-		BatchUpdateValuesResponse batchResult = service.spreadsheets().values()
-		  .batchUpdate(spreadsheetId, batchBody)
-		  .execute();
-    }
-
-    public String toString() {
-		return 	"spreadsheetId: " + spreadsheetId + "\n" +
-			"registrantsRange: " + registrantsRange + "\n" +
-			"participantsRange: " + participantsRange + "\n" +
-			"eventsId: " + eventsId;
-    }
-
-    public static void main(String[] args) throws IOException, AppException {
-		App theApp = App.getInstance();
-		GoogleWriteSheets grs = new GoogleWriteSheets();
-		System.out.println(grs);
-		//GoogleWriteSheets.updateRegistrants();
-		GoogleWriteSheets.updateParticipants();
-    }
+		try {
+			BatchUpdateValuesResponse batchResult = service.spreadsheets().values()
+			  .batchUpdate(GoogleSheetWrite.spreadsheetId, batchBody)
+			  .execute();
+		} catch (IOException ioe) {
+			throw new AppException("IOException during batchUpdate. " + ioe.getMessage());
+		}
+	}
 }

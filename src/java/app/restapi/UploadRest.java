@@ -114,7 +114,7 @@ public class UploadRest {
 			return Response.status(500).entity("Can not save file").build();
 		}
 		try {
-			buf = processParticipantExcessFile(registrant_id, event_id, uploadedFileLocation);
+			buf = processParticipantExcelFile(registrant_id, event_id, uploadedFileLocation);
 		} catch (AppException ae) {
 			return Response.status(500).entity(ae.getMessage()).build();
 		}
@@ -181,7 +181,7 @@ public class UploadRest {
 		}
 	}
 	
-	private String processParticipantExcessFile(int registrant_id, int event_id, String uploadedFileLocation) throws AppException {
+	private String processParticipantExcelFile(int registrant_id, int event_id, String uploadedFileLocation) throws AppException {
 		String retVal = "";
 		sDateFormat = new SimpleDateFormat(Constants.DATE_FORMAT_STR);
 		EventInterface eIf = new EventImpl();
