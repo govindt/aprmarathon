@@ -43,12 +43,29 @@ public class ExportToSheetsRest {
 	@Path("exportToSheets")
 	public Response exportToSheets(InputStream incomingData) throws JSONException, AppException {
 		App theApp = App.getInstance();
+		JsonConverter jc = new JsonConverter(incomingData);
+		JSONObject jObject = jc.getJsonObject();
 		GoogleSheetWrite grs = new GoogleSheetWrite();
 		DebugHandler.info(grs);
 		ExportToSheetsInterface eTSIf = new ExportToSheetsImpl();
-		eTSIf.updateRegistrants();
-		eTSIf.updateParticipants();
-		return Response.status(200).entity("Exporting to Google Sheets Succeeded.").build();
+		JSONObject jo = new JSONObject();
+		try {
+			eTSIf.updateRegistrants();
+		} catch (AppException ae) {
+			jo.put("result", new Integer(1));
+			ae.printStackTrace();
+			throw new AppException("Failed to write Registrant Info");
+		}
+		try {
+			eTSIf.updateParticipants();
+		} catch (AppException ae) {
+			jo.put("result", new Integer(2));
+			ae.printStackTrace();
+			throw new AppException("Failed to write ParticipantInfo Info");
+		}
+		
+		jo.put("result", new Integer(0));
+		return Response.status(200).entity(jo.toString()).type(MediaType.APPLICATION_JSON).build();
 	};
 	
 
