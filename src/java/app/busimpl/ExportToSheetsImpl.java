@@ -9,6 +9,7 @@
 package app.busimpl;
 
 import com.google.api.services.sheets.v4.model.BatchUpdateValuesRequest;
+import com.google.api.services.sheets.v4.model.ClearValuesRequest;
 import com.google.api.services.sheets.v4.model.BatchUpdateValuesResponse;
 import com.google.api.services.sheets.v4.model.ValueRange;
 import com.google.api.services.sheets.v4.Sheets;
@@ -26,6 +27,7 @@ import java.text.SimpleDateFormat;
 import core.util.AppException;
 import core.util.Util;
 import core.util.Constants;
+import core.util.DebugHandler;
 import app.util.App;
 import core.util.GoogleSheetWrite;
 import app.util.AppConstants;
@@ -115,7 +117,7 @@ public class ExportToSheetsImpl implements ExportToSheetsInterface  {
 				rPObj.setRegistrantEvent(event_id);
 				rPObj.setRegistrant(rEObj.getRegistrantId());
 				ArrayList<RegistrantPaymentObject> rPObjArr = rPIf.getRegistrantPayments(rPObj);
-				if ( rPObjArr != null && rPObjArr.size() == 1) {
+				if ( rPObjArr != null && rPObjArr.size() == 1 ) {
 					rPObj = rPObjArr.get(0);
 					PaymentTypeObject pTObj = pTIf.getPaymentType(rPObj.getPaymentType());
 					registrantList.add(pTObj.getPaymentTypeName());
@@ -135,10 +137,17 @@ public class ExportToSheetsImpl implements ExportToSheetsInterface  {
 				}
 				rListOfList.add(registrantList);
 			}
+			DebugHandler.fine(rListOfList);
 			vR.setValues(rListOfList);
 			data.add(vR);
+			DebugHandler.fine(data);
 		}
-		 
+		try {
+			service.spreadsheets().values().clear(GoogleSheetWrite.spreadsheetId, 
+				GoogleSheetWrite.registrantsRange, new ClearValuesRequest()).execute();
+		} catch (IOException ioe) {
+			throw new AppException("IOException during Clearing Contents. " + ioe.getMessage());
+		}
 		BatchUpdateValuesRequest batchBody = new BatchUpdateValuesRequest()
 		  .setValueInputOption("USER_ENTERED")
 		  .setData(data);
@@ -231,7 +240,12 @@ public class ExportToSheetsImpl implements ExportToSheetsInterface  {
 			vR.setValues(rListOfList);
 			data.add(vR);
 		}
-		 
+		try {
+			service.spreadsheets().values().clear(GoogleSheetWrite.spreadsheetId, 
+					GoogleSheetWrite.participantsRange, new ClearValuesRequest()).execute();
+		} catch (IOException ioe) {
+			throw new AppException("IOException during Clearing Contents. " + ioe.getMessage());
+		}
 		BatchUpdateValuesRequest batchBody = new BatchUpdateValuesRequest()
 		  .setValueInputOption("USER_ENTERED")
 		  .setData(data);
