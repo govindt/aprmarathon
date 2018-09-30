@@ -45,13 +45,13 @@ public class ExportToSheetsRest {
 		App theApp = App.getInstance();
 		JsonConverter jc = new JsonConverter(incomingData);
 		JSONObject jObject = jc.getJsonObject();
-		String event_id = null;
+		int event_id;
 		try {
-			event_id = jObject.getString("event_id");
+			event_id = jObject.getInt("event_id");
 		} catch (JSONException je) {
 			throw new AppException("event_id value not passed.");
 		}
-		GoogleSheetWrite grs = new GoogleSheetWrite(event_id);
+		GoogleSheetWrite grs = new GoogleSheetWrite(event_id + "");
 		DebugHandler.info(grs);
 		ExportToSheetsInterface eTSIf = new ExportToSheetsImpl();
 		JSONObject jo = new JSONObject();

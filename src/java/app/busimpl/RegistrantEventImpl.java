@@ -42,7 +42,7 @@ public class RegistrantEventImpl implements RegistrantEventInterface  {
 	 *
 	 */
 	
-	public ArrayList<RegistrantEventObject> getRegistrantEvents(RegistrationTypeObject[] registranttype_obj) throws AppException{
+	public ArrayList<RegistrantEventObject> getRegistrantEvents(RegistrationTypeObject[] registranttype_obj, int event_id) throws AppException{
 		RegistrantEventObject[] registrantEventObjectArr = getAllRegistrantEvents();
 		if ( registrantEventObjectArr == null )
 			return null;
@@ -51,7 +51,8 @@ public class RegistrantEventImpl implements RegistrantEventInterface  {
 			for ( int i = 0; i < registranttype_obj.length; i++) {
 				for ( int j = 0; j < registrantEventObjectArr.length; j++ ) {
 					if ( registranttype_obj[i] != null )
-						if ( registrantEventObjectArr[j].getRegistrantType() == registranttype_obj[i].getRegistrationTypeId() )
+						if ( registrantEventObjectArr[j].getRegistrantType() == registranttype_obj[i].getRegistrationTypeId() &&
+							 registrantEventObjectArr[j].getRegistrantEvent() == event_id )
 							v.add((RegistrantEventObject)registrantEventObjectArr[j].clone());
 				}
 			}

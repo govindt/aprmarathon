@@ -22,6 +22,15 @@ import app.busimpl.*;
 
 public class DbTest {
     public static void main(String args[]) throws core.util.AppException {
+		if ( args.length != 1 ) {
+			throw new AppException("Usage: DbTest event_id");
+		}
+		int event_id;
+		try {
+			event_id = Integer.parseInt(args[0]);
+		} catch (NumberFormatException nfe) {
+			throw new AppException("Event ID not Integer");
+		}
 		App.getInstance();
 		SimpleDateFormat sDateFormat = new SimpleDateFormat(Constants.DATE_FORMAT_STR);
 		UsersInterface uIf = new UsersImpl();
@@ -32,20 +41,6 @@ public class DbTest {
 		ArrayList<RegistrantEventObject> rEObjArr = new ArrayList<RegistrantEventObject>();
 		ArrayList<RegistrantObject> rObjArr = new ArrayList<RegistrantObject>();
 		RegistrationTypeObject[] rTObjArr = rTIf.getAllRegistrationTypes();
-		
-		/*RegistrationTypeObject[] rTObjArr = new RegistrationTypeObject[4];
-		RegistrationTypeObject rTObj = new RegistrationTypeObject();
-		rTObj.setRegistrationTypeId(7);
-		rTObjArr[0] = rTObj;
-		rTObj = new RegistrationTypeObject();
-		rTObj.setRegistrationTypeId(8);
-		rTObjArr[1] = rTObj;
-		rTObj = new RegistrationTypeObject();
-		rTObj.setRegistrationTypeId(9);
-		rTObjArr[2] = rTObj;
-		rTObj = new RegistrationTypeObject();
-		rTObj.setRegistrationTypeId(10);
-		rTObjArr[3] = rTObj;*/
 		RegistrationTypeObject[] rTObjArr1 = new RegistrationTypeObject[rTObjArr.length];
 		
 		int k = 0;
@@ -56,7 +51,7 @@ public class DbTest {
 				k++;
 			}
 		}
-		rEObjArr = rEIf.getRegistrantEvents(rTObjArr1);
+		rEObjArr = rEIf.getRegistrantEvents(rTObjArr1, event_id);
 
 		if ( rEObjArr != null ) {
 			System.out.println(rEObjArr.size());
