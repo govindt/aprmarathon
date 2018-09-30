@@ -43,7 +43,15 @@ public class ExportToSheetsRest {
 	@Path("exportToSheets")
 	public Response exportToSheets(InputStream incomingData) throws JSONException, AppException {
 		App theApp = App.getInstance();
-		GoogleSheetWrite grs = new GoogleSheetWrite();
+		JsonConverter jc = new JsonConverter(incomingData);
+		JSONObject jObject = jc.getJsonObject();
+		String event_id = null;
+		try {
+			event_id = jObject.getString("event_id");
+		} catch (JSONException je) {
+			throw new AppException("event_id value not passed.");
+		}
+		GoogleSheetWrite grs = new GoogleSheetWrite(event_id);
 		DebugHandler.info(grs);
 		ExportToSheetsInterface eTSIf = new ExportToSheetsImpl();
 		JSONObject jo = new JSONObject();

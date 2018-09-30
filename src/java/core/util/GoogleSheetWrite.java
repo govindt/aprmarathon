@@ -81,8 +81,9 @@ public class GoogleSheetWrite {
         }
     }
 
-    public GoogleSheetWrite() {
+    public GoogleSheetWrite(String event_id) {
 		init();
+		eventsId = event_id;
     }
 
     /**
@@ -140,7 +141,7 @@ public class GoogleSheetWrite {
 			spreadsheetId = prop.getProperty("googlesheetwrite.spreadsheetId");
 			participantsRange = prop.getProperty("googlesheetwrite.participants.range");
 			registrantsRange = prop.getProperty("googlesheetwrite.registrants.range");
-			eventsId = prop.getProperty("googlesheetwrite.events.eventId");
+			//eventsId = prop.getProperty("googlesheetwrite.events.eventId");
 		} 
 		catch (IOException ex) {
 			ex.printStackTrace();
