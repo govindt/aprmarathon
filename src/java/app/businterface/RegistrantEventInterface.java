@@ -34,7 +34,7 @@ public interface RegistrantEventInterface {
 	 * @throws AppException if the underlying operation fails
 	 *
 	 */
-	public ArrayList<RegistrantEventObject> getRegistrantEvents(RegistrationTypeObject[] registranttype_obj) throws AppException;
+	public ArrayList<RegistrantEventObject> getRegistrantEvents(RegistrationTypeObject[] registranttype_obj, int event_id) throws AppException;
 	
 	/**
 	 *

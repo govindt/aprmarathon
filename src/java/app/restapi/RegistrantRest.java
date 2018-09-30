@@ -79,6 +79,13 @@ public class RegistrantRest {
 	public Response getOfflineRegistrants(InputStream incomingData) throws AppException, JSONException {
 		App.getInstance();
 		JsonConverter jc = new JsonConverter(incomingData);
+		JSONObject jObject = jc.getJsonObject();
+		int event_id;
+		try {
+			event_id = jObject.getInt("event_id");
+		} catch (JSONException je) {
+			throw new AppException("event_id value not passed.");
+		}
 		JSONArray joArr = new JSONArray();
 		RegistrantEventInterface rEIf = new RegistrantEventImpl();
 		RegistrantInterface rIf = new RegistrantImpl();
@@ -95,7 +102,7 @@ public class RegistrantRest {
 				k++;
 			}
 		}
-		rEObjArr = rEIf.getRegistrantEvents(rTObjArr1);
+		rEObjArr = rEIf.getRegistrantEvents(rTObjArr1, event_id);
 
 		if ( rEObjArr != null ) {
 			System.out.println(rEObjArr.size());
