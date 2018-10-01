@@ -174,6 +174,8 @@ public class ExportToSheetsImpl implements ExportToSheetsInterface  {
 		TShirtSizeInterface tSSIf = new TShirtSizeImpl();
 		BloodGroupInterface bGIf = new BloodGroupImpl();
 		ParticipantEventObject pEObj = new ParticipantEventObject();
+		RegistrationSourceInterface rSIf = new RegistrationSourceImpl();
+		RegistrantEventInterface rEIf = new RegistrantEventImpl();
 		
 		int event_id = Integer.parseInt(GoogleSheetWrite.eventsId);
 		
@@ -187,6 +189,7 @@ public class ExportToSheetsImpl implements ExportToSheetsInterface  {
 		
 		participantListHeader.add(AppConstants.PARTICIPANT_EVENT_ID_LABEL);
 		participantListHeader.add(AppConstants.PARTICIPANT_TYPE_LABEL);
+		participantListHeader.add(AppConstants.REGISTRANT_SOURCE_LABEL);
 		participantListHeader.add(AppConstants.PARTICIPANT_EVENT_TYPE_LABEL);
 		participantListHeader.add(AppConstants.PARTICIPANT_BIB_NO_LABEL);
 		participantListHeader.add(AppConstants.PARTICIPANT_GROUP_LABEL);
@@ -210,10 +213,13 @@ public class ExportToSheetsImpl implements ExportToSheetsInterface  {
 				participantList.add(pEObj.getParticipantEventId());
 				RegistrationTypeObject rTObj = rTIf.getRegistrationType(pEObj.getParticipantType());
 				participantList.add(rTObj.getRegistrationTypeName());
+				RegistrantEventObject rEObj = rEIf.getRegistrantEvent(pEObj.getParticipantGroup());
+				RegistrationSourceObject rSObj = rSIf.getRegistrationSource(rEObj.getRegistrantSource());
+				participantList.add(rSObj.getRegistrationSourceName());
 				EventTypeObject eTObj = eTIf.getEventType(pEObj.getParticipantEventType());
 				participantList.add(eTObj.getEventTypeName());
 				participantList.add(pEObj.getParticipantBibNo());
-				RegistrantObject rObj = rIf.getRegistrant(pEObj.getParticipantGroup());
+				RegistrantObject rObj = rIf.getRegistrant(rEObj.getRegistrantId());
 				participantList.add(rObj.getRegistrantName());
 				participantList.add(pObj.getParticipantFirstName());
 				participantList.add(pObj.getParticipantMiddleName());
