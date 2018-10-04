@@ -21,7 +21,7 @@ import java.io.FileNotFoundException;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
-import core.busobj.SendMailObject;
+import app.busobj.SendMailObject;
 import core.util.EnglishNumberToWords;
 import core.util.DebugHandler;
 

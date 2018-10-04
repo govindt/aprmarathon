@@ -6,7 +6,7 @@
  * Author: Govind Thirumalai
  */
 
-package core.busobj;
+package app.busobj;
 
 import java.util.Date;
 import core.util.DebugHandler;
