@@ -116,7 +116,7 @@
 		</copy>
     </target>
 
-	<target name="compile" depends="init,compile-core-util,compile-core-ui,compile-core-connectionpool,compile-core-busobj,compile-core-db,compile-core-appdb,compile-core-appui,compile-app-util,compile-app-busobj,compile-app-appdb,compile-app-businterface,compile-app-busimpl,compile-app-appui,compile-app-menu,compile-app-restapi,compile-servlet,compile-examples,compile-bins" description="compile the source " >
+	<target name="compile" depends="init,compile-core-util,compile-core-ui,compile-core-connectionpool,compile-core-busobj,compile-core-db,compile-core-appdb,compile-core-appui,compile-app-busobj,compile-app-util,compile-app-appdb,compile-app-businterface,compile-app-busimpl,compile-app-appui,compile-app-menu,compile-app-restapi,compile-servlet,compile-examples,compile-bins" description="compile the source " >
   	</target>
         <target name="dist" depends="clean,init,compile-scripts,compile-jsps,compile-images,compile-css,compile-js,compile" description="generate the distribution" >
     		<jar jarfile="${aprmarathon.classes}/aprmarathon.jar" basedir="${aprmarathon.classes}"/>
@@ -176,6 +176,13 @@
 		<compilerarg value="${compile.compilerarg}"/>
 		</javac>
 	</target>
+	<target name="compile-app-busobj">
+		<javac 	destdir="${aprmarathon.classes}" classpathref="classpath" includeantruntime="false"
+		fork="true" executable="${env.JAVA_HOME}/bin/javac" debug="${compile.debug}" debuglevel="${compile.debuglevel}" deprecation="${compile.deprecation}" 
+		includes="*.java" srcdir="${aprmarathon.appsrc}/busobj" >
+				<compilerarg value="${compile.compilerarg}"/>
+		</javac>
+	</target>
 	<target name="compile-app-util">
 		<javac 	destdir="${aprmarathon.classes}" classpathref="classpath" includeantruntime="false"
 		fork="true" executable="${env.JAVA_HOME}/bin/javac" debug="${compile.debug}" debuglevel="${compile.debuglevel}" deprecation="${compile.deprecation}" 
@@ -185,13 +192,6 @@
 		<copy todir="${aprmarathon.classes}/app/util">
 			<fileset dir="${aprmarathon.appsrc}/util" includes="**/*.properties, **/*.docx"/>
 		</copy>
-	</target>
-	<target name="compile-app-busobj">
-		<javac 	destdir="${aprmarathon.classes}" classpathref="classpath" includeantruntime="false"
-		fork="true" executable="${env.JAVA_HOME}/bin/javac" debug="${compile.debug}" debuglevel="${compile.debuglevel}" deprecation="${compile.deprecation}" 
-		includes="*.java" srcdir="${aprmarathon.appsrc}/busobj" >
-				<compilerarg value="${compile.compilerarg}"/>
-		</javac>
 	</target>
 	<target name="compile-app-appdb">
 		<javac 	destdir="${aprmarathon.classes}" classpathref="classpath" includeantruntime="false"

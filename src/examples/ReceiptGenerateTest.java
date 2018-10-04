@@ -5,11 +5,10 @@
  *
  * Author: Govind Thirumalai 
  */
-import core.busobj.SendMailObject;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import java.io.IOException;
 import java.io.File;
-import core.busobj.SendMailObject;
+import app.busobj.SendMailObject;
 import core.util.SendGMail;
 import core.util.DebugHandler;
 import app.util.AppConstants;

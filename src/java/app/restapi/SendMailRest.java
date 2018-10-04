@@ -23,7 +23,7 @@ import core.util.Util;
 import core.util.DebugHandler;
 import core.util.AppException;
 import core.util.SendGMail;
-import core.busobj.SendMailObject;
+import app.busobj.SendMailObject;
 import app.util.App;
 import app.util.AppConstants;
 import app.util.ReceiptGenerate;
@@ -33,6 +33,9 @@ import org.codehaus.jettison.json.JSONArray;
 import javax.mail.MessagingException;
 import java.security.GeneralSecurityException;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import app.businterface.SendMailInterface;
+import app.busimpl.SendMailImpl;
+
 
 /**
  * The implementation of the Data APIS for SendMail 
@@ -55,7 +58,10 @@ public class SendMailRest {
 		SendMailObject sendMailObject = new SendMailObject(jObject);
 		DebugHandler.fine(sendMailObject);
 		JSONObject jo = sendMailObject.toJSON();
-		try {
+		SendMailInterface sMIf = new SendMailImpl();
+		Integer result = sMIf.mailReceiptRegistrants(sendMailObject);
+		jo.put("result", result);
+		/*try {
 			if ( sendMailObject.getEmailType() == SendMailObject.RECEIPT_EMAIL) {
 				ReceiptGenerate r = new ReceiptGenerate();
 				try {
@@ -82,7 +88,7 @@ public class SendMailRest {
 			gse.printStackTrace();
 			jo = sendMailObject.toJSON();
 			jo.put("result", new Integer(1));
-		}
+		}*/
 		
 		return Response.status(200).entity(jo.toString()).type(MediaType.APPLICATION_JSON).build();
 	};
