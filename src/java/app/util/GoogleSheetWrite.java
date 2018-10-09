@@ -9,7 +9,7 @@
 
 
 
-package core.util;
+package app.util;
 
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp;
@@ -34,6 +34,8 @@ import java.util.Properties;
 import java.util.StringTokenizer;
 import java.util.Date;
 import java.text.SimpleDateFormat;
+import core.util.AppException;
+import core.util.DebugHandler;
 
 
 
@@ -42,32 +44,34 @@ public class GoogleSheetWrite {
     public static String participantsRange;
     public static String registrantsRange;
 	public static String eventsId;
+    
+	
 	
 
     /** Application name. */
-    private static final String APPLICATION_NAME =
+    public static final String APPLICATION_NAME =
         "Google Sheets API Java Read";
 
     /** Directory to store user credentials for this application. */
-    private static final java.io.File DATA_STORE_DIR = new java.io.File(
+    public static final java.io.File DATA_STORE_DIR = new java.io.File(
         System.getProperty("user.home"), ".credentials/sheets.googleapis.com-java-read");
 
     /** Global instance of the {@link FileDataStoreFactory}. */
-    private static FileDataStoreFactory DATA_STORE_FACTORY;
+    public static FileDataStoreFactory DATA_STORE_FACTORY;
 
     /** Global instance of the JSON factory. */
-    private static final JsonFactory JSON_FACTORY =
+    public static final JsonFactory JSON_FACTORY =
         JacksonFactory.getDefaultInstance();
 
     /** Global instance of the HTTP transport. */
-    private static HttpTransport HTTP_TRANSPORT;
+    public static HttpTransport HTTP_TRANSPORT;
 
     /** Global instance of the scopes required by this quickstart.
      *
      * If modifying these scopes, delete your previously saved credentials
      * at ~/.credentials/sheets.googleapis.com-java-quickstart
      */
-    private static final List<String> SCOPES =
+    public static final List<String> SCOPES =
         Arrays.asList(SheetsScopes.SPREADSHEETS);
 	
 
@@ -93,7 +97,7 @@ public class GoogleSheetWrite {
      */
     public static Credential authorize() throws IOException {
         // Load client secrets.
-        InputStream in = GoogleSheetWrite.class.getClassLoader().getResourceAsStream("core/util/client_secret.json");
+        InputStream in = GoogleSheetWrite.class.getClassLoader().getResourceAsStream("app/util/client_secret.json");
 		if ( in == null ) {
 			System.err.println("Unable to read client_secret.json from " +  GoogleSheetWrite.class.getClassLoader());
 		}
@@ -133,7 +137,7 @@ public class GoogleSheetWrite {
     public static void init() {
 		Properties prop = new Properties();
 		try {
-			InputStream in = GoogleSheetWrite.class.getClassLoader().getResourceAsStream("core/util/googlesheets.properties");
+			InputStream in = GoogleSheetWrite.class.getClassLoader().getResourceAsStream("app/util/googlesheets.properties");
 			//load a properties file from class path, inside static method
 			prop.load(in);
 
@@ -151,7 +155,7 @@ public class GoogleSheetWrite {
 		return 	"spreadsheetId: " + spreadsheetId + "\n" +
 			"registrantsRange: " + registrantsRange + "\n" +
 			"participantsRange: " + participantsRange + "\n" +
-			"eventsId: " + eventsId;
+			"eventsId: " + eventsId + "\n";
     }
 
 }

@@ -59,7 +59,7 @@
    		<fileset dir="${aprmarathon.jsp}" includes="**/*.jsp, **/*.html css/**/*.css, js/**/*.js, images/**/*" excludes="Makefile" />
 		</copy>
         <copy todir="${deploy.webclasses}" verbose="true" overwrite="true">
-		<fileset dir="${aprmarathon.classes}" includes="**/*.class,**/*.properties,**/*.tld,**/*.ccf,**/*.json,**/*.docx" />
+		<fileset dir="${aprmarathon.classes}" includes="**/*.class,**/*.properties,**/*.tld,**/*.ccf,**/*.json,**/*.docx,**/*.txt" />
 		</copy>
         <copy todir="${deploy.weblib}" verbose="true" overwrite="true">
    		<fileset dir="${aprmarathon.classes}" includes="**/aprmarathon.jar, **/core.jar" />
@@ -190,7 +190,7 @@
 				<compilerarg value="${compile.compilerarg}"/>
 		</javac>
 		<copy todir="${aprmarathon.classes}/app/util">
-			<fileset dir="${aprmarathon.appsrc}/util" includes="**/*.properties, **/*.docx"/>
+			<fileset dir="${aprmarathon.appsrc}/util" includes="**/*.properties, **/*.docx, **/*.json **/*.txt"/>
 		</copy>
 	</target>
 	<target name="compile-app-appdb">

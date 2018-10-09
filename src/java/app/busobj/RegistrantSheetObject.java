@@ -5,6 +5,9 @@
  *
  * Author: Govind Thirumalai
  */
+
+package app.busobj;
+
 import java.util.Date;
 import core.util.DebugHandler;
 import core.util.Util;
@@ -23,6 +26,7 @@ import org.codehaus.jettison.json.JSONException;
  */
 
 public class RegistrantSheetObject implements Cloneable {
+	private String registrant_id;
 	private String registrant_name;
 	private String registrant_middle_name;
 	private String registrant_last_name;
@@ -62,7 +66,8 @@ public class RegistrantSheetObject implements Cloneable {
 	 */
     
 	public String toString() {
-	   return	"registrant_name : " + registrant_name + "\n" +
+	   return	"registrant_id : " + registrant_id + "\n" +
+	    "registrant_name : " + registrant_name + "\n" +
 		"registrant_middle_name : " + registrant_middle_name + "\n" +
 		"registrant_last_name : " + registrant_last_name + "\n" +
 		"registrant_email : " + registrant_email + "\n" +
@@ -155,6 +160,7 @@ public class RegistrantSheetObject implements Cloneable {
 	 */
     
 	public RegistrantSheetObject () {
+		setRegistrantId("0");
 		setRegistrantName("");
 		setRegistrantMiddleName("");
 		setRegistrantLastName("");
@@ -191,6 +197,9 @@ public class RegistrantSheetObject implements Cloneable {
 	 */
     
 	public RegistrantSheetObject (JSONObject jObject) {
+		try {
+			registrant_id = jObject.getString("registrant_id");
+		} catch (JSONException je) {}
 		try {
 			registrant_name = jObject.getString("registrant_name");
 		} catch (JSONException je) {}
@@ -305,7 +314,31 @@ public class RegistrantSheetObject implements Cloneable {
 			}
 		} catch (JSONException je) {}
 	}
+	
+    /**
+     *
+     * Sets the <code>registrant_id</code> field
+     *
+     * @param registrant_id      String
+     *
+     */
     
+    public void setRegistrantId(String registrant_id) {
+        this.registrant_id = registrant_id;
+    }
+    
+    
+    /**
+     *
+     * Gets the <code>registrant_id</code> field
+     *
+     * @returns registrant_id
+     *
+     */
+    
+    public String getRegistrantId() {
+        return registrant_id;
+    }
     
     /**
      *

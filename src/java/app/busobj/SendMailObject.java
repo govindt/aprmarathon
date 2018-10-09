@@ -17,6 +17,7 @@ import java.text.ParseException;
 import org.codehaus.jettison.json.JSONObject;
 import org.codehaus.jettison.json.JSONException;
 
+
 /**
  * The implementation of the SendMailObject which maps a table
  * in the database
@@ -202,6 +203,38 @@ public class SendMailObject implements Cloneable {
 		} catch (JSONException je) {}
 	}
     
+	
+	/**
+	 * Constructs the SendMailObject from RegistrantSheetObject
+	 *
+	 */
+    
+	public SendMailObject (	RegistrantSheetObject rSObj, 
+							String subject, 
+							String body,
+							String receipt_prefix ) {
+		this.subject = subject;
+		this.body = body;
+		to = rSObj.getRegistrantEmail();
+		if ( ! Util.trim(rSObj.getRegistrantAdditionalEmail()).equals("") )
+			cc = rSObj.getRegistrantAdditionalEmail();
+		registrant_id = rSObj.getRegistrantId();
+		SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+		receipt_date = df.format(rSObj.getRegistrantReceiptDate());
+		SimpleDateFormat df1 = new SimpleDateFormat("yyyy");
+		receipt_year = df1.format(rSObj.getRegistrantReceiptDate());
+		receipt_no = receipt_prefix + "/" + registrant_id;
+		registrant_name = rSObj.getRegistrantName();
+		registrant_last_name = rSObj.getRegistrantLastName();
+		receipt_address = rSObj.getRegistrantAddress();
+		transfer_type = rSObj.getRegistrantPaymentTypeName();
+		transfer_date = df.format(rSObj.getRegistrantPaymentDate());
+		transfer_details = rSObj.getRegistrantPaymentDetails();
+		towards = rSObj.getRegistrantPaymentTowards();
+		amount = rSObj.getRegistrantPaymentAmount() + rSObj.getRegistrantAdditionalAmount() + "";
+		email_type = SendMailObject.RECEIPT_EMAIL;
+	}
+	
 	/**
      *
      * Sets the <code>subject</code> field

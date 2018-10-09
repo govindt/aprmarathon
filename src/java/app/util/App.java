@@ -118,6 +118,8 @@ public class App {
 		AppConstants.EMAIL_USERNAMES = siteProps.getProperty("app.email_usernames");
 		AppConstants.RECEIPT_NO_PREFIX = siteProps.getProperty("app.receipt_no_prefix");
 		AppConstants.RECEIPT_TEMPLATE = siteProps.getProperty("app.receipt_template");
+		AppConstants.RECEIPT_MAIL_BODY_TEMPLATE = siteProps.getProperty("app.receipt_mail_body_template");
+		AppConstants.RECEIPT_MAIL_SUBJECT = siteProps.getProperty("app.receipt_mail_subject");
 
 		// INSERT GENERATED CODE
     AppConstants.MIN_AGE_LABEL = siteProps.getProperty("app.min_age_label");

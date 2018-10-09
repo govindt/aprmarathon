@@ -1,0 +1,19 @@
+<html>
+<table>
+<tr>
+<td><img src="http://aprmarathon.org/app/images/act-apr-chartitable-trust.png"></td>
+<td><img src="http://aprmarathon.org/app/images/apr-marathon.png" width="191" height="104"></td>
+</tr>
+</table>
+<br>
+<br>Hi %%FIRST_NAME%%,
+<br>
+<br>Thanks for contributing towards APR Charitable Trust and participating in APR Marathon.
+<br>
+<br
+<br><b>Please find the tax receipt for your contribution</b><br>
+<br>
+<br>Thanks
+<br>
+<br>APR Charitable Trust - Treasurer.
+</html>
