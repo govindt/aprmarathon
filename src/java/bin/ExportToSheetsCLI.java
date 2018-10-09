@@ -1,6 +1,6 @@
 import core.util.AppException;
 import app.util.App;
-import core.util.GoogleSheetWrite;
+import app.util.GoogleSheetWrite;
 import core.util.DebugHandler;
 import app.businterface.ExportToSheetsInterface;
 import app.busimpl.ExportToSheetsImpl;

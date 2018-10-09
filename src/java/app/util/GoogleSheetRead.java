@@ -1,3 +1,16 @@
+/*
+ * @(#)GoogleSheetRead.java	1.31 04/08/20
+ *
+ * Project Name Project
+ *
+ * Author: Govind Thirumalai 
+ */
+
+
+
+
+package app.util;
+
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp;
 import com.google.api.client.extensions.jetty.auth.oauth2.LocalServerReceiver;
@@ -11,7 +24,6 @@ import com.google.api.client.util.store.FileDataStoreFactory;
 import com.google.api.services.sheets.v4.SheetsScopes;
 import com.google.api.services.sheets.v4.model.*;
 import com.google.api.services.sheets.v4.Sheets;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -22,15 +34,20 @@ import java.util.Properties;
 import java.util.StringTokenizer;
 import java.util.Date;
 import java.text.SimpleDateFormat;
+import app.busobj.CellObject;
+import app.busobj.RegistrantSheetObject;
 import core.util.AppException;
+import core.util.DebugHandler;
 import core.util.Util;
 import core.util.Constants;
-import app.util.App;
+import java.text.SimpleDateFormat;
 
-public class GoogleReadSheets {
-    private static boolean debug = false;
-    private static String spreadsheetId;
-    private static String range;
+
+
+public class GoogleSheetRead {
+	private static String spreadsheetId;
+	private static String range;
+	private static String registrantId;
     private static String registrantName;
     private static String registrantMiddleName;
     private static String registrantLastName;
@@ -60,134 +77,87 @@ public class GoogleReadSheets {
     private static String registrantPaymentReferenceId;
     private static String registrantPaymentTax;
     private static String registrantPaymentFee;
-
-
-    /** Application name. */
-    private static final String APPLICATION_NAME =
-        "Google Sheets API Java Read";
-
-    /** Directory to store user credentials for this application. */
-    private static final java.io.File DATA_STORE_DIR = new java.io.File(
-        System.getProperty("user.home"), ".credentials/sheets.googleapis.com-java-read");
-
-    /** Global instance of the {@link FileDataStoreFactory}. */
-    private static FileDataStoreFactory DATA_STORE_FACTORY;
-
-    /** Global instance of the JSON factory. */
-    private static final JsonFactory JSON_FACTORY =
-        JacksonFactory.getDefaultInstance();
-
-    /** Global instance of the HTTP transport. */
-    private static HttpTransport HTTP_TRANSPORT;
-
-    /** Global instance of the scopes required by this quickstart.
-     *
-     * If modifying these scopes, delete your previously saved credentials
-     * at ~/.credentials/sheets.googleapis.com-java-quickstart
-     */
-    private static final List<String> SCOPES =
-        Arrays.asList(SheetsScopes.SPREADSHEETS_READONLY);
-
-    static {
-        try {
-            HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
-            DATA_STORE_FACTORY = new FileDataStoreFactory(DATA_STORE_DIR);
-        } catch (Throwable t) {
-            t.printStackTrace();
-            System.exit(1);
-        }
-    }
-
-    public GoogleReadSheets() {
-		init();
-    }
-
-    /**
-     * Creates an authorized Credential object.
-     * @return an authorized Credential object.
-     * @throws IOException
-     */
-    public static Credential authorize() throws IOException {
-        // Load client secrets.
-        InputStream in = GoogleReadSheets.class.getClassLoader().getResourceAsStream("core/util/client_secret.json");
-		if ( in == null ) {
-			System.err.println("Unable to read client_secret.json from " +  GoogleReadSheets.class.getClassLoader());
-		}
-		GoogleClientSecrets clientSecrets =
-			GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(in));
-
-		// Build flow and trigger user authorization request.
-		GoogleAuthorizationCodeFlow flow =
-				new GoogleAuthorizationCodeFlow.Builder(
-						HTTP_TRANSPORT, JSON_FACTORY, clientSecrets, SCOPES)
-				.setDataStoreFactory(DATA_STORE_FACTORY)
-				.setAccessType("offline")
-				.build();
-		Credential credential = new AuthorizationCodeInstalledApp(
-			flow, new LocalServerReceiver()).authorize("user");
-		if ( debug )
-				System.out.println(
-						"Credentials saved to " + DATA_STORE_DIR.getAbsolutePath());
-		return credential;
-    }
-
-    /**
-     * Build and return an authorized Sheets API client service.
-     * @return an authorized Sheets API client service
-     * @throws IOException
-     */
-    public static Sheets getSheetsService() throws IOException {
-        Credential credential = authorize();
-        return new Sheets.Builder(HTTP_TRANSPORT, JSON_FACTORY, credential)
-                .setApplicationName(APPLICATION_NAME)
-                .build();
-    }
-
-    public static void init() {
+	
+	 public static void init(int eventYear) {
 		Properties prop = new Properties();
 		try {
-			InputStream in = GoogleReadSheets.class.getClassLoader().getResourceAsStream("core/util/googlesheets.properties");
+			InputStream in = GoogleSheetWrite.class.getClassLoader().getResourceAsStream("app/util/googlesheets.properties");
 			//load a properties file from class path, inside static method
 			prop.load(in);
 
-			//get the property value and print it out
-			spreadsheetId = prop.getProperty("googlereadsheets.spreadsheetId");
-			range = prop.getProperty("googlereadsheets.range");
-			registrantName = prop.getProperty("googlereadsheets.registrantName.column");
-			registrantMiddleName = prop.getProperty("googlereadsheets.registrantMiddleName.column");
-			registrantLastName = prop.getProperty("googlereadsheets.registrantLastName.column");
-			registrantEmail = prop.getProperty("googlereadsheets.registrantEmail.column");
-			registrantAdditionalEmail = prop.getProperty("googlereadsheets.registrantAdditionalEmail.column");
-			registrantPhoneNumber = prop.getProperty("googlereadsheets.registrantPhoneNumber.column");
-			registrantAddress = prop.getProperty("googlereadsheets.registrantAddress.column");
-			registrantCity = prop.getProperty("googlereadsheets.registrantCity.column");
-			registrantState = prop.getProperty("googlereadsheets.registrantState.column");
-			registrantPincode = prop.getProperty("googlereadsheets.registrantPincode.column");
-			registrantPAN = prop.getProperty("googlereadsheets.registrantPan.column");
-			registrantEvent = prop.getProperty("googlereadsheets.registrantEvent.column");
-			registrantTypeName = prop.getProperty("googlereadsheets.registrantTypeName.column");
-			registrantSourceName = prop.getProperty("googlereadsheets.registrantSourceName.column");
-			registrantClassName = prop.getProperty("googlereadsheets.registrantClassName.column");
-			registrantBeneficiaryName = prop.getProperty("googlereadsheets.registrantBeneficiaryName.column");
-			registrantEmergencyContact = prop.getProperty("googlereadsheets.registrantEmergencyContact.column");
-			registrantEmergencyPhone = prop.getProperty("googlereadsheets.registrantEmergencyPhone.column");
-			registrantPaymentTypeName = prop.getProperty("googlereadsheets.registrantPaymentTypeName.column");
-			registrantPaymentStatusName = prop.getProperty("googlereadsheets.registrantPaymentStatusName.column");
-			registrantPaymentAmount = prop.getProperty("googlereadsheets.registrantPaymentAmount.column");
-			registrantAdditionalAmount = prop.getProperty("googlereadsheets.registrantAdditionalAmount.column");
-			registrantPaymentDate = prop.getProperty("googlereadsheets.registrantPaymentDate.column");
-			registrantReceiptDate = prop.getProperty("googlereadsheets.registrantReceiptDate.column");
-			registrantPaymentDetails = prop.getProperty("googlereadsheets.registrantPaymentDetails.column");
-			registrantPaymentTowards = prop.getProperty("googlereadsheets.registrantPaymentTowards.column");
-			registrantPaymentReferenceId = prop.getProperty("googlereadsheets.registrantPaymentReferenceId.column");
-			registrantPaymentTax = prop.getProperty("googlereadsheets.registrantPaymentTax.column");
-			registrantPaymentFee = prop.getProperty("googlereadsheets.registrantPaymentFee.column");
+			// Old Format
+			if ( eventYear <= 2017 ) {
+				spreadsheetId = prop.getProperty("googlereadsheets.2017.spreadsheetId");
+				range = prop.getProperty("googlereadsheets.2017.range");
+				registrantName = prop.getProperty("googlereadsheets.2017.registrantName.column");
+				registrantMiddleName = prop.getProperty("googlereadsheets.2017.registrantMiddleName.column");
+				registrantLastName = prop.getProperty("googlereadsheets.2017.registrantLastName.column");
+				registrantEmail = prop.getProperty("googlereadsheets.2017.registrantEmail.column");
+				registrantAdditionalEmail = prop.getProperty("googlereadsheets.2017.registrantAdditionalEmail.column");
+				registrantPhoneNumber = prop.getProperty("googlereadsheets.2017.registrantPhoneNumber.column");
+				registrantAddress = prop.getProperty("googlereadsheets.2017.registrantAddress.column");
+				registrantCity = prop.getProperty("googlereadsheets.2017.registrantCity.column");
+				registrantState = prop.getProperty("googlereadsheets.2017.registrantState.column");
+				registrantPincode = prop.getProperty("googlereadsheets.2017.registrantPincode.column");
+				registrantPAN = prop.getProperty("googlereadsheets.2017.registrantPan.column");
+				registrantEvent = prop.getProperty("googlereadsheets.2017.registrantEvent.column");
+				registrantTypeName = prop.getProperty("googlereadsheets.2017.registrantTypeName.column");
+				registrantSourceName = prop.getProperty("googlereadsheets.2017.registrantSourceName.column");
+				registrantClassName = prop.getProperty("googlereadsheets.2017.registrantClassName.column");
+				registrantBeneficiaryName = prop.getProperty("googlereadsheets.2017.registrantBeneficiaryName.column");
+				registrantEmergencyContact = prop.getProperty("googlereadsheets.2017.registrantEmergencyContact.column");
+				registrantEmergencyPhone = prop.getProperty("googlereadsheets.2017.registrantEmergencyPhone.column");
+				registrantPaymentTypeName = prop.getProperty("googlereadsheets.2017.registrantPaymentTypeName.column");
+				registrantPaymentStatusName = prop.getProperty("googlereadsheets.2017.registrantPaymentStatusName.column");
+				registrantPaymentAmount = prop.getProperty("googlereadsheets.2017.registrantPaymentAmount.column");
+				registrantAdditionalAmount = prop.getProperty("googlereadsheets.2017.registrantAdditionalAmount.column");
+				registrantPaymentDate = prop.getProperty("googlereadsheets.2017.registrantPaymentDate.column");
+				registrantReceiptDate = prop.getProperty("googlereadsheets.2017.registrantReceiptDate.column");
+				registrantPaymentDetails = prop.getProperty("googlereadsheets.2017.registrantPaymentDetails.column");
+				registrantPaymentTowards = prop.getProperty("googlereadsheets.2017.registrantPaymentTowards.column");
+				registrantPaymentReferenceId = prop.getProperty("googlereadsheets.2017.registrantPaymentReferenceId.column");
+				registrantPaymentTax = prop.getProperty("googlereadsheets.2017.registrantPaymentTax.column");
+				registrantPaymentFee = prop.getProperty("googlereadsheets.2017.registrantPaymentFee.column");
+			} else { // 2018
+				spreadsheetId = prop.getProperty("googlereadsheets.2018.spreadsheetId");
+				range = prop.getProperty("googlereadsheets.2018.range");
+				registrantId = prop.getProperty("googlereadsheets.2018.registrantId.column");
+				registrantName = prop.getProperty("googlereadsheets.2018.registrantName.column");
+				registrantMiddleName = prop.getProperty("googlereadsheets.2018.registrantMiddleName.column");
+				registrantLastName = prop.getProperty("googlereadsheets.2018.registrantLastName.column");
+				registrantEmail = prop.getProperty("googlereadsheets.2018.registrantEmail.column");
+				registrantAdditionalEmail = prop.getProperty("googlereadsheets.2018.registrantAdditionalEmail.column");
+				registrantPhoneNumber = prop.getProperty("googlereadsheets.2018.registrantPhoneNumber.column");
+				registrantAddress = prop.getProperty("googlereadsheets.2018.registrantAddress.column");
+				registrantCity = prop.getProperty("googlereadsheets.2018.registrantCity.column");
+				registrantState = prop.getProperty("googlereadsheets.2018.registrantState.column");
+				registrantPincode = prop.getProperty("googlereadsheets.2018.registrantPincode.column");
+				registrantPAN = prop.getProperty("googlereadsheets.2018.registrantPan.column");
+				registrantEvent = prop.getProperty("googlereadsheets.2018.registrantEvent.column");
+				registrantTypeName = prop.getProperty("googlereadsheets.2018.registrantTypeName.column");
+				registrantSourceName = prop.getProperty("googlereadsheets.2018.registrantSourceName.column");
+				registrantClassName = prop.getProperty("googlereadsheets.2018.registrantClassName.column");
+				registrantBeneficiaryName = prop.getProperty("googlereadsheets.2018.registrantBeneficiaryName.column");
+				registrantEmergencyContact = prop.getProperty("googlereadsheets.2018.registrantEmergencyContact.column");
+				registrantEmergencyPhone = prop.getProperty("googlereadsheets.2018.registrantEmergencyPhone.column");
+				registrantPaymentTypeName = prop.getProperty("googlereadsheets.2018.registrantPaymentTypeName.column");
+				registrantPaymentStatusName = prop.getProperty("googlereadsheets.2018.registrantPaymentStatusName.column");
+				registrantPaymentAmount = prop.getProperty("googlereadsheets.2018.registrantPaymentAmount.column");
+				registrantAdditionalAmount = prop.getProperty("googlereadsheets.2018.registrantAdditionalAmount.column");
+				registrantPaymentDate = prop.getProperty("googlereadsheets.2018.registrantPaymentDate.column");
+				registrantReceiptDate = prop.getProperty("googlereadsheets.2018.registrantReceiptDate.column");
+				registrantPaymentDetails = prop.getProperty("googlereadsheets.2018.registrantPaymentDetails.column");
+				registrantPaymentTowards = prop.getProperty("googlereadsheets.2018.registrantPaymentTowards.column");
+				registrantPaymentReferenceId = prop.getProperty("googlereadsheets.2018.registrantPaymentReferenceId.column");
+				registrantPaymentTax = prop.getProperty("googlereadsheets.2018.registrantPaymentTax.column");
+				registrantPaymentFee = prop.getProperty("googlereadsheets.2018.registrantPaymentFee.column");
+			}
 		} 
 		catch (IOException ex) {
-				ex.printStackTrace();
+			ex.printStackTrace();
 		}
     }
-
+	
     public static int ColumnLetterToNumber(String inputColumnName) {
     	int outputColumnNumber = 0;
     	if (inputColumnName == null || inputColumnName.length() == 0) {
@@ -204,9 +174,16 @@ public class GoogleReadSheets {
     	}
 		return outputColumnNumber - 1;
     }
-
-    public static ArrayList<CellObject> getEmptyElements(RegistrantSheetObject rObj, int rowNo, String sheetName) {
+	
+	public static ArrayList<CellObject> getEmptyElements(RegistrantSheetObject rObj, int rowNo, String sheetName) {
 		ArrayList<CellObject> cObjAL = new ArrayList<CellObject>();
+		if ( rObj.getRegistrantId() == null || rObj.getRegistrantId().equals("") ) {
+                CellObject cObj = new CellObject();
+                cObj.setSheetName(sheetName);
+                cObj.setRowNo(rowNo);
+                cObj.setColumn(registrantId);
+                cObjAL.add(cObj);
+        }
 		if ( rObj.getRegistrantName() == null || rObj.getRegistrantName().equals("") ) {
                 CellObject cObj = new CellObject();
                 cObj.setSheetName(sheetName);
@@ -214,20 +191,22 @@ public class GoogleReadSheets {
                 cObj.setColumn(registrantName);
                 cObjAL.add(cObj);
         }
-        if ( rObj.getRegistrantMiddleName() == null || rObj.getRegistrantMiddleName().equals("") ) {
+		// Middle Name can be null
+        /*if ( rObj.getRegistrantMiddleName() == null || rObj.getRegistrantMiddleName().equals("") ) {
                 CellObject cObj = new CellObject();
                 cObj.setSheetName(sheetName);
                 cObj.setRowNo(rowNo);
                 cObj.setColumn(registrantMiddleName);
                 cObjAL.add(cObj);
-        }
-        if ( rObj.getRegistrantLastName() == null || rObj.getRegistrantLastName().equals("") ) {
+        }*/
+		// Last Name can be null
+        /*if ( rObj.getRegistrantLastName() == null || rObj.getRegistrantLastName().equals("") ) {
                 CellObject cObj = new CellObject();
                 cObj.setSheetName(sheetName);
                 cObj.setRowNo(rowNo);
                 cObj.setColumn(registrantLastName);
                 cObjAL.add(cObj);
-        }
+        }*/
         if ( rObj.getRegistrantEmail() == null || rObj.getRegistrantEmail().equals("") ) {
                 CellObject cObj = new CellObject();
                 cObj.setSheetName(sheetName);
@@ -235,13 +214,13 @@ public class GoogleReadSheets {
                 cObj.setColumn(registrantEmail);
                 cObjAL.add(cObj);
         }
-        if ( rObj.getRegistrantAdditionalEmail() == null || rObj.getRegistrantAdditionalEmail().equals("") ) {
+        /*if ( rObj.getRegistrantAdditionalEmail() == null || rObj.getRegistrantAdditionalEmail().equals("") ) {
                 CellObject cObj = new CellObject();
                 cObj.setSheetName(sheetName);
                 cObj.setRowNo(rowNo);
                 cObj.setColumn(registrantAdditionalEmail);
                 cObjAL.add(cObj);
-        }
+        }*/
         if ( rObj.getRegistrantPhoneNumber() == null || rObj.getRegistrantPhoneNumber().equals("") ) {
                 CellObject cObj = new CellObject();
                 cObj.setSheetName(sheetName);
@@ -256,7 +235,7 @@ public class GoogleReadSheets {
                 cObj.setColumn(registrantAddress);
                 cObjAL.add(cObj);
         }
-        if ( rObj.getRegistrantCity() == null || rObj.getRegistrantCity().equals("") ) {
+        /*if ( rObj.getRegistrantCity() == null || rObj.getRegistrantCity().equals("") ) {
                 CellObject cObj = new CellObject();
                 cObj.setSheetName(sheetName);
                 cObj.setRowNo(rowNo);
@@ -290,7 +269,7 @@ public class GoogleReadSheets {
                 cObj.setRowNo(rowNo);
                 cObj.setColumn(registrantEvent);
                 cObjAL.add(cObj);
-        }
+        }*/
         if ( rObj.getRegistrantTypeName() == null || rObj.getRegistrantTypeName().equals("") ) {
                 CellObject cObj = new CellObject();
                 cObj.setSheetName(sheetName);
@@ -319,7 +298,7 @@ public class GoogleReadSheets {
                 cObj.setColumn(registrantBeneficiaryName);
                 cObjAL.add(cObj);
         }
-        if ( rObj.getRegistrantEmergencyContact() == null || rObj.getRegistrantEmergencyContact().equals("") ) {
+        /*if ( rObj.getRegistrantEmergencyContact() == null || rObj.getRegistrantEmergencyContact().equals("") ) {
                 CellObject cObj = new CellObject();
                 cObj.setSheetName(sheetName);
                 cObj.setRowNo(rowNo);
@@ -332,7 +311,7 @@ public class GoogleReadSheets {
                 cObj.setRowNo(rowNo);
                 cObj.setColumn(registrantEmergencyPhone);
                 cObjAL.add(cObj);
-        }
+        }*/
         if ( rObj.getRegistrantPaymentTypeName() == null || rObj.getRegistrantPaymentTypeName().equals("") ) {
                 CellObject cObj = new CellObject();
                 cObj.setSheetName(sheetName);
@@ -361,13 +340,14 @@ public class GoogleReadSheets {
                 cObj.setColumn(registrantReceiptDate);
                 cObjAL.add(cObj);
         }
+		/*
         if ( rObj.getRegistrantPaymentDetails() == null || rObj.getRegistrantPaymentDetails().equals("") ) {
                 CellObject cObj = new CellObject();
                 cObj.setSheetName(sheetName);
                 cObj.setRowNo(rowNo);
                 cObj.setColumn(registrantPaymentDetails);
                 cObjAL.add(cObj);
-        }
+        }*/
         if ( rObj.getRegistrantPaymentTowards() == null || rObj.getRegistrantPaymentTowards().equals("") ) {
                 CellObject cObj = new CellObject();
                 cObj.setSheetName(sheetName);
@@ -375,37 +355,37 @@ public class GoogleReadSheets {
                 cObj.setColumn(registrantPaymentTowards);
                 cObjAL.add(cObj);
         }
+		/*
         if ( rObj.getRegistrantPaymentReferenceId() == null || rObj.getRegistrantPaymentReferenceId().equals("") ) {
                 CellObject cObj = new CellObject();
                 cObj.setSheetName(sheetName);
                 cObj.setRowNo(rowNo);
                 cObj.setColumn(registrantPaymentReferenceId);
                 cObjAL.add(cObj);
-        }
+        }*/
 		return cObjAL;
     }
-
-    public static ArrayList<RegistrantSheetObject> getPendingReceiptList() throws IOException, AppException {
+	
+	public static ArrayList<RegistrantSheetObject> getRegistrantList() throws IOException, AppException {
 		ArrayList<RegistrantSheetObject> rObjAL = new ArrayList<RegistrantSheetObject>();
 		ArrayList<CellObject> errorList = new ArrayList<CellObject>();
 		 // Build a new authorized API client service.
-		Sheets service = getSheetsService();
+		Sheets service = GoogleSheetWrite.getSheetsService();
 		String buf = null;
 		List<List<Object>> values = null;
 		List<List<Object>> allValues = null;
 		int rowNo = 0;
 
-		StringTokenizer st = new StringTokenizer(GoogleReadSheets.range, ",");
+		StringTokenizer st = new StringTokenizer(range, ",");
 		while (st.hasMoreTokens()) {
 			buf = st.nextToken();
 			StringTokenizer st1 = new StringTokenizer(buf, "!");
 			String buf1 = st1.nextToken();
 			rowNo = 0;
 			allValues = new ArrayList<List<Object>>();
-			//if ( debug )
-				System.out.println("Sheet: " + buf1);
+			DebugHandler.info("Sheet: " + buf1);
 			ValueRange response = service.spreadsheets().values()
-					.get(GoogleReadSheets.spreadsheetId, buf)
+					.get(spreadsheetId, buf)
 						.execute();
 			values = response.getValues();
 			if (values == null || values.size() == 0) {
@@ -414,8 +394,7 @@ public class GoogleReadSheets {
                 for (List<Object> row : values) { 
 			// Leave the heading row in each sheet
 			if ( rowNo != 0 ) {
-				if ( debug )
-					System.out.println("Adding Row: " + row);
+				DebugHandler.fine("Adding Row: " + row);
 				allValues.add(row);
 			}
 			rowNo++;
@@ -426,6 +405,7 @@ public class GoogleReadSheets {
 			rowNo = 0;
         		for (List<Object> row : allValues) { 
 					RegistrantSheetObject rObj = new RegistrantSheetObject();
+					rObj.setRegistrantId((String)row.get(ColumnLetterToNumber(registrantId)));
 					rObj.setRegistrantName((String)row.get(ColumnLetterToNumber(registrantName)));
 					rObj.setRegistrantMiddleName((String)row.get(ColumnLetterToNumber(registrantMiddleName)));
 					rObj.setRegistrantLastName((String)row.get(ColumnLetterToNumber(registrantLastName)));
@@ -482,20 +462,19 @@ public class GoogleReadSheets {
 					rObj.setRegistrantPaymentReferenceId((String)row.get(ColumnLetterToNumber(registrantPaymentReferenceId)));
 					System.out.println("registrantPaymentReferenceId Column : " + ColumnLetterToNumber(registrantPaymentReferenceId));
 					try {
-						System.out.println("registrantPaymentTax Column : " + ColumnLetterToNumber(registrantPaymentTax) + ", Row: " + rowNo );
-										rObj.setRegistrantPaymentTax(Double.parseDouble((String)row.get(ColumnLetterToNumber(registrantPaymentTax))));
+						DebugHandler.info("registrantPaymentTax Column : " + ColumnLetterToNumber(registrantPaymentTax) + ", Row: " + rowNo );
+						rObj.setRegistrantPaymentTax(Double.parseDouble((String)row.get(ColumnLetterToNumber(registrantPaymentTax))));
 					} catch (NumberFormatException nfe) {
 					} catch (IndexOutOfBoundsException ibe) {// Sometimes Google sheets gives less array size
 					}
 
 					try {
-						System.out.println("registrantPaymentFee Column : " + ColumnLetterToNumber(registrantPaymentFee));
+						DebugHandler.info("registrantPaymentFee Column : " + ColumnLetterToNumber(registrantPaymentFee));
 						rObj.setRegistrantPaymentFee(Double.parseDouble((String)row.get(ColumnLetterToNumber(registrantPaymentFee))));
 					} catch (NumberFormatException nfe) {
 					} catch (IndexOutOfBoundsException ibe) {// Sometimes Google sheets gives less array size
 					}
-					if ( debug )
-						System.out.println(rObj);
+					DebugHandler.fine(rObj);
 					rObjAL.add(rObj);
 					
 					ArrayList<CellObject> rowError = getEmptyElements(rObj, (rowNo+2), buf1);
@@ -506,19 +485,19 @@ public class GoogleReadSheets {
 	          	}
 			}
         }
-		if (debug)
-			System.out.println(rObjAL);
+		DebugHandler.fine(rObjAL);
 		if ( errorList.size() > 0 ) {
-			System.err.println("ERROR!!!The following cells have errors: " + errorList);
-			System.err.println("Exiting. Please correct and rerun");
-			System.exit(1);
+			DebugHandler.severe("ERROR!!!The following cells have errors: " + errorList);
+			DebugHandler.severe("Exiting. Please correct and rerun");
+			return null;
 		}
 		return rObjAL;
     }
-
-    public String toString() {
-		return 	"spreadsheetId: " + spreadsheetId + "\n" +
+	
+	public String toString() {
+		return "spreadsheetId: " + spreadsheetId + "\n" +
 			"range: " + range + "\n" +
+			"registrantId: " + registrantId + "\n" +
 			"registrantName: " + registrantName + "\n" +
 			"registrantMiddleName: " + registrantMiddleName + "\n" +
 			"registrantLastName: " + registrantLastName + "\n" +
@@ -548,13 +527,12 @@ public class GoogleReadSheets {
 			"registrantPaymentReferenceId: " + registrantPaymentReferenceId + "\n" +
 			"registrantPaymentTax: " + registrantPaymentTax + "\n" +
 			"registrantPaymentFee: " + registrantPaymentFee + "\n";
-    }
+	}
 
-    public static void main(String[] args) throws IOException, AppException {
-		App theApp = App.getInstance();
-		GoogleReadSheets grs = new GoogleReadSheets();
-		if ( debug ) 
-			System.out.println(grs);
-		GoogleReadSheets.getPendingReceiptList();
+    public GoogleSheetRead(String event_year) {
+		int eventYear = Integer.parseInt(event_year);
+		GoogleSheetRead.init(eventYear);
     }
 }
+
+

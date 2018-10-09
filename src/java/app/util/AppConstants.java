@@ -447,6 +447,8 @@ public class AppConstants {
 	public static String EMAIL_USERNAMES;
 	public static String RECEIPT_NO_PREFIX;
 	public static String RECEIPT_TEMPLATE;
+	public static String RECEIPT_MAIL_BODY_TEMPLATE;
+	public static String RECEIPT_MAIL_SUBJECT;
 	public static int SITE_ID = 1;
 	public static int ONLINE_REGISTRANT_ID = 1;
 };

@@ -52,7 +52,6 @@ ${TOMCAT_WEBAPP_LIB_DIR}/fr.opensagres.xdocreport.itext.extension-2.0.0.jar:\
 ${TOMCAT_WEBAPP_LIB_DIR}/com.lowagie.text-2.1.7.jar:\
 ${TOMCAT_WEBAPP_LIB_DIR}/fr.opensagres.xdocreport.itext.extension-2.0.0.jar:\
 ${TOMCAT_WEBAPP_LIB_DIR}/commons-codec-1.11.jar\
-
 "
 
 CLASSPATH="${TOMCAT_DIR}/webapps/aprmarathon/WEB-INF/classes:\
