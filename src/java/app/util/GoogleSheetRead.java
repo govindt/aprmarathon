@@ -383,13 +383,13 @@ public class GoogleSheetRead {
 			String buf1 = st1.nextToken();
 			rowNo = 0;
 			allValues = new ArrayList<List<Object>>();
-			DebugHandler.info("Sheet: " + buf1);
+			DebugHandler.fine("Sheet: " + buf1);
 			ValueRange response = service.spreadsheets().values()
 					.get(spreadsheetId, buf)
 						.execute();
 			values = response.getValues();
 			if (values == null || values.size() == 0) {
-						System.out.println("No data found in " + buf1 + " sheet.");
+				DebugHandler.severe("No data found in " + buf1 + " sheet.");
 			}
                 for (List<Object> row : values) { 
 			// Leave the heading row in each sheet
@@ -400,7 +400,7 @@ public class GoogleSheetRead {
 			rowNo++;
 		}
 		if (allValues == null || allValues.size() == 0) {
-			System.out.println("No data found in sheet " + buf1);
+			DebugHandler.severe("No data found in sheet " + buf1);
 		} else {
 			rowNo = 0;
         		for (List<Object> row : allValues) { 
@@ -448,28 +448,28 @@ public class GoogleSheetRead {
 						date = dateFormatter.parse(tmp);
 						rObj.setRegistrantPaymentDate(date);
 					} catch (java.text.ParseException pe) {
-						System.err.println("Parse Exception while parsing " + tmp);
+						DebugHandler.severe("Parse Exception while parsing " + tmp);
 					}
 					tmp = Util.trim((String)row.get(ColumnLetterToNumber(registrantReceiptDate)));
 					try {
 						date = dateFormatter.parse(tmp);
 										rObj.setRegistrantReceiptDate(date);
 					} catch (java.text.ParseException pe) {
-						System.err.println("Parse Exception while parsing " + tmp);
+						DebugHandler.severe("Parse Exception while parsing " + tmp);
 					}
 					rObj.setRegistrantPaymentDetails((String)row.get(ColumnLetterToNumber(registrantPaymentDetails)));
 					rObj.setRegistrantPaymentTowards((String)row.get(ColumnLetterToNumber(registrantPaymentTowards)));
 					rObj.setRegistrantPaymentReferenceId((String)row.get(ColumnLetterToNumber(registrantPaymentReferenceId)));
-					System.out.println("registrantPaymentReferenceId Column : " + ColumnLetterToNumber(registrantPaymentReferenceId));
+					DebugHandler.fine("registrantPaymentReferenceId Column : " + ColumnLetterToNumber(registrantPaymentReferenceId));
 					try {
-						DebugHandler.info("registrantPaymentTax Column : " + ColumnLetterToNumber(registrantPaymentTax) + ", Row: " + rowNo );
+						DebugHandler.fine("registrantPaymentTax Column : " + ColumnLetterToNumber(registrantPaymentTax) + ", Row: " + rowNo );
 						rObj.setRegistrantPaymentTax(Double.parseDouble((String)row.get(ColumnLetterToNumber(registrantPaymentTax))));
 					} catch (NumberFormatException nfe) {
 					} catch (IndexOutOfBoundsException ibe) {// Sometimes Google sheets gives less array size
 					}
 
 					try {
-						DebugHandler.info("registrantPaymentFee Column : " + ColumnLetterToNumber(registrantPaymentFee));
+						DebugHandler.fine("registrantPaymentFee Column : " + ColumnLetterToNumber(registrantPaymentFee));
 						rObj.setRegistrantPaymentFee(Double.parseDouble((String)row.get(ColumnLetterToNumber(registrantPaymentFee))));
 					} catch (NumberFormatException nfe) {
 					} catch (IndexOutOfBoundsException ibe) {// Sometimes Google sheets gives less array size

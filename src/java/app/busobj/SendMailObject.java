@@ -214,7 +214,7 @@ public class SendMailObject implements Cloneable {
 							String body,
 							String receipt_prefix ) {
 		this.subject = subject;
-		this.body = body;
+		this.body = body.replaceAll("%%FIRST_NAME%%",rSObj.getRegistrantName());
 		to = rSObj.getRegistrantEmail();
 		if ( ! Util.trim(rSObj.getRegistrantAdditionalEmail()).equals("") )
 			cc = rSObj.getRegistrantAdditionalEmail();
