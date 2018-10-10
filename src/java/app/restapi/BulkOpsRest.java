@@ -40,7 +40,6 @@ import java.io.InputStream;
 public class BulkOpsRest {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
 	@Path("bulkReceiptGenerate")
 	public Response bulkReceiptGenerate(InputStream incomingData) throws JSONException, AppException {
 		App.getInstance();
@@ -51,12 +50,12 @@ public class BulkOpsRest {
 		try {
 			event_id = jObject.getInt("event_id");
 		} catch (JSONException je) {
-			throw new AppException("event_id value not passed.");
+			return Response.status(400).entity("event_id value not passed.").build();
 		}
 		EventInterface eIf = new EventImpl();
 		EventObject eObj = eIf.getEvent(event_id);
 		if ( eObj == null ) 
-			throw new AppException("Event not found for the given event id");
+			return Response.status(400).entity("Event not found for the given event id").build();
 		SimpleDateFormat df = new SimpleDateFormat("yyyy");
 		String year = df.format(eObj.getEventStartDate());
 		DebugHandler.info("Year: " + year);
@@ -65,6 +64,6 @@ public class BulkOpsRest {
 		JSONObject jo = new JSONObject();
 		jo.put("result", result);
 		
-		return Response.status(200).entity(jo.toString()).type(MediaType.APPLICATION_JSON).build();
+		return Response.status(200).entity("Receipt Generated and Sent Mail Successfully.").build();
 	};
 };
