@@ -38,33 +38,43 @@ import org.codehaus.jettison.json.JSONArray;
 @Path("exporttosheets")
 public class ExportToSheetsRest {
 	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("exportToSheets")
 	public Response exportToSheets(InputStream incomingData) throws JSONException, AppException {
 		App theApp = App.getInstance();
 		JsonConverter jc = new JsonConverter(incomingData);
 		JSONObject jObject = jc.getJsonObject();
+		JSONObject jo = new JSONObject();
 		int event_id;
 		try {
 			event_id = jObject.getInt("event_id");
 		} catch (JSONException je) {
-			return Response.status(400).entity("event_id value not passed.").build();
+			DebugHandler.severe("event_id value not passed.");
+			jo.put("result", new Integer(1));
+			return Response.status(200).entity(jo.toString()).type(MediaType.APPLICATION_JSON).build();
 		}
 		GoogleSheetWrite grs = new GoogleSheetWrite(event_id + "");
 		DebugHandler.info(grs);
 		ExportToSheetsInterface eTSIf = new ExportToSheetsImpl();
-		JSONObject jo = new JSONObject();
+		
 		try {
 			eTSIf.updateRegistrants();
 		} catch (AppException ae) {
-			return Response.status(400).entity("Failed to write ParticipantInfo Info.").build();
+			DebugHandler.severe("Failed to write Registrant Info");
+			jo.put("result", new Integer(1));
+			return Response.status(200).entity(jo.toString()).type(MediaType.APPLICATION_JSON).build();
 		}
 		try {
 			eTSIf.updateParticipants();
 		} catch (AppException ae) {
-			return Response.status(400).entity("Failed to write ParticipantInfo Info.").build();
+			DebugHandler.severe("Failed to write ParticipantInfo Info");
+			jo.put("result", new Integer(2));
+			return Response.status(200).entity(jo.toString()).type(MediaType.APPLICATION_JSON).build();
 		}
-		return Response.status(200).entity("Registrants and Participant Data Updated to Sheets Successfully.").build();
+		
+		jo.put("result", new Integer(0));
+		return Response.status(200).entity(jo.toString()).type(MediaType.APPLICATION_JSON).build();
 	};
 	
 
