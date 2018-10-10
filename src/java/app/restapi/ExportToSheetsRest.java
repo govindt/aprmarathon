@@ -38,7 +38,6 @@ import org.codehaus.jettison.json.JSONArray;
 @Path("exporttosheets")
 public class ExportToSheetsRest {
 	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("exportToSheets")
 	public Response exportToSheets(InputStream incomingData) throws JSONException, AppException {
@@ -49,7 +48,7 @@ public class ExportToSheetsRest {
 		try {
 			event_id = jObject.getInt("event_id");
 		} catch (JSONException je) {
-			throw new AppException("event_id value not passed.");
+			return Response.status(400).entity("event_id value not passed.").build();
 		}
 		GoogleSheetWrite grs = new GoogleSheetWrite(event_id + "");
 		DebugHandler.info(grs);
@@ -58,20 +57,14 @@ public class ExportToSheetsRest {
 		try {
 			eTSIf.updateRegistrants();
 		} catch (AppException ae) {
-			jo.put("result", new Integer(1));
-			ae.printStackTrace();
-			throw new AppException("Failed to write Registrant Info");
+			return Response.status(400).entity("Failed to write ParticipantInfo Info.").build();
 		}
 		try {
 			eTSIf.updateParticipants();
 		} catch (AppException ae) {
-			jo.put("result", new Integer(2));
-			ae.printStackTrace();
-			throw new AppException("Failed to write ParticipantInfo Info");
+			return Response.status(400).entity("Failed to write ParticipantInfo Info.").build();
 		}
-		
-		jo.put("result", new Integer(0));
-		return Response.status(200).entity(jo.toString()).type(MediaType.APPLICATION_JSON).build();
+		return Response.status(200).entity("Registrants and Participant Data Updated to Sheets Successfully.").build();
 	};
 	
 
