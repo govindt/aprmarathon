@@ -97,6 +97,10 @@ public class ExportToSheetsImpl implements ExportToSheetsInterface  {
 		registrantListHeader.add(AppConstants.PAYMENT_REFERENCE_ID_LABEL);
 		registrantListHeader.add(AppConstants.PAYMENT_TAX_LABEL);
 		registrantListHeader.add(AppConstants.PAYMENT_FEE_LABEL);
+		registrantListHeader.add(AppConstants.REGISTRANT_EVENT_ID_LABEL);
+		registrantListHeader.add(AppConstants.REGISTRANT_PAYMENT_ID_LABEL);
+		registrantListHeader.add(AppConstants.DB_OPERATION_LABEL);
+		
 		rListOfList.add(registrantListHeader);
 		if ( rEObjArr != null ) {
 			for ( int i = 0; i < rEObjArr.size(); i++) {
@@ -132,6 +136,10 @@ public class ExportToSheetsImpl implements ExportToSheetsInterface  {
 					registrantList.add(rPObj.getPaymentReferenceId());
 					registrantList.add(rPObj.getPaymentTax());
 					registrantList.add(rPObj.getPaymentFee());
+					registrantList.add(rEObj.getRegistrantEventId());
+					registrantList.add(rPObj.getRegistrantPaymentId());
+					registrantList.add(Constants.INFO_STR);
+					
 				} else {
 					throw new AppException("Found none or more than one payment for registrant : " + rObj.toString());
 				}

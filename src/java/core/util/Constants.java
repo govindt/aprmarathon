@@ -26,6 +26,8 @@ public class Constants {
 
     public static int FILE_SIZE = 1024 * 1024 * 5;
     public static int GET_ALL = -1;
+	public static String UPDATE_STR = "Update";
+	public static String INFO_STR = "Info";
 
     public static String ORACLE = "oracle";
     public static String MY_SQL = "mysql";

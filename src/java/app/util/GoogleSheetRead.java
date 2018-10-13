@@ -77,6 +77,9 @@ public class GoogleSheetRead {
     private static String registrantPaymentReferenceId;
     private static String registrantPaymentTax;
     private static String registrantPaymentFee;
+	private static String registrantEventId;
+	private static String registrantPaymentId;
+	private static String registrantDbOperation;
 	
 	 public static void init(int eventYear) {
 		Properties prop = new Properties();
@@ -151,6 +154,9 @@ public class GoogleSheetRead {
 				registrantPaymentReferenceId = prop.getProperty("googlereadsheets.2018.registrantPaymentReferenceId.column");
 				registrantPaymentTax = prop.getProperty("googlereadsheets.2018.registrantPaymentTax.column");
 				registrantPaymentFee = prop.getProperty("googlereadsheets.2018.registrantPaymentFee.column");
+				registrantEventId = prop.getProperty("googlereadsheets.2018.registrantEventId.column");
+				registrantPaymentId = prop.getProperty("googlereadsheets.2018.registrantPaymentId.column");
+				registrantDbOperation = prop.getProperty("googlereadsheets.2018.registrantDbOperation.column");
 			}
 		} 
 		catch (IOException ex) {
@@ -424,7 +430,7 @@ public class GoogleSheetRead {
 					rObj.setRegistrantBeneficiaryName((String)row.get(ColumnLetterToNumber(registrantBeneficiaryName)));
 					String tmp = Util.trim((String)row.get(ColumnLetterToNumber(registrantEmergencyContact)));
 					if ( tmp.equals("") ) {
-										rObj.setRegistrantEmergencyContact(rObj.getRegistrantName());
+						rObj.setRegistrantEmergencyContact(rObj.getRegistrantName());
 					}
 					tmp = Util.trim((String)row.get(ColumnLetterToNumber(registrantEmergencyPhone)));
 					if ( tmp.equals("") ) {
@@ -474,6 +480,19 @@ public class GoogleSheetRead {
 					} catch (NumberFormatException nfe) {
 					} catch (IndexOutOfBoundsException ibe) {// Sometimes Google sheets gives less array size
 					}
+					try {
+						DebugHandler.fine("registrantEventId Column : " + ColumnLetterToNumber(registrantEventId));
+						rObj.setRegistrantEventId(Integer.parseInt((String)row.get(ColumnLetterToNumber(registrantEventId))));
+					} catch (NumberFormatException nfe) {
+					} catch (IndexOutOfBoundsException ibe) {// Sometimes Google sheets gives less array size
+					}
+					try {
+						DebugHandler.fine("registrantPaymentId Column : " + ColumnLetterToNumber(registrantPaymentId));
+						rObj.setRegistrantPaymentId(Integer.parseInt((String)row.get(ColumnLetterToNumber(registrantPaymentId))));
+					} catch (NumberFormatException nfe) {
+					} catch (IndexOutOfBoundsException ibe) {// Sometimes Google sheets gives less array size
+					}
+					rObj.setRegistrantDbOperation((String)row.get(ColumnLetterToNumber(registrantDbOperation)));
 					DebugHandler.fine(rObj);
 					rObjAL.add(rObj);
 					
@@ -526,7 +545,10 @@ public class GoogleSheetRead {
 			"registrantPaymentTowards: " + registrantPaymentTowards + "\n" +
 			"registrantPaymentReferenceId: " + registrantPaymentReferenceId + "\n" +
 			"registrantPaymentTax: " + registrantPaymentTax + "\n" +
-			"registrantPaymentFee: " + registrantPaymentFee + "\n";
+			"registrantPaymentFee: " + registrantPaymentFee + "\n" +
+			"registrantEventId: " + registrantEventId + "\n" +
+			"registrantPaymentId: " + registrantPaymentId + "\n" +
+			"registrantDbOperation: " + registrantDbOperation + "\n";
 	}
 
     public GoogleSheetRead(String event_year) {
