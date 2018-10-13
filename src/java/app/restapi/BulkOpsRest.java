@@ -65,9 +65,43 @@ public class BulkOpsRest {
 		}
 		SimpleDateFormat df = new SimpleDateFormat("yyyy");
 		String year = df.format(eObj.getEventStartDate());
-		DebugHandler.info("Year: " + year);
+		DebugHandler.fine("Year: " + year);
 		BulkOpsInterface bOIf = new BulkOpsImpl();
 		Integer result = bOIf.bulkReceiptGenerate(year);
+		jo.put("result", result);
+		return Response.status(200).entity(jo.toString()).type(MediaType.APPLICATION_JSON).build();
+	};
+	
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("bulkUpdateRegistrants")
+	public Response bulkUpdateRegistrants(InputStream incomingData) throws JSONException, AppException {
+		App.getInstance();
+		JsonConverter jc = new JsonConverter(incomingData);
+		JSONObject jObject = jc.getJsonObject();
+		DebugHandler.fine("jObject: \n" + jObject);
+		JSONObject jo = new JSONObject();
+		int event_id;
+		try {
+			event_id = jObject.getInt("event_id");
+		} catch (JSONException je) {
+			DebugHandler.severe("event_id value not passed.");
+			jo.put("result", new Integer(1));
+			return Response.status(200).entity(jo.toString()).type(MediaType.APPLICATION_JSON).build();
+		}
+		EventInterface eIf = new EventImpl();
+		EventObject eObj = eIf.getEvent(event_id);
+		if ( eObj == null ) {
+			DebugHandler.severe("Event not found for the given event id");
+			jo.put("result", new Integer(2));
+			return Response.status(200).entity(jo.toString()).type(MediaType.APPLICATION_JSON).build();
+		}
+		SimpleDateFormat df = new SimpleDateFormat("yyyy");
+		String year = df.format(eObj.getEventStartDate());
+		DebugHandler.fine("Year: " + year);
+		BulkOpsInterface bOIf = new BulkOpsImpl();
+		Integer result = bOIf.bulkUpdateRegistrants(year);
 		jo.put("result", result);
 		return Response.status(200).entity(jo.toString()).type(MediaType.APPLICATION_JSON).build();
 	};

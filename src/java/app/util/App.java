@@ -111,6 +111,7 @@ public class App {
 
 		AppConstants.POST_URL = siteProps.getProperty("app.post_url");
 		AppConstants.DB_TYPE = siteProps.getProperty("app.dbtype");
+		AppConstants.DB_OPERATION_LABEL = siteProps.getProperty("app.dboperation_label");
 		
 		AppConstants.SMTP_HOST = siteProps.getProperty("app.smtp_host");
 		AppConstants.SMTP_DEBUG = Boolean.parseBoolean(siteProps.getProperty("app.smtp_debug"));
@@ -120,10 +121,11 @@ public class App {
 		AppConstants.RECEIPT_TEMPLATE = siteProps.getProperty("app.receipt_template");
 		AppConstants.RECEIPT_MAIL_BODY_TEMPLATE = siteProps.getProperty("app.receipt_mail_body_template");
 		AppConstants.RECEIPT_MAIL_SUBJECT = siteProps.getProperty("app.receipt_mail_subject");
+		
 
 		// INSERT GENERATED CODE
-    AppConstants.MIN_AGE_LABEL = siteProps.getProperty("app.min_age_label");
-    AppConstants.MAX_AGE_LABEL = siteProps.getProperty("app.max_age_label");
+		AppConstants.MIN_AGE_LABEL = siteProps.getProperty("app.min_age_label");
+		AppConstants.MAX_AGE_LABEL = siteProps.getProperty("app.max_age_label");
 		AppConstants.CURRENT_SITE_LABEL = siteProps.getProperty("app.current_site_label");
 		AppConstants.NEW_SITE = siteProps.getProperty("app.new_site");
 		AppConstants.SITE_ID_LABEL = siteProps.getProperty("app.site_id_label");

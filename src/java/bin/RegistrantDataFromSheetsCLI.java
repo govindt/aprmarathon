@@ -12,8 +12,9 @@ public class RegistrantDataFromSheetsCLI {
 	
     public static void main(String[] args) throws AppException {
 		App theApp = App.getInstance();
-		if ( args.length != 1 ) {
-			DebugHandler.severe("Usage RegistrantDataFromSheetsCLI event_id");
+		if ( args.length != 2 ) {
+			DebugHandler.severe("Usage RegistrantDataFromSheetsCLI event_id operation[receipt|regupdate]");
+			System.exit(1);
 		}
 		int event_id = 0;
 		try {
@@ -29,6 +30,9 @@ public class RegistrantDataFromSheetsCLI {
 		String year = df.format(eObj.getEventStartDate());
 		DebugHandler.info("Year: " + year);
 		BulkOpsInterface bOIf = new BulkOpsImpl();
-		bOIf.bulkReceiptGenerate(year);
+		if ( args[1].equals("receipt"))
+			bOIf.bulkReceiptGenerate(year);
+		else if ( args[1].equals("regupdate"))
+			bOIf.bulkUpdateRegistrants(year);
     }
 }

@@ -56,6 +56,9 @@ public class RegistrantSheetObject implements Cloneable {
 	private String registrant_payment_reference_id;
 	private double registrant_payment_tax;
 	private double registrant_payment_fee;
+	private int registrant_event_id;
+	private int registrant_payment_id;
+	private String registrant_db_operation;
 	
 	/**
 	 *
@@ -95,7 +98,10 @@ public class RegistrantSheetObject implements Cloneable {
 		"registrant_payment_towards : " + registrant_payment_towards + "\n" +
 		"registrant_payment_reference_id : " + registrant_payment_reference_id + "\n" +
 		"registrant_payment_tax : " + registrant_payment_tax + "\n" +
-		"registrant_payment_fee : " + registrant_payment_fee + "\n";
+		"registrant_payment_fee : " + registrant_payment_fee + "\n" +
+		"registrant_event_id : " + registrant_event_id + "\n" +
+		"registrant_payment_id : " + registrant_payment_id + "\n" +
+		"registrant_db_operation : " + registrant_db_operation + "\n" 		;
 	}
     
 	/**
@@ -138,6 +144,9 @@ public class RegistrantSheetObject implements Cloneable {
 			 jo.put("registrant_payment_reference_id", registrant_payment_reference_id);
 			 jo.put("registrant_payment_tax", registrant_payment_tax);
 			 jo.put("registrant_payment_fee", registrant_payment_fee);
+			 jo.put("registrant_event_id", registrant_event_id);
+			 jo.put("registrant_payment_id", registrant_payment_id);
+			 jo.put("registrant_db_operation", registrant_db_operation);
 		} catch (JSONException je) {}
 		return jo;
 	}
@@ -189,6 +198,9 @@ public class RegistrantSheetObject implements Cloneable {
 		setRegistrantPaymentReferenceId("");
 		setRegistrantPaymentTax(0.0);
 		setRegistrantPaymentFee(0.0);
+		setRegistrantEventId(0);
+		setRegistrantPaymentId(0);
+		setRegistrantDbOperation(Constants.INFO_STR);
 	}
     
 	/**
@@ -312,6 +324,23 @@ public class RegistrantSheetObject implements Cloneable {
 			} catch (NumberFormatException e) {
 				e.printStackTrace();
 			}
+		} catch (JSONException je) {}
+		try {
+			try {
+				registrant_event_id = Integer.parseInt(jObject.getString("registrant_event_id"));
+			} catch (NumberFormatException e) {
+				e.printStackTrace();
+			}
+		} catch (JSONException je) {}
+		try {
+			try {
+				registrant_payment_id = Integer.parseInt(jObject.getString("registrant_payment_id"));
+			} catch (NumberFormatException e) {
+				e.printStackTrace();
+			}
+		} catch (JSONException je) {}
+		try {
+			registrant_db_operation = jObject.getString("registrant_db_operation");
 		} catch (JSONException je) {}
 	}
 	
@@ -1092,7 +1121,79 @@ public class RegistrantSheetObject implements Cloneable {
     public double getRegistrantPaymentFee() {
         return registrant_payment_fee;
     }
+	
+	/**
+     *
+     * Sets the <code>registrant_event_id</code> field
+     *
+     * @param registrant_event_id      int
+     *
+     */
+    
+    public void setRegistrantEventId(int registrant_event_id) {
+        this.registrant_event_id = registrant_event_id;
+    }
+    
+    
+    /**
+     *
+     * Gets the <code>registrant_event_id</code> field
+     *
+     * @returns registrant_event_id
+     *
+     */
+    
+    public int getRegistrantEventId() {
+        return registrant_event_id;
+    }
+	
+	/**
+     *
+     * Sets the <code>registrant_payment_id</code> field
+     *
+     * @param registrant_payment_id      int
+     *
+     */
+    
+    public void setRegistrantPaymentId(int registrant_payment_id) {
+        this.registrant_payment_id = registrant_payment_id;
+    }
+	
+	/**
+     *
+     * Gets the <code>registrant_payment_id</code> field
+     *
+     * @returns registrant_payment_id
+     *
+     */
+    
+    public int getRegistrantPaymentId() {
+        return registrant_payment_id;
+    }
+    
+    /**
+     *
+     * Gets the <code>registrant_db_operation</code> field
+     *
+     * @returns registrant_db_operation
+     *
+     */
+    
+    public String getRegistrantDbOperation() {
+        return registrant_db_operation;
+    }
 
+	/**
+     *
+     * Sets the <code>registrant_db_operation</code> field
+     *
+     * @param registrant_db_operation      String
+     *
+     */
+    
+    public void setRegistrantDbOperation(String registrant_db_operation) {
+        this.registrant_db_operation = registrant_db_operation;
+    }
     
     /**
      *
@@ -1134,7 +1235,10 @@ public class RegistrantSheetObject implements Cloneable {
             Util.trim(registrant_payment_towards).equals(Util.trim(other.getRegistrantPaymentTowards())) &&
             Util.trim(registrant_payment_reference_id).equals(Util.trim(other.getRegistrantPaymentReferenceId())) &&
             registrant_payment_tax == other.getRegistrantPaymentTax() &&
-            registrant_payment_fee == other.getRegistrantPaymentFee();
+            registrant_payment_fee == other.getRegistrantPaymentFee() &&
+			registrant_event_id == other.getRegistrantEventId() &&
+			registrant_payment_id == other.getRegistrantPaymentId() &&
+			Util.trim(registrant_db_operation).equals(Util.trim(other.getRegistrantDbOperation()));
     }
     
     /**

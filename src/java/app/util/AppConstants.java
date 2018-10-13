@@ -440,6 +440,7 @@ public class AppConstants {
     public static String HOME_LABEL;
     public static String POST_URL;
     public static String DB_TYPE;
+	public static String DB_OPERATION_LABEL;
 
 	public static String SMTP_HOST;
 	public static boolean SMTP_DEBUG;
