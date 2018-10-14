@@ -30,6 +30,7 @@ public interface BulkOpsInterface {
      */
     
     public Integer bulkReceiptGenerate(String year) throws AppException;
+	
 	/**
      *
      * Interface that updates db for a particular year
@@ -38,4 +39,13 @@ public interface BulkOpsInterface {
      */
     
     public Integer bulkUpdateRegistrants(String year) throws AppException;
+	
+	/**
+     *
+     * Interface that updates db for a particular year
+     *
+     * @throws AppException if the underlying operation fails
+     */
+    
+    public Integer bulkUpdateParticipants(String year) throws AppException;
 }

@@ -24,13 +24,29 @@ import app.businterface.SendMailInterface;
 import app.businterface.RegistrantPaymentInterface;
 import app.businterface.PaymentTypeInterface;
 import app.businterface.PaymentStatusInterface;
-import app.busimpl.SendMailImpl;
-import app.busimpl.RegistrantPaymentImpl;
+import app.businterface.ParticipantEventInterface;
+import app.businterface.ParticipantInterface;
+import app.businterface.RegistrationTypeInterface;
+import app.businterface.EventTypeInterface;
+import app.businterface.GenderInterface;
+import app.businterface.TShirtSizeInterface;
+import app.businterface.BloodGroupInterface;
+
 import app.busobj.SendMailObject;
 import app.busobj.RegistrantSheetObject;
+import app.busobj.ParticipantSheetObject;
 import app.busobj.RegistrantPaymentObject;
 import app.busobj.PaymentTypeObject;
 import app.busobj.PaymentStatusObject;
+import app.busobj.ParticipantObject;
+import app.busobj.ParticipantEventObject;
+import app.busobj.RegistrationTypeObject;
+import app.busobj.EventTypeObject;
+import app.busobj.GenderObject;
+import app.busobj.TShirtSizeObject;
+import app.busobj.BloodGroupObject;
+
+
 
 import app.businterface.BulkOpsInterface;
 
@@ -48,6 +64,7 @@ import java.util.ArrayList;
 
 public class BulkOpsImpl implements BulkOpsInterface  {
 	ArrayList<RegistrantSheetObject> rSObjAL = new ArrayList<RegistrantSheetObject>();
+	ArrayList<ParticipantSheetObject> pSObjAL = new ArrayList<ParticipantSheetObject>();
 	String contents = "";
 	ReceiptGenerate rg = new ReceiptGenerate();
 	
@@ -55,6 +72,7 @@ public class BulkOpsImpl implements BulkOpsInterface  {
 		GoogleSheetRead gsw = new GoogleSheetRead(year);
 		try {
 			rSObjAL = GoogleSheetRead.getRegistrantList();
+			pSObjAL = GoogleSheetRead.getParticipantList();
 		} catch (IOException ioe) {
 			throw new AppException("IO Exception getting Registrant List");
 		}
@@ -95,6 +113,8 @@ public class BulkOpsImpl implements BulkOpsInterface  {
 	public Integer bulkUpdateRegistrants(String year) throws AppException {
 		Integer result = new Integer(0);
 		init(year);
+		if ( rSObjAL == null ) 
+			return new Integer(1);
 		for (RegistrantSheetObject rSObj : rSObjAL ) {
 			String dbOperation = rSObj.getRegistrantDbOperation();
 			if ( dbOperation != null ) {
@@ -127,6 +147,79 @@ public class BulkOpsImpl implements BulkOpsInterface  {
 					DebugHandler.fine(rPObj);
 					result = rPIf.updateRegistrantPayment(rPObj);
 					DebugHandler.fine("Result: " + result);
+				}
+			}
+		}
+		return result;
+	}
+	
+	public Integer bulkUpdateParticipants(String year) throws AppException {
+		Integer result = new Integer(0);
+		init(year);
+		if ( pSObjAL == null ) 
+			return new Integer(1);
+		for (ParticipantSheetObject pSObj : pSObjAL ) {
+			String dbOperation = pSObj.getParticipantDbOperation();
+			if ( dbOperation != null ) {
+				if ( dbOperation.equals(Constants.UPDATE_STR) ) {
+					ParticipantEventInterface pEIf = new ParticipantEventImpl();
+					RegistrationTypeInterface rTIf = new RegistrationTypeImpl();
+					ParticipantInterface pIf = new ParticipantImpl();
+					EventTypeInterface eTIf = new EventTypeImpl();
+					GenderInterface gIf = new GenderImpl();
+					TShirtSizeInterface tSIf = new TShirtSizeImpl();
+					BloodGroupInterface bGIf = new BloodGroupImpl();
+					
+					RegistrationTypeObject rTObj = new RegistrationTypeObject();
+					EventTypeObject eTObj = new EventTypeObject();
+					GenderObject gObj = new GenderObject();
+					TShirtSizeObject tSObj = new TShirtSizeObject();
+					BloodGroupObject bGObj = new BloodGroupObject();
+					
+					ParticipantEventObject pEObj = pEIf.getParticipantEvent(pSObj.getParticipantEventId());
+					ParticipantObject pObj = pIf.getParticipant(pSObj.getParticipantId());
+					
+					rTObj.setRegistrationTypeName(pSObj.getParticipantType());
+					ArrayList<RegistrationTypeObject> rTObjAL = rTIf.getRegistrationTypes(rTObj);
+					rTObj = rTObjAL.get(0);
+					DebugHandler.fine(rTObj);
+					pEObj.setParticipantType(rTObj.getRegistrationTypeId());
+					
+					eTObj.setEventTypeName(pSObj.getParticipantEventType());
+					ArrayList<EventTypeObject> eTObjAL = eTIf.getEventTypes(eTObj);
+					eTObj = eTObjAL.get(0);
+					DebugHandler.fine(eTObj);
+					pEObj.setParticipantEventType(eTObj.getEventTypeId());
+					
+					pEObj.setParticipantBibNo(pSObj.getParticipantBibNo());
+					pObj.setParticipantFirstName(pSObj.getParticipantFirstName());
+					pObj.setParticipantMiddleName(pSObj.getParticipantMiddleName());
+					pObj.setParticipantLastName(pSObj.getParticipantLastName());
+					
+					gObj.setGenderName(pSObj.getParticipantGender());
+					ArrayList<GenderObject> gObjAL = gIf.getGenders(gObj);
+					gObj = gObjAL.get(0);
+					DebugHandler.fine(gObj);
+					
+					pObj.setParticipantGender(gObj.getGenderId());
+					pObj.setParticipantDateOfBirth(pSObj.getParticipantDateOfBirth());
+					
+					tSObj.setTShirtSizeName(pSObj.getParticipantTShirtSize());
+					ArrayList<TShirtSizeObject> tSObjAL = tSIf.getTShirtSizes(tSObj);
+					tSObj = tSObjAL.get(0);
+					DebugHandler.fine(tSObj);
+					pObj.setParticipantTShirtSize(tSObj.getTShirtSizeId());
+					
+					bGObj.setBloodGroupName(pSObj.getParticipantBloodGroup());
+					ArrayList<BloodGroupObject> bGObjAL = bGIf.getBloodGroups(bGObj);
+					bGObj = bGObjAL.get(0);
+					DebugHandler.fine(bGObj);
+					pObj.setParticipantBloodGroup(bGObj.getBloodGroupId());
+					
+					pObj.setParticipantCellPhone(pSObj.getParticipantCellPhone());
+					pObj.setParticipantEmail(pSObj.getParticipantEmail());
+					result = pIf.updateParticipant(pObj);
+					result = pEIf.updateParticipantEvent(pEObj);
 				}
 			}
 		}

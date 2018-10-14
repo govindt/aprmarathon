@@ -36,6 +36,7 @@ import java.util.Date;
 import java.text.SimpleDateFormat;
 import app.busobj.CellObject;
 import app.busobj.RegistrantSheetObject;
+import app.busobj.ParticipantSheetObject;
 import core.util.AppException;
 import core.util.DebugHandler;
 import core.util.Util;
@@ -80,6 +81,26 @@ public class GoogleSheetRead {
 	private static String registrantEventId;
 	private static String registrantPaymentId;
 	private static String registrantDbOperation;
+	
+	private static String participantRange;
+	private static String participantEventIdCol;
+	private static String participantTypeCol;
+	private static String participantSourceCol;
+	private static String participantEventTypeCol;
+	private static String participantBibNoCol;
+	private static String participantGroupCol;
+	private static String participantFirstNameCol;
+	private static String participantMiddleNameCol;
+	private static String participantLastNameCol;
+	private static String participantGenderCol;
+	private static String participantDateOfBirthCol;
+	private static String participantAgeCategoryCol;
+	private static String participantTShirtSizeCol;
+	private static String participantBloodGroupCol;
+	private static String participantCellPhoneCol;
+	private static String participantEmailCol;
+	private static String participantIdCol;
+	private static String participantDbOperationCol;
 	
 	 public static void init(int eventYear) {
 		Properties prop = new Properties();
@@ -157,6 +178,26 @@ public class GoogleSheetRead {
 				registrantEventId = prop.getProperty("googlereadsheets.2018.registrantEventId.column");
 				registrantPaymentId = prop.getProperty("googlereadsheets.2018.registrantPaymentId.column");
 				registrantDbOperation = prop.getProperty("googlereadsheets.2018.registrantDbOperation.column");
+				
+				participantRange = prop.getProperty("googlereadsheets.2018.participantRange");
+				participantEventIdCol = prop.getProperty("googlereadsheets.2018.participantEventId.column");
+				participantTypeCol = prop.getProperty("googlereadsheets.2018.participantType.column");
+				participantSourceCol = prop.getProperty("googlereadsheets.2018.participantSource.column");
+				participantEventTypeCol = prop.getProperty("googlereadsheets.2018.participantEventType.column");
+				participantBibNoCol = prop.getProperty("googlereadsheets.2018.participantBibNo.column");
+				participantGroupCol = prop.getProperty("googlereadsheets.2018.participantGroup.column");
+				participantFirstNameCol = prop.getProperty("googlereadsheets.2018.participantFirstName.column");
+				participantMiddleNameCol = prop.getProperty("googlereadsheets.2018.participantMiddleName.column");
+				participantLastNameCol = prop.getProperty("googlereadsheets.2018.participantLastName.column");
+				participantGenderCol = prop.getProperty("googlereadsheets.2018.participantGender.column");
+				participantDateOfBirthCol = prop.getProperty("googlereadsheets.2018.participantDateOfBirth.column");
+				participantAgeCategoryCol = prop.getProperty("googlereadsheets.2018.participantAgeCategory.column");
+				participantTShirtSizeCol = prop.getProperty("googlereadsheets.2018.participantTShirtSize.column");
+				participantBloodGroupCol = prop.getProperty("googlereadsheets.2018.participantBloodGroup.column");
+				participantCellPhoneCol = prop.getProperty("googlereadsheets.2018.participantCellPhone.column");
+				participantEmailCol = prop.getProperty("googlereadsheets.2018.participantEmail.column");
+				participantIdCol = prop.getProperty("googlereadsheets.2018.participantId.column");
+				participantDbOperationCol = prop.getProperty("googlereadsheets.2018.participantDbOperation.column");
 			}
 		} 
 		catch (IOException ex) {
@@ -181,6 +222,101 @@ public class GoogleSheetRead {
 		return outputColumnNumber - 1;
     }
 	
+	public static ArrayList<CellObject> getEmptyElements(ParticipantSheetObject pSObj, int rowNo, String sheetName) {
+		ArrayList<CellObject> cObjAL = new ArrayList<CellObject>();
+		if ( pSObj.getParticipantType() == null || pSObj.getParticipantType().equals("") ) {
+                CellObject cObj = new CellObject();
+                cObj.setSheetName(sheetName);
+                cObj.setRowNo(rowNo);
+                cObj.setColumn(participantTypeCol);
+                cObjAL.add(cObj);
+        }
+		if ( pSObj.getParticipantSource() == null || pSObj.getParticipantSource().equals("") ) {
+                CellObject cObj = new CellObject();
+                cObj.setSheetName(sheetName);
+                cObj.setRowNo(rowNo);
+                cObj.setColumn(participantSourceCol);
+                cObjAL.add(cObj);
+        }
+		if ( pSObj.getParticipantEventType() == null || pSObj.getParticipantEventType().equals("") ) {
+                CellObject cObj = new CellObject();
+                cObj.setSheetName(sheetName);
+                cObj.setRowNo(rowNo);
+                cObj.setColumn(participantEventTypeCol);
+                cObjAL.add(cObj);
+        }
+		if ( pSObj.getParticipantGroup() == null || pSObj.getParticipantGroup().equals("") ) {
+                CellObject cObj = new CellObject();
+                cObj.setSheetName(sheetName);
+                cObj.setRowNo(rowNo);
+                cObj.setColumn(participantGroupCol);
+                cObjAL.add(cObj);
+        }
+		if ( pSObj.getParticipantFirstName() == null || pSObj.getParticipantFirstName().equals("") ) {
+                CellObject cObj = new CellObject();
+                cObj.setSheetName(sheetName);
+                cObj.setRowNo(rowNo);
+                cObj.setColumn(participantFirstNameCol);
+                cObjAL.add(cObj);
+        }
+		if ( pSObj.getParticipantGender() == null || pSObj.getParticipantGender().equals("") ) {
+                CellObject cObj = new CellObject();
+                cObj.setSheetName(sheetName);
+                cObj.setRowNo(rowNo);
+                cObj.setColumn(participantGenderCol);
+                cObjAL.add(cObj);
+        }
+		if ( pSObj.getParticipantDateOfBirth() == null || pSObj.getParticipantDateOfBirth().equals("") ) {
+                CellObject cObj = new CellObject();
+                cObj.setSheetName(sheetName);
+                cObj.setRowNo(rowNo);
+                cObj.setColumn(participantDateOfBirthCol);
+                cObjAL.add(cObj);
+        }
+		if ( pSObj.getParticipantAgeCategory() == null || pSObj.getParticipantAgeCategory().equals("") ) {
+                CellObject cObj = new CellObject();
+                cObj.setSheetName(sheetName);
+                cObj.setRowNo(rowNo);
+                cObj.setColumn(participantAgeCategoryCol);
+                cObjAL.add(cObj);
+        }
+		if ( pSObj.getParticipantTShirtSize() == null || pSObj.getParticipantTShirtSize().equals("") ) {
+                CellObject cObj = new CellObject();
+                cObj.setSheetName(sheetName);
+                cObj.setRowNo(rowNo);
+                cObj.setColumn(participantTShirtSizeCol);
+                cObjAL.add(cObj);
+        }
+		if ( pSObj.getParticipantBloodGroup() == null || pSObj.getParticipantBloodGroup().equals("") ) {
+                CellObject cObj = new CellObject();
+                cObj.setSheetName(sheetName);
+                cObj.setRowNo(rowNo);
+                cObj.setColumn(participantBloodGroupCol);
+                cObjAL.add(cObj);
+        }
+		if ( pSObj.getParticipantCellPhone() == null || pSObj.getParticipantCellPhone().equals("") ) {
+                CellObject cObj = new CellObject();
+                cObj.setSheetName(sheetName);
+                cObj.setRowNo(rowNo);
+                cObj.setColumn(participantCellPhoneCol);
+                cObjAL.add(cObj);
+        }
+		if ( pSObj.getParticipantEmail() == null || pSObj.getParticipantEmail().equals("") ) {
+                CellObject cObj = new CellObject();
+                cObj.setSheetName(sheetName);
+                cObj.setRowNo(rowNo);
+                cObj.setColumn(participantEmailCol);
+                cObjAL.add(cObj);
+        }
+		if ( pSObj.getParticipantDbOperation() == null || pSObj.getParticipantDbOperation().equals("") ) {
+                CellObject cObj = new CellObject();
+                cObj.setSheetName(sheetName);
+                cObj.setRowNo(rowNo);
+                cObj.setColumn(participantDbOperationCol);
+                cObjAL.add(cObj);
+        }
+		return cObjAL;
+	}
 	public static ArrayList<CellObject> getEmptyElements(RegistrantSheetObject rObj, int rowNo, String sheetName) {
 		ArrayList<CellObject> cObjAL = new ArrayList<CellObject>();
 		if ( rObj.getRegistrantId() == null || rObj.getRegistrantId().equals("") ) {
@@ -197,22 +333,6 @@ public class GoogleSheetRead {
                 cObj.setColumn(registrantName);
                 cObjAL.add(cObj);
         }
-		// Middle Name can be null
-        /*if ( rObj.getRegistrantMiddleName() == null || rObj.getRegistrantMiddleName().equals("") ) {
-                CellObject cObj = new CellObject();
-                cObj.setSheetName(sheetName);
-                cObj.setRowNo(rowNo);
-                cObj.setColumn(registrantMiddleName);
-                cObjAL.add(cObj);
-        }*/
-		// Last Name can be null
-        /*if ( rObj.getRegistrantLastName() == null || rObj.getRegistrantLastName().equals("") ) {
-                CellObject cObj = new CellObject();
-                cObj.setSheetName(sheetName);
-                cObj.setRowNo(rowNo);
-                cObj.setColumn(registrantLastName);
-                cObjAL.add(cObj);
-        }*/
         if ( rObj.getRegistrantEmail() == null || rObj.getRegistrantEmail().equals("") ) {
                 CellObject cObj = new CellObject();
                 cObj.setSheetName(sheetName);
@@ -220,13 +340,6 @@ public class GoogleSheetRead {
                 cObj.setColumn(registrantEmail);
                 cObjAL.add(cObj);
         }
-        /*if ( rObj.getRegistrantAdditionalEmail() == null || rObj.getRegistrantAdditionalEmail().equals("") ) {
-                CellObject cObj = new CellObject();
-                cObj.setSheetName(sheetName);
-                cObj.setRowNo(rowNo);
-                cObj.setColumn(registrantAdditionalEmail);
-                cObjAL.add(cObj);
-        }*/
         if ( rObj.getRegistrantPhoneNumber() == null || rObj.getRegistrantPhoneNumber().equals("") ) {
                 CellObject cObj = new CellObject();
                 cObj.setSheetName(sheetName);
@@ -241,41 +354,6 @@ public class GoogleSheetRead {
                 cObj.setColumn(registrantAddress);
                 cObjAL.add(cObj);
         }
-        /*if ( rObj.getRegistrantCity() == null || rObj.getRegistrantCity().equals("") ) {
-                CellObject cObj = new CellObject();
-                cObj.setSheetName(sheetName);
-                cObj.setRowNo(rowNo);
-                cObj.setColumn(registrantCity);
-                cObjAL.add(cObj);
-        }
-        if ( rObj.getRegistrantState() == null || rObj.getRegistrantState().equals("") ) {
-                CellObject cObj = new CellObject();
-                cObj.setSheetName(sheetName);
-                cObj.setRowNo(rowNo);
-                cObj.setColumn(registrantState);
-                cObjAL.add(cObj);
-        }
-        if ( rObj.getRegistrantPincode() == null || rObj.getRegistrantPincode().equals("") ) {
-                CellObject cObj = new CellObject();
-                cObj.setSheetName(sheetName);
-                cObj.setRowNo(rowNo);
-                cObj.setColumn(registrantPincode);
-                cObjAL.add(cObj);
-        }
-        if ( rObj.getRegistrantPan() == null || rObj.getRegistrantPan().equals("") ) {
-                CellObject cObj = new CellObject();
-                cObj.setSheetName(sheetName);
-                cObj.setRowNo(rowNo);
-                cObj.setColumn(registrantPAN);
-                cObjAL.add(cObj);
-        }
-        if ( rObj.getRegistrantEvent() == null || rObj.getRegistrantEvent().equals("") ) {
-                CellObject cObj = new CellObject();
-                cObj.setSheetName(sheetName);
-                cObj.setRowNo(rowNo);
-                cObj.setColumn(registrantEvent);
-                cObjAL.add(cObj);
-        }*/
         if ( rObj.getRegistrantTypeName() == null || rObj.getRegistrantTypeName().equals("") ) {
                 CellObject cObj = new CellObject();
                 cObj.setSheetName(sheetName);
@@ -304,20 +382,6 @@ public class GoogleSheetRead {
                 cObj.setColumn(registrantBeneficiaryName);
                 cObjAL.add(cObj);
         }
-        /*if ( rObj.getRegistrantEmergencyContact() == null || rObj.getRegistrantEmergencyContact().equals("") ) {
-                CellObject cObj = new CellObject();
-                cObj.setSheetName(sheetName);
-                cObj.setRowNo(rowNo);
-                cObj.setColumn(registrantEmergencyContact);
-                cObjAL.add(cObj);
-        }
-        if ( rObj.getRegistrantEmergencyPhone() == null || rObj.getRegistrantEmergencyPhone().equals("") ) {
-                CellObject cObj = new CellObject();
-                cObj.setSheetName(sheetName);
-                cObj.setRowNo(rowNo);
-                cObj.setColumn(registrantEmergencyPhone);
-                cObjAL.add(cObj);
-        }*/
         if ( rObj.getRegistrantPaymentTypeName() == null || rObj.getRegistrantPaymentTypeName().equals("") ) {
                 CellObject cObj = new CellObject();
                 cObj.setSheetName(sheetName);
@@ -346,14 +410,6 @@ public class GoogleSheetRead {
                 cObj.setColumn(registrantReceiptDate);
                 cObjAL.add(cObj);
         }
-		/*
-        if ( rObj.getRegistrantPaymentDetails() == null || rObj.getRegistrantPaymentDetails().equals("") ) {
-                CellObject cObj = new CellObject();
-                cObj.setSheetName(sheetName);
-                cObj.setRowNo(rowNo);
-                cObj.setColumn(registrantPaymentDetails);
-                cObjAL.add(cObj);
-        }*/
         if ( rObj.getRegistrantPaymentTowards() == null || rObj.getRegistrantPaymentTowards().equals("") ) {
                 CellObject cObj = new CellObject();
                 cObj.setSheetName(sheetName);
@@ -361,16 +417,98 @@ public class GoogleSheetRead {
                 cObj.setColumn(registrantPaymentTowards);
                 cObjAL.add(cObj);
         }
-		/*
-        if ( rObj.getRegistrantPaymentReferenceId() == null || rObj.getRegistrantPaymentReferenceId().equals("") ) {
-                CellObject cObj = new CellObject();
-                cObj.setSheetName(sheetName);
-                cObj.setRowNo(rowNo);
-                cObj.setColumn(registrantPaymentReferenceId);
-                cObjAL.add(cObj);
-        }*/
 		return cObjAL;
     }
+	
+	public static ArrayList<ParticipantSheetObject>getParticipantList() throws IOException, AppException {
+		ArrayList<ParticipantSheetObject> pSObjAL = new ArrayList<ParticipantSheetObject>();
+		ArrayList<CellObject> errorList = new ArrayList<CellObject>();
+		 // Build a new authorized API client service.
+		Sheets service = GoogleSheetWrite.getSheetsService();
+		String buf = null;
+		List<List<Object>> values = null;
+		List<List<Object>> allValues = null;
+		int rowNo = 0;
+
+		StringTokenizer st = new StringTokenizer(participantRange, ",");
+		while (st.hasMoreTokens()) {
+			buf = st.nextToken();
+			StringTokenizer st1 = new StringTokenizer(buf, "!");
+			String buf1 = st1.nextToken();
+			rowNo = 0;
+			allValues = new ArrayList<List<Object>>();
+			DebugHandler.fine("Sheet: " + buf1);
+			ValueRange response = service.spreadsheets().values()
+					.get(spreadsheetId, buf)
+						.execute();
+			values = response.getValues();
+			if (values == null || values.size() == 0) {
+				DebugHandler.severe("No data found in " + buf1 + " sheet.");
+			}
+            for (List<Object> row : values) { 
+				// Leave the heading row in each sheet
+				if ( rowNo != 0 ) {
+					DebugHandler.fine("Adding Row: " + row);
+					allValues.add(row);
+				}
+				rowNo++;
+			}
+			if (allValues == null || allValues.size() == 0) {
+				DebugHandler.severe("No data found in sheet " + buf1);
+			} else {
+				rowNo = 0;
+				for (List<Object> row : allValues) { 
+					ParticipantSheetObject pSObj = new ParticipantSheetObject();
+					try {
+						pSObj.setParticipantEventId(Integer.parseInt((String)row.get(ColumnLetterToNumber(participantEventIdCol))));
+					} catch (NumberFormatException npe) {}
+					pSObj.setParticipantType((String)row.get(ColumnLetterToNumber(participantTypeCol)));
+					pSObj.setParticipantSource((String)row.get(ColumnLetterToNumber(participantSourceCol)));
+					pSObj.setParticipantEventType((String)row.get(ColumnLetterToNumber(participantEventTypeCol)));
+					pSObj.setParticipantBibNo((String)row.get(ColumnLetterToNumber(participantBibNoCol)));
+					pSObj.setParticipantGroup((String)row.get(ColumnLetterToNumber(participantGroupCol)));
+					pSObj.setParticipantFirstName((String)row.get(ColumnLetterToNumber(participantFirstNameCol)));
+					pSObj.setParticipantMiddleName((String)row.get(ColumnLetterToNumber(participantMiddleNameCol)));
+					pSObj.setParticipantLastName((String)row.get(ColumnLetterToNumber(participantLastNameCol)));
+					pSObj.setParticipantGender((String)row.get(ColumnLetterToNumber(participantGenderCol)));
+					String tmp = Util.trim((String)row.get(ColumnLetterToNumber(participantDateOfBirthCol)));
+					Date date = null;
+					SimpleDateFormat dateFormatter = new SimpleDateFormat(Constants.DATE_FORMAT_STR);
+					try {
+						date = dateFormatter.parse(tmp);
+						pSObj.setParticipantDateOfBirth(date);
+					} catch (java.text.ParseException pe) {
+						DebugHandler.severe("Parse Exception while parsing " + tmp);
+					}
+					
+					pSObj.setParticipantAgeCategory((String)row.get(ColumnLetterToNumber(participantAgeCategoryCol)));
+					pSObj.setParticipantTShirtSize((String)row.get(ColumnLetterToNumber(participantTShirtSizeCol)));
+					pSObj.setParticipantBloodGroup((String)row.get(ColumnLetterToNumber(participantBloodGroupCol)));
+					pSObj.setParticipantCellPhone((String)row.get(ColumnLetterToNumber(participantCellPhoneCol)));
+					pSObj.setParticipantEmail((String)row.get(ColumnLetterToNumber(participantEmailCol)));
+					try {
+						pSObj.setParticipantId(Integer.parseInt((String)row.get(ColumnLetterToNumber(participantIdCol))));
+					} catch (NumberFormatException npe) {}
+					pSObj.setParticipantDbOperation((String)row.get(ColumnLetterToNumber(participantDbOperationCol)));
+					DebugHandler.fine(pSObj);
+					pSObjAL.add(pSObj);
+					
+					ArrayList<CellObject> rowError = getEmptyElements(pSObj, (rowNo+2), buf1);
+					for (CellObject cObj : rowError) {
+						errorList.add(cObj);
+					}
+					rowNo++;
+				}
+			}
+		}
+		DebugHandler.fine(pSObjAL);
+		if ( errorList.size() > 0 ) {
+			DebugHandler.severe("ERROR!!!The following cells have errors: " + errorList);
+			DebugHandler.severe("Exiting. Please correct and rerun");
+			return null;
+		}
+		return pSObjAL;
+	}
 	
 	public static ArrayList<RegistrantSheetObject> getRegistrantList() throws IOException, AppException {
 		ArrayList<RegistrantSheetObject> rObjAL = new ArrayList<RegistrantSheetObject>();
@@ -397,19 +535,19 @@ public class GoogleSheetRead {
 			if (values == null || values.size() == 0) {
 				DebugHandler.severe("No data found in " + buf1 + " sheet.");
 			}
-                for (List<Object> row : values) { 
-			// Leave the heading row in each sheet
-			if ( rowNo != 0 ) {
-				DebugHandler.fine("Adding Row: " + row);
-				allValues.add(row);
+            for (List<Object> row : values) { 
+				// Leave the heading row in each sheet
+				if ( rowNo != 0 ) {
+					DebugHandler.fine("Adding Row: " + row);
+					allValues.add(row);
+				}
+				rowNo++;
 			}
-			rowNo++;
-		}
-		if (allValues == null || allValues.size() == 0) {
-			DebugHandler.severe("No data found in sheet " + buf1);
-		} else {
-			rowNo = 0;
-        		for (List<Object> row : allValues) { 
+			if (allValues == null || allValues.size() == 0) {
+				DebugHandler.severe("No data found in sheet " + buf1);
+			} else {
+				rowNo = 0;
+				for (List<Object> row : allValues) { 
 					RegistrantSheetObject rObj = new RegistrantSheetObject();
 					rObj.setRegistrantId((String)row.get(ColumnLetterToNumber(registrantId)));
 					rObj.setRegistrantName((String)row.get(ColumnLetterToNumber(registrantName)));
@@ -501,9 +639,9 @@ public class GoogleSheetRead {
 						errorList.add(cObj);
 					}
 					rowNo++;
-	          	}
+				}
 			}
-        }
+		}
 		DebugHandler.fine(rObjAL);
 		if ( errorList.size() > 0 ) {
 			DebugHandler.severe("ERROR!!!The following cells have errors: " + errorList);
