@@ -24,7 +24,7 @@ DUMP_DIR=${DUMP_DIR:-/tmp/${DATE_STR}}
 
 
 mkdir -p ${DUMP_DIR}
-TABLES=" role users acl Participant_Sheet"
+TABLES=" role users acl Event Event_Type Gender Age_Category T_Shirt_Size Blood_Group Payment_Type Payment_Status Medal Registration_Type Registration_Source Registration_Class Beneficiary Registrant Registrant_Event Registrant_Payment Participant Participant_Event Result"
 
 # set path variable.
 PATH=$PATH:$ORACLE_HOME/bin
