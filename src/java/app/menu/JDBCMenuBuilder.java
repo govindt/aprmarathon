@@ -82,13 +82,12 @@ public class JDBCMenuBuilder implements MenuBuilder
         int j=1;
         for (int i=0;i<topMenus.size();i++)
         {
-         CompositeMenu menu = topMenus.get(i);
-         menu.setLevelCoord(Integer.toString(j));
-         j++;
-         buildMenu(menu.getMenuId(), menu);
-         sb.append(menu.render());
-     }
-        //System.out.println(sb.toString());
+			CompositeMenu menu = topMenus.get(i);
+			menu.setLevelCoord(Integer.toString(j));
+			j++;
+			buildMenu(menu.getMenuId(), menu);
+			sb.append(menu.render());
+		}
         return sb.toString();
     }
 
@@ -97,7 +96,6 @@ public class JDBCMenuBuilder implements MenuBuilder
         PreparedStatement ps = null;
         ResultSet rs = null;
         Connection con = null;
-        //System.out.println(menuId);
         boolean isLeaf = false;
         try{
                 //Class.forName(driver);
@@ -142,7 +140,6 @@ public class JDBCMenuBuilder implements MenuBuilder
         PreparedStatement ps = null;
         ResultSet rs = null;
         Connection con = null;
-        //System.out.println(menuId);
         try{
                 //Class.forName(driver);
                 con = DriverManager.getConnection(url, username, password);
@@ -154,7 +151,6 @@ public class JDBCMenuBuilder implements MenuBuilder
                      String menuName = rs.getString(2);
                      String href = rs.getString(3);
                      String parentId = rs.getString(4);
-                     //System.out.println(childMenuId + " " + menuName + " " + parentId + " " + href);
                      if (isLeaf(childMenuId)) //simple menu
                      {
                             SimpleMenu sm = new SimpleMenu(childMenuId , menuName, href);
@@ -162,7 +158,6 @@ public class JDBCMenuBuilder implements MenuBuilder
                      }
                      else
                      {
-                        //System.out.println("inside submenu" + childMenuId);
                         CompositeMenu aParentMenu = new CompositeMenu(childMenuId, menuName);
                         comSrc.add(aParentMenu);
                         buildMenu(childMenuId, aParentMenu);

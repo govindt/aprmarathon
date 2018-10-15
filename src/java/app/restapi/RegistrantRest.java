@@ -105,7 +105,7 @@ public class RegistrantRest {
 		rEObjArr = rEIf.getRegistrantEvents(rTObjArr1, event_id);
 
 		if ( rEObjArr != null ) {
-			System.out.println(rEObjArr.size());
+			DebugHandler.fine(rEObjArr.size());
 			for ( int i = 0; i < rEObjArr.size(); i++) {
 				rObjArr.add(rIf.getRegistrant(rEObjArr.get(i).getRegistrantId()));
 			}
