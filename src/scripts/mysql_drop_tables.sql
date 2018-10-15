@@ -1,41 +1,41 @@
 
-drop table if exists result;
+drop table if exists Result;
 
-drop table if exists participant_event;
+drop table if exists Participant_Event;
 
-drop table if exists participant;
+drop table if exists Participant;
 
-drop table if exists registrant_payment;
+drop table if exists Registrant_Payment;
 
-drop table if exists registrant_event;
+drop table if exists Registrant_Event;
 
-drop table if exists registrant;
+drop table if exists Registrant;
 
-drop table if exists beneficiary;
+drop table if exists Beneficiary;
 
-drop table if exists registration_class;
+drop table if exists Registration_Class;
 
-drop table if exists registration_source;
+drop table if exists Registration_Source;
 
-drop table if exists registration_type;
+drop table if exists Registration_Type;
 
-drop table if exists medal;
+drop table if exists Medal;
 
-drop table if exists payment_status;
+drop table if exists Payment_Status;
 
-drop table if exists payment_type;
+drop table if exists Payment_Type;
 
-drop table if exists blood_group;
+drop table if exists Blood_Group;
 
-drop table if exists t_shirt_size;
+drop table if exists T_Shirt_Size;
 
-drop table if exists age_category;
+drop table if exists Age_Category;
 
-drop table if exists gender;
+drop table if exists Gender;
 
-drop table if exists event_type;
+drop table if exists Event_Type;
 
-drop table if exists event;
+drop table if exists Event;
 
 
 drop table if exists Menu;

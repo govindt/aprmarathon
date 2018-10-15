@@ -125,7 +125,7 @@ ${NAWK} -v QUOTE="'" -v logname=${LOGNAME} -v version=1.0 -v since=1.0 -v proj_n
 	}
 	for ( kdx = k - 1; kdx >= 0; kdx-- ) {
 		printf("drop sequence %s_seq;\n", tolower(res[kdx]))>> drop_name;
-		printf("drop table %s;\n", tolower(res[kdx]))>> drop_name;
+		printf("drop table %s;\n", res[kdx])>> drop_name;
 		printf("\n") >> drop_name;
 		printf("%s\n", res[kdx])>>rfile;
 	} 
