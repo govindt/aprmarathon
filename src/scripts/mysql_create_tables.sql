@@ -74,7 +74,9 @@ create table Gender(
 
 create table Age_Category(
 	age_category_id int primary key auto_increment,
-	age_category varchar(50)
+	age_category varchar(50),
+	min_age int,
+	max_age int
 );
 
 create table T_Shirt_Size(
@@ -117,7 +119,7 @@ create table Registration_Source(
 create table Registration_Class(
 	registration_class_id int primary key auto_increment,
 	registration_class_name varchar(50) not null,
-	registration_type int references RegistrationType(Registration_Type_Id),
+	registration_type int references Registration_Type(Registration_Type_Id),
 	registration_event int references Event(Event_Id),
 	registration_class_value decimal(30,2) not null,
 	registration_free_tickets int not null
