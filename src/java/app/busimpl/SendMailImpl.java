@@ -54,7 +54,7 @@ public class SendMailImpl implements SendMailInterface {
 		if ( sendMailObject.getEmailType() == SendMailObject.RECEIPT_EMAIL) {
 			ReceiptGenerate r = new ReceiptGenerate();
 			try {
-				String pdfFile = r.createReceipt(AppConstants.RECEIPT_TEMPLATE, sendMailObject);
+				String pdfFile = r.createReceipt(AppConstants.RECEIPT_TEMPLATE, sendMailObject, false);
 				File pdfFilePtr = new File(pdfFile);
 				SendGMail.sendMessage(sendMailObject.getTo(), AppConstants.EMAIL_FROM, sendMailObject.getSubject(), sendMailObject.getBody(), pdfFilePtr);
 			} catch (InvalidFormatException ife) {

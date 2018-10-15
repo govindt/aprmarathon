@@ -46,7 +46,7 @@ public class ReceiptGenerateTest {
 		smObj.setTowards("APR Charitable Trust - UST APR Marathon");
 		smObj.setAmount("1000");
 		smObj.setEmailType(emailType);
-		String pdfFile = r.createReceipt(AppConstants.RECEIPT_TEMPLATE, smObj);
+		String pdfFile = r.createReceipt(AppConstants.RECEIPT_TEMPLATE, smObj, false);
 		File pdfFilePtr = new File(pdfFile);
 		try {
 			SendGMail.sendMessage(	smObj.getTo(), 

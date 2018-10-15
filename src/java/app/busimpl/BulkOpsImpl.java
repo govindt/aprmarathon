@@ -20,6 +20,8 @@ import core.util.AppException;
 import core.util.DebugHandler;
 import core.util.SendMail;
 import core.util.Constants;
+import core.util.SendGMail;
+
 import app.businterface.SendMailInterface;
 import app.businterface.RegistrantPaymentInterface;
 import app.businterface.PaymentTypeInterface;
@@ -52,7 +54,10 @@ import app.businterface.BulkOpsInterface;
 
 import java.io.InputStream;
 import java.io.IOException;
+import java.io.File;
 import java.util.ArrayList;
+import javax.mail.MessagingException;
+import java.security.GeneralSecurityException;
 
 /**
  * The implementation which downloads from database and updates
@@ -91,13 +96,20 @@ public class BulkOpsImpl implements BulkOpsInterface  {
 															AppConstants.RECEIPT_NO_PREFIX);
 				if ( paymentStatus.equals("Manual Receipt") ) {
 					try {
-						String pdfFile = rg.createReceipt(AppConstants.RECEIPT_TEMPLATE, smObj);
-						DebugHandler.info("Created Receipt File: " + pdfFile);
+						String docFile = rg.createReceipt(AppConstants.RECEIPT_TEMPLATE, smObj, true);
+						DebugHandler.info("Created Receipt File: " + docFile);
+						File docFilePtr = new File(docFile);
+						SendGMail.sendMessage("aprct.treasurer@gmail.com", AppConstants.EMAIL_FROM, 
+							smObj.getSubject(), smObj.getBody(), docFilePtr);
 					} catch (InvalidFormatException ife) {
 						throw new AppException("Caught exception while creating file. " + ife.getMessage());
 					} catch (IOException ioe) {
 						throw new AppException("IO Exception creating Receipt");
-					}	
+					} catch (MessagingException me) {
+						throw new AppException("Messaging Exception creating Receipt");
+					} catch (GeneralSecurityException gse) {
+						throw new AppException("General Security Exception creating Receipt");
+					}
 				}
 				else if ( paymentStatus.equals("Send Email Receipt") ) {
 					SendMailInterface sMIf = new SendMailImpl();

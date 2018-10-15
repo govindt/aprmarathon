@@ -95,7 +95,7 @@ public class ReceiptGenerate
 		}
 	}
 	// Create Receipt
-	public String createReceipt(String template, SendMailObject rObj) throws IOException,  InvalidFormatException {
+	public String createReceipt(String template, SendMailObject rObj, boolean manualReceipt) throws IOException,  InvalidFormatException {
 		String pdfDirName = System.getProperty("java.io.tmpdir") + File.separator + "pdfs";
 		String[] replaceStrs = {
 			rObj.getReceiptYear(), 
@@ -129,6 +129,8 @@ public class ReceiptGenerate
 		}
 		InputStream buf = getClass().getResourceAsStream(template);
 		manipulateDocx(buf, destFileWord, FIND_STRS, replaceStrs);
+		if ( manualReceipt ) // Send the doc file and do not bother with pdf 
+			return destFileWord;
 		DebugHandler.finest("Generating...." + destFile);
         convertPdf(destFileWord, destFile );
 		File destFileWordPtr = new File(destFileWord);
