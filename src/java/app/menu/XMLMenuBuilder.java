@@ -11,6 +11,8 @@ import org.xml.sax.SAXParseException;
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
+import core.util.DebugHandler;
+import app.util.App;
 
 import org.w3c.dom.*;
 
@@ -33,7 +35,6 @@ public class XMLMenuBuilder implements MenuBuilder
             DocumentBuilder builder = factory.newDocumentBuilder();
             Document document = builder.parse( new File(xmlfile) );
             String str = renderMenu(document);
-            System.out.println(str);
             return str;
         }
         catch (SAXException sxe)
@@ -99,8 +100,6 @@ public class XMLMenuBuilder implements MenuBuilder
 
                 if (parentNode != null && parentNode.getNodeType()== Node.ELEMENT_NODE && parentNode.getNodeName().equals("menus"))
                 {
-                    System.out.println(parentNode.getNodeName() + " " + node.getNodeName());
-                    System.out.println("Top level menu");
                     CompositeMenu topMenu = new CompositeMenu(id, name);
                     comSrc = topMenu;
                     topMenus.add(topMenu);
@@ -130,9 +129,10 @@ public class XMLMenuBuilder implements MenuBuilder
 
     public static void main(String argv[]) throws Exception
     {
+		App.getInstance();
         if (argv.length < 1)
         {
-            System.err.println("Usage: MenuBuilder filename");
+            DebugHandler.severe("Usage: MenuBuilder filename");
             System.exit(1);
         }
 

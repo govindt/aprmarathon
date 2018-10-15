@@ -43,8 +43,6 @@ public class SimpleMenu extends Menu
     {
         StringBuffer sb = new StringBuffer();
 
-     //   System.out.println("simple " + getMenuName() + " " + getUrl());
-
         /*sb.append("addmenuitem(");
         sb.append("\"" + getLevelCoord() + "\",");
         sb.append("\"" + getMenuName() + "\",");

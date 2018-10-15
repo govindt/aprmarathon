@@ -54,7 +54,6 @@ public class CompositeMenu extends Menu
         /*sb.append("addmenuitem(");
         sb.append("\"" + getLevelCoord() + "\",");
         sb.append("\"" + getMenuName() + "\",");
-     //   System.out.println(getUrl() + " "  + getMenuName());
         if (null == getUrl())
             sb.append("null" + ",");
          else
@@ -62,9 +61,9 @@ public class CompositeMenu extends Menu
 
 	if ( list != null ) {
 	    if ( list.size() == 0 ) {
-		sb.append("<li><a href=\"" + core.util.Util.trim(getUrl()) + "\">" + getMenuName() + "</a></li>\n");
+			sb.append("<li><a href=\"" + core.util.Util.trim(getUrl()) + "\">" + getMenuName() + "</a></li>\n");
 	    } else {
-		sb.append("<li><span class=\"dir\">" + getMenuName() + "</span>\n\t<ul>\n");
+			sb.append("<li><span class=\"dir\">" + getMenuName() + "</span>\n\t<ul>\n");
 	    }
 	}
 
