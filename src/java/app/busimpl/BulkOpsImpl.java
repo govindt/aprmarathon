@@ -25,6 +25,7 @@ import core.util.SendGMail;
 import app.businterface.SendMailInterface;
 import app.businterface.RegistrantPaymentInterface;
 import app.businterface.PaymentTypeInterface;
+import app.businterface.RegistrantInterface;
 import app.businterface.PaymentStatusInterface;
 import app.businterface.ParticipantEventInterface;
 import app.businterface.ParticipantInterface;
@@ -38,6 +39,7 @@ import app.busobj.SendMailObject;
 import app.busobj.RegistrantSheetObject;
 import app.busobj.ParticipantSheetObject;
 import app.busobj.RegistrantPaymentObject;
+import app.busobj.RegistrantObject;
 import app.busobj.PaymentTypeObject;
 import app.busobj.PaymentStatusObject;
 import app.busobj.ParticipantObject;
@@ -132,8 +134,11 @@ public class BulkOpsImpl implements BulkOpsInterface  {
 			if ( dbOperation != null ) {
 				if ( dbOperation.equals(Constants.UPDATE_STR) ) {
 					RegistrantPaymentInterface rPIf = new RegistrantPaymentImpl();
-					RegistrantPaymentObject rPObj = rPIf.getRegistrantPayment(rSObj.getRegistrantPaymentId());
 					PaymentTypeInterface pTIf = new PaymentTypeImpl();
+					RegistrantInterface rIf = new RegistrantImpl();
+					RegistrantPaymentObject rPObj = rPIf.getRegistrantPayment(rSObj.getRegistrantPaymentId());
+					RegistrantObject rObj = rIf.getRegistrant(rSObj.getRegistrantId());
+					
 					PaymentTypeObject pTObj = new PaymentTypeObject();
 					pTObj.setPaymentTypeName(rSObj.getRegistrantPaymentTypeName());
 					ArrayList<PaymentTypeObject> pTObjAL = pTIf.getPaymentTypes(pTObj);
@@ -157,7 +162,20 @@ public class BulkOpsImpl implements BulkOpsInterface  {
 					rPObj.setPaymentTax(rSObj.getRegistrantPaymentTax());
 					rPObj.setPaymentFee(rSObj.getRegistrantPaymentFee());
 					DebugHandler.fine(rPObj);
+					rObj.setRegistrantName(rSObj.getRegistrantName());
+					rObj.setRegistrantMiddleName(rSObj.getRegistrantMiddleName());
+					rObj.setRegistrantEmail(rSObj.getRegistrantEmail());
+					rObj.setRegistrantAdditionalEmail(rSObj.getRegistrantAdditionalEmail());
+					rObj.setRegistrantPhone(rSObj.getRegistrantPhoneNumber());
+					rObj.setRegistrantAddress(rSObj.getRegistrantAddress());
+					rObj.setRegistrantCity(rSObj.getRegistrantCity());
+					rObj.setRegistrantState(rSObj.getRegistrantState());
+					rObj.setRegistrantPincode(rSObj.getRegistrantPincode());
+					rObj.setRegistrantPan(rSObj.getRegistrantPan());
+					DebugHandler.info(rObj);
+					result = rIf.updateRegistrant(rObj);
 					result = rPIf.updateRegistrantPayment(rPObj);
+					
 					DebugHandler.fine("Result: " + result);
 				}
 			}

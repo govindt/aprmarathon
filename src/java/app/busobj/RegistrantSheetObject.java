@@ -26,7 +26,7 @@ import org.codehaus.jettison.json.JSONException;
  */
 
 public class RegistrantSheetObject implements Cloneable {
-	private String registrant_id;
+	private int registrant_id;
 	private String registrant_name;
 	private String registrant_middle_name;
 	private String registrant_last_name;
@@ -169,7 +169,7 @@ public class RegistrantSheetObject implements Cloneable {
 	 */
     
 	public RegistrantSheetObject () {
-		setRegistrantId("0");
+		setRegistrantId(0);
 		setRegistrantName("");
 		setRegistrantMiddleName("");
 		setRegistrantLastName("");
@@ -210,7 +210,7 @@ public class RegistrantSheetObject implements Cloneable {
     
 	public RegistrantSheetObject (JSONObject jObject) {
 		try {
-			registrant_id = jObject.getString("registrant_id");
+			registrant_id = jObject.getInt("registrant_id");
 		} catch (JSONException je) {}
 		try {
 			registrant_name = jObject.getString("registrant_name");
@@ -348,11 +348,11 @@ public class RegistrantSheetObject implements Cloneable {
      *
      * Sets the <code>registrant_id</code> field
      *
-     * @param registrant_id      String
+     * @param registrant_id      int
      *
      */
     
-    public void setRegistrantId(String registrant_id) {
+    public void setRegistrantId(int registrant_id) {
         this.registrant_id = registrant_id;
     }
     
@@ -365,7 +365,7 @@ public class RegistrantSheetObject implements Cloneable {
      *
      */
     
-    public String getRegistrantId() {
+    public int getRegistrantId() {
         return registrant_id;
     }
     
@@ -1208,6 +1208,7 @@ public class RegistrantSheetObject implements Cloneable {
         DebugHandler.finest("This: " + this);
         DebugHandler.finest("Other: " + other);
         return
+			registrant_id == other.getRegistrantId() &&
             Util.trim(registrant_name).equals(Util.trim(other.getRegistrantName())) &&
             Util.trim(registrant_middle_name).equals(Util.trim(other.getRegistrantMiddleName())) &&
             Util.trim(registrant_last_name).equals(Util.trim(other.getRegistrantLastName())) &&

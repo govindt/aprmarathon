@@ -319,13 +319,6 @@ public class GoogleSheetRead {
 	}
 	public static ArrayList<CellObject> getEmptyElements(RegistrantSheetObject rObj, int rowNo, String sheetName) {
 		ArrayList<CellObject> cObjAL = new ArrayList<CellObject>();
-		if ( rObj.getRegistrantId() == null || rObj.getRegistrantId().equals("") ) {
-                CellObject cObj = new CellObject();
-                cObj.setSheetName(sheetName);
-                cObj.setRowNo(rowNo);
-                cObj.setColumn(registrantId);
-                cObjAL.add(cObj);
-        }
 		if ( rObj.getRegistrantName() == null || rObj.getRegistrantName().equals("") ) {
                 CellObject cObj = new CellObject();
                 cObj.setSheetName(sheetName);
@@ -549,7 +542,11 @@ public class GoogleSheetRead {
 				rowNo = 0;
 				for (List<Object> row : allValues) { 
 					RegistrantSheetObject rObj = new RegistrantSheetObject();
-					rObj.setRegistrantId((String)row.get(ColumnLetterToNumber(registrantId)));
+					try {
+						rObj.setRegistrantId(Integer.parseInt((String)row.get(ColumnLetterToNumber(registrantId))));
+					} catch (NumberFormatException nfe) {
+					} catch (IndexOutOfBoundsException ibe) {// Sometimes Google sheets gives less array size
+					}
 					rObj.setRegistrantName((String)row.get(ColumnLetterToNumber(registrantName)));
 					rObj.setRegistrantMiddleName((String)row.get(ColumnLetterToNumber(registrantMiddleName)));
 					rObj.setRegistrantLastName((String)row.get(ColumnLetterToNumber(registrantLastName)));
