@@ -27,6 +27,11 @@ import app.businterface.RegistrantPaymentInterface;
 import app.businterface.PaymentTypeInterface;
 import app.businterface.RegistrantInterface;
 import app.businterface.PaymentStatusInterface;
+import app.businterface.RegistrantEventInterface;
+import app.businterface.BeneficiaryInterface;
+import app.businterface.RegistrationTypeInterface;
+import app.businterface.RegistrationSourceInterface;
+import app.businterface.RegistrationClassInterface;
 import app.businterface.ParticipantEventInterface;
 import app.businterface.ParticipantInterface;
 import app.businterface.RegistrationTypeInterface;
@@ -42,6 +47,11 @@ import app.busobj.RegistrantPaymentObject;
 import app.busobj.RegistrantObject;
 import app.busobj.PaymentTypeObject;
 import app.busobj.PaymentStatusObject;
+import app.busobj.RegistrantEventObject;
+import app.busobj.BeneficiaryObject;
+import app.busobj.RegistrationTypeObject;
+import app.busobj.RegistrationSourceObject;
+import app.busobj.RegistrationClassObject;
 import app.busobj.ParticipantObject;
 import app.busobj.ParticipantEventObject;
 import app.busobj.RegistrationTypeObject;
@@ -99,7 +109,7 @@ public class BulkOpsImpl implements BulkOpsInterface  {
 				if ( paymentStatus.equals("Manual Receipt") ) {
 					try {
 						String docFile = rg.createReceipt(AppConstants.RECEIPT_TEMPLATE, smObj, true);
-						DebugHandler.info("Created Receipt File: " + docFile);
+						DebugHandler.fine("Created Receipt File: " + docFile);
 						File docFilePtr = new File(docFile);
 						SendGMail.sendMessage("aprct.treasurer@gmail.com", AppConstants.EMAIL_FROM, 
 							smObj.getSubject(), smObj.getBody(), docFilePtr);
@@ -116,7 +126,7 @@ public class BulkOpsImpl implements BulkOpsInterface  {
 				else if ( paymentStatus.equals("Send Email Receipt") ) {
 					SendMailInterface sMIf = new SendMailImpl();
 					Integer result = sMIf.mailReceiptRegistrants(smObj);
-					DebugHandler.info("Result: " + result);
+					DebugHandler.fine("Result: " + result);
 				}
 			
 			}
@@ -136,8 +146,19 @@ public class BulkOpsImpl implements BulkOpsInterface  {
 					RegistrantPaymentInterface rPIf = new RegistrantPaymentImpl();
 					PaymentTypeInterface pTIf = new PaymentTypeImpl();
 					RegistrantInterface rIf = new RegistrantImpl();
+					RegistrantEventInterface rEIf = new RegistrantEventImpl();
+					BeneficiaryInterface bIf = new BeneficiaryImpl();
+					RegistrationTypeInterface rTIf = new RegistrationTypeImpl();
+					RegistrationSourceInterface rSIf = new RegistrationSourceImpl();
+					RegistrationClassInterface rCIf = new RegistrationClassImpl();
+					
 					RegistrantPaymentObject rPObj = rPIf.getRegistrantPayment(rSObj.getRegistrantPaymentId());
 					RegistrantObject rObj = rIf.getRegistrant(rSObj.getRegistrantId());
+					RegistrantEventObject rEObj = rEIf.getRegistrantEvent(rSObj.getRegistrantEventId());
+					BeneficiaryObject bObj = new BeneficiaryObject();
+					RegistrationTypeObject rTObj = new RegistrationTypeObject();
+					RegistrationSourceObject rSoObj = new RegistrationSourceObject();
+					RegistrationClassObject rCObj = new RegistrationClassObject();
 					
 					PaymentTypeObject pTObj = new PaymentTypeObject();
 					pTObj.setPaymentTypeName(rSObj.getRegistrantPaymentTypeName());
@@ -151,6 +172,7 @@ public class BulkOpsImpl implements BulkOpsInterface  {
 					ArrayList<PaymentStatusObject> pSObjAL = pSIf.getPaymentStatus(pSObj);
 					pSObj = pSObjAL.get(0);
 					DebugHandler.fine(pSObj);
+					// Updates for Registrant Payments
 					rPObj.setPaymentStatus(pSObj.getPaymentStatusId());
 					rPObj.setPaymentAmount(rSObj.getRegistrantPaymentAmount());
 					rPObj.setPaymentAdditionalAmount(rSObj.getRegistrantAdditionalAmount());
@@ -162,6 +184,8 @@ public class BulkOpsImpl implements BulkOpsInterface  {
 					rPObj.setPaymentTax(rSObj.getRegistrantPaymentTax());
 					rPObj.setPaymentFee(rSObj.getRegistrantPaymentFee());
 					DebugHandler.fine(rPObj);
+					
+					// Updates for Registrant 
 					rObj.setRegistrantName(rSObj.getRegistrantName());
 					rObj.setRegistrantMiddleName(rSObj.getRegistrantMiddleName());
 					rObj.setRegistrantEmail(rSObj.getRegistrantEmail());
@@ -172,9 +196,40 @@ public class BulkOpsImpl implements BulkOpsInterface  {
 					rObj.setRegistrantState(rSObj.getRegistrantState());
 					rObj.setRegistrantPincode(rSObj.getRegistrantPincode());
 					rObj.setRegistrantPan(rSObj.getRegistrantPan());
-					DebugHandler.info(rObj);
+					DebugHandler.fine(rObj);
+					
+					// Updates for Registrant Event
+					
+					rCObj.setRegistrationClassName(rSObj.getRegistrantClassName());
+					ArrayList<RegistrationClassObject> rCObjAL = rCIf.getRegistrationClass(rCObj);
+					rCObj = rCObjAL.get(0);
+					DebugHandler.fine(rCObj);
+					rEObj.setRegistrantClass(rCObj.getRegistrationClassId());
+					
+					rSoObj.setRegistrationSourceName(rSObj.getRegistrantSourceName());
+					ArrayList<RegistrationSourceObject> rSoObjAL = rSIf.getRegistrationSources(rSoObj);
+					rSoObj = rSoObjAL.get(0);
+					DebugHandler.fine(rSoObj);
+					rEObj.setRegistrantSource(rSoObj.getRegistrationSourceId());
+					
+					rTObj.setRegistrationTypeName(rSObj.getRegistrantTypeName());
+					ArrayList<RegistrationTypeObject> rTObjAL = rTIf.getRegistrationTypes(rTObj);
+					rTObj = rTObjAL.get(0);
+					DebugHandler.fine(rTObj);
+					rEObj.setRegistrantType(rTObj.getRegistrationTypeId());
+					
+					bObj.setBeneficiaryName(rSObj.getRegistrantBeneficiaryName());
+					ArrayList<BeneficiaryObject> bObjAL = bIf.getBeneficiarys(bObj);
+					bObj = bObjAL.get(0);
+					DebugHandler.fine(bObj);
+					rEObj.setRegistrantBeneficiary(bObj.getBeneficiaryId());
+					
+					rEObj.setRegistrantEmergencyContact(rSObj.getRegistrantEmergencyContact());
+					rEObj.setRegistrantEmergencyPhone(rSObj.getRegistrantEmergencyPhone());
+					DebugHandler.fine(rEObj);
 					result = rIf.updateRegistrant(rObj);
 					result = rPIf.updateRegistrantPayment(rPObj);
+					result = rEIf.updateRegistrantEvent(rEObj);
 					
 					DebugHandler.fine("Result: " + result);
 				}
