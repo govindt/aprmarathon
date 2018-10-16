@@ -218,7 +218,7 @@ public class SendMailObject implements Cloneable {
 		to = rSObj.getRegistrantEmail();
 		if ( ! Util.trim(rSObj.getRegistrantAdditionalEmail()).equals("") )
 			cc = rSObj.getRegistrantAdditionalEmail();
-		registrant_id = rSObj.getRegistrantId();
+		registrant_id = rSObj.getRegistrantId() + "";
 		SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 		receipt_date = df.format(rSObj.getRegistrantReceiptDate());
 		SimpleDateFormat df1 = new SimpleDateFormat("yyyy");
