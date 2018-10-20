@@ -81,8 +81,8 @@ public class UploadRest {
 								@FormDataParam("registrantId") String registrantId,
 								@FormDataParam("eventId") String eventId)throws AppException, JSONException {
 		App.getInstance();
-		DebugHandler.info("Registrant ID : " + registrantId);
-		DebugHandler.info("Event ID : " + eventId);
+		DebugHandler.fine("Registrant ID : " + registrantId);
+		DebugHandler.fine("Event ID : " + eventId);
 		int registrant_id;
 		int event_id;
 		try {
@@ -158,6 +158,8 @@ public class UploadRest {
 	}
 	
 	private String getCellValue(Cell cell) {
+		if (cell == null ) 
+			return "";
 		switch (cell.getCellTypeEnum()) {
 			case BOOLEAN:
 				return cell.getBooleanCellValue() + "";
@@ -183,7 +185,7 @@ public class UploadRest {
 	
 	private String processParticipantExcelFile(int registrant_id, int event_id, String uploadedFileLocation) throws AppException {
 		String retVal = "";
-		sDateFormat = new SimpleDateFormat(Constants.DATE_FORMAT_STR);
+		sDateFormat = new SimpleDateFormat("DD/MM/YYYY");
 		EventInterface eIf = new EventImpl();
 		EventObject eObj = eIf.getEvent(event_id);
 		if ( eObj == null ) {
@@ -236,6 +238,7 @@ public class UploadRest {
 		EventTypeInterface eTIf = new EventTypeImpl();
 		GenderInterface gIf = new GenderImpl();
 		TShirtSizeInterface tssIf = new TShirtSizeImpl();
+		DebugHandler.info("Rows Count : " + rowsCount);
 		for (int i = 2; i <= rowsCount; i++) { // First Row is Comment and then Headers
 			ParticipantObject pObj = new ParticipantObject();
 			ParticipantEventObject pEObj = new ParticipantEventObject();
@@ -243,56 +246,65 @@ public class UploadRest {
 			pEObj.setParticipantGroup(reObj.getRegistrantEventId());
 			pEObj.setParticipantType(reObj.getRegistrantType());
 			Row row = sheet.getRow(i);
+			if ( row == null )
+				continue;
+			String buf = "";
 			int colCounts = row.getLastCellNum();
 			for (int j = 0; j < colCounts; j++) {
 				Cell cell = row.getCell(j);
-				String buf = getCellValue(cell);
-				if ( j == 0 ) 
-					pObj.setParticipantFirstName(buf);
-				else if ( j == 1 ) {
-					eTObj.setEventTypeName(buf);
-					eTObj.setEvent(event_id);
-					
-					ArrayList<EventTypeObject> eTObjArr = eTIf.getEventTypes(eTObj);
-					DebugHandler.fine(eTObjArr);
-					if ( eTObjArr == null || eTObjArr.size() != 1 ) {
-						throw new AppException("Zero or More than one record found for " + buf + " Row: " + i + "Column: " + (j + 1));
+				buf = getCellValue(cell);
+				if ( ! buf.equals("") ) {
+					if ( j == 0 ) {
+						pObj.setParticipantFirstName(buf);
 					}
-					pEObj.setParticipantEvent(event_id);
-					pEObj.setParticipantEventType((eTObjArr.get(0)).getEventTypeId());
-				} else if ( j == 2) {
-					gObj.setGenderName(buf);
-					ArrayList<GenderObject> gObjArr = gIf.getGenders(gObj);
-					pObj.setParticipantGender((gObjArr.get(0)).getGenderId());
-					if ( gObjArr.size() != 1 ) {
-						throw new AppException("Zero or More than one record found for " + buf + " Row: " + i + "Column: " + (j + 1));
+					else if ( j == 1 ) {
+						eTObj.setEventTypeName(buf);
+						eTObj.setEvent(event_id);
+						
+						ArrayList<EventTypeObject> eTObjArr = eTIf.getEventTypes(eTObj);
+						DebugHandler.fine(eTObjArr);
+						if ( eTObjArr == null || eTObjArr.size() != 1 ) {
+							throw new AppException("Zero or More than one record found for " + buf + " Row: " + i + "Column: " + (j + 1));
+						}
+						pEObj.setParticipantEvent(event_id);
+						pEObj.setParticipantEventType((eTObjArr.get(0)).getEventTypeId());
+					} else if ( j == 2) {
+						gObj.setGenderName(buf);
+						ArrayList<GenderObject> gObjArr = gIf.getGenders(gObj);
+						pObj.setParticipantGender((gObjArr.get(0)).getGenderId());
+						if ( gObjArr.size() != 1 ) {
+							throw new AppException("Zero or More than one record found for " + buf + " Row: " + i + "Column: " + (j + 1));
+						}
+					} else if ( j == 3) {
+						try {
+							Date date = sDateFormat.parse(buf); 
+							pObj.setParticipantDateOfBirth(date);
+						} catch (ParseException pe) {
+							throw new AppException("Wrong Date provide " + buf + " Row: " + i + "Column: " + (j + 1));
+						}
+					} else if ( j == 4) {
+						tssObj.setTShirtSizeName(buf);
+						ArrayList<TShirtSizeObject> tssObjArr = tssIf.getTShirtSizes(tssObj);
+						pObj.setParticipantTShirtSize((tssObjArr.get(0)).getTShirtSizeId());
+						if ( tssObjArr.size() != 1 ) {
+							throw new AppException("Zero or More than one record found for " + buf + " Row: " + i + "Column: " + (j + 1));
+						}
+					} else if ( j == 5) {
+						pObj.setParticipantCellPhone(buf);
+						if ( Util.trim(buf).equals("") ) 
+							throw new AppException("Cell Phone is empty for " + pObj.getParticipantFirstName()  + " Row: " + i + "Column: " + (j + 1));
+					} else if ( j == 6) {
+						pObj.setParticipantEmail(buf);
+						if ( Util.trim(buf).equals("") ) 
+							throw new AppException("Email is empty for " + pObj.getParticipantFirstName()  + " Row: " + i + "Column: " + (j + 1));
 					}
-				} else if ( j == 3) {
-					try {
-						Date date = sDateFormat.parse(buf); 
-						pObj.setParticipantDateOfBirth(date);
-					} catch (ParseException pe) {
-						throw new AppException("Wrong Date provide " + buf + " Row: " + i + "Column: " + (j + 1));
-					}
-				} else if ( j == 4) {
-					tssObj.setTShirtSizeName(buf);
-					ArrayList<TShirtSizeObject> tssObjArr = tssIf.getTShirtSizes(tssObj);
-					pObj.setParticipantTShirtSize((tssObjArr.get(0)).getTShirtSizeId());
-					if ( tssObjArr.size() != 1 ) {
-						throw new AppException("Zero or More than one record found for " + buf + " Row: " + i + "Column: " + (j + 1));
-					}
-				} else if ( j == 5) {
-					pObj.setParticipantCellPhone(buf);
-					if ( Util.trim(buf).equals("") ) 
-						throw new AppException("Cell Phone is empty for " + pObj.getParticipantFirstName()  + " Row: " + i + "Column: " + (j + 1));
-				} else if ( j == 6) {
-					pObj.setParticipantEmail(buf);
-					if ( Util.trim(buf).equals("") ) 
-						throw new AppException("Email is empty for " + pObj.getParticipantFirstName()  + " Row: " + i + "Column: " + (j + 1));
-				}
+				} else
+					continue;
 			}
-			pObjArr.add(pObj);
-			pEObjArr.add(pEObj);
+			if ( ! buf.equals("") ) {
+				pObjArr.add(pObj);
+				pEObjArr.add(pEObj);
+			}
 		}
 		DebugHandler.fine(pObjArr);
 		DebugHandler.fine(pEObjArr);
