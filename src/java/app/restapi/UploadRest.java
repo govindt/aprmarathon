@@ -88,21 +88,21 @@ public class UploadRest {
 		try {
 			registrant_id = Integer.parseInt(registrantId);
 		} catch (NumberFormatException nfe) {
-			return Response.status(400).entity("Invalid registrant ID in form data").build();
+			return Response.status(200).entity("Invalid registrant ID in form data").build();
 		}
 		try {
 			event_id = Integer.parseInt(eventId);
 		} catch (NumberFormatException nfe) {
-			return Response.status(400).entity("Invalid event ID in form data").build();
+			return Response.status(200).entity("Invalid event ID in form data").build();
 		}
 		// check if all form parameters are provided
 		if (uploadedInputStream == null || fileDetail == null)
-			return Response.status(400).entity("Invalid form data").build();
+			return Response.status(200).entity("Invalid form data").build();
 		// create our destination folder, if it not exists
 		try {
 			createFolderIfNotExists(UPLOAD_FOLDER);
 		} catch (SecurityException se) {
-			return Response.status(500)
+			return Response.status(200)
 					.entity("Can not create destination folder on server")
 					.build();
 		}
@@ -111,12 +111,12 @@ public class UploadRest {
 		try {
 			saveToFile(uploadedInputStream, uploadedFileLocation);
 		} catch (IOException e) {
-			return Response.status(500).entity("Can not save file").build();
+			return Response.status(200).entity("Can not save file").build();
 		}
 		try {
 			buf = processParticipantExcelFile(registrant_id, event_id, uploadedFileLocation);
 		} catch (AppException ae) {
-			return Response.status(500).entity(ae.getMessage()).build();
+			return Response.status(200).entity(ae.getMessage()).build();
 		}
 		
 		return Response.status(200).entity(buf).build();

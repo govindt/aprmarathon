@@ -67,7 +67,13 @@ public class BulkOpsRest {
 		String year = df.format(eObj.getEventStartDate());
 		DebugHandler.fine("Year: " + year);
 		BulkOpsInterface bOIf = new BulkOpsImpl();
-		Integer result = bOIf.bulkReceiptGenerate(year);
+		Integer result = new Integer(0);
+		try {
+			result = bOIf.bulkReceiptGenerate(year);
+		} catch (AppException ae) {
+			DebugHandler.severe(ae.getMessage());
+			result = 1;
+		}
 		jo.put("result", result);
 		return Response.status(200).entity(jo.toString()).type(MediaType.APPLICATION_JSON).build();
 	};
@@ -101,7 +107,13 @@ public class BulkOpsRest {
 		String year = df.format(eObj.getEventStartDate());
 		DebugHandler.fine("Year: " + year);
 		BulkOpsInterface bOIf = new BulkOpsImpl();
-		Integer result = bOIf.bulkUpdateRegistrants(year);
+		Integer result = new Integer(0);
+		try {
+			bOIf.bulkUpdateRegistrants(year);
+		} catch (AppException ae) {
+			DebugHandler.severe(ae.getMessage());
+			result = 1;
+		}
 		jo.put("result", result);
 		return Response.status(200).entity(jo.toString()).type(MediaType.APPLICATION_JSON).build();
 	};
@@ -135,7 +147,13 @@ public class BulkOpsRest {
 		String year = df.format(eObj.getEventStartDate());
 		DebugHandler.fine("Year: " + year);
 		BulkOpsInterface bOIf = new BulkOpsImpl();
-		Integer result = bOIf.bulkUpdateParticipants(year);
+		Integer result = new Integer(0);
+		try {
+			bOIf.bulkUpdateParticipants(year);
+		} catch (AppException ae) {
+			DebugHandler.severe(ae.getMessage());
+			result = 1;
+		}
 		jo.put("result", result);
 		return Response.status(200).entity(jo.toString()).type(MediaType.APPLICATION_JSON).build();
 	};
