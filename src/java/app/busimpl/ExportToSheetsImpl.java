@@ -230,7 +230,8 @@ public class ExportToSheetsImpl implements ExportToSheetsInterface  {
 				participantList.add(eTObj.getEventTypeName());
 				participantList.add(pEObj.getParticipantBibNo());
 				RegistrantObject rObj = rIf.getRegistrant(rEObj.getRegistrantId());
-				participantList.add(rObj.getRegistrantName());
+				//participantList.add(rObj.getRegistrantName());
+				participantList.add(rObj.getRegistrantEmail());
 				participantList.add(pObj.getParticipantFirstName());
 				participantList.add(pObj.getParticipantMiddleName());
 				participantList.add(pObj.getParticipantLastName());
