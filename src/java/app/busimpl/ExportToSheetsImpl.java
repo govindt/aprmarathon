@@ -200,7 +200,8 @@ public class ExportToSheetsImpl implements ExportToSheetsInterface  {
 		participantListHeader.add(AppConstants.REGISTRANT_SOURCE_LABEL);
 		participantListHeader.add(AppConstants.PARTICIPANT_EVENT_TYPE_LABEL);
 		participantListHeader.add(AppConstants.PARTICIPANT_BIB_NO_LABEL);
-		participantListHeader.add(AppConstants.PARTICIPANT_GROUP_LABEL);
+		//participantListHeader.add(AppConstants.PARTICIPANT_GROUP_LABEL);
+		participantListHeader.add(AppConstants.REGISTRANT_EMAIL_LABEL);
 		participantListHeader.add(AppConstants.PARTICIPANT_FIRST_NAME_LABEL);
 		participantListHeader.add(AppConstants.PARTICIPANT_MIDDLE_NAME_LABEL);
 		participantListHeader.add(AppConstants.PARTICIPANT_LAST_NAME_LABEL);
