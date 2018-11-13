@@ -56,7 +56,11 @@ public class SendMailImpl implements SendMailInterface {
 			try {
 				String pdfFile = r.createReceipt(AppConstants.RECEIPT_TEMPLATE, sendMailObject, false);
 				File pdfFilePtr = new File(pdfFile);
-				SendGMail.sendMessage(sendMailObject.getTo(), AppConstants.EMAIL_FROM, sendMailObject.getSubject(), sendMailObject.getBody(), pdfFilePtr);
+				StringTokenizer st = new StringTokenizer(sendMailObject.getTo(), ",");
+				while ( st.hasMoreTokens() ) {
+					String to = st.nextToken();
+					SendGMail.sendMessage(to, AppConstants.EMAIL_FROM, sendMailObject.getSubject(), sendMailObject.getBody(), pdfFilePtr);
+				}
 			} catch (InvalidFormatException ife) {
 				throw new AppException("Invalid Format Exception during mail sending");
 			} catch (IOException ioe) {

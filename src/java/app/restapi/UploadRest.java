@@ -318,6 +318,7 @@ public class UploadRest {
 			ParticipantEventObject pEObj = pEObjArr.get(i);
 			ParticipantObject checkPObj = new ParticipantObject();
 			// Find if a record exists with the same gender, dob and cell
+			checkPObj.setParticipantFirstName(pObj.getParticipantFirstName());
 			checkPObj.setParticipantGender(pObj.getParticipantGender());
 			checkPObj.setParticipantDateOfBirth(pObj.getParticipantDateOfBirth());
 			checkPObj.setParticipantCellPhone(pObj.getParticipantCellPhone());
