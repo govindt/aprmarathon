@@ -16,6 +16,8 @@ import app.util.App;
 import app.util.ReceiptGenerate;
 import javax.mail.MessagingException;
 import java.security.GeneralSecurityException;
+import app.businterface.SendMailInterface;
+import app.busimpl.SendMailImpl;
 
 public class ReceiptGenerateTest {
     public static void main(String args[]) throws core.util.AppException, IOException,InvalidFormatException {
@@ -48,26 +50,8 @@ public class ReceiptGenerateTest {
 		smObj.setEmailType(emailType);
 		String pdfFile = r.createReceipt(AppConstants.RECEIPT_TEMPLATE, smObj, false);
 		File pdfFilePtr = new File(pdfFile);
-		try {
-			SendGMail.sendMessage(	smObj.getTo(), 
-									AppConstants.EMAIL_FROM, 
-									smObj.getSubject(),
-									smObj.getBody(),
-									pdfFilePtr);
-		} catch (MessagingException me) {
-			DebugHandler.severe("Sending Mail failed for the following user" + 
-								"\nEmail : " + smObj.getTo() + 
-								"\nSubject : " + smObj.getSubject() +
-								"\nBody: " + smObj.getBody() +
-								"\nAttachment: " + pdfFile);
-			me.printStackTrace();
-		} catch (GeneralSecurityException gse) {
-			DebugHandler.severe("Sending Mail failed for the following user" + 
-								"\nEmail : " + smObj.getTo() + 
-								"\nSubject : " + smObj.getSubject() +
-								"\nBody: " + smObj.getBody() +
-								"\nAttachment: " + pdfFile);
-			gse.printStackTrace();
-		}
+		
+		SendMailInterface sMIf = new SendMailImpl();
+		Integer result = sMIf.mailReceiptRegistrants(smObj);
 	}
 }
