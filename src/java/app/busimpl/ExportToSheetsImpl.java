@@ -214,6 +214,7 @@ public class ExportToSheetsImpl implements ExportToSheetsInterface  {
 		participantListHeader.add(AppConstants.PARTICIPANT_EMAIL_LABEL);
 		participantListHeader.add(AppConstants.PARTICIPANT_ID_LABEL);
 		participantListHeader.add(AppConstants.DB_OPERATION_LABEL);
+		participantListHeader.add(AppConstants.PARTICIPANT_GROUP_LABEL);
 		rListOfList.add(participantListHeader);
 		
 		if ( pEObjArr != null ) {
@@ -255,6 +256,7 @@ public class ExportToSheetsImpl implements ExportToSheetsInterface  {
 				participantList.add(pObj.getParticipantEmail());
 				participantList.add(pObj.getParticipantId());
 				participantList.add(Constants.INFO_STR);
+				participantList.add(rEObj.getRegistrantEventId());
 				rListOfList.add(participantList);
 			}
 			vR.setValues(rListOfList);
