@@ -29,6 +29,7 @@ GOOGLE_SHEET_CLASSPATH="${TOMCAT_WEBAPP_LIB_DIR}/guava-26.0-jre.jar:\
 ${TOMCAT_WEBAPP_LIB_DIR}/google-collect-1.0.jar:\
 ${TOMCAT_WEBAPP_LIB_DIR}/servlet.jar:\
 ${TOMCAT_WEBAPP_LIB_DIR}/google-api-services-gmail-v1-rev93-1.24.1.jar:\
+${TOMCAT_WEBAPP_LIB_DIR}/google-api-services-drive-v3-rev136-1.25.0.jar:\
 ${TOMCAT_WEBAPP_LIB_DIR}/google-http-client-1.24.1.jar:\
 ${TOMCAT_WEBAPP_LIB_DIR}/google-http-client-jackson2-1.24.1.jar:\
 ${TOMCAT_WEBAPP_LIB_DIR}/google-oauth-client-java6-1.24.1.jar:\
