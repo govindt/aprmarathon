@@ -41,6 +41,7 @@ public class ParticipantSheetObject implements Cloneable {
 	private String participant_cell_phone;
 	private String participant_email;
 	private String participant_group;
+	private String registrant_participant_email;
 	private int participant_event_id;
 	private String participant_event;
 	private String participant_type;
@@ -74,6 +75,7 @@ public class ParticipantSheetObject implements Cloneable {
 		buf += "participant_cell_phone : " + participant_cell_phone + "\n";
 		buf += "participant_email : " + participant_email + "\n";
 		buf += "participant_group : " + participant_group + "\n";
+		buf += "registrant_participant_email : " + registrant_participant_email + "\n";
 		buf += "participant_event_id : " + participant_event_id + "\n";
 		buf += "participant_event : " + participant_event + "\n";
 		buf += "participant_type : " + participant_type + "\n";
@@ -106,6 +108,7 @@ public class ParticipantSheetObject implements Cloneable {
 		list.add(participant_cell_phone + "");
 		list.add(participant_email + "");
 		list.add(participant_group + "");
+		list.add(registrant_participant_email + "");
 		list.add(participant_event_id + "");
 		list.add(participant_event + "");
 		list.add(participant_type + "");
@@ -139,6 +142,7 @@ public class ParticipantSheetObject implements Cloneable {
 			jo.put("participant_cell_phone", participant_cell_phone);
 			jo.put("participant_email", participant_email);
 			jo.put("participant_group", participant_group);
+			jo.put("registrant_participant_email", registrant_participant_email);
 			jo.put("participant_event_id", participant_event_id);
 			jo.put("participant_event", participant_event);
 			jo.put("participant_type", participant_type);
@@ -180,6 +184,7 @@ public class ParticipantSheetObject implements Cloneable {
 		setParticipantCellPhone("");
 		setParticipantEmail("");
 		setParticipantGroup("");
+		setRegistrantParticipantEmail("");
 		setParticipantEventId(0);
 		setParticipantEvent("");
 		setParticipantType("");
@@ -236,6 +241,12 @@ public class ParticipantSheetObject implements Cloneable {
 		try {
 			participant_group = jObject.getString("participant_group");
 		} catch (JSONException je) {participant_group = "";}
+		try {
+			participant_event_id = jObject.getInt("participant_event_id");
+		} catch (JSONException je) {}
+		try {
+			registrant_participant_email = jObject.getString("registrant_participant_email");
+		} catch (JSONException je) {registrant_participant_email = "";}
 		try {
 			participant_event_id = jObject.getInt("participant_event_id");
 		} catch (JSONException je) {}
@@ -569,6 +580,31 @@ public class ParticipantSheetObject implements Cloneable {
 	
 	public String getParticipantGroup() {
 		return participant_group;
+	}
+	
+	/**
+	 *
+	 * Sets the <code>registrant_participant_email</code> field
+	 *
+	 * @param registrant_participant_email	  String
+	 *
+	 */
+	
+	public void setRegistrantParticipantEmail(String registrant_participant_email) {
+		this.registrant_participant_email = registrant_participant_email;
+	}
+	
+	
+	/**
+	 *
+	 * Gets the <code>registrant_participant_email</code> field
+	 *
+	 * @returns registrant_participant_email
+	 *
+	 */
+	
+	public String getRegistrantParticipantEmail() {
+		return registrant_participant_email;
 	}
 
 	
