@@ -101,7 +101,7 @@ public class GoogleSheetRead {
 	private static String participantEmailCol;
 	private static String participantIdCol;
 	private static String participantDbOperationCol;
-	private static String participantRegistrantEmailCol;
+	private static String registrantParticipantEmailCol;
 	
 	 public static void init(int eventYear) {
 		Properties prop = new Properties();
@@ -186,7 +186,7 @@ public class GoogleSheetRead {
 				participantSourceCol = prop.getProperty("googlereadsheets.2018.participantSource.column");
 				participantEventTypeCol = prop.getProperty("googlereadsheets.2018.participantEventType.column");
 				participantBibNoCol = prop.getProperty("googlereadsheets.2018.participantBibNo.column");
-				participantRegistrantEmailCol = prop.getProperty("googlereadsheets.2018.participantRegistrantEmail.column");
+				registrantParticipantEmailCol = prop.getProperty("googlereadsheets.2018.registrantParticipantEmail.column");
 				participantFirstNameCol = prop.getProperty("googlereadsheets.2018.participantFirstName.column");
 				participantMiddleNameCol = prop.getProperty("googlereadsheets.2018.participantMiddleName.column");
 				participantLastNameCol = prop.getProperty("googlereadsheets.2018.participantLastName.column");
@@ -462,6 +462,7 @@ public class GoogleSheetRead {
 					pSObj.setParticipantEventType((String)row.get(ColumnLetterToNumber(participantEventTypeCol)));
 					pSObj.setParticipantBibNo((String)row.get(ColumnLetterToNumber(participantBibNoCol)));
 					pSObj.setParticipantGroup((String)row.get(ColumnLetterToNumber(participantGroupCol)));
+					pSObj.setRegistrantParticipantEmail((String)row.get(ColumnLetterToNumber(registrantParticipantEmailCol)));
 					pSObj.setParticipantFirstName((String)row.get(ColumnLetterToNumber(participantFirstNameCol)));
 					pSObj.setParticipantMiddleName((String)row.get(ColumnLetterToNumber(participantMiddleNameCol)));
 					pSObj.setParticipantLastName((String)row.get(ColumnLetterToNumber(participantLastNameCol)));
