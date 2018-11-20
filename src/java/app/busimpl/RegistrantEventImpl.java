@@ -50,7 +50,7 @@ public class RegistrantEventImpl implements RegistrantEventInterface  {
 			ArrayList<RegistrantEventObject> v = new ArrayList<RegistrantEventObject>();
 			for ( int i = 0; i < registranttype_obj.length; i++) {
 				for ( int j = 0; j < registrantEventObjectArr.length; j++ ) {
-					if ( registranttype_obj[i] != null )
+					if ( registranttype_obj[i] != null && registrantEventObjectArr[j] != null )
 						if ( registrantEventObjectArr[j].getRegistrantType() == registranttype_obj[i].getRegistrationTypeId() &&
 							 registrantEventObjectArr[j].getRegistrantEvent() == event_id )
 							v.add((RegistrantEventObject)registrantEventObjectArr[j].clone());
