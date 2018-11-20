@@ -232,6 +232,46 @@ public class BulkOpsImpl implements BulkOpsInterface  {
 					result = rEIf.updateRegistrantEvent(rEObj);
 					
 					DebugHandler.fine("Result: " + result);
+				} else if ( dbOperation.equals(Constants.DELETE_STR) ) {
+					RegistrantPaymentInterface rPIf = new RegistrantPaymentImpl();
+					RegistrantInterface rIf = new RegistrantImpl();
+					RegistrantEventInterface rEIf = new RegistrantEventImpl();
+					ParticipantEventInterface pEIf = new ParticipantEventImpl();
+					ParticipantInterface pIf = new ParticipantImpl();
+					RegistrantPaymentObject rPObj = rPIf.getRegistrantPayment(rSObj.getRegistrantPaymentId());
+					if ( rPObj != null ) {
+						DebugHandler.info("Deleteing Registrant Payment " + rPObj.getRegistrantPaymentId());
+						rPIf.deleteRegistrantPayment(rPObj);
+					}
+					
+					ParticipantEventObject pEObj = new ParticipantEventObject();
+					pEObj.setParticipantGroup(rSObj.getRegistrantEventId());
+					ArrayList<ParticipantEventObject> pEObjAL = pEIf.getParticipantEvents(pEObj);
+					for ( int i = 0; i < pEObjAL.size(); i++ ) {
+						pEObj = pEObjAL.get(i);
+						pEIf.deleteParticipantEvent(pEObj);
+						DebugHandler.info("Deleting Participant Event " + pEObj.getParticipantEventId());
+					}
+					ParticipantObject pObj = new ParticipantObject();
+					pObj.setParticipantGroup(rSObj.getRegistrantEventId());
+					ArrayList<ParticipantObject> pObjAL = pIf.getParticipants(pObj);
+					for ( int i = 0; i < pObjAL.size(); i++ ) {
+						pObj = pObjAL.get(i);
+						pIf.deleteParticipant(pObj);
+						DebugHandler.info("Deleting Participant " + pObj.getParticipantId());
+					}
+					
+					RegistrantEventObject rEObj = rEIf.getRegistrantEvent(rSObj.getRegistrantEventId());
+					if ( rEObj != null ) {
+						rEIf.deleteRegistrantEvent(rEObj);
+						DebugHandler.info("Deleting Registrant Event " + rEObj.getRegistrantEventId());
+					}
+					
+					RegistrantObject rObj = rIf.getRegistrant(rSObj.getRegistrantId());
+					if ( rObj != null ) {
+						rIf.deleteRegistrant(rObj);
+						DebugHandler.info("Deleting Registrant " + rObj.getRegistrantId());
+					}
 				}
 			}
 		}
