@@ -345,6 +345,21 @@ public class BulkOpsImpl implements BulkOpsInterface  {
 					pObj.setParticipantEmail(pSObj.getParticipantEmail());
 					result = pIf.updateParticipant(pObj);
 					result = pEIf.updateParticipantEvent(pEObj);
+				} else if ( dbOperation.equals(Constants.DELETE_STR) ) {
+					ParticipantEventInterface pEIf = new ParticipantEventImpl();
+					ParticipantInterface pIf = new ParticipantImpl();
+					
+					ParticipantEventObject pEObj = pEIf.getParticipantEvent(pSObj.getParticipantEventId());
+					
+					if ( pEObj != null ) {
+						pEIf.deleteParticipantEvent(pEObj);
+						DebugHandler.info("Deleting Participant Event " + pEObj.getParticipantEventId());
+					}
+					ParticipantObject pObj = pIf.getParticipant(pSObj.getParticipantId());
+					if ( pObj != null ) {
+						pIf.deleteParticipant(pObj);
+						DebugHandler.info("Deleting Participant " + pObj.getParticipantId());
+					}
 				}
 			}
 		}
