@@ -275,13 +275,13 @@ public class GoogleSheetRead {
                 cObj.setColumn(participantDateOfBirthCol);
                 cObjAL.add(cObj);
         }
-		if ( pSObj.getParticipantAgeCategory() == null || pSObj.getParticipantAgeCategory().equals("") ) {
+		/*if ( pSObj.getParticipantAgeCategory() == null || pSObj.getParticipantAgeCategory().equals("") ) {
                 CellObject cObj = new CellObject();
                 cObj.setSheetName(sheetName);
                 cObj.setRowNo(rowNo);
                 cObj.setColumn(participantAgeCategoryCol);
                 cObjAL.add(cObj);
-        }
+        }*/
 		if ( pSObj.getParticipantTShirtSize() == null || pSObj.getParticipantTShirtSize().equals("") ) {
                 CellObject cObj = new CellObject();
                 cObj.setSheetName(sheetName);
