@@ -246,7 +246,12 @@ public class ExportToSheetsImpl implements ExportToSheetsInterface  {
 				else
 					participantList.add("");
 				TShirtSizeObject tSSObj = tSSIf.getTShirtSize(pObj.getParticipantTShirtSize());
-				participantList.add(tSSObj.getTShirtSizeName());
+				if ( tSSObj != null )
+					participantList.add(tSSObj.getTShirtSizeName());
+				else {
+					participantList.add("");
+					DebugHandler.info("Tshirt Size not found for " + pObj);
+				}
 				BloodGroupObject bGObj = bGIf.getBloodGroup(pObj.getParticipantBloodGroup());
 				if ( bGObj != null )
 					participantList.add(bGObj.getBloodGroupName());
