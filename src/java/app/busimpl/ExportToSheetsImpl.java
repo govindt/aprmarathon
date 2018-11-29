@@ -234,7 +234,10 @@ public class ExportToSheetsImpl implements ExportToSheetsInterface  {
 				RegistrantObject rObj = rIf.getRegistrant(rEObj.getRegistrantId());
 				//participantList.add(rObj.getRegistrantName());
 				participantList.add(rObj.getRegistrantEmail());
-				DebugHandler.info(pObj);
+				if ( pObj == null ) {
+					DebugHandler.severe("Unable to find Participant for " + pEObj.getParticipantId());
+				}
+				
 				participantList.add(pObj.getParticipantFirstName());
 				participantList.add(pObj.getParticipantMiddleName());
 				participantList.add(pObj.getParticipantLastName());
