@@ -221,6 +221,10 @@ public class ExportToSheetsImpl implements ExportToSheetsInterface  {
 			for ( int i = 0; i < pEObjArr.size(); i++) {
 				pEObj = pEObjArr.get(i);
 				ParticipantObject pObj = pIf.getParticipant(pEObj.getParticipantId());
+				if ( pObj == null ) {
+					DebugHandler.severe("Unable to find Participant for " + pEObj.getParticipantId());
+					continue;
+				}
 				List<Object> participantList = new ArrayList<Object>();
 				participantList.add(pEObj.getParticipantEventId());
 				RegistrationTypeObject rTObj = rTIf.getRegistrationType(pEObj.getParticipantType());
@@ -234,9 +238,7 @@ public class ExportToSheetsImpl implements ExportToSheetsInterface  {
 				RegistrantObject rObj = rIf.getRegistrant(rEObj.getRegistrantId());
 				//participantList.add(rObj.getRegistrantName());
 				participantList.add(rObj.getRegistrantEmail());
-				if ( pObj == null ) {
-					DebugHandler.severe("Unable to find Participant for " + pEObj.getParticipantId());
-				}
+				
 				
 				participantList.add(pObj.getParticipantFirstName());
 				participantList.add(pObj.getParticipantMiddleName());
