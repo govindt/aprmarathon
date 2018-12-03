@@ -1,4 +1,5 @@
 package app.busobj;
+import core.util.Util;
 import java.util.Comparator;
 
 public class RegistrantObjectSort implements Comparator<RegistrantObject> 
@@ -7,6 +8,8 @@ public class RegistrantObjectSort implements Comparator<RegistrantObject>
     // registrant_id  
     public int compare(RegistrantObject a, RegistrantObject b) 
     { 
-        return a.getRegistrantId() - b.getRegistrantId(); 
+        //return a.getRegistrantId() - b.getRegistrantId();
+		
+		return (Util.trim(a.getRegistrantName())).compareTo(Util.trim(b.getRegistrantName()));
     } 
 } 
