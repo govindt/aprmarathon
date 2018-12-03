@@ -355,10 +355,18 @@ public class BulkOpsImpl implements BulkOpsInterface  {
 						pEIf.deleteParticipantEvent(pEObj);
 						DebugHandler.info("Deleting Participant Event " + pEObj.getParticipantEventId());
 					}
-					ParticipantObject pObj = pIf.getParticipant(pSObj.getParticipantId());
-					if ( pObj != null ) {
-						pIf.deleteParticipant(pObj);
-						DebugHandler.info("Deleting Participant " + pObj.getParticipantId());
+					// Now get any other event the participant has registered before deleting
+					// the participants
+					pEObj = new ParticipantEventObject();
+					pEObj.setParticipantId(pSObj.getParticipantId());
+					ArrayList<ParticipantEventObject> pEObjAL = pEIf.getParticipantEvents(pEObj);
+				
+					if ( pEObjAL.size() == 0 ) { // No other Event exists
+						ParticipantObject pObj = pIf.getParticipant(pSObj.getParticipantId());
+						if ( pObj != null ) {
+							pIf.deleteParticipant(pObj);
+							DebugHandler.info("Deleting Participant " + pObj.getParticipantId());
+						}
 					}
 				}
 			}
