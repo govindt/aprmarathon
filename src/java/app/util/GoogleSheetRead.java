@@ -493,11 +493,11 @@ public class GoogleSheetRead {
 						pSObj.setParticipantId(Integer.parseInt((String)row.get(ColumnLetterToNumber(participantIdCol))));
 					} catch (NumberFormatException npe) {}
 					pSObj.setParticipantDbOperation((String)row.get(ColumnLetterToNumber(participantDbOperationCol)));
-					DebugHandler.info(ColumnLetterToNumber(participantEventAgeCategoryCol));
+					DebugHandler.info(participantEventAgeCategoryCol);
 					pSObj.setParticipantAgeCategory((String)row.get(ColumnLetterToNumber(participantEventAgeCategoryCol)));
-					DebugHandler.info(ColumnLetterToNumber(participantEventNetTimeCol));
+					DebugHandler.info(participantEventNetTimeCol);
 					pSObj.setParticipantEventNetTime((String)row.get(ColumnLetterToNumber(participantEventNetTimeCol)));
-					DebugHandler.info(ColumnLetterToNumber(participantEventGunTimeCol));
+					DebugHandler.info(participantEventGunTimeCol);
 					pSObj.setParticipantEventGunTime((String)row.get(ColumnLetterToNumber(participantEventGunTimeCol)));
 					DebugHandler.fine(pSObj);
 					pSObjAL.add(pSObj);
