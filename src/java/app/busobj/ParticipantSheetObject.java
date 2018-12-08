@@ -49,6 +49,9 @@ public class ParticipantSheetObject implements Cloneable {
 	private String participant_event_type;
 	private String participant_bib_no;
 	private String participant_db_operation;
+	private String participant_event_age_category;
+	private String participant_event_net_time;
+	private String participant_event_gun_time;
 	
 	/**
 	 *
@@ -82,7 +85,11 @@ public class ParticipantSheetObject implements Cloneable {
 		buf += "participant_source : " + participant_source + "\n";
 		buf += "participant_event_type : " + participant_event_type + "\n";
 		buf += "participant_bib_no : " + participant_bib_no + "\n";
+		buf += "participant_event_age_category : " + participant_event_age_category + "\n";
+		buf += "participant_event_net_time : " + participant_event_net_time + "\n";
+		buf += "participant_event_gun_time : " + participant_event_gun_time + "\n";
 		buf += "participant_db_operation : " + participant_db_operation + "\n";
+		
 		return buf;
 	}
 
@@ -115,6 +122,9 @@ public class ParticipantSheetObject implements Cloneable {
 		list.add(participant_source + "");
 		list.add(participant_event_type + "");
 		list.add(participant_bib_no + "");
+		list.add(participant_event_age_category + "");
+		list.add(participant_event_net_time + "");
+		list.add(participant_event_gun_time + "");
 		list.add(participant_db_operation + "");
 		return list;
 	}
@@ -149,6 +159,9 @@ public class ParticipantSheetObject implements Cloneable {
 			jo.put("participant_source", participant_source);
 			jo.put("participant_event_type", participant_event_type);
 			jo.put("participant_bib_no", participant_bib_no);
+			jo.put("participant_event_age_category", participant_event_age_category);
+			jo.put("participant_event_net_time", participant_event_net_time);
+			jo.put("participant_event_gun_time", participant_event_gun_time);
 			jo.put("participant_db_operation", participant_db_operation);
 		} catch (JSONException je) {}
 		return jo;
@@ -192,6 +205,9 @@ public class ParticipantSheetObject implements Cloneable {
 		setParticipantEventType("");
 		setParticipantBibNo("");
 		setParticipantDbOperation("");
+		setParticipantEventAgeCategory("");
+		setParticipantEventNetTime("");
+		setParticipantEventGunTime("");
 	}
 	
 	/**
@@ -268,6 +284,16 @@ public class ParticipantSheetObject implements Cloneable {
 		try {
 			participant_db_operation = jObject.getString("participant_db_operation");
 		} catch (JSONException je) {participant_db_operation = "";}
+		try {
+			participant_event_age_category = jObject.getString("participant_event_age_category");
+		} catch (JSONException je) {participant_event_age_category = "";}
+		try {
+			participant_event_net_time = jObject.getString("participant_event_net_time");
+		} catch (JSONException je) {participant_event_net_time = "";}
+		try {
+			participant_event_gun_time = jObject.getString("participant_event_gun_time");
+		} catch (JSONException je) {participant_event_gun_time = "";}
+		
 	}
 	
 	
@@ -775,6 +801,80 @@ public class ParticipantSheetObject implements Cloneable {
 		this.participant_db_operation = participant_db_operation;
 	}
 	
+	/**
+	 *
+	 * Gets the <code>participant_event_age_category</code> field
+	 *
+	 * @returns participant_event_age_category
+	 *
+	 */
+	
+	public String getParticipantEventAgeCategory() {
+		return participant_event_age_category;
+	}
+
+	
+	/**
+	 *
+	 * Sets the <code>participant_event_age_category</code> field
+	 *
+	 * @param participant_event_age_category	  String
+	 *
+	 */
+	
+	public void setParticipantEventAgeCategory(String participant_event_age_category) {
+		this.participant_event_age_category = participant_event_age_category;
+	}
+	
+	/**
+	 *
+	 * Gets the <code>participant_event_net_time</code> field
+	 *
+	 * @returns participant_event_net_time
+	 *
+	 */
+	
+	public String getParticipantEventNetTime() {
+		return participant_event_net_time;
+	}
+
+	
+	/**
+	 *
+	 * Sets the <code>participant_event_net_time</code> field
+	 *
+	 * @param participant_event_net_time	  String
+	 *
+	 */
+	
+	public void setParticipantEventNetTime(String participant_event_net_time) {
+		this.participant_event_net_time = participant_event_net_time;
+	}
+	
+	/**
+	 *
+	 * Gets the <code>participant_event_gun_time</code> field
+	 *
+	 * @returns participant_event_gun_time
+	 *
+	 */
+	
+	public String getParticipantEventGunTime() {
+		return participant_event_gun_time;
+	}
+
+	
+	/**
+	 *
+	 * Sets the <code>participant_event_gun_time</code> field
+	 *
+	 * @param participant_event_gun_time	  String
+	 *
+	 */
+	
+	public void setParticipantEventGunTime(String participant_event_gun_time) {
+		this.participant_event_gun_time = participant_event_gun_time;
+	}
 	
 	/**
 	 *
@@ -820,6 +920,9 @@ public class ParticipantSheetObject implements Cloneable {
 			Util.trim(participant_source).equals(Util.trim(other.getParticipantSource())) &&
 			Util.trim(participant_event_type).equals(Util.trim(other.getParticipantEventType())) &&
 			Util.trim(participant_bib_no).equals(Util.trim(other.getParticipantBibNo())) &&
+			Util.trim(participant_event_age_category).equals(Util.trim(other.getParticipantEventAgeCategory())) &&
+			Util.trim(participant_event_net_time).equals(Util.trim(other.getParticipantEventNetTime())) &&
+			Util.trim(participant_event_gun_time).equals(Util.trim(other.getParticipantEventGunTime())) &&
 			Util.trim(participant_db_operation).equals(Util.trim(other.getParticipantDbOperation()));
 	}
 	

@@ -168,6 +168,22 @@ public class ExportToSheetsImpl implements ExportToSheetsInterface  {
 		}
 	}
 	
+	public boolean checkIfAlreadyTShirtAddedForParticipant(	ArrayList<ParticipantEventObject> pEObjArr,
+															int checkTill,
+															int currentParticipantId) {
+		for ( int i = 0; i < checkTill; i++) {
+			ParticipantEventObject pEObj = pEObjArr.get(i);
+			if ( pEObj.getParticipantId() == currentParticipantId ) {
+				DebugHandler.info("T-Shirt Duplicate Entry found Participant ID: " + 
+								   pEObj.getParticipantId() + 
+								   " ParticipantEventID: " + pEObj.getParticipantEventId()); 
+				return true;
+			}
+		}
+		return false;
+	}
+														
+	
 	public void updateParticipants() throws AppException {
 		SimpleDateFormat dateFormatter = new SimpleDateFormat(Constants.DATE_FORMAT_STR);
 		Sheets service = GoogleSheetWrite.getSheetsService();
@@ -215,6 +231,10 @@ public class ExportToSheetsImpl implements ExportToSheetsInterface  {
 		participantListHeader.add(AppConstants.PARTICIPANT_ID_LABEL);
 		participantListHeader.add(AppConstants.DB_OPERATION_LABEL);
 		participantListHeader.add(AppConstants.PARTICIPANT_GROUP_LABEL);
+		participantListHeader.add(AppConstants.PARTICIPANT_EVENT_AGE_CATEGORY_LABEL);
+		participantListHeader.add(AppConstants.PARTICIPANT_EVENT_NET_TIME_LABEL);
+		participantListHeader.add(AppConstants.PARTICIPANT_EVENT_GUN_TIME_LABEL);
+		
 		rListOfList.add(participantListHeader);
 		
 		if ( pEObjArr != null ) {
@@ -251,13 +271,18 @@ public class ExportToSheetsImpl implements ExportToSheetsInterface  {
 					participantList.add(aCObj.getAgeCategory());
 				else
 					participantList.add("");
-				TShirtSizeObject tSSObj = tSSIf.getTShirtSize(pObj.getParticipantTShirtSize());
-				if ( tSSObj != null )
-					participantList.add(tSSObj.getTShirtSizeName());
-				else {
-					participantList.add("");
-					DebugHandler.info("Tshirt Size not found for " + pObj);
+				if ( checkIfAlreadyTShirtAddedForParticipant(pEObjArr, i, pEObj.getParticipantId()) ) {
+					participantList.add("None");
 				}
+				else {
+					TShirtSizeObject tSSObj = tSSIf.getTShirtSize(pObj.getParticipantTShirtSize());
+					if ( tSSObj != null )
+						participantList.add(tSSObj.getTShirtSizeName());
+					else {
+						participantList.add("");
+						DebugHandler.info("Tshirt Size not found for " + pObj);
+					}
+				} 
 				BloodGroupObject bGObj = bGIf.getBloodGroup(pObj.getParticipantBloodGroup());
 				if ( bGObj != null )
 					participantList.add(bGObj.getBloodGroupName());
@@ -268,6 +293,13 @@ public class ExportToSheetsImpl implements ExportToSheetsInterface  {
 				participantList.add(pObj.getParticipantId());
 				participantList.add(Constants.INFO_STR);
 				participantList.add(rEObj.getRegistrantEventId());
+				aCObj = aCIf.getAgeCategory(pEObj.getParticipantEventAgeCategory());
+				if ( aCObj != null )
+					participantList.add(aCObj.getAgeCategory());
+				else
+					participantList.add("");
+				participantList.add(pEObj.getParticipantEventNetTime());
+				participantList.add(pEObj.getParticipantEventGunTime());
 				rListOfList.add(participantList);
 			}
 			vR.setValues(rListOfList);

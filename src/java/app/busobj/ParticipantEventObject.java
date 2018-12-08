@@ -36,6 +36,9 @@ public class ParticipantEventObject implements Cloneable {
 	private int participant_event_type;
 	private String participant_bib_no;
 	private int participant_group;
+	private int participant_event_age_category;
+	private String participant_event_net_time;
+	private String participant_event_gun_time;
 	
 	/**
 	 *
@@ -54,6 +57,9 @@ public class ParticipantEventObject implements Cloneable {
 		buf += "participant_event_type : " + participant_event_type + "\n";
 		buf += "participant_bib_no : " + participant_bib_no + "\n";
 		buf += "participant_group : " + participant_group + "\n";
+		buf += "participant_event_age_category : " + participant_event_age_category + "\n";
+		buf += "participant_event_net_time : " + participant_event_net_time + "\n";
+		buf += "participant_event_gun_time : " + participant_event_gun_time + "\n";
 		return buf;
 	}
 
@@ -74,6 +80,9 @@ public class ParticipantEventObject implements Cloneable {
 		list.add(participant_event_type + "");
 		list.add(participant_bib_no + "");
 		list.add(participant_group + "");
+		list.add(participant_event_age_category + "");
+		list.add(participant_event_net_time + "");
+		list.add(participant_event_gun_time + "");
 		return list;
 	}
 
@@ -95,6 +104,9 @@ public class ParticipantEventObject implements Cloneable {
 			jo.put("participant_event_type", participant_event_type);
 			jo.put("participant_bib_no", participant_bib_no);
 			jo.put("participant_group", participant_group);
+			jo.put("participant_event_age_category", participant_event_age_category);
+			jo.put("participant_event_net_time", participant_event_net_time);
+			jo.put("participant_event_gun_time", participant_event_gun_time);
 		} catch (JSONException je) {}
 		return jo;
 	}
@@ -124,6 +136,9 @@ public class ParticipantEventObject implements Cloneable {
 		setParticipantEventType(0);
 		setParticipantBibNo("");
 		setParticipantGroup(0);
+		setParticipantEventAgeCategory(0);
+		setParticipantEventNetTime("");
+		setParticipantEventGunTime("");
 	}
 	
 	/**
@@ -153,6 +168,15 @@ public class ParticipantEventObject implements Cloneable {
 		try {
 			participant_group = jObject.getInt("participant_group");
 		} catch (JSONException je) {}
+		try {
+			participant_event_age_category = jObject.getInt("participant_event_age_category");
+		} catch (JSONException je) {}
+		try {
+			participant_event_net_time = jObject.getString("participant_event_net_time");
+		} catch (JSONException je) {participant_event_net_time = "";}
+		try {
+			participant_event_gun_time = jObject.getString("participant_event_gun_time");
+		} catch (JSONException je) {participant_event_gun_time = "";}
 	}
 	
 	
@@ -340,6 +364,84 @@ public class ParticipantEventObject implements Cloneable {
 	
 	/**
 	 *
+	 * Sets the <code>participant_event_age_category</code> field
+	 *
+	 * @param participant_event_age_category	  int
+	 *
+	 */
+	
+	public void setParticipantEventAgeCategory(int participant_event_age_category) {
+		this.participant_event_age_category = participant_event_age_category;
+	}
+	
+	
+	/**
+	 *
+	 * Gets the <code>participant_event_age_category</code> field
+	 *
+	 * @returns participant_event_age_category
+	 *
+	 */
+	
+	public int getParticipantEventAgeCategory() {
+		return participant_event_age_category;
+	}
+
+	
+	/**
+	 *
+	 * Sets the <code>participant_event_net_time</code> field
+	 *
+	 * @param participant_event_net_time	  String
+	 *
+	 */
+	
+	public void setParticipantEventNetTime(String participant_event_net_time) {
+		this.participant_event_net_time = participant_event_net_time;
+	}
+	
+	
+	/**
+	 *
+	 * Gets the <code>participant_event_net_time</code> field
+	 *
+	 * @returns participant_event_net_time
+	 *
+	 */
+	
+	public String getParticipantEventNetTime() {
+		return participant_event_net_time;
+	}
+
+	
+	/**
+	 *
+	 * Sets the <code>participant_event_gun_time</code> field
+	 *
+	 * @param participant_event_gun_time	  String
+	 *
+	 */
+	
+	public void setParticipantEventGunTime(String participant_event_gun_time) {
+		this.participant_event_gun_time = participant_event_gun_time;
+	}
+	
+	
+	/**
+	 *
+	 * Gets the <code>participant_event_gun_time</code> field
+	 *
+	 * @returns participant_event_gun_time
+	 *
+	 */
+	
+	public String getParticipantEventGunTime() {
+		return participant_event_gun_time;
+	}
+
+	
+	/**
+	 *
 	 * Tests if this object equals <code>obj</code>
 	 *
 	 * @returns true if equals
@@ -357,7 +459,10 @@ public class ParticipantEventObject implements Cloneable {
 			participant_type == other.getParticipantType() &&
 			participant_event_type == other.getParticipantEventType() &&
 			Util.trim(participant_bib_no).equals(Util.trim(other.getParticipantBibNo())) &&
-			participant_group == other.getParticipantGroup();
+			participant_group == other.getParticipantGroup() &&
+			participant_event_age_category == other.getParticipantEventAgeCategory() &&
+			Util.trim(participant_event_net_time).equals(Util.trim(other.getParticipantEventNetTime())) &&
+			Util.trim(participant_event_gun_time).equals(Util.trim(other.getParticipantEventGunTime()));
 	}
 	
 	/**

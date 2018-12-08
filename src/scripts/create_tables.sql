@@ -220,7 +220,10 @@ create table Participant_Event(
 	participant_type number references RegistrationType(Registration_Type_Id),
 	participant_event_type number references EventType(Event_Type_Id),
 	participant_bib_no varchar2(20),
-	participant_group number references Registrant_Event(Registrant_Event_Id)
+	participant_group number references Registrant_Event(Registrant_Event_Id),
+	participant_event_age_category number references Age_Category(Age_Category_Id),
+	participant_event_net_time varchar2(20),
+	participant_event_gun_time varchar2(20)
 );
 
 create sequence result_seq start with 1 increment by 1;
