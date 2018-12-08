@@ -20,6 +20,12 @@ import java.util.*;
  */
 
 public class AppConstants {
+    public static String PARTICIPANT_EVENT_AGE_CATEGORY_LABEL;
+    public static String PARTICIPANT_EVENT_AGE_CATEGORY_STR = "participantEventAgeCategory";
+    public static String PARTICIPANT_EVENT_GUN_TIME_LABEL;
+    public static String PARTICIPANT_EVENT_GUN_TIME_STR = "participantEventGunTime";
+    public static String PARTICIPANT_EVENT_NET_TIME_LABEL;
+    public static String PARTICIPANT_EVENT_NET_TIME_STR = "participantEventNetTime";
     public static String MAX_AGE_LABEL;
     public static String MAX_AGE_STR = "maxAge";
     public static String MIN_AGE_LABEL;

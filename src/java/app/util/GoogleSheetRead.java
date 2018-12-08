@@ -102,6 +102,10 @@ public class GoogleSheetRead {
 	private static String participantIdCol;
 	private static String participantDbOperationCol;
 	private static String registrantParticipantEmailCol;
+	private static String participantEventAgeCategoryCol;
+	private static String participantEventNetTimeCol;
+	private static String participantEventGunTimeCol;
+	
 	
 	 public static void init(int eventYear) {
 		Properties prop = new Properties();
@@ -200,6 +204,9 @@ public class GoogleSheetRead {
 				participantIdCol = prop.getProperty("googlereadsheets.2018.participantId.column");
 				participantDbOperationCol = prop.getProperty("googlereadsheets.2018.participantDbOperation.column");
 				participantGroupCol = prop.getProperty("googlereadsheets.2018.participantGroup.column");
+				participantEventAgeCategoryCol = prop.getProperty("googlereadsheets.2018.participantEventAgeCategory.column");
+				participantEventNetTimeCol = prop.getProperty("googlereadsheets.2018.participantEventNetTime.column");
+				participantEventGunTimeCol = prop.getProperty("googlereadsheets.2018.participantEventGunTime.column");
 			}
 		} 
 		catch (IOException ex) {
@@ -486,6 +493,9 @@ public class GoogleSheetRead {
 						pSObj.setParticipantId(Integer.parseInt((String)row.get(ColumnLetterToNumber(participantIdCol))));
 					} catch (NumberFormatException npe) {}
 					pSObj.setParticipantDbOperation((String)row.get(ColumnLetterToNumber(participantDbOperationCol)));
+					pSObj.setParticipantAgeCategory((String)row.get(ColumnLetterToNumber(participantEventAgeCategoryCol)));
+					pSObj.setParticipantEventNetTime((String)row.get(ColumnLetterToNumber(participantEventNetTimeCol)));
+					pSObj.setParticipantEventGunTime((String)row.get(ColumnLetterToNumber(participantEventGunTimeCol)));
 					DebugHandler.fine(pSObj);
 					pSObjAL.add(pSObj);
 					

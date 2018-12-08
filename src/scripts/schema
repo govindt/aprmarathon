@@ -151,6 +151,9 @@ Participant_Type int references RegistrationType(Registration_Type_Id.Registrati
 Participant_Event_Type int references EventType(Event_Type_Id.Event_Type_Name)
 Participant_Bib_No varchar2(20)
 Participant_Group int references Registrant_Event(Registrant_Event_Id.Registrant_Id)
+Participant_Event_Age_Category int references Age_Category(Age_Category_Id.Age_Category)
+Participant_Event_Net_Time varchar2(20)
+Participant_Event_Gun_Time varchar2(20)
 
 
 Result

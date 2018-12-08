@@ -39,6 +39,8 @@ public class ParticipantEventBean implements SpreadSheetInterface {
     public int participantType = 0;
     public int participantEventType = 0;
     public int participantGroup = 0;
+	public int participantEventAgeCategory = 0;
+	
     ParticipantEventObject selectedParticipantEventObj = new ParticipantEventObject();
     ParticipantEventInterface participantEventIf = new ParticipantEventImpl();
 
@@ -81,6 +83,11 @@ public class ParticipantEventBean implements SpreadSheetInterface {
 		} catch (NumberFormatException nfe) {
 			participantGroup = 0;
 		}
+		try {
+			participantEventAgeCategory = Integer.parseInt(valuepairs.get(AppConstants.PARTICIPANT_EVENT_AGE_CATEGORY_STR));
+		} catch (NumberFormatException nfe) {
+			participantGroup = 0;
+		}
 		String saveProfile = valuepairs.get(UtilBean.SAVE_PROFILE_FLAG_STR);
 		if ( saveProfile == null ||
 			 Boolean.valueOf(saveProfile).booleanValue() == false ) {
@@ -107,6 +114,12 @@ public class ParticipantEventBean implements SpreadSheetInterface {
 					selectedParticipantEventObj.setParticipantBibNo(buf);
 					buf = Util.trim(valuepairs.get(AppConstants.PARTICIPANT_GROUP_STR));
 					selectedParticipantEventObj.setParticipantGroup(Integer.parseInt(buf));
+					buf = Util.trim(valuepairs.get(AppConstants.PARTICIPANT_EVENT_AGE_CATEGORY_STR));
+					selectedParticipantEventObj.setParticipantEventAgeCategory(Integer.parseInt(buf));
+					buf = Util.trim(valuepairs.get(AppConstants.PARTICIPANT_EVENT_NET_TIME_STR));
+					selectedParticipantEventObj.setParticipantEventNetTime(buf);
+					buf = Util.trim(valuepairs.get(AppConstants.PARTICIPANT_EVENT_GUN_TIME_STR));
+					selectedParticipantEventObj.setParticipantEventGunTime(buf);
 					DebugHandler.debug("Modifying ParticipantEvent Object " + selectedParticipantEventObj);
 					participantEventIf.updateParticipantEvent(selectedParticipantEventObj);
 				}
@@ -127,6 +140,12 @@ public class ParticipantEventBean implements SpreadSheetInterface {
 					participantEventObj.setParticipantBibNo(buf);
 					buf = Util.trim(valuepairs.get(AppConstants.PARTICIPANT_GROUP_STR));
 					participantEventObj.setParticipantGroup(Integer.parseInt(buf));
+					buf = Util.trim(valuepairs.get(AppConstants.PARTICIPANT_EVENT_AGE_CATEGORY_STR));
+					selectedParticipantEventObj.setParticipantEventAgeCategory(Integer.parseInt(buf));
+					buf = Util.trim(valuepairs.get(AppConstants.PARTICIPANT_EVENT_NET_TIME_STR));
+					selectedParticipantEventObj.setParticipantEventNetTime(buf);
+					buf = Util.trim(valuepairs.get(AppConstants.PARTICIPANT_EVENT_GUN_TIME_STR));
+					selectedParticipantEventObj.setParticipantEventGunTime(buf);
 					DebugHandler.debug("Adding ParticipantEvent Object " + participantEventObj);
 					participantEventIf.addParticipantEvent(participantEventObj);
 				}
@@ -307,6 +326,53 @@ public class ParticipantEventBean implements SpreadSheetInterface {
 		tr.add(td);
 		te.add(tr);
 
+		tr = new TableRowElement();
+		be = new BoldElement(AppConstants.PARTICIPANT_EVENT_AGE_CATEGORY_LABEL);
+		be.setId(Constants.BODY_ROW_STYLE);
+		td = new TableDataElement(be);
+		tr.add(td);
+		nameArrayList = new ArrayList<String>();
+		valueArrayList = new ArrayList<Integer>();
+		AgeCategoryInterface age_categoryIf = new AgeCategoryImpl();
+		AgeCategoryObject[] age_categoryRefArr = age_categoryIf.getAllAgeCategorys();
+		for (int iterator = 0; iterator < age_categoryRefArr.length; iterator++) {
+			AgeCategoryObject age_categoryObject = age_categoryRefArr[iterator];
+			if (age_categoryObject == null)
+				break;
+			nameArrayList.add(String.valueOf(age_categoryObject.getAgeCategory()));
+			valueArrayList.add(new Integer(age_categoryObject.getAgeCategoryId()));
+		}
+		if ( participantId != 0 )
+			se = new SelectElement(AppConstants.PARTICIPANT_EVENT_AGE_CATEGORY_STR, nameArrayList, valueArrayList, String.valueOf(selectedParticipantEventObj.getParticipantEventAgeCategory()), 0);
+		else
+			se = new SelectElement(AppConstants.PARTICIPANT_EVENT_AGE_CATEGORY_STR, nameArrayList, valueArrayList, String.valueOf(participantEventAgeCategory), 0);
+		td = new TableDataElement(se);
+		tr.add(td);
+		te.add(tr);
+		
+		tr = new TableRowElement();
+		be = new BoldElement(AppConstants.PARTICIPANT_EVENT_NET_TIME_LABEL);
+		be.setId(Constants.BODY_ROW_STYLE);
+		td = new TableDataElement(be);
+		tr.add(td);
+		if ( participantEventId != 0 )
+			td = new TableDataElement(new InputElement(InputElement.TEXT, AppConstants.PARTICIPANT_EVENT_NET_TIME_STR, selectedParticipantEventObj.getParticipantEventNetTime()));
+		else
+			td = new TableDataElement(new InputElement(InputElement.TEXT, AppConstants.PARTICIPANT_EVENT_NET_TIME_STR, Constants.EMPTY));
+		tr.add(td);
+		te.add(tr);
+		
+		tr = new TableRowElement();
+		be = new BoldElement(AppConstants.PARTICIPANT_EVENT_GUN_TIME_LABEL);
+		be.setId(Constants.BODY_ROW_STYLE);
+		td = new TableDataElement(be);
+		tr.add(td);
+		if ( participantEventId != 0 )
+			td = new TableDataElement(new InputElement(InputElement.TEXT, AppConstants.PARTICIPANT_EVENT_GUN_TIME_STR, selectedParticipantEventObj.getParticipantEventGunTime()));
+		else
+			td = new TableDataElement(new InputElement(InputElement.TEXT, AppConstants.PARTICIPANT_EVENT_GUN_TIME_STR, Constants.EMPTY));
+		tr.add(td);
+		te.add(tr);
 
 		tr = new TableRowElement();
 		be = new BoldElement(Constants.UPLOAD_FILE_LABEL);
@@ -401,6 +467,18 @@ public class ParticipantEventBean implements SpreadSheetInterface {
 		cell = row.createCell((short)col++);
 		cell.setCellStyle(cellstyleTblHdr);
 		cell.setCellValue(AppConstants.PARTICIPANT_GROUP_LABEL);
+		
+		cell = row.createCell((short)col++);
+		cell.setCellStyle(cellstyleTblHdr);
+		cell.setCellValue(AppConstants.PARTICIPANT_EVENT_AGE_CATEGORY_LABEL);
+		
+		cell = row.createCell((short)col++);
+		cell.setCellStyle(cellstyleTblHdr);
+		cell.setCellValue(AppConstants.PARTICIPANT_EVENT_NET_TIME_LABEL);
+		
+		cell = row.createCell((short)col++);
+		cell.setCellStyle(cellstyleTblHdr);
+		cell.setCellValue(AppConstants.PARTICIPANT_EVENT_GUN_TIME_LABEL);
 
 		ParticipantEventInterface participanteventIf = new ParticipantEventImpl();
 		ParticipantEventObject[] participanteventArr = participanteventIf.getAllParticipantEvents();
@@ -444,6 +522,18 @@ public class ParticipantEventBean implements SpreadSheetInterface {
 				cell = row.createCell((short)col++);
 				cell.setCellStyle(cellstyleTblLeft);
 				cell.setCellValue(participanteventObj.getParticipantGroup());
+				
+				cell = row.createCell((short)col++);
+				cell.setCellStyle(cellstyleTblLeft);
+				cell.setCellValue(participanteventObj.getParticipantEventAgeCategory());
+				
+				cell = row.createCell((short)col++);
+				cell.setCellStyle(cellstyleTblLeft);
+				cell.setCellValue(participanteventObj.getParticipantEventNetTime());
+				
+				cell = row.createCell((short)col++);
+				cell.setCellStyle(cellstyleTblLeft);
+				cell.setCellValue(participanteventObj.getParticipantEventGunTime());
 			}
 		}
 		try {
@@ -455,6 +545,7 @@ public class ParticipantEventBean implements SpreadSheetInterface {
     }
 
     public void readFromFile(String inputFileName, Object obj) throws AppException {
+		DataFormatter dataFormatter = new DataFormatter();
 		DebugHandler.fine("readFromFile(" + inputFileName + obj + ")");
 		InputStream fs = null;
 		XSSFWorkbook wb = null;
@@ -487,7 +578,7 @@ public class ParticipantEventBean implements SpreadSheetInterface {
 		while ( true ) {
 			row = sheet.getRow(++rowNum);
 			if ( row == null )
-			break;
+				break;
 			participanteventObject = new ParticipantEventObject();
 			cell = row.getCell((short)1);
 			if ( cell != null )
@@ -497,95 +588,135 @@ public class ParticipantEventBean implements SpreadSheetInterface {
 			DebugHandler.fine("DbOp = |" + dbOp + "|");
 			if ( dbOp != null &&  dbOp.equalsIgnoreCase("UPDATE") ) {
 				cell = row.getCell((short)0); // Get the first column
-			try {
-				participanteventObject.setParticipantEventId((int)cell.getNumericCellValue());
-			} catch (NumberFormatException nfe) {
-				throw new AppException("Column A has been changed in " + wb.getSheetName((short)0) + " Current value is Row num " + row + " is : " + cell.getStringCellValue());
-			}
-			participanteventObject = participanteventIf.getParticipantEvent(participanteventObject.getParticipantEventId());
-			col = 2; // Starting from 3rd Column
-			cell = row.getCell((short)col++);
-			if ( cell != null )
-			try {
-				participanteventObject.setParticipantId((int)cell.getNumericCellValue());
-			} catch (NumberFormatException nfe) {
-				participanteventObject.setParticipantId(0);
-			}
-			cell = row.getCell((short)col++);
-			if ( cell != null )
-			try {
-				participanteventObject.setParticipantEvent((int)cell.getNumericCellValue());
-			} catch (NumberFormatException nfe) {
-				participanteventObject.setParticipantEvent(0);
-			}
-			cell = row.getCell((short)col++);
-			if ( cell != null )
-			try {
-				participanteventObject.setParticipantType((int)cell.getNumericCellValue());
-			} catch (NumberFormatException nfe) {
-				participanteventObject.setParticipantType(0);
-			}
-			cell = row.getCell((short)col++);
-			if ( cell != null )
-			try {
-				participanteventObject.setParticipantEventType((int)cell.getNumericCellValue());
-			} catch (NumberFormatException nfe) {
-				participanteventObject.setParticipantEventType(0);
-			}
-			cell = row.getCell((short)col++);
-			if ( cell != null )
-				participanteventObject.setParticipantBibNo(Util.trim(cell.getStringCellValue()));
-			cell = row.getCell((short)col++);
-			if ( cell != null )
 				try {
-					participanteventObject.setParticipantGroup((int)cell.getNumericCellValue());
+					participanteventObject.setParticipantEventId((int)cell.getNumericCellValue());
 				} catch (NumberFormatException nfe) {
-					participanteventObject.setParticipantGroup(0);
+					throw new AppException("Column A has been changed in " + wb.getSheetName((short)0) + " Current value is Row num " + row + " is : " + cell.getStringCellValue());
 				}
-			DebugHandler.fine("Updating ParticipantEvent " + participanteventObject);
-			participanteventIf.updateParticipantEvent(participanteventObject);
+				participanteventObject = participanteventIf.getParticipantEvent(participanteventObject.getParticipantEventId());
+				col = 2; // Starting from 3rd Column
+				cell = row.getCell((short)col++);
+				if ( cell != null )
+					try {
+						participanteventObject.setParticipantId((int)cell.getNumericCellValue());
+					} catch (NumberFormatException nfe) {
+						participanteventObject.setParticipantId(0);
+					}
+				cell = row.getCell((short)col++);
+				if ( cell != null )
+					try {
+						participanteventObject.setParticipantEvent((int)cell.getNumericCellValue());
+					} catch (NumberFormatException nfe) {
+						participanteventObject.setParticipantEvent(0);
+					}
+				cell = row.getCell((short)col++);
+				if ( cell != null )
+					try {
+						participanteventObject.setParticipantType((int)cell.getNumericCellValue());
+					} catch (NumberFormatException nfe) {
+						participanteventObject.setParticipantType(0);
+					}
+				cell = row.getCell((short)col++);
+				if ( cell != null )
+					try {
+						participanteventObject.setParticipantEventType((int)cell.getNumericCellValue());
+					} catch (NumberFormatException nfe) {
+						participanteventObject.setParticipantEventType(0);
+					}
+				cell = row.getCell((short)col++);
+				if ( cell != null )
+					participanteventObject.setParticipantBibNo(Util.trim(cell.getStringCellValue()));
+				cell = row.getCell((short)col++);
+				if ( cell != null )
+					try {
+						participanteventObject.setParticipantGroup((int)cell.getNumericCellValue());
+					} catch (NumberFormatException nfe) {
+						participanteventObject.setParticipantGroup(0);
+					}
+				cell = row.getCell((short)col++);
+				if ( cell != null )
+					try {
+						participanteventObject.setParticipantEventAgeCategory((int)cell.getNumericCellValue());
+					} catch (NumberFormatException nfe) {
+						participanteventObject.setParticipantEventAgeCategory(0);
+					}
+				cell = row.getCell((short)col++);
+				if ( cell != null )
+					try {
+						String cellStringValue = dataFormatter.formatCellValue(cell);
+						participanteventObject.setParticipantEventNetTime(cellStringValue);
+					} catch (NumberFormatException nfe) {
+						participanteventObject.setParticipantEventNetTime(Util.trim(cell.getStringCellValue()));
+					}
+				cell = row.getCell((short)col++);
+				if ( cell != null )
+					try {
+						String cellStringValue = dataFormatter.formatCellValue(cell);
+						participanteventObject.setParticipantEventGunTime(cellStringValue);
+					} catch (NumberFormatException nfe) {
+						participanteventObject.setParticipantEventGunTime(Util.trim(cell.getStringCellValue()));
+					}
+				participanteventIf.updateParticipantEvent(participanteventObject);
+				DebugHandler.fine("Updating ParticipantEvent " + participanteventObject);
 			} else if ( dbOp != null && dbOp.equalsIgnoreCase("INSERT") ) {
-			col = 2; // Starting from 3rd Column
-			cell = row.getCell((short)col++);
-			if ( cell != null )
-			try {
-				participanteventObject.setParticipantId((int)cell.getNumericCellValue());
-			} catch (NumberFormatException nfe) {
-				participanteventObject.setParticipantId(0);
-			}
-			cell = row.getCell((short)col++);
-			if ( cell != null )
-			try {
-				participanteventObject.setParticipantEvent((int)cell.getNumericCellValue());
-			} catch (NumberFormatException nfe) {
-				participanteventObject.setParticipantEvent(0);
-			}
-			cell = row.getCell((short)col++);
-			if ( cell != null )
-			try {
-				participanteventObject.setParticipantType((int)cell.getNumericCellValue());
-			} catch (NumberFormatException nfe) {
-				participanteventObject.setParticipantType(0);
-			}
-			cell = row.getCell((short)col++);
-			if ( cell != null )
-			try {
-				participanteventObject.setParticipantEventType((int)cell.getNumericCellValue());
-			} catch (NumberFormatException nfe) {
-				participanteventObject.setParticipantEventType(0);
-			}
-			cell = row.getCell((short)col++);
-			if ( cell != null )
-				participanteventObject.setParticipantBibNo(Util.trim(cell.getStringCellValue()));
-			cell = row.getCell((short)col++);
-			if ( cell != null )
-				try {
-					participanteventObject.setParticipantGroup((int)cell.getNumericCellValue());
-				} catch (NumberFormatException nfe) {
-					participanteventObject.setParticipantGroup(0);
-				}
-			DebugHandler.fine("Adding ParticipantEvent " + participanteventObject);
-			participanteventIf.addParticipantEvent(participanteventObject);
+				col = 2; // Starting from 3rd Column
+				cell = row.getCell((short)col++);
+				if ( cell != null )
+					try {
+						participanteventObject.setParticipantId((int)cell.getNumericCellValue());
+					} catch (NumberFormatException nfe) {
+						participanteventObject.setParticipantId(0);
+					}
+				cell = row.getCell((short)col++);
+				if ( cell != null )
+					try {
+						participanteventObject.setParticipantEvent((int)cell.getNumericCellValue());
+					} catch (NumberFormatException nfe) {
+						participanteventObject.setParticipantEvent(0);
+					}
+				cell = row.getCell((short)col++);
+				if ( cell != null )
+					try {
+						participanteventObject.setParticipantType((int)cell.getNumericCellValue());
+					} catch (NumberFormatException nfe) {
+						participanteventObject.setParticipantType(0);
+					}
+				cell = row.getCell((short)col++);
+				if ( cell != null )
+					try {
+						participanteventObject.setParticipantEventType((int)cell.getNumericCellValue());
+					} catch (NumberFormatException nfe) {
+						participanteventObject.setParticipantEventType(0);
+					}
+					
+				cell = row.getCell((short)col++);
+				if ( cell != null )
+					participanteventObject.setParticipantBibNo(Util.trim(cell.getStringCellValue()));
+				
+				cell = row.getCell((short)col++);
+				if ( cell != null )
+					try {
+						participanteventObject.setParticipantGroup((int)cell.getNumericCellValue());
+					} catch (NumberFormatException nfe) {
+						participanteventObject.setParticipantGroup(0);
+					}
+				cell = row.getCell((short)col++);
+				if ( cell != null )
+					try {
+						participanteventObject.setParticipantEventAgeCategory((int)cell.getNumericCellValue());
+					} catch (NumberFormatException nfe) {
+						participanteventObject.setParticipantEventAgeCategory(0);
+					}
+				cell = row.getCell((short)col++);
+				if ( cell != null )
+					participanteventObject.setParticipantEventNetTime(Util.trim(cell.getStringCellValue()));
+				
+				cell = row.getCell((short)col++);
+				if ( cell != null )
+					participanteventObject.setParticipantEventGunTime(Util.trim(cell.getStringCellValue()));
+				
+				DebugHandler.fine("Adding ParticipantEvent " + participanteventObject);
+				participanteventIf.addParticipantEvent(participanteventObject);
 			} else if ( dbOp != null && dbOp.equalsIgnoreCase("DELETE") ) {
 				cell = row.getCell((short)0); // Get the first column
 				try {
