@@ -240,6 +240,35 @@ public class Util {
 		return Math.round(value * power_of_ten) 
 		   / power_of_ten;
     }
+	
+	public static String elapsedTime(Date startDate, Date endDate){
+	
+		//milliseconds
+		long different = endDate.getTime() - startDate.getTime();
+		
+		System.out.println("startDate : " + startDate);
+		System.out.println("endDate : "+ endDate);
+		System.out.println("different : " + different);
+		
+		long secondsInMilli = 1000;
+		long minutesInMilli = secondsInMilli * 60;
+		long hoursInMilli = minutesInMilli * 60;
+		long daysInMilli = hoursInMilli * 24;
+
+		long elapsedDays = different / daysInMilli;
+		different = different % daysInMilli;
+		
+		long elapsedHours = different / hoursInMilli;
+		different = different % hoursInMilli;
+		
+		long elapsedMinutes = different / minutesInMilli;
+		different = different % minutesInMilli;
+		
+		long elapsedSeconds = different / secondsInMilli;
+		
+		return String.format("%02d:%02d:%02d",elapsedHours, elapsedMinutes, elapsedSeconds);
+	
+	}
 
     public static Date convertFromTime(Date ssTime) {
 		DebugHandler.severe(ssTime);

@@ -24,6 +24,7 @@ import java.util.Properties;
 import java.util.StringTokenizer;
 import java.util.Date;
 import java.text.SimpleDateFormat;
+import java.text.ParseException;
 import core.util.AppException;
 import core.util.Util;
 import core.util.Constants;
@@ -174,7 +175,7 @@ public class ExportToSheetsImpl implements ExportToSheetsInterface  {
 		for ( int i = 0; i < checkTill; i++) {
 			ParticipantEventObject pEObj = pEObjArr.get(i);
 			if ( pEObj.getParticipantId() == currentParticipantId ) {
-				DebugHandler.info("T-Shirt Duplicate Entry found Participant ID: " + 
+				DebugHandler.fine("T-Shirt Duplicate Entry found Participant ID: " + 
 								   pEObj.getParticipantId() + 
 								   " ParticipantEventID: " + pEObj.getParticipantEventId()); 
 				return true;
@@ -186,6 +187,9 @@ public class ExportToSheetsImpl implements ExportToSheetsInterface  {
 	
 	public void updateParticipants() throws AppException {
 		SimpleDateFormat dateFormatter = new SimpleDateFormat(Constants.DATE_FORMAT_STR);
+		SimpleDateFormat inputTimeFormatter = new SimpleDateFormat("HH:mm:ss");
+		SimpleDateFormat outputTimeFormatter = new SimpleDateFormat("HH:mm:ss");
+		
 		Sheets service = GoogleSheetWrite.getSheetsService();
 		List<ValueRange> data = new ArrayList<>();
 		ParticipantEventInterface pEIf = new ParticipantEventImpl();
@@ -228,12 +232,14 @@ public class ExportToSheetsImpl implements ExportToSheetsInterface  {
 		participantListHeader.add(AppConstants.PARTICIPANT_BLOOD_GROUP_LABEL);
 		participantListHeader.add(AppConstants.PARTICIPANT_CELL_PHONE_LABEL);
 		participantListHeader.add(AppConstants.PARTICIPANT_EMAIL_LABEL);
-		participantListHeader.add(AppConstants.PARTICIPANT_ID_LABEL);
-		participantListHeader.add(AppConstants.DB_OPERATION_LABEL);
-		participantListHeader.add(AppConstants.PARTICIPANT_GROUP_LABEL);
 		participantListHeader.add(AppConstants.PARTICIPANT_EVENT_AGE_CATEGORY_LABEL);
 		participantListHeader.add(AppConstants.PARTICIPANT_EVENT_NET_TIME_LABEL);
 		participantListHeader.add(AppConstants.PARTICIPANT_EVENT_GUN_TIME_LABEL);
+		participantListHeader.add(AppConstants.PARTICIPANT_ID_LABEL);
+		participantListHeader.add(AppConstants.PARTICIPANT_GROUP_LABEL);
+		participantListHeader.add(AppConstants.DB_OPERATION_LABEL);
+		
+		
 		
 		rListOfList.add(participantListHeader);
 		
@@ -290,16 +296,47 @@ public class ExportToSheetsImpl implements ExportToSheetsInterface  {
 					participantList.add("Unknown");
 				participantList.add(pObj.getParticipantCellPhone());
 				participantList.add(pObj.getParticipantEmail());
-				participantList.add(pObj.getParticipantId());
-				participantList.add(Constants.INFO_STR);
-				participantList.add(rEObj.getRegistrantEventId());
 				aCObj = aCIf.getAgeCategory(pEObj.getParticipantEventAgeCategory());
+				Date bufTime = new Date();
+				Date startTime = new Date();
 				if ( aCObj != null )
 					participantList.add(aCObj.getAgeCategory());
 				else
-					participantList.add("");
-				participantList.add(pEObj.getParticipantEventNetTime());
-				participantList.add(pEObj.getParticipantEventGunTime());
+					participantList.add("Others");
+				String buf = Util.trim(pEObj.getParticipantEventNetTime());
+				if ( ! buf.equals("")) {
+					try {
+						startTime = inputTimeFormatter.parse("00:00:00");
+						bufTime = inputTimeFormatter.parse(buf);
+						DebugHandler.info("Buf: " + buf + " Buf Time: " + bufTime + "Start Time: " + startTime);
+						buf = Util.elapsedTime(startTime, bufTime);
+						DebugHandler.info("Buf: " + buf);
+						//participantList.add(outputTimeFormatter.format(bufTime));
+						participantList.add(buf);
+					} catch (ParseException pe) {
+						DebugHandler.severe("Caught Parse Exception parsing " + buf);
+						participantList.add("00:00:00");
+					}
+				}
+				else {
+					participantList.add("00:00:00");
+				}
+				buf = Util.trim(pEObj.getParticipantEventGunTime());
+				if ( ! buf.equals("")) {
+					try {
+						bufTime = inputTimeFormatter.parse(buf);
+						DebugHandler.info("Buf: " + buf + " Buf Time: " + bufTime);
+						participantList.add(outputTimeFormatter.format(bufTime));
+					} catch (ParseException pe) {
+						DebugHandler.severe("Caught Parse Exception parsing " + buf);
+						participantList.add("00:00:00");
+					}
+				}
+				else 
+					participantList.add("00:00:00");
+				participantList.add(pObj.getParticipantId());
+				participantList.add(rEObj.getRegistrantEventId());
+				participantList.add(Constants.INFO_STR);
 				rListOfList.add(participantList);
 			}
 			vR.setValues(rListOfList);

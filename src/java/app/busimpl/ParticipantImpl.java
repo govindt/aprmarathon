@@ -53,7 +53,7 @@ public class ParticipantImpl implements ParticipantInterface  {
 			if ( years <= aCObjArr[i].getMaxAge() && years >= aCObjArr[i].getMinAge() ) {
 				ParticipantObject pObj1 = (ParticipantObject)pObj.clone();
 				pObj1.setParticipantAgeCategory(aCObjArr[i].getAgeCategoryId());
-				DebugHandler.info("DOB: " + pObj1.getParticipantDateOfBirth() + " Age : " + years + " Age Category: " + aCObjArr[i].getAgeCategory());
+				DebugHandler.fine("DOB: " + pObj1.getParticipantDateOfBirth() + " Age : " + years + " Age Category: " + aCObjArr[i].getAgeCategory());
 				return pObj1;
 			}
 		}
