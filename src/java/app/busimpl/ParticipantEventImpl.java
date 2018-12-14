@@ -16,7 +16,15 @@ import core.db.DBUtil;
 import core.util.AppException;
 import core.util.Util;
 import app.busobj.ParticipantEventObject;
+import app.busobj.ParticipantObject;
 import app.businterface.ParticipantEventInterface;
+import app.businterface.ParticipantInterface;
+import app.busobj.AgeCategoryObject;
+import app.busobj.RegistrantEventObject;
+import app.busobj.EventObject;
+import app.businterface.RegistrantEventInterface;
+import app.businterface.AgeCategoryInterface;
+import app.businterface.EventInterface;
 import app.util.AppConstants;
 
 /**
@@ -28,6 +36,36 @@ import app.util.AppConstants;
 
 public class ParticipantEventImpl implements ParticipantEventInterface  {
 	private String PARTICIPANTEVENT = "ParticipantEventInterface.getAllParticipantEvent";
+	
+	public ParticipantEventObject updateParticipantEventAgeCategory(ParticipantEventObject pEObj) throws AppException {
+		RegistrantEventInterface rEIf = new RegistrantEventImpl();
+		RegistrantEventObject rEObj = rEIf.getRegistrantEvent(pEObj.getParticipantGroup());
+		ParticipantInterface pIf = new ParticipantImpl();
+		int eventId = rEObj.getRegistrantEvent();
+		EventInterface eIf = new EventImpl();
+		EventObject eObj = eIf.getEvent(eventId);
+		ParticipantObject pObj = pIf.getParticipant(pEObj.getParticipantId());
+		if ( eObj == null || eObj.getEventStartDate() == null )
+			throw new AppException("Event not in DB or Event Start Date is null");
+		if ( pObj == null )
+			throw new AppException("Event not in DB or Event Start Date is null");
+		if ( pObj == null || pObj.getParticipantDateOfBirth() == null )
+			throw new AppException("Participant not in DB or Date of Birth is null for " + pObj);
+		
+		int years = Util.calculateAge(pObj.getParticipantDateOfBirth(), eObj.getEventStartDate());
+		AgeCategoryInterface aCIf = new AgeCategoryImpl();
+		AgeCategoryObject[] aCObjArr = aCIf.getAllAgeCategorys();
+		for ( int i = 0; i < aCObjArr.length; i++) {
+			if ( years <= aCObjArr[i].getMaxAge() && years >= aCObjArr[i].getMinAge() ) {
+				ParticipantEventObject pEObj1 = (ParticipantEventObject)pEObj.clone();
+				pEObj1.setParticipantEventAgeCategory(aCObjArr[i].getAgeCategoryId());
+				DebugHandler.info("DOB: " + pObj.getParticipantDateOfBirth() + " Age : " + years + " Age Category: " + aCObjArr[i].getAgeCategory());
+				return pEObj1;
+			}
+		}
+		
+		return pEObj;
+	}
 	
 	/**
 	 *
@@ -144,6 +182,7 @@ public class ParticipantEventImpl implements ParticipantEventInterface  {
 			long l = DBUtil.getNextId("Participant_Event_seq");
 			participantEventObject.setParticipantEventId((int)l);
 		}
+		participantEventObject = updateParticipantEventAgeCategory(participantEventObject);
 		Integer i = (Integer)DBUtil.insert(participantEventObject);
 		DebugHandler.fine("i: " +  i);
 		// Do for Non Oracle where there is auto increment
@@ -193,6 +232,7 @@ public class ParticipantEventImpl implements ParticipantEventInterface  {
 	
 	public Integer updateParticipantEvent(ParticipantEventObject participantEventObject) throws AppException{
 		ParticipantEventObject newParticipantEventObject = getParticipantEvent(participantEventObject.getParticipantEventId()); // This call will make sure cache/db are in sync
+		participantEventObject = updateParticipantEventAgeCategory(participantEventObject);
 		Integer i = (Integer)DBUtil.update(participantEventObject);
 		DebugHandler.fine("i: " +  i);
 		ParticipantEventObject[] participantEventObjectArr = getAllParticipantEvents();

@@ -317,6 +317,8 @@ public class BulkOpsImpl implements BulkOpsInterface  {
 					pEObj.setParticipantEventType(eTObj.getEventTypeId());
 					
 					pEObj.setParticipantBibNo(pSObj.getParticipantBibNo());
+					pEObj.setParticipantEventNetTime(pSObj.getParticipantEventNetTime());
+					pEObj.setParticipantEventGunTime(pSObj.getParticipantEventGunTime());
 					pObj.setParticipantFirstName(pSObj.getParticipantFirstName());
 					pObj.setParticipantMiddleName(pSObj.getParticipantMiddleName());
 					pObj.setParticipantLastName(pSObj.getParticipantLastName());

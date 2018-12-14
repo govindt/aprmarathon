@@ -23,6 +23,8 @@ import app.busobj.ParticipantEventObject;
 
 public interface ParticipantEventInterface {
 	
+	public ParticipantEventObject updateParticipantEventAgeCategory(ParticipantEventObject pObj) throws AppException;
+	
 	/**
 	 *
 	 * Interface that returns the ParticipantEventObject given a ParticipantEventObject filled with values that will be used for query from the underlying datasource.
