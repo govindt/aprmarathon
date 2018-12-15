@@ -28,6 +28,7 @@ public class Constants {
     public static int GET_ALL = -1;
 	public static String UPDATE_STR = "Update";
 	public static String INFO_STR = "Info";
+	public static String INSERT_STR = "Insert";
 
     public static String ORACLE = "oracle";
     public static String MY_SQL = "mysql";
