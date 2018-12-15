@@ -33,7 +33,7 @@ public class RegistrantDataFromSheetsCLI {
 		if ( args[1].equals("receipt"))
 			bOIf.bulkReceiptGenerate(year);
 		else if ( args[1].equals("regupdate"))
-			bOIf.bulkUpdateRegistrants(year);
+			bOIf.bulkUpdateRegistrants(year, event_id);
 		else if ( args[1].equals("partupdate"))
 			bOIf.bulkUpdateParticipants(year);
     }

@@ -134,7 +134,7 @@ public class BulkOpsImpl implements BulkOpsInterface  {
 		return new Integer(0);
 	}
 	
-	public Integer bulkUpdateRegistrants(String year) throws AppException {
+	public Integer bulkUpdateRegistrants(String year, int event_id) throws AppException {
 		Integer result = new Integer(0);
 		init(year);
 		if ( rSObjAL == null ) 
@@ -232,7 +232,101 @@ public class BulkOpsImpl implements BulkOpsInterface  {
 					result = rEIf.updateRegistrantEvent(rEObj);
 					
 					DebugHandler.fine("Result: " + result);
-				} else if ( dbOperation.equals(Constants.DELETE_STR) ) {
+				} else if ( dbOperation.equals(Constants.INSERT_STR) ) {
+					RegistrantPaymentInterface rPIf = new RegistrantPaymentImpl();
+					PaymentTypeInterface pTIf = new PaymentTypeImpl();
+					RegistrantInterface rIf = new RegistrantImpl();
+					RegistrantEventInterface rEIf = new RegistrantEventImpl();
+					BeneficiaryInterface bIf = new BeneficiaryImpl();
+					RegistrationTypeInterface rTIf = new RegistrationTypeImpl();
+					RegistrationSourceInterface rSIf = new RegistrationSourceImpl();
+					RegistrationClassInterface rCIf = new RegistrationClassImpl();
+					
+					RegistrantPaymentObject rPObj = new RegistrantPaymentObject();
+					RegistrantObject rObj = new RegistrantObject();
+					RegistrantEventObject rEObj = new RegistrantEventObject();
+					BeneficiaryObject bObj = new BeneficiaryObject();
+					RegistrationTypeObject rTObj = new RegistrationTypeObject();
+					RegistrationSourceObject rSoObj = new RegistrationSourceObject();
+					RegistrationClassObject rCObj = new RegistrationClassObject();
+					
+					PaymentTypeObject pTObj = new PaymentTypeObject();
+					pTObj.setPaymentTypeName(rSObj.getRegistrantPaymentTypeName());
+					ArrayList<PaymentTypeObject> pTObjAL = pTIf.getPaymentTypes(pTObj);
+					pTObj = pTObjAL.get(0);
+					DebugHandler.fine(pTObj);
+					rPObj.setPaymentType(pTObj.getPaymentTypeId());
+					PaymentStatusInterface pSIf = new PaymentStatusImpl();
+					PaymentStatusObject pSObj = new PaymentStatusObject();
+					pSObj.setPaymentStatusName(rSObj.getRegistrantPaymentStatusName());
+					ArrayList<PaymentStatusObject> pSObjAL = pSIf.getPaymentStatus(pSObj);
+					pSObj = pSObjAL.get(0);
+					DebugHandler.fine(pSObj);
+					// Insert for Registrant Payments
+					rPObj.setRegistrantEvent(event_id);
+					rPObj.setPaymentStatus(pSObj.getPaymentStatusId());
+					rPObj.setPaymentAmount(rSObj.getRegistrantPaymentAmount());
+					rPObj.setPaymentAdditionalAmount(rSObj.getRegistrantAdditionalAmount());
+					rPObj.setPaymentDate(rSObj.getRegistrantPaymentDate());
+					rPObj.setReceiptDate(rSObj.getRegistrantReceiptDate());
+					rPObj.setPaymentDetails(rSObj.getRegistrantPaymentDetails());
+					rPObj.setPaymentTowards(rSObj.getRegistrantPaymentTowards());
+					rPObj.setPaymentReferenceId(rSObj.getRegistrantPaymentReferenceId());
+					rPObj.setPaymentTax(rSObj.getRegistrantPaymentTax());
+					rPObj.setPaymentFee(rSObj.getRegistrantPaymentFee());
+					
+					// Insert for Registrant 
+					rObj.setRegistrantName(rSObj.getRegistrantName());
+					rObj.setRegistrantMiddleName(rSObj.getRegistrantMiddleName());
+					rObj.setRegistrantEmail(rSObj.getRegistrantEmail());
+					rObj.setRegistrantAdditionalEmail(rSObj.getRegistrantAdditionalEmail());
+					rObj.setRegistrantPhone(rSObj.getRegistrantPhoneNumber());
+					rObj.setRegistrantAddress(rSObj.getRegistrantAddress());
+					rObj.setRegistrantCity(rSObj.getRegistrantCity());
+					rObj.setRegistrantState(rSObj.getRegistrantState());
+					rObj.setRegistrantPincode(rSObj.getRegistrantPincode());
+					rObj.setRegistrantPan(rSObj.getRegistrantPan());
+					DebugHandler.fine(rObj);
+					
+					// Insert for Registrant Event
+					rEObj.setRegistrantEvent(event_id);
+					rCObj.setRegistrationClassName(rSObj.getRegistrantClassName());
+					ArrayList<RegistrationClassObject> rCObjAL = rCIf.getRegistrationClass(rCObj);
+					rCObj = rCObjAL.get(0);
+					DebugHandler.fine(rCObj);
+					rEObj.setRegistrantClass(rCObj.getRegistrationClassId());
+					
+					rSoObj.setRegistrationSourceName(rSObj.getRegistrantSourceName());
+					ArrayList<RegistrationSourceObject> rSoObjAL = rSIf.getRegistrationSources(rSoObj);
+					rSoObj = rSoObjAL.get(0);
+					DebugHandler.fine(rSoObj);
+					rEObj.setRegistrantSource(rSoObj.getRegistrationSourceId());
+					
+					rTObj.setRegistrationTypeName(rSObj.getRegistrantTypeName());
+					ArrayList<RegistrationTypeObject> rTObjAL = rTIf.getRegistrationTypes(rTObj);
+					rTObj = rTObjAL.get(0);
+					DebugHandler.fine(rTObj);
+					rEObj.setRegistrantType(rTObj.getRegistrationTypeId());
+					
+					bObj.setBeneficiaryName(rSObj.getRegistrantBeneficiaryName());
+					ArrayList<BeneficiaryObject> bObjAL = bIf.getBeneficiarys(bObj);
+					bObj = bObjAL.get(0);
+					DebugHandler.fine(bObj);
+					rEObj.setRegistrantBeneficiary(bObj.getBeneficiaryId());
+					
+					rEObj.setRegistrantEmergencyContact(rSObj.getRegistrantEmergencyContact());
+					rEObj.setRegistrantEmergencyPhone(rSObj.getRegistrantEmergencyPhone());
+					
+					result = rIf.addRegistrant(rObj);
+					rPObj.setRegistrant(result.intValue());
+					rEObj.setRegistrantId(result.intValue());
+					DebugHandler.fine(rPObj);
+					result = rPIf.addRegistrantPayment(rPObj);
+					DebugHandler.fine(rEObj);
+					result = rEIf.addRegistrantEvent(rEObj);				
+					DebugHandler.fine("Result: " + result);
+				}
+				else if ( dbOperation.equals(Constants.DELETE_STR) ) {
 					RegistrantPaymentInterface rPIf = new RegistrantPaymentImpl();
 					RegistrantInterface rIf = new RegistrantImpl();
 					RegistrantEventInterface rEIf = new RegistrantEventImpl();

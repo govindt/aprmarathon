@@ -109,7 +109,7 @@ public class BulkOpsRest {
 		BulkOpsInterface bOIf = new BulkOpsImpl();
 		Integer result = new Integer(0);
 		try {
-			bOIf.bulkUpdateRegistrants(year);
+			bOIf.bulkUpdateRegistrants(year, event_id);
 		} catch (AppException ae) {
 			DebugHandler.severe(ae.getMessage());
 			result = 1;

@@ -308,9 +308,9 @@ public class ExportToSheetsImpl implements ExportToSheetsInterface  {
 					try {
 						startTime = inputTimeFormatter.parse("00:00:00");
 						bufTime = inputTimeFormatter.parse(buf);
-						DebugHandler.info("Buf: " + buf + " Buf Time: " + bufTime + "Start Time: " + startTime);
+						DebugHandler.fine("Buf: " + buf + " Buf Time: " + bufTime + "Start Time: " + startTime);
 						buf = Util.elapsedTime(startTime, bufTime);
-						DebugHandler.info("Buf: " + buf);
+						DebugHandler.fine("Buf: " + buf);
 						//participantList.add(outputTimeFormatter.format(bufTime));
 						participantList.add(buf);
 					} catch (ParseException pe) {
@@ -325,7 +325,7 @@ public class ExportToSheetsImpl implements ExportToSheetsInterface  {
 				if ( ! buf.equals("")) {
 					try {
 						bufTime = inputTimeFormatter.parse(buf);
-						DebugHandler.info("Buf: " + buf + " Buf Time: " + bufTime);
+						DebugHandler.fine("Buf: " + buf + " Buf Time: " + bufTime);
 						participantList.add(outputTimeFormatter.format(bufTime));
 					} catch (ParseException pe) {
 						DebugHandler.severe("Caught Parse Exception parsing " + buf);

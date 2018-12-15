@@ -38,7 +38,7 @@ public interface BulkOpsInterface {
      * @throws AppException if the underlying operation fails
      */
     
-    public Integer bulkUpdateRegistrants(String year) throws AppException;
+    public Integer bulkUpdateRegistrants(String year, int event_id) throws AppException;
 	
 	/**
      *
