@@ -245,11 +245,6 @@ public class Util {
 	
 		//milliseconds
 		long different = endDate.getTime() - startDate.getTime();
-		
-		System.out.println("startDate : " + startDate);
-		System.out.println("endDate : "+ endDate);
-		System.out.println("different : " + different);
-		
 		long secondsInMilli = 1000;
 		long minutesInMilli = secondsInMilli * 60;
 		long hoursInMilli = minutesInMilli * 60;
