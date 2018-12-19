@@ -35,7 +35,6 @@ import org.apache.poi.ss.usermodel.IndexedColors;
 public class ParticipantBean implements SpreadSheetInterface {
     public int participantId = 0;
     public int participantGender = 0;
-    public int participantAgeCategory = 0;
     public int participantTShirtSize = 0;
     public int participantBloodGroup = 0;
 	public int participantGroup = 0;
@@ -60,11 +59,6 @@ public class ParticipantBean implements SpreadSheetInterface {
 			participantGender = Integer.parseInt(valuepairs.get(AppConstants.PARTICIPANT_GENDER_STR));
 		} catch (NumberFormatException nfe) {
 			participantGender = 0;
-		}
-		try {
-			participantAgeCategory = Integer.parseInt(valuepairs.get(AppConstants.PARTICIPANT_AGE_CATEGORY_STR));
-		} catch (NumberFormatException nfe) {
-			participantAgeCategory = 0;
 		}
 		try {
 			participantTShirtSize = Integer.parseInt(valuepairs.get(AppConstants.PARTICIPANT_T_SHIRT_SIZE_STR));
@@ -115,8 +109,6 @@ public class ParticipantBean implements SpreadSheetInterface {
 						throw new AppException("Parse Exception while parsing " + buf);
 					}
 					selectedParticipantObj.setParticipantDateOfBirth(date);
-					buf = Util.trim(valuepairs.get(AppConstants.PARTICIPANT_AGE_CATEGORY_STR));
-					selectedParticipantObj.setParticipantAgeCategory(Integer.parseInt(buf));
 					buf = Util.trim(valuepairs.get(AppConstants.PARTICIPANT_T_SHIRT_SIZE_STR));
 					selectedParticipantObj.setParticipantTShirtSize(Integer.parseInt(buf));
 					buf = Util.trim(valuepairs.get(AppConstants.PARTICIPANT_BLOOD_GROUP_STR));
@@ -150,8 +142,6 @@ public class ParticipantBean implements SpreadSheetInterface {
 						throw new AppException("Parse Exception while parsing " + buf);
 					}
 					participantObj.setParticipantDateOfBirth(date);
-					buf = Util.trim(valuepairs.get(AppConstants.PARTICIPANT_AGE_CATEGORY_STR));
-					participantObj.setParticipantAgeCategory(Integer.parseInt(buf));
 					buf = Util.trim(valuepairs.get(AppConstants.PARTICIPANT_T_SHIRT_SIZE_STR));
 					participantObj.setParticipantTShirtSize(Integer.parseInt(buf));
 					buf = Util.trim(valuepairs.get(AppConstants.PARTICIPANT_BLOOD_GROUP_STR));
@@ -283,30 +273,6 @@ public class ParticipantBean implements SpreadSheetInterface {
 			td = new TableDataElement(new InputElement(InputElement.TEXT, AppConstants.PARTICIPANT_DATE_OF_BIRTH_STR, formattedDate));
 		}	else
 			td = new TableDataElement(new InputElement(InputElement.TEXT, AppConstants.PARTICIPANT_DATE_OF_BIRTH_STR, Constants.EMPTY));
-		tr.add(td);
-		te.add(tr);
-
-		tr = new TableRowElement();
-		be = new BoldElement(AppConstants.PARTICIPANT_AGE_CATEGORY_LABEL);
-		be.setId(Constants.BODY_ROW_STYLE);
-		td = new TableDataElement(be);
-		tr.add(td);
-		nameArrayList = new ArrayList<String>();
-		valueArrayList = new ArrayList<Integer>();
-		AgeCategoryInterface age_categoryIf = new AgeCategoryImpl();
-		AgeCategoryObject[] age_categoryRefArr = age_categoryIf.getAllAgeCategorys();
-		for (int iterator = 0; iterator < age_categoryRefArr.length; iterator++) {
-			AgeCategoryObject age_categoryObject = age_categoryRefArr[iterator];
-			if (age_categoryObject == null)
-				break;
-			nameArrayList.add(String.valueOf(age_categoryObject.getAgeCategory()));
-			valueArrayList.add(new Integer(age_categoryObject.getAgeCategoryId()));
-		}
-		if ( participantId != 0 )
-			se = new SelectElement(AppConstants.PARTICIPANT_AGE_CATEGORY_STR, nameArrayList, valueArrayList, String.valueOf(selectedParticipantObj.getParticipantAgeCategory()), 0);
-		else
-			se = new SelectElement(AppConstants.PARTICIPANT_AGE_CATEGORY_STR, nameArrayList, valueArrayList, String.valueOf(participantAgeCategory), 0);
-		td = new TableDataElement(se);
 		tr.add(td);
 		te.add(tr);
 
@@ -499,10 +465,6 @@ public class ParticipantBean implements SpreadSheetInterface {
 
 		cell = row.createCell((short)col++);
 		cell.setCellStyle(cellstyleTblHdr);
-		cell.setCellValue(AppConstants.PARTICIPANT_AGE_CATEGORY_LABEL);
-
-		cell = row.createCell((short)col++);
-		cell.setCellStyle(cellstyleTblHdr);
 		cell.setCellValue(AppConstants.PARTICIPANT_T_SHIRT_SIZE_LABEL);
 
 		cell = row.createCell((short)col++);
@@ -555,10 +517,6 @@ public class ParticipantBean implements SpreadSheetInterface {
 				cell = row.createCell((short)col++);
 				cell.setCellStyle(cellstyleTblLeft);
 				cell.setCellValue(participantObj.getParticipantDateOfBirth());
-
-				cell = row.createCell((short)col++);
-				cell.setCellStyle(cellstyleTblLeft);
-				cell.setCellValue(participantObj.getParticipantAgeCategory());
 
 				cell = row.createCell((short)col++);
 				cell.setCellStyle(cellstyleTblLeft);
@@ -661,13 +619,6 @@ public class ParticipantBean implements SpreadSheetInterface {
 				cell = row.getCell((short)col++);
 				if ( cell != null )
 					try {
-						participantObject.setParticipantAgeCategory((int)cell.getNumericCellValue());
-					} catch (NumberFormatException nfe) {
-						participantObject.setParticipantAgeCategory(0);
-					}
-				cell = row.getCell((short)col++);
-				if ( cell != null )
-					try {
 						participantObject.setParticipantTShirtSize((int)cell.getNumericCellValue());
 					} catch (NumberFormatException nfe) {
 						participantObject.setParticipantTShirtSize(0);
@@ -714,13 +665,6 @@ public class ParticipantBean implements SpreadSheetInterface {
 				cell = row.getCell((short)col++);
 				if ( cell != null )
 					participantObject.setParticipantDateOfBirth(cell.getDateCellValue());
-				cell = row.getCell((short)col++);
-				if ( cell != null )
-					try {
-						participantObject.setParticipantAgeCategory((int)cell.getNumericCellValue());
-					} catch (NumberFormatException nfe) {
-						participantObject.setParticipantAgeCategory(0);
-					}
 				cell = row.getCell((short)col++);
 				if ( cell != null )
 					try {

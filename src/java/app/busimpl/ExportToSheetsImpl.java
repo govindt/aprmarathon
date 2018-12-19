@@ -227,7 +227,7 @@ public class ExportToSheetsImpl implements ExportToSheetsInterface  {
 		participantListHeader.add(AppConstants.PARTICIPANT_LAST_NAME_LABEL);
 		participantListHeader.add(AppConstants.PARTICIPANT_GENDER_LABEL);
 		participantListHeader.add(AppConstants.PARTICIPANT_DATE_OF_BIRTH_LABEL);
-		participantListHeader.add(AppConstants.PARTICIPANT_AGE_CATEGORY_LABEL);
+		//participantListHeader.add(AppConstants.PARTICIPANT_AGE_CATEGORY_LABEL);
 		participantListHeader.add(AppConstants.PARTICIPANT_T_SHIRT_SIZE_LABEL);
 		participantListHeader.add(AppConstants.PARTICIPANT_BLOOD_GROUP_LABEL);
 		participantListHeader.add(AppConstants.PARTICIPANT_CELL_PHONE_LABEL);
@@ -272,11 +272,6 @@ public class ExportToSheetsImpl implements ExportToSheetsInterface  {
 				GenderObject gObj = gIf.getGender(pObj.getParticipantGender());
 				participantList.add(gObj.getGenderName());
 				participantList.add(dateFormatter.format(pObj.getParticipantDateOfBirth()));
-				AgeCategoryObject aCObj = aCIf.getAgeCategory(pObj.getParticipantAgeCategory());
-				if ( aCObj != null )
-					participantList.add(aCObj.getAgeCategory());
-				else
-					participantList.add("");
 				if ( checkIfAlreadyTShirtAddedForParticipant(pEObjArr, i, pEObj.getParticipantId()) ) {
 					participantList.add("None");
 				}
@@ -296,7 +291,7 @@ public class ExportToSheetsImpl implements ExportToSheetsInterface  {
 					participantList.add("Unknown");
 				participantList.add(pObj.getParticipantCellPhone());
 				participantList.add(pObj.getParticipantEmail());
-				aCObj = aCIf.getAgeCategory(pEObj.getParticipantEventAgeCategory());
+				AgeCategoryObject aCObj = aCIf.getAgeCategory(pEObj.getParticipantEventAgeCategory());
 				Date bufTime = new Date();
 				Date startTime = new Date();
 				if ( aCObj != null )

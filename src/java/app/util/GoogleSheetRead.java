@@ -94,7 +94,6 @@ public class GoogleSheetRead {
 	private static String participantLastNameCol;
 	private static String participantGenderCol;
 	private static String participantDateOfBirthCol;
-	private static String participantAgeCategoryCol;
 	private static String participantTShirtSizeCol;
 	private static String participantBloodGroupCol;
 	private static String participantCellPhoneCol;
@@ -196,7 +195,6 @@ public class GoogleSheetRead {
 				participantLastNameCol = prop.getProperty("googlereadsheets.2018.participantLastName.column");
 				participantGenderCol = prop.getProperty("googlereadsheets.2018.participantGender.column");
 				participantDateOfBirthCol = prop.getProperty("googlereadsheets.2018.participantDateOfBirth.column");
-				participantAgeCategoryCol = prop.getProperty("googlereadsheets.2018.participantAgeCategory.column");
 				participantTShirtSizeCol = prop.getProperty("googlereadsheets.2018.participantTShirtSize.column");
 				participantBloodGroupCol = prop.getProperty("googlereadsheets.2018.participantBloodGroup.column");
 				participantCellPhoneCol = prop.getProperty("googlereadsheets.2018.participantCellPhone.column");
@@ -282,13 +280,6 @@ public class GoogleSheetRead {
                 cObj.setColumn(participantDateOfBirthCol);
                 cObjAL.add(cObj);
         }
-		/*if ( pSObj.getParticipantAgeCategory() == null || pSObj.getParticipantAgeCategory().equals("") ) {
-                CellObject cObj = new CellObject();
-                cObj.setSheetName(sheetName);
-                cObj.setRowNo(rowNo);
-                cObj.setColumn(participantAgeCategoryCol);
-                cObjAL.add(cObj);
-        }*/
 		if ( pSObj.getParticipantTShirtSize() == null || pSObj.getParticipantTShirtSize().equals("") ) {
                 CellObject cObj = new CellObject();
                 cObj.setSheetName(sheetName);
@@ -483,8 +474,6 @@ public class GoogleSheetRead {
 					} catch (java.text.ParseException pe) {
 						DebugHandler.severe("Parse Exception while parsing " + tmp);
 					}
-					
-					pSObj.setParticipantAgeCategory((String)row.get(ColumnLetterToNumber(participantAgeCategoryCol)));
 					pSObj.setParticipantTShirtSize((String)row.get(ColumnLetterToNumber(participantTShirtSizeCol)));
 					pSObj.setParticipantBloodGroup((String)row.get(ColumnLetterToNumber(participantBloodGroupCol)));
 					pSObj.setParticipantCellPhone((String)row.get(ColumnLetterToNumber(participantCellPhoneCol)));

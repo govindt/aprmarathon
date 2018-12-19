@@ -58,7 +58,7 @@ public class PersistentParticipant extends PersistentObject {
 	
 	public Object list() throws DBException {
 		PreparedSQLStatement sql = new PreparedSQLStatement();
-		String statement = "SELECT participant_id, participant_first_name, participant_middle_name, participant_last_name, participant_gender, participant_date_of_birth, participant_age_category, participant_t_shirt_size, participant_blood_group, participant_cell_phone, participant_email, participant_group from Participant";
+		String statement = "SELECT participant_id, participant_first_name, participant_middle_name, participant_last_name, participant_gender, participant_date_of_birth, participant_t_shirt_size, participant_blood_group, participant_cell_phone, participant_email, participant_group from Participant";
 		int index = 1;
 		sql.setStatement(statement);
 		
@@ -85,7 +85,7 @@ public class PersistentParticipant extends PersistentObject {
 	
 	public Object list(Object args) throws DBException {
 		PreparedSQLStatement sql = new PreparedSQLStatement();
-		String statement = "SELECT participant_id, participant_first_name, participant_middle_name, participant_last_name, participant_gender, participant_date_of_birth, participant_age_category, participant_t_shirt_size, participant_blood_group, participant_cell_phone, participant_email, participant_group from Participant";
+		String statement = "SELECT participant_id, participant_first_name, participant_middle_name, participant_last_name, participant_gender, participant_date_of_birth, participant_t_shirt_size, participant_blood_group, participant_cell_phone, participant_email, participant_group from Participant";
 		int index = 1;
 		ParticipantObject passedParticipantObject = (ParticipantObject)args;
 		boolean whereSpecified = false;
@@ -140,15 +140,6 @@ public class PersistentParticipant extends PersistentObject {
 				statement += " and participant_date_of_birth = ?";
 			sql.setStatement(statement);
 			sql.setInParams(new SQLParam(index++,  passedParticipantObject.getParticipantDateOfBirth(), Types.TIMESTAMP));
-		}
-		if ( passedParticipantObject.getParticipantAgeCategory() != 0 ) {
-			if ( ! whereSpecified ) {
-				statement += " where participant_age_category = ?";
-				whereSpecified = true;
-			} else
-				statement += " and participant_age_category = ?";
-			sql.setStatement(statement);
-			sql.setInParams(new SQLParam(index++, new Integer(passedParticipantObject.getParticipantAgeCategory()), Types.INTEGER));
 		}
 		if ( passedParticipantObject.getParticipantTShirtSize() != 0 ) {
 			if ( ! whereSpecified ) {
@@ -221,7 +212,7 @@ public class PersistentParticipant extends PersistentObject {
 	
 	public Object fetch() throws DBException {
 		PreparedSQLStatement sql = new PreparedSQLStatement();
-		String statement = "SELECT participant_id, participant_first_name, participant_middle_name, participant_last_name, participant_gender, participant_date_of_birth, participant_age_category, participant_t_shirt_size, participant_blood_group, participant_cell_phone, participant_email, participant_group from Participant where participant_id = ? ";
+		String statement = "SELECT participant_id, participant_first_name, participant_middle_name, participant_last_name, participant_gender, participant_date_of_birth, participant_t_shirt_size, participant_blood_group, participant_cell_phone, participant_email, participant_group from Participant where participant_id = ? ";
 		int index = 1;
 		sql.setStatement(statement);
 		sql.setInParams(new SQLParam(index++, new Integer(participantObject.getParticipantId()), Types.INTEGER));
@@ -252,11 +243,11 @@ public class PersistentParticipant extends PersistentObject {
 		int index = 1;
 
 		if ( AppConstants.DB_TYPE.equalsIgnoreCase(Constants.ORACLE) ) {
-			statement = "INSERT INTO Participant (participant_id, participant_first_name, participant_middle_name, participant_last_name, participant_gender, participant_date_of_birth, participant_age_category, participant_t_shirt_size, participant_blood_group, participant_cell_phone, participant_email, participant_group) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ";
+			statement = "INSERT INTO Participant (participant_id, participant_first_name, participant_middle_name, participant_last_name, participant_gender, participant_date_of_birth, participant_t_shirt_size, participant_blood_group, participant_cell_phone, participant_email, participant_group) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ";
 			sql.setStatement(statement);
 			sql.setInParams(new SQLParam(index++, new Integer(participantObject.getParticipantId()), Types.INTEGER));
 		} else {
-			statement = "INSERT INTO Participant (participant_first_name, participant_middle_name, participant_last_name, participant_gender, participant_date_of_birth, participant_age_category, participant_t_shirt_size, participant_blood_group, participant_cell_phone, participant_email, participant_group) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ";
+			statement = "INSERT INTO Participant (participant_first_name, participant_middle_name, participant_last_name, participant_gender, participant_date_of_birth, participant_t_shirt_size, participant_blood_group, participant_cell_phone, participant_email, participant_group) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ";
 			sql.setStatement(statement);
 		}
 		sql.setInParams(new SQLParam(index++,  participantObject.getParticipantFirstName(), Types.VARCHAR));
@@ -264,7 +255,6 @@ public class PersistentParticipant extends PersistentObject {
 		sql.setInParams(new SQLParam(index++,  participantObject.getParticipantLastName(), Types.VARCHAR));
 		sql.setInParams(new SQLParam(index++, new Integer(participantObject.getParticipantGender()), Types.INTEGER));
 		sql.setInParams(new SQLParam(index++,  participantObject.getParticipantDateOfBirth(), Types.TIMESTAMP));
-		sql.setInParams(new SQLParam(index++, new Integer(participantObject.getParticipantAgeCategory()), Types.INTEGER));
 		sql.setInParams(new SQLParam(index++, new Integer(participantObject.getParticipantTShirtSize()), Types.INTEGER));
 		sql.setInParams(new SQLParam(index++, new Integer(participantObject.getParticipantBloodGroup()), Types.INTEGER));
 		sql.setInParams(new SQLParam(index++,  participantObject.getParticipantCellPhone(), Types.VARCHAR));
@@ -318,7 +308,7 @@ public class PersistentParticipant extends PersistentObject {
 	
 	public Object update() throws DBException {
 		PreparedSQLStatement sql = new PreparedSQLStatement();
-		String statement = "UPDATE Participant SET participant_id = ?, participant_first_name = ?, participant_middle_name = ?, participant_last_name = ?, participant_gender = ?, participant_date_of_birth = ?, participant_age_category = ?, participant_t_shirt_size = ?, participant_blood_group = ?, participant_cell_phone = ?, participant_email = ?, participant_group = ? where participant_id = ? ";
+		String statement = "UPDATE Participant SET participant_id = ?, participant_first_name = ?, participant_middle_name = ?, participant_last_name = ?, participant_gender = ?, participant_date_of_birth = ?, participant_t_shirt_size = ?, participant_blood_group = ?, participant_cell_phone = ?, participant_email = ?, participant_group = ? where participant_id = ? ";
 		int index = 1;
 		sql.setStatement(statement);
 		sql.setInParams(new SQLParam(index++, new Integer(participantObject.getParticipantId()), Types.INTEGER));
@@ -327,7 +317,6 @@ public class PersistentParticipant extends PersistentObject {
 		sql.setInParams(new SQLParam(index++,  participantObject.getParticipantLastName(), Types.VARCHAR));
 		sql.setInParams(new SQLParam(index++, new Integer(participantObject.getParticipantGender()), Types.INTEGER));
 		sql.setInParams(new SQLParam(index++,  participantObject.getParticipantDateOfBirth(), Types.TIMESTAMP));
-		sql.setInParams(new SQLParam(index++, new Integer(participantObject.getParticipantAgeCategory()), Types.INTEGER));
 		sql.setInParams(new SQLParam(index++, new Integer(participantObject.getParticipantTShirtSize()), Types.INTEGER));
 		sql.setInParams(new SQLParam(index++, new Integer(participantObject.getParticipantBloodGroup()), Types.INTEGER));
 		sql.setInParams(new SQLParam(index++,  participantObject.getParticipantCellPhone(), Types.VARCHAR));
@@ -368,7 +357,6 @@ public class PersistentParticipant extends PersistentObject {
 				f.setParticipantLastName(rs.getString(index++));
 				f.setParticipantGender(rs.getInt(index++));
 				f.setParticipantDateOfBirth(rs.getDate(index++));
-				f.setParticipantAgeCategory(rs.getInt(index++));
 				f.setParticipantTShirtSize(rs.getInt(index++));
 				f.setParticipantBloodGroup(rs.getInt(index++));
 				f.setParticipantCellPhone(rs.getString(index++));

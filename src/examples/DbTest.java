@@ -66,19 +66,5 @@ public class DbTest {
 		usersObj = uIf.getAllUsers();
 		DebugHandler.info(usersObj.length);
 		long end = System.currentTimeMillis();
-		
-		String[] ages = { "06-16-1968", "01-01-2016", "02-04-2010", "06-18-1940", "11-12-2001" };
-		ParticipantInterface pIf = new ParticipantImpl();
-		ParticipantObject pObj = new ParticipantObject();
-		pObj.setParticipantGroup(149);
-		for ( int i = 0; i < ages.length; i++ ) {
-			try {
-				pObj.setParticipantDateOfBirth(sDateFormat.parse(ages[i]));
-				pIf.updateParticipantAgeCategory(pObj);
-			} catch (ParseException pe) {
-				System.err.println("Parse Exception " + ages[i]);
-			}
-			
-		}
     }
 }

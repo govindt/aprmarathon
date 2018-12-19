@@ -35,7 +35,6 @@ public class ParticipantObject implements Cloneable {
 	private String participant_last_name;
 	private int participant_gender;
 	private Date participant_date_of_birth;
-	private int participant_age_category;
 	private int participant_t_shirt_size;
 	private int participant_blood_group;
 	private String participant_cell_phone;
@@ -61,7 +60,6 @@ public class ParticipantObject implements Cloneable {
 			buf += "participant_date_of_birth : " + dateFormatter.format(participant_date_of_birth) + "\n";
 		else
 			buf += "participant_date_of_birth : " + "\n";
-		buf += "participant_age_category : " + participant_age_category + "\n";
 		buf += "participant_t_shirt_size : " + participant_t_shirt_size + "\n";
 		buf += "participant_blood_group : " + participant_blood_group + "\n";
 		buf += "participant_cell_phone : " + participant_cell_phone + "\n";
@@ -86,7 +84,6 @@ public class ParticipantObject implements Cloneable {
 		list.add(participant_last_name + "");
 		list.add(participant_gender + "");
 		list.add(participant_date_of_birth + "");
-		list.add(participant_age_category + "");
 		list.add(participant_t_shirt_size + "");
 		list.add(participant_blood_group + "");
 		list.add(participant_cell_phone + "");
@@ -112,7 +109,6 @@ public class ParticipantObject implements Cloneable {
 			jo.put("participant_last_name", participant_last_name);
 			jo.put("participant_gender", participant_gender);
 			jo.put("participant_date_of_birth", participant_date_of_birth);
-			jo.put("participant_age_category", participant_age_category);
 			jo.put("participant_t_shirt_size", participant_t_shirt_size);
 			jo.put("participant_blood_group", participant_blood_group);
 			jo.put("participant_cell_phone", participant_cell_phone);
@@ -146,7 +142,6 @@ public class ParticipantObject implements Cloneable {
 		setParticipantLastName("");
 		setParticipantGender(0);
 		setParticipantDateOfBirth(null);
-		setParticipantAgeCategory(0);
 		setParticipantTShirtSize(0);
 		setParticipantBloodGroup(0);
 		setParticipantCellPhone("");
@@ -182,9 +177,6 @@ public class ParticipantObject implements Cloneable {
 			} catch (ParseException e) {participant_date_of_birth = new Date();
 				e.printStackTrace();
 			}
-		} catch (JSONException je) {}
-		try {
-			participant_age_category = jObject.getInt("participant_age_category");
 		} catch (JSONException je) {}
 		try {
 			participant_t_shirt_size = jObject.getInt("participant_t_shirt_size");
@@ -358,33 +350,6 @@ public class ParticipantObject implements Cloneable {
 	public Date getParticipantDateOfBirth() {
 		return participant_date_of_birth;
 	}
-
-	
-	/**
-	 *
-	 * Sets the <code>participant_age_category</code> field
-	 *
-	 * @param participant_age_category	  int
-	 *
-	 */
-	
-	public void setParticipantAgeCategory(int participant_age_category) {
-		this.participant_age_category = participant_age_category;
-	}
-	
-	
-	/**
-	 *
-	 * Gets the <code>participant_age_category</code> field
-	 *
-	 * @returns participant_age_category
-	 *
-	 */
-	
-	public int getParticipantAgeCategory() {
-		return participant_age_category;
-	}
-
 	
 	/**
 	 *
@@ -535,7 +500,6 @@ public class ParticipantObject implements Cloneable {
 			Util.trim(participant_last_name).equals(Util.trim(other.getParticipantLastName())) &&
 			participant_gender == other.getParticipantGender() &&
 			participant_date_of_birth.equals(other.getParticipantDateOfBirth()) &&
-			participant_age_category == other.getParticipantAgeCategory() &&
 			participant_t_shirt_size == other.getParticipantTShirtSize() &&
 			participant_blood_group == other.getParticipantBloodGroup() &&
 			Util.trim(participant_cell_phone).equals(Util.trim(other.getParticipantCellPhone())) &&

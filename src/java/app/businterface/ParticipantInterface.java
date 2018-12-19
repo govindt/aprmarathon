@@ -22,8 +22,6 @@ import app.busobj.ParticipantObject;
  */
 
 public interface ParticipantInterface {
-	
-	public ParticipantObject updateParticipantAgeCategory(ParticipantObject pObj) throws AppException;
 	/**
 	 *
 	 * Interface that returns the ParticipantObject given a ParticipantObject filled with values that will be used for query from the underlying datasource.
