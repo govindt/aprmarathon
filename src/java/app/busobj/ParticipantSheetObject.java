@@ -204,7 +204,7 @@ public class ParticipantSheetObject implements Cloneable {
 		setParticipantSource("");
 		setParticipantEventType("");
 		setParticipantBibNo("");
-		setParticipantDbOperation("");
+		setParticipantDbOperation(Constants.INFO_STR);
 		setParticipantEventAgeCategory("");
 		setParticipantEventNetTime("");
 		setParticipantEventGunTime("");

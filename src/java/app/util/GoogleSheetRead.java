@@ -37,6 +37,7 @@ import java.text.SimpleDateFormat;
 import app.busobj.CellObject;
 import app.busobj.RegistrantSheetObject;
 import app.busobj.ParticipantSheetObject;
+import app.busobj.ResultsSheetObject;
 import core.util.AppException;
 import core.util.DebugHandler;
 import core.util.Util;
@@ -105,8 +106,17 @@ public class GoogleSheetRead {
 	private static String participantEventNetTimeCol;
 	private static String participantEventGunTimeCol;
 	
+	private static String resultsRange;
+	private static String resultsBibNoCol;
+	private static String resultsEventTypeCol;
+	private static String resultsAgeCategoryCol;
+	private static String resultsGenderCol;
+	private static String resultsGunTimeCol;
+	private static String resultsNetTimeCol;
+	private static String resultsCategoryRankCol;
+	private static String resultsDbOperationCol;
 	
-	 public static void init(int eventYear) {
+	public static void init(int eventYear) {
 		Properties prop = new Properties();
 		try {
 			InputStream in = GoogleSheetWrite.class.getClassLoader().getResourceAsStream("app/util/googlesheets.properties");
@@ -205,6 +215,16 @@ public class GoogleSheetRead {
 				participantEventAgeCategoryCol = prop.getProperty("googlereadsheets.2018.participantEventAgeCategory.column");
 				participantEventNetTimeCol = prop.getProperty("googlereadsheets.2018.participantEventNetTime.column");
 				participantEventGunTimeCol = prop.getProperty("googlereadsheets.2018.participantEventGunTime.column");
+				
+				resultsRange = prop.getProperty("googlereadsheets.2018.resultsRange");
+				resultsBibNoCol = prop.getProperty("googlereadsheets.2018.resultsBibNo.column");
+				resultsEventTypeCol = prop.getProperty("googlereadsheets.2018.resultsEventType.column");
+				resultsAgeCategoryCol = prop.getProperty("googlereadsheets.2018.resultsAgeCategory.column");
+				resultsGenderCol = prop.getProperty("googlereadsheets.2018.resultsGender.column");
+				resultsGunTimeCol = prop.getProperty("googlereadsheets.2018.resultsGunTime.column");
+				resultsNetTimeCol = prop.getProperty("googlereadsheets.2018.resultsNetTime.column");
+				resultsCategoryRankCol = prop.getProperty("googlereadsheets.2018.resultsCategoryRank.column");
+				resultsDbOperationCol = prop.getProperty("googlereadsheets.2018.resultsDbOperation.column");
 			}
 		} 
 		catch (IOException ex) {
@@ -653,6 +673,78 @@ public class GoogleSheetRead {
 		return rObjAL;
     }
 	
+	public static ArrayList<ResultsSheetObject> getResultsList() throws IOException, AppException {
+		ArrayList<ResultsSheetObject> rObjAL = new ArrayList<ResultsSheetObject>();
+		ArrayList<CellObject> errorList = new ArrayList<CellObject>();
+		 // Build a new authorized API client service.
+		Sheets service = GoogleSheetWrite.getSheetsService();
+		String buf = null;
+		List<List<Object>> values = null;
+		List<List<Object>> allValues = null;
+		int rowNo = 0;
+
+		StringTokenizer st = new StringTokenizer(resultsRange, ",");
+		while (st.hasMoreTokens()) {
+			buf = st.nextToken();
+			StringTokenizer st1 = new StringTokenizer(buf, "!");
+			String buf1 = st1.nextToken();
+			rowNo = 0;
+			allValues = new ArrayList<List<Object>>();
+			DebugHandler.fine("Sheet: " + buf1);
+			ValueRange response = service.spreadsheets().values()
+					.get(spreadsheetId, buf)
+						.execute();
+			values = response.getValues();
+			if (values == null || values.size() == 0) {
+				DebugHandler.severe("No data found in " + buf1 + " sheet.");
+			}
+            for (List<Object> row : values) { 
+				// Leave the heading row in each sheet
+				if ( rowNo != 0 ) {
+					DebugHandler.fine("Adding Row: " + row);
+					allValues.add(row);
+				}
+				rowNo++;
+			}
+			if (allValues == null || allValues.size() == 0) {
+				DebugHandler.severe("No data found in sheet " + buf1);
+			} else {
+				rowNo = 0;
+				for (List<Object> row : allValues) { 
+					ResultsSheetObject rObj = new ResultsSheetObject();
+					DebugHandler.fine("Results Bib Column: " + resultsBibNoCol);
+					rObj.setResultsBibNo((String)row.get(ColumnLetterToNumber(resultsBibNoCol)));
+					rObj.setResultsEventType((String)row.get(ColumnLetterToNumber(resultsEventTypeCol)));
+					rObj.setResultsAgeCategory((String)row.get(ColumnLetterToNumber(resultsAgeCategoryCol)));
+					rObj.setResultsGender((String)row.get(ColumnLetterToNumber(resultsGenderCol)));
+					rObj.setResultsGunTime((String)row.get(ColumnLetterToNumber(resultsGunTimeCol)));
+					rObj.setResultsNetTime((String)row.get(ColumnLetterToNumber(resultsNetTimeCol)));
+					try {
+						rObj.setResultsCategoryRank(Integer.parseInt((String)row.get(ColumnLetterToNumber(resultsCategoryRankCol))));
+					} catch (NumberFormatException nfe) {
+					} catch (IndexOutOfBoundsException ibe) {// Sometimes Google sheets gives less array size
+					}
+					rObj.setResultsDbOperation((String)row.get(ColumnLetterToNumber(resultsDbOperationCol)));
+					DebugHandler.fine(rObj);
+					rObjAL.add(rObj);
+					
+					/*ArrayList<CellObject> rowError = getEmptyElements(rObj, (rowNo+2), buf1);
+					for (CellObject cObj : rowError) {
+						errorList.add(cObj);
+					}*/
+					rowNo++;
+				}
+			}
+		}
+		DebugHandler.fine(rObjAL);
+		if ( errorList.size() > 0 ) {
+			DebugHandler.severe("ERROR!!!The following cells have errors: " + errorList);
+			DebugHandler.severe("Exiting. Please correct and rerun");
+			return null;
+		}
+		return rObjAL;
+    }
+	
 	public String toString() {
 		return "spreadsheetId: " + spreadsheetId + "\n" +
 			"range: " + range + "\n" +
@@ -688,7 +780,36 @@ public class GoogleSheetRead {
 			"registrantPaymentFee: " + registrantPaymentFee + "\n" +
 			"registrantEventId: " + registrantEventId + "\n" +
 			"registrantPaymentId: " + registrantPaymentId + "\n" +
-			"registrantDbOperation: " + registrantDbOperation + "\n";
+			"registrantDbOperation: " + registrantDbOperation + "\n" +
+			"participantRange: " + participantRange + "\n" +
+			"participantEventIdCol: " + participantEventIdCol + "\n" +
+			"participantTypeCol: " + participantTypeCol + "\n" +
+			"participantSourceCol: " + participantSourceCol + "\n" +
+			"participantEventTypeCol: " + participantEventTypeCol + "\n" +
+			"participantBibNoCol: " + participantBibNoCol + "\n" +
+			"participantGroupCol: " + participantGroupCol + "\n" +
+			"participantFirstNameCol: " + participantFirstNameCol + "\n" +
+			"participantMiddleNameCol: " + participantMiddleNameCol + "\n" +
+			"participantLastNameCol: " + participantLastNameCol + "\n" +
+			"participantGenderCol: " + participantGenderCol + "\n" +
+			"participantDateOfBirthCol: " + participantDateOfBirthCol + "\n" +
+			"participantTShirtSizeCol: " + participantTShirtSizeCol + "\n" +
+			"participantBloodGroupCol: " + participantBloodGroupCol + "\n" +
+			"participantCellPhoneCol: " + participantCellPhoneCol + "\n" +
+			"participantEmailCol: " + participantEmailCol + "\n" +
+			"participantIdCol: " + participantIdCol + "\n" +
+			"participantDbOperationCol: " + participantDbOperationCol + "\n" +
+			"registrantParticipantEmailCol: " + registrantParticipantEmailCol + "\n" +
+			"participantEventAgeCategoryCol: " + participantEventAgeCategoryCol + "\n" +
+			"participantEventNetTimeCol: " + participantEventNetTimeCol + "\n" +
+			"participantEventGunTimeCol: " + participantEventGunTimeCol + "\n" +
+			"resultsBibNoCol: " + resultsBibNoCol + "\n" +
+			"resultsEventTypeCol: " + resultsEventTypeCol + "\n" +
+			"resultsAgeCategoryCol: " + resultsAgeCategoryCol + "\n" +
+			"resultsGenderCol: " + resultsGenderCol + "\n" +
+			"resultsGunTimeCol: " + resultsGunTimeCol + "\n" +
+			"resultsNetTimeCol: " + resultsNetTimeCol + "\n" +
+			"resultsCategoryRankCol: " + resultsCategoryRankCol + "\n";
 	}
 
     public GoogleSheetRead(String event_year) {
