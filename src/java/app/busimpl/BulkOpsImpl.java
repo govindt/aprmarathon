@@ -43,6 +43,7 @@ import app.businterface.BloodGroupInterface;
 import app.busobj.SendMailObject;
 import app.busobj.RegistrantSheetObject;
 import app.busobj.ParticipantSheetObject;
+import app.busobj.ResultsSheetObject;
 import app.busobj.RegistrantPaymentObject;
 import app.busobj.RegistrantObject;
 import app.busobj.PaymentTypeObject;
@@ -82,6 +83,7 @@ import java.security.GeneralSecurityException;
 public class BulkOpsImpl implements BulkOpsInterface  {
 	ArrayList<RegistrantSheetObject> rSObjAL = new ArrayList<RegistrantSheetObject>();
 	ArrayList<ParticipantSheetObject> pSObjAL = new ArrayList<ParticipantSheetObject>();
+	ArrayList<ResultsSheetObject> rObjAL = new ArrayList<ResultsSheetObject>();
 	String contents = "";
 	ReceiptGenerate rg = new ReceiptGenerate();
 	
@@ -90,6 +92,7 @@ public class BulkOpsImpl implements BulkOpsInterface  {
 		try {
 			rSObjAL = GoogleSheetRead.getRegistrantList();
 			pSObjAL = GoogleSheetRead.getParticipantList();
+			rObjAL =  GoogleSheetRead.getResultsList();
 		} catch (IOException ioe) {
 			throw new AppException("IO Exception getting Registrant List");
 		}
@@ -463,6 +466,52 @@ public class BulkOpsImpl implements BulkOpsInterface  {
 							pIf.deleteParticipant(pObj);
 							DebugHandler.info("Deleting Participant " + pObj.getParticipantId());
 						}
+					}
+				}
+			}
+		}
+		return result;
+	}
+	
+	public Integer bulkUpdateResults(String year) throws AppException {
+		Integer result = new Integer(0);
+		init(year);
+		if ( rObjAL == null ) 
+			return new Integer(1);
+		for (ResultsSheetObject rObj : rObjAL ) {
+			String dbOperation = rObj.getResultsDbOperation();
+			if ( dbOperation != null ) {
+				if ( dbOperation.equals(Constants.UPDATE_STR) ) {
+					String bibNo = rObj.getResultsBibNo();
+					ParticipantEventInterface pEIf = new ParticipantEventImpl();
+					ParticipantInterface pIf = new ParticipantImpl();
+					EventTypeInterface eTIf = new EventTypeImpl();
+					GenderInterface gIf = new GenderImpl();
+					EventTypeObject eTObj = new EventTypeObject();
+					GenderObject gObj = new GenderObject();
+					if (bibNo != null && ! bibNo.equals("")) {
+						ParticipantEventObject pEObj = new ParticipantEventObject();
+						pEObj.setParticipantBibNo(rObj.getResultsBibNo());
+						ArrayList<ParticipantEventObject> pEObjAL = pEIf.getParticipantEvents(pEObj);
+						DebugHandler.fine(pEObjAL);
+						if ( pEObjAL != null && pEObjAL.size() > 0) {
+							if ( pEObjAL.size() > 1 ) {
+								DebugHandler.severe("Bib No: " + bibNo + " has more than one Participant Event");
+							}
+							pEObj = pEObjAL.get(0);
+							eTObj.setEventTypeName(rObj.getResultsEventType());
+							ArrayList<EventTypeObject> eTObjAL = eTIf.getEventTypes(eTObj);
+							eTObj = eTObjAL.get(0);
+							DebugHandler.fine(eTObj);
+							pEObj.setParticipantEventType(eTObj.getEventTypeId());
+							pEObj.setParticipantEventGunTime(rObj.getResultsGunTime());
+							pEObj.setParticipantEventNetTime(rObj.getResultsNetTime());
+							result = pEIf.updateParticipantEvent(pEObj);
+						} else {
+							DebugHandler.severe("Bib No: " + bibNo + " does not have the corresponding Participant Event Entry. Must be added as spot entry in Timing System.");
+						}
+					} else {
+						DebugHandler.severe("No Bib number entry in timing system.");
 					}
 				}
 			}
