@@ -33,6 +33,7 @@ public class SendMailObject implements Cloneable {
 	private String body;
 	private String to;
 	private String cc;
+	private String bcc;
 	private String registrant_id;
 	private String receipt_date;
 	private String receipt_year;
@@ -60,6 +61,7 @@ public class SendMailObject implements Cloneable {
 		"body : " + body + "\n" +
 		"to : " + to + "\n" +
 		"cc : " + cc + "\n" +
+		"bcc : " + bcc + "\n" +
 		"registrant_id : " + registrant_id + "\n" +
 		"receipt_date : " + receipt_date + "\n" +
 		"receipt_year : " + receipt_year + "\n" +
@@ -90,6 +92,7 @@ public class SendMailObject implements Cloneable {
 			jo.put("body", body);
 			jo.put("to", to);
 			jo.put("cc", cc);
+			jo.put("bcc", bcc);
 			jo.put("registrant_id", registrant_id);
 			jo.put("receipt_date", receipt_date);
 			jo.put("receipt_year", receipt_year);
@@ -129,6 +132,7 @@ public class SendMailObject implements Cloneable {
 		setBody("");
 		setTo("");
 		setCc("");
+		setBcc("");
 		setRegistrantId("");
 		setReceiptDate("");
 		setReceiptYear("");
@@ -161,6 +165,9 @@ public class SendMailObject implements Cloneable {
 		} catch (JSONException je) {}
 		try {
 			cc = jObject.getString("cc");
+		} catch (JSONException je) {}
+		try {
+			bcc = jObject.getString("bcc");
 		} catch (JSONException je) {}
 		try {
 			registrant_id = jObject.getString("registrant_id");
@@ -334,6 +341,31 @@ public class SendMailObject implements Cloneable {
     
     public String getCc() {
         return cc;
+    }
+	
+	/**
+     *
+     * Sets the <code>bcc</code> field
+     *
+     * @param bcc      String
+     *
+     */
+    
+    public void setBcc(String bcc) {
+        this.bcc = bcc;
+    }
+    
+    
+    /**
+     *
+     * Gets the <code>bcc</code> field
+     *
+     * @returns bcc
+     *
+     */
+    
+    public String getBcc() {
+        return bcc;
     }
 	
     /**
@@ -680,6 +712,7 @@ public class SendMailObject implements Cloneable {
             Util.trim(body) == other.getBody() &&
 			Util.trim(to) == other.getTo() &&
 			Util.trim(cc) == other.getCc() &&
+			Util.trim(bcc) == other.getBcc() &&
             Util.trim(registrant_id).equals(Util.trim(other.getRegistrantId())) &&
 			Util.trim(receipt_date).equals(Util.trim(other.getReceiptDate())) &&
 			Util.trim(receipt_year).equals(Util.trim(other.getReceiptYear())) &&

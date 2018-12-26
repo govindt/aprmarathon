@@ -41,6 +41,9 @@ import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.DateUtil;
 import org.apache.poi.ss.usermodel.DataFormatter;
 
+import javax.mail.MessagingException;
+import java.security.GeneralSecurityException;
+import java.io.IOException;
 
 import java.lang.*;
 import java.util.*;
@@ -49,8 +52,10 @@ import core.util.DebugHandler;
 import core.util.AppException;
 import core.util.Util;
 import core.util.Constants;
+import core.util.SendGMail;
 import app.util.App;
 import core.util.AppException;
+import app.util.AppConstants;
 import app.busimpl.*;
 import app.businterface.*;
 import app.busobj.*;
@@ -378,6 +383,24 @@ public class UploadRest {
 			retVal += "Added Participant Events " + toAddParticipantEvents + "\n";
 		if ( notToAddParticipantEvents.size() != 0 )
 			retVal += "Not Added Participant Events " + notToAddParticipantEvents + "\n";
+		
+		try {
+			SendGMail.sendMessage(rObj.getRegistrantEmail(), 
+								rObj.getRegistrantAdditionalEmail(),
+								null,
+								AppConstants.EMAIL_FROM, 
+								"Participant List Updated for " + eObj.getEventName(), 
+								"Participants Added", null);
+		} catch (MessagingException me) {
+			DebugHandler.severe("Messaging Exception Sending to " + rObj.getRegistrantEmail());
+			me.printStackTrace();
+		} catch (GeneralSecurityException gse) {
+			DebugHandler.severe("General Security Exception Sending to " + rObj.getRegistrantEmail());
+			gse.printStackTrace();
+		} catch (IOException ioe) {
+			DebugHandler.severe("General Security Exception Sending to " + rObj.getRegistrantEmail());
+			ioe.printStackTrace();
+		}
 		
 		return retVal;
 	}
