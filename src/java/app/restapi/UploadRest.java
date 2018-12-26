@@ -283,6 +283,7 @@ public class UploadRest {
 					} else if ( j == 3) {
 						try {
 							Date date = sDateFormat.parse(buf); 
+							DebugHandler.info("DOB: " + buf + " Date: " + date);
 							pObj.setParticipantDateOfBirth(date);
 						} catch (ParseException pe) {
 							throw new AppException("Wrong Date provide " + buf + " Row: " + i + "Column: " + (j + 1));
@@ -390,7 +391,7 @@ public class UploadRest {
 								null,
 								AppConstants.EMAIL_FROM, 
 								"Participant List Updated for " + eObj.getEventName(), 
-								"Participants Added", null);
+								"Participants Added that were sent via Mass Entry Spreadsheet", null);
 		} catch (MessagingException me) {
 			DebugHandler.severe("Messaging Exception Sending to " + rObj.getRegistrantEmail());
 			me.printStackTrace();
