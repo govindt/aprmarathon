@@ -47,6 +47,7 @@ import java.io.InputStreamReader;
 import java.security.GeneralSecurityException;
 import java.util.Collections;
 import java.util.List;
+import java.util.StringTokenizer;
 import java.io.File;
 
 
@@ -95,6 +96,8 @@ public class SendGMail {
      * @throws MessagingException
      */
     public static MimeMessage createEmail(String to,
+										  String cc,
+										  String bcc,
                                           String from,
                                           String subject,
                                           String bodyText)
@@ -105,8 +108,22 @@ public class SendGMail {
         MimeMessage email = new MimeMessage(session);
 
         email.setFrom(new InternetAddress(from));
-        email.addRecipient(javax.mail.Message.RecipientType.TO,
-                new InternetAddress(to));
+		StringTokenizer st = new StringTokenizer(to);
+		while ( st.hasMoreTokens() )
+			email.addRecipient(javax.mail.Message.RecipientType.TO,
+                new InternetAddress(st.nextToken()));
+		if ( cc != null && !cc.equals("")) {
+			st = new StringTokenizer(cc);
+			while ( st.hasMoreTokens() )
+				email.addRecipient(javax.mail.Message.RecipientType.CC,
+					new InternetAddress(st.nextToken()));
+		}
+		if ( bcc != null && !bcc.equals("")) {
+			st = new StringTokenizer(cc);
+			while ( st.hasMoreTokens() )
+				email.addRecipient(javax.mail.Message.RecipientType.BCC,
+					new InternetAddress(st.nextToken()));
+		}
         email.setSubject(subject);
 		email.setContent(bodyText,"text/html");
 		email.saveChanges();
@@ -144,6 +161,8 @@ public class SendGMail {
      * @throws MessagingException
      */
     public static MimeMessage createEmailWithAttachment(String to,
+														String cc,
+														String bcc,
                                                         String from,
                                                         String subject,
                                                         String bodyText,
@@ -203,6 +222,8 @@ public class SendGMail {
     }
 	
 	public static void sendMessage(	String to,
+									String cc,
+									String bcc,
 									String from,
 									String subject,
 									String bodyText,
@@ -214,9 +235,9 @@ public class SendGMail {
                 .build();
 		MimeMessage m = null;
 		if ( attachment == null ) {
-			m = SendGMail.createEmail(to, from, subject, bodyText);
+			m = SendGMail.createEmail(to, cc, bcc, from, subject, bodyText);
 		} else {
-			m = SendGMail.createEmailWithAttachment(to, from, subject, bodyText, attachment);
+			m = SendGMail.createEmailWithAttachment(to, from, cc, bcc, subject, bodyText, attachment);
 		}
 		String user = "me";
 		SendGMail.sendMessage(service, user, m);

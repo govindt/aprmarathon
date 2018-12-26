@@ -114,8 +114,9 @@ public class BulkOpsImpl implements BulkOpsInterface  {
 						String docFile = rg.createReceipt(AppConstants.RECEIPT_TEMPLATE, smObj, true);
 						DebugHandler.fine("Created Receipt File: " + docFile);
 						File docFilePtr = new File(docFile);
-						SendGMail.sendMessage("aprct.treasurer@gmail.com", AppConstants.EMAIL_FROM, 
-							smObj.getSubject(), smObj.getBody(), docFilePtr);
+						SendGMail.sendMessage(	"aprct.treasurer@gmail.com", null, null,
+												AppConstants.EMAIL_FROM, 
+												smObj.getSubject(), smObj.getBody(), docFilePtr);
 					} catch (InvalidFormatException ife) {
 						throw new AppException("Caught exception while creating file. " + ife.getMessage());
 					} catch (IOException ioe) {

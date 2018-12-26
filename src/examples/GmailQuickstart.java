@@ -36,12 +36,15 @@ import java.security.GeneralSecurityException;
 import java.util.Collections;
 import java.util.List;
 import java.io.File;
+import app.util.App;
 
 import core.util.SendGMail;
+import core.util.AppException;
 
 public class GmailQuickstart {
-    public static void main(String... args) throws IOException, GeneralSecurityException, MessagingException {
-		SendGMail.sendMessage("govindt@yahoo.com", "aprct.treasurer@gmail.com", "Test Subject", "Test Body", null);
+    public static void main(String... args) throws IOException, GeneralSecurityException, MessagingException, AppException {
+		App.getInstance();
+		SendGMail.sendMessage("govindt@yahoo.com", "govind.thirumalai@gmail.com", "govind@guks.com", "aprct.treasurer@gmail.com", "Test Subject", "Test Body", null);
         /*ListLabelsResponse listResponse = service.users().labels().list(user).execute();
         List<Label> labels = listResponse.getLabels();
         if (labels.isEmpty()) {
