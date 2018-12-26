@@ -154,6 +154,7 @@ Participant_Group int references Registrant_Event(Registrant_Event_Id.Registrant
 Participant_Event_Age_Category int references Age_Category(Age_Category_Id.Age_Category)
 Participant_Event_Net_Time varchar2(20)
 Participant_Event_Gun_Time varchar2(20)
+Participant_Event_Category_Rank int
 
 
 Result

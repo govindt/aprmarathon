@@ -58,7 +58,7 @@ public class PersistentParticipantEvent extends PersistentObject {
 	
 	public Object list() throws DBException {
 		PreparedSQLStatement sql = new PreparedSQLStatement();
-		String statement = "SELECT participant_event_id, participant_id, participant_event, participant_type, participant_event_type, participant_bib_no, participant_group, participant_event_age_category, participant_event_net_time, participant_event_gun_time from Participant_Event";
+		String statement = "SELECT participant_event_id, participant_id, participant_event, participant_type, participant_event_type, participant_bib_no, participant_group, participant_event_age_category, participant_event_net_time, participant_event_gun_time, participant_event_category_rank from Participant_Event";
 		int index = 1;
 		sql.setStatement(statement);
 		
@@ -85,7 +85,7 @@ public class PersistentParticipantEvent extends PersistentObject {
 	
 	public Object list(Object args) throws DBException {
 		PreparedSQLStatement sql = new PreparedSQLStatement();
-		String statement = "SELECT participant_event_id, participant_id, participant_event, participant_type, participant_event_type, participant_bib_no, participant_group, participant_event_age_category, participant_event_net_time, participant_event_gun_time from Participant_Event";
+		String statement = "SELECT participant_event_id, participant_id, participant_event, participant_type, participant_event_type, participant_bib_no, participant_group, participant_event_age_category, participant_event_net_time, participant_event_gun_time, participant_event_category_rank from Participant_Event";
 		int index = 1;
 		ParticipantEventObject passedParticipantEventObject = (ParticipantEventObject)args;
 		boolean whereSpecified = false;
@@ -177,6 +177,15 @@ public class PersistentParticipantEvent extends PersistentObject {
 			sql.setStatement(statement);
 			sql.setInParams(new SQLParam(index++,  passedParticipantEventObject.getParticipantEventGunTime(), Types.VARCHAR));
 		}
+		if ( passedParticipantEventObject.getParticipantEventCategoryRank() != 0 ) {
+			if ( ! whereSpecified ) {
+				statement += " where participant_event_category_rank = ?";
+				whereSpecified = true;
+			} else
+				statement += " and participant_event_category_rank = ?";
+			sql.setStatement(statement);
+			sql.setInParams(new SQLParam(index++, new Integer(passedParticipantEventObject.getParticipantEventCategoryRank()), Types.INTEGER));
+		}
 		sql.setStatement(statement);
 		
 		DebugHandler.debug(statement);
@@ -203,7 +212,7 @@ public class PersistentParticipantEvent extends PersistentObject {
 	
 	public Object fetch() throws DBException {
 		PreparedSQLStatement sql = new PreparedSQLStatement();
-		String statement = "SELECT participant_event_id, participant_id, participant_event, participant_type, participant_event_type, participant_bib_no, participant_group, participant_event_age_category, participant_event_net_time, participant_event_gun_time from Participant_Event where participant_event_id = ? ";
+		String statement = "SELECT participant_event_id, participant_id, participant_event, participant_type, participant_event_type, participant_bib_no, participant_group, participant_event_age_category, participant_event_net_time, participant_event_gun_time, participant_event_category_rank from Participant_Event where participant_event_id = ? ";
 		int index = 1;
 		sql.setStatement(statement);
 		sql.setInParams(new SQLParam(index++, new Integer(participantEventObject.getParticipantEventId()), Types.INTEGER));
@@ -234,11 +243,11 @@ public class PersistentParticipantEvent extends PersistentObject {
 		int index = 1;
 
 		if ( AppConstants.DB_TYPE.equalsIgnoreCase(Constants.ORACLE) ) {
-			statement = "INSERT INTO Participant_Event (participant_event_id, participant_id, participant_event, participant_type, participant_event_type, participant_bib_no, participant_group, participant_event_age_category, participant_event_net_time, participant_event_gun_time) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ";
+			statement = "INSERT INTO Participant_Event (participant_event_id, participant_id, participant_event, participant_type, participant_event_type, participant_bib_no, participant_group, participant_event_age_category, participant_event_net_time, participant_event_gun_time, participant_event_category_rank) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ";
 			sql.setStatement(statement);
 			sql.setInParams(new SQLParam(index++, new Integer(participantEventObject.getParticipantEventId()), Types.INTEGER));
 		} else {
-			statement = "INSERT INTO Participant_Event (participant_id, participant_event, participant_type, participant_event_type, participant_bib_no, participant_group, participant_event_age_category, participant_event_net_time, participant_event_gun_time) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?) ";
+			statement = "INSERT INTO Participant_Event (participant_id, participant_event, participant_type, participant_event_type, participant_bib_no, participant_group, participant_event_age_category, participant_event_net_time, participant_event_gun_time, participant_event_category_rank) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ";
 			sql.setStatement(statement);
 		}
 		sql.setInParams(new SQLParam(index++, new Integer(participantEventObject.getParticipantId()), Types.INTEGER));
@@ -250,6 +259,7 @@ public class PersistentParticipantEvent extends PersistentObject {
 		sql.setInParams(new SQLParam(index++, new Integer(participantEventObject.getParticipantEventAgeCategory()), Types.INTEGER));
 		sql.setInParams(new SQLParam(index++,  participantEventObject.getParticipantEventNetTime(), Types.VARCHAR));
 		sql.setInParams(new SQLParam(index++,  participantEventObject.getParticipantEventGunTime(), Types.VARCHAR));
+		sql.setInParams(new SQLParam(index++, new Integer(participantEventObject.getParticipantEventCategoryRank()), Types.INTEGER));
 		setSQLStatement(sql);
 		
 		Integer result = (Integer) super.insert();
@@ -298,7 +308,7 @@ public class PersistentParticipantEvent extends PersistentObject {
 	
 	public Object update() throws DBException {
 		PreparedSQLStatement sql = new PreparedSQLStatement();
-		String statement = "UPDATE Participant_Event SET participant_event_id = ?, participant_id = ?, participant_event = ?, participant_type = ?, participant_event_type = ?, participant_bib_no = ?, participant_group = ?, participant_event_age_category = ?, participant_event_net_time = ?, participant_event_gun_time = ? where participant_event_id = ? ";
+		String statement = "UPDATE Participant_Event SET participant_event_id = ?, participant_id = ?, participant_event = ?, participant_type = ?, participant_event_type = ?, participant_bib_no = ?, participant_group = ?, participant_event_age_category = ?, participant_event_net_time = ?, participant_event_gun_time = ?, participant_event_category_rank = ? where participant_event_id = ? ";
 		int index = 1;
 		sql.setStatement(statement);
 		sql.setInParams(new SQLParam(index++, new Integer(participantEventObject.getParticipantEventId()), Types.INTEGER));
@@ -311,6 +321,7 @@ public class PersistentParticipantEvent extends PersistentObject {
 		sql.setInParams(new SQLParam(index++, new Integer(participantEventObject.getParticipantEventAgeCategory()), Types.INTEGER));
 		sql.setInParams(new SQLParam(index++,  participantEventObject.getParticipantEventNetTime(), Types.VARCHAR));
 		sql.setInParams(new SQLParam(index++,  participantEventObject.getParticipantEventGunTime(), Types.VARCHAR));
+		sql.setInParams(new SQLParam(index++, new Integer(participantEventObject.getParticipantEventCategoryRank()), Types.INTEGER));
 		sql.setInParams(new SQLParam(index++, new Integer(participantEventObject.getParticipantEventId()), Types.INTEGER));
 		setSQLStatement(sql);
 		
@@ -350,6 +361,7 @@ public class PersistentParticipantEvent extends PersistentObject {
 				f.setParticipantEventAgeCategory(rs.getInt(index++));
 				f.setParticipantEventNetTime(rs.getString(index++));
 				f.setParticipantEventGunTime(rs.getString(index++));
+				f.setParticipantEventCategoryRank(rs.getInt(index++));
 				result.add(f);
 			}
 		} catch (Exception e) {

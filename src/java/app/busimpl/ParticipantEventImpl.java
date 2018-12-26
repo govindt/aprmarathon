@@ -1,7 +1,7 @@
 /*
  * ParticipantEventImpl.java
  *
- * APR Marathon Registration App Project
+ * APR Marathon Registration App Project - MANUAL EDIT
  *
  * Author: Govind Thirumalai
  */

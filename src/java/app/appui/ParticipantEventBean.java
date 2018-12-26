@@ -120,6 +120,8 @@ public class ParticipantEventBean implements SpreadSheetInterface {
 					selectedParticipantEventObj.setParticipantEventNetTime(buf);
 					buf = Util.trim(valuepairs.get(AppConstants.PARTICIPANT_EVENT_GUN_TIME_STR));
 					selectedParticipantEventObj.setParticipantEventGunTime(buf);
+					buf = Util.trim(valuepairs.get(AppConstants.PARTICIPANT_EVENT_CATEGORY_RANK_STR));
+					selectedParticipantEventObj.setParticipantEventCategoryRank(Integer.parseInt(buf));
 					DebugHandler.debug("Modifying ParticipantEvent Object " + selectedParticipantEventObj);
 					participantEventIf.updateParticipantEvent(selectedParticipantEventObj);
 				}
@@ -146,6 +148,8 @@ public class ParticipantEventBean implements SpreadSheetInterface {
 					selectedParticipantEventObj.setParticipantEventNetTime(buf);
 					buf = Util.trim(valuepairs.get(AppConstants.PARTICIPANT_EVENT_GUN_TIME_STR));
 					selectedParticipantEventObj.setParticipantEventGunTime(buf);
+					buf = Util.trim(valuepairs.get(AppConstants.PARTICIPANT_EVENT_CATEGORY_RANK_STR));
+					selectedParticipantEventObj.setParticipantEventCategoryRank(Integer.parseInt(buf));
 					DebugHandler.debug("Adding ParticipantEvent Object " + participantEventObj);
 					participantEventIf.addParticipantEvent(participantEventObj);
 				}
@@ -373,6 +377,18 @@ public class ParticipantEventBean implements SpreadSheetInterface {
 			td = new TableDataElement(new InputElement(InputElement.TEXT, AppConstants.PARTICIPANT_EVENT_GUN_TIME_STR, Constants.EMPTY));
 		tr.add(td);
 		te.add(tr);
+		
+		tr = new TableRowElement();
+		be = new BoldElement(AppConstants.PARTICIPANT_EVENT_CATEGORY_RANK_LABEL);
+		be.setId(Constants.BODY_ROW_STYLE);
+		td = new TableDataElement(be);
+		tr.add(td);
+		if ( participantEventId != 0 )
+			td = new TableDataElement(new InputElement(InputElement.TEXT, AppConstants.PARTICIPANT_EVENT_CATEGORY_RANK_STR, selectedParticipantEventObj.getParticipantEventGunTime()));
+		else
+			td = new TableDataElement(new InputElement(InputElement.TEXT, AppConstants.PARTICIPANT_EVENT_CATEGORY_RANK_STR, Constants.EMPTY));
+		tr.add(td);
+		te.add(tr);
 
 		tr = new TableRowElement();
 		be = new BoldElement(Constants.UPLOAD_FILE_LABEL);
@@ -479,6 +495,10 @@ public class ParticipantEventBean implements SpreadSheetInterface {
 		cell = row.createCell((short)col++);
 		cell.setCellStyle(cellstyleTblHdr);
 		cell.setCellValue(AppConstants.PARTICIPANT_EVENT_GUN_TIME_LABEL);
+		
+		cell = row.createCell((short)col++);
+		cell.setCellStyle(cellstyleTblHdr);
+		cell.setCellValue(AppConstants.PARTICIPANT_EVENT_CATEGORY_RANK_LABEL);
 
 		ParticipantEventInterface participanteventIf = new ParticipantEventImpl();
 		ParticipantEventObject[] participanteventArr = participanteventIf.getAllParticipantEvents();
@@ -656,6 +676,13 @@ public class ParticipantEventBean implements SpreadSheetInterface {
 					} catch (NumberFormatException nfe) {
 						participanteventObject.setParticipantEventGunTime(Util.trim(cell.getStringCellValue()));
 					}
+				cell = row.getCell((short)col++);
+				if ( cell != null )
+					try {
+						participanteventObject.setParticipantEventCategoryRank((int)cell.getNumericCellValue());
+					} catch (NumberFormatException nfe) {
+						participanteventObject.setParticipantEventCategoryRank(0);
+					}
 				participanteventIf.updateParticipantEvent(participanteventObject);
 				DebugHandler.fine("Updating ParticipantEvent " + participanteventObject);
 			} else if ( dbOp != null && dbOp.equalsIgnoreCase("INSERT") ) {
@@ -714,6 +741,14 @@ public class ParticipantEventBean implements SpreadSheetInterface {
 				cell = row.getCell((short)col++);
 				if ( cell != null )
 					participanteventObject.setParticipantEventGunTime(Util.trim(cell.getStringCellValue()));
+				
+				cell = row.getCell((short)col++);
+				if ( cell != null )
+					try {
+						participanteventObject.setParticipantEventCategoryRank((int)cell.getNumericCellValue());
+					} catch (NumberFormatException nfe) {
+						participanteventObject.setParticipantEventCategoryRank(0);
+					}
 				
 				DebugHandler.fine("Adding ParticipantEvent " + participanteventObject);
 				participanteventIf.addParticipantEvent(participanteventObject);

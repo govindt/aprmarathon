@@ -1,7 +1,7 @@
 /*
  * ParticipantInterface.java
  *
- * APR Marathon Registration App Project - MANUAL EDIT
+ * APR Marathon Registration App Project
  *
  * Author: Govind Thirumalai
  */
@@ -22,6 +22,7 @@ import app.busobj.ParticipantObject;
  */
 
 public interface ParticipantInterface {
+	
 	/**
 	 *
 	 * Interface that returns the ParticipantObject given a ParticipantObject filled with values that will be used for query from the underlying datasource.

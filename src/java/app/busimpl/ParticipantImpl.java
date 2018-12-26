@@ -1,7 +1,7 @@
 /*
  * ParticipantImpl.java
  *
- * APR Marathon Registration App Project - MANUAL EDIT
+ * APR Marathon Registration App Project
  *
  * Author: Govind Thirumalai
  */
@@ -16,11 +16,7 @@ import core.db.DBUtil;
 import core.util.AppException;
 import core.util.Util;
 import app.busobj.ParticipantObject;
-import app.busobj.RegistrantEventObject;
-import app.busobj.EventObject;
 import app.businterface.ParticipantInterface;
-import app.businterface.RegistrantEventInterface;
-import app.businterface.EventInterface;
 import app.util.AppConstants;
 
 /**
@@ -150,7 +146,6 @@ public class ParticipantImpl implements ParticipantInterface  {
 		}
 		Integer i = (Integer)DBUtil.insert(participantObject);
 		DebugHandler.fine("i: " +  i);
-	
 		// Do for Non Oracle where there is auto increment
 		if ( ! AppConstants.DB_TYPE.equalsIgnoreCase(Constants.ORACLE) ) {
 			participantObject.setParticipantId(i.intValue());
