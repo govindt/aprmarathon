@@ -39,6 +39,7 @@ public class ParticipantEventObject implements Cloneable {
 	private int participant_event_age_category;
 	private String participant_event_net_time;
 	private String participant_event_gun_time;
+	private int participant_event_category_rank;
 	
 	/**
 	 *
@@ -60,6 +61,7 @@ public class ParticipantEventObject implements Cloneable {
 		buf += "participant_event_age_category : " + participant_event_age_category + "\n";
 		buf += "participant_event_net_time : " + participant_event_net_time + "\n";
 		buf += "participant_event_gun_time : " + participant_event_gun_time + "\n";
+		buf += "participant_event_category_rank : " + participant_event_category_rank + "\n";
 		return buf;
 	}
 
@@ -83,6 +85,7 @@ public class ParticipantEventObject implements Cloneable {
 		list.add(participant_event_age_category + "");
 		list.add(participant_event_net_time + "");
 		list.add(participant_event_gun_time + "");
+		list.add(participant_event_category_rank + "");
 		return list;
 	}
 
@@ -107,6 +110,7 @@ public class ParticipantEventObject implements Cloneable {
 			jo.put("participant_event_age_category", participant_event_age_category);
 			jo.put("participant_event_net_time", participant_event_net_time);
 			jo.put("participant_event_gun_time", participant_event_gun_time);
+			jo.put("participant_event_category_rank", participant_event_category_rank);
 		} catch (JSONException je) {}
 		return jo;
 	}
@@ -139,6 +143,7 @@ public class ParticipantEventObject implements Cloneable {
 		setParticipantEventAgeCategory(0);
 		setParticipantEventNetTime("");
 		setParticipantEventGunTime("");
+		setParticipantEventCategoryRank(0);
 	}
 	
 	/**
@@ -177,6 +182,9 @@ public class ParticipantEventObject implements Cloneable {
 		try {
 			participant_event_gun_time = jObject.getString("participant_event_gun_time");
 		} catch (JSONException je) {participant_event_gun_time = "";}
+		try {
+			participant_event_category_rank = jObject.getInt("participant_event_category_rank");
+		} catch (JSONException je) {}
 	}
 	
 	
@@ -442,6 +450,32 @@ public class ParticipantEventObject implements Cloneable {
 	
 	/**
 	 *
+	 * Sets the <code>participant_event_category_rank</code> field
+	 *
+	 * @param participant_event_category_rank	  int
+	 *
+	 */
+	
+	public void setParticipantEventCategoryRank(int participant_event_category_rank) {
+		this.participant_event_category_rank = participant_event_category_rank;
+	}
+	
+	
+	/**
+	 *
+	 * Gets the <code>participant_event_category_rank</code> field
+	 *
+	 * @returns participant_event_category_rank
+	 *
+	 */
+	
+	public int getParticipantEventCategoryRank() {
+		return participant_event_category_rank;
+	}
+
+	
+	/**
+	 *
 	 * Tests if this object equals <code>obj</code>
 	 *
 	 * @returns true if equals
@@ -462,7 +496,8 @@ public class ParticipantEventObject implements Cloneable {
 			participant_group == other.getParticipantGroup() &&
 			participant_event_age_category == other.getParticipantEventAgeCategory() &&
 			Util.trim(participant_event_net_time).equals(Util.trim(other.getParticipantEventNetTime())) &&
-			Util.trim(participant_event_gun_time).equals(Util.trim(other.getParticipantEventGunTime()));
+			Util.trim(participant_event_gun_time).equals(Util.trim(other.getParticipantEventGunTime())) &&
+			participant_event_category_rank == other.getParticipantEventCategoryRank();
 	}
 	
 	/**

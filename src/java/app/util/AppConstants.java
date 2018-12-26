@@ -20,6 +20,8 @@ import java.util.*;
  */
 
 public class AppConstants {
+    public static String PARTICIPANT_EVENT_CATEGORY_RANK_LABEL;
+    public static String PARTICIPANT_EVENT_CATEGORY_RANK_STR = "participantEventCategoryRank";
     public static String PARTICIPANT_EVENT_AGE_CATEGORY_LABEL;
     public static String PARTICIPANT_EVENT_AGE_CATEGORY_STR = "participantEventAgeCategory";
     public static String PARTICIPANT_EVENT_GUN_TIME_LABEL;

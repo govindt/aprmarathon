@@ -350,6 +350,7 @@ public class ParticipantObject implements Cloneable {
 	public Date getParticipantDateOfBirth() {
 		return participant_date_of_birth;
 	}
+
 	
 	/**
 	 *

@@ -243,11 +243,11 @@ public class PersistentParticipant extends PersistentObject {
 		int index = 1;
 
 		if ( AppConstants.DB_TYPE.equalsIgnoreCase(Constants.ORACLE) ) {
-			statement = "INSERT INTO Participant (participant_id, participant_first_name, participant_middle_name, participant_last_name, participant_gender, participant_date_of_birth, participant_t_shirt_size, participant_blood_group, participant_cell_phone, participant_email, participant_group) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ";
+			statement = "INSERT INTO Participant (participant_id, participant_first_name, participant_middle_name, participant_last_name, participant_gender, participant_date_of_birth, participant_t_shirt_size, participant_blood_group, participant_cell_phone, participant_email, participant_group) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ";
 			sql.setStatement(statement);
 			sql.setInParams(new SQLParam(index++, new Integer(participantObject.getParticipantId()), Types.INTEGER));
 		} else {
-			statement = "INSERT INTO Participant (participant_first_name, participant_middle_name, participant_last_name, participant_gender, participant_date_of_birth, participant_t_shirt_size, participant_blood_group, participant_cell_phone, participant_email, participant_group) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ";
+			statement = "INSERT INTO Participant (participant_first_name, participant_middle_name, participant_last_name, participant_gender, participant_date_of_birth, participant_t_shirt_size, participant_blood_group, participant_cell_phone, participant_email, participant_group) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ";
 			sql.setStatement(statement);
 		}
 		sql.setInParams(new SQLParam(index++,  participantObject.getParticipantFirstName(), Types.VARCHAR));

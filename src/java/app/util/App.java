@@ -124,6 +124,7 @@ public class App {
 		
 
 		// INSERT GENERATED CODE
+    AppConstants.PARTICIPANT_EVENT_CATEGORY_RANK_LABEL = siteProps.getProperty("app.participant_event_category_rank_label");
     AppConstants.PARTICIPANT_EVENT_AGE_CATEGORY_LABEL = siteProps.getProperty("app.participant_event_age_category_label");
     AppConstants.PARTICIPANT_EVENT_NET_TIME_LABEL = siteProps.getProperty("app.participant_event_net_time_label");
     AppConstants.PARTICIPANT_EVENT_GUN_TIME_LABEL = siteProps.getProperty("app.participant_event_gun_time_label");

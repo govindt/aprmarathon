@@ -506,6 +506,7 @@ public class BulkOpsImpl implements BulkOpsInterface  {
 							pEObj.setParticipantEventType(eTObj.getEventTypeId());
 							pEObj.setParticipantEventGunTime(rObj.getResultsGunTime());
 							pEObj.setParticipantEventNetTime(rObj.getResultsNetTime());
+							pEObj.setParticipantEventCategoryRank(rObj.getResultsCategoryRank());
 							result = pEIf.updateParticipantEvent(pEObj);
 						} else {
 							DebugHandler.severe("Bib No: " + bibNo + " does not have the corresponding Participant Event Entry. Must be added as spot entry in Timing System.");
