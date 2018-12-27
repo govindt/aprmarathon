@@ -237,7 +237,7 @@ public class SendGMail {
 		if ( attachment == null ) {
 			m = SendGMail.createEmail(to, cc, bcc, from, subject, bodyText);
 		} else {
-			m = SendGMail.createEmailWithAttachment(to, from, cc, bcc, subject, bodyText, attachment);
+			m = SendGMail.createEmailWithAttachment(to, cc, bcc, from, subject, bodyText, attachment);
 		}
 		String user = "me";
 		SendGMail.sendMessage(service, user, m);
