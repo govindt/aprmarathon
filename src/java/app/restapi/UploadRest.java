@@ -391,7 +391,8 @@ public class UploadRest {
 								null,
 								AppConstants.EMAIL_FROM, 
 								"Participant List Updated for " + eObj.getEventName(), 
-								"Participants Added that were sent via Mass Entry Spreadsheet", null);
+								"Participants Added that were sent via Mass Entry Spreadsheet.\nYou can check the Registration in the APR Marathon mobile App.\nYou can get the app download location from http://aprmarathon.org", 
+								null);
 		} catch (MessagingException me) {
 			DebugHandler.severe("Messaging Exception Sending to " + rObj.getRegistrantEmail());
 			me.printStackTrace();
