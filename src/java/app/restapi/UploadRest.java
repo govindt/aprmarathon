@@ -172,10 +172,11 @@ public class UploadRest {
 				return cell.getRichStringCellValue().getString();
 			case NUMERIC:
 				if (DateUtil.isCellDateFormatted(cell)) {
-					Date date = DateUtil.getJavaDate(cell.getNumericCellValue());
+					Date date = cell.getDateCellValue();
 					return sDateFormat.format(date);
 				}
 				else {
+					DebugHandler.info("Not Date Cell Formatted : cell.getNumericCellValue(): " + cell.getNumericCellValue());
 					DataFormatter formatter = new DataFormatter();
 					return formatter.formatCellValue(cell);
 				}
@@ -190,7 +191,7 @@ public class UploadRest {
 	
 	private String processParticipantExcelFile(int registrant_id, int event_id, String uploadedFileLocation) throws AppException {
 		String retVal = "";
-		sDateFormat = new SimpleDateFormat("DD/MM/YYYY");
+		sDateFormat = new SimpleDateFormat("dd/MM/yyyy");
 		EventInterface eIf = new EventImpl();
 		EventObject eObj = eIf.getEvent(event_id);
 		if ( eObj == null ) {
@@ -283,7 +284,6 @@ public class UploadRest {
 					} else if ( j == 3) {
 						try {
 							Date date = sDateFormat.parse(buf); 
-							DebugHandler.info("DOB: " + buf + " Date: " + date);
 							pObj.setParticipantDateOfBirth(date);
 						} catch (ParseException pe) {
 							throw new AppException("Wrong Date provide " + buf + " Row: " + i + "Column: " + (j + 1));
@@ -391,7 +391,9 @@ public class UploadRest {
 								null,
 								AppConstants.EMAIL_FROM, 
 								"Participant List Updated for " + eObj.getEventName(), 
-								"Participants Added that were sent via Mass Entry Spreadsheet.\nYou can check the Registration in the APR Marathon mobile App.\nYou can get the app download location from http://aprmarathon.org", 
+								"Participants Added that were sent via Mass Entry Spreadsheet.<br>" +
+								"You can check the Registration in the APR Marathon mobile App->Group Info from Menu<br>" +
+								"You can get the app download location from http://aprmarathon.org", 
 								null);
 		} catch (MessagingException me) {
 			DebugHandler.severe("Messaging Exception Sending to " + rObj.getRegistrantEmail());
