@@ -161,7 +161,7 @@ public class UploadRest {
 			theDir.mkdir();
 		}
 	}
-	
+
 	private String getCellValue(Cell cell) {
 		if (cell == null ) 
 			return "";
@@ -176,7 +176,6 @@ public class UploadRest {
 					return sDateFormat.format(date);
 				}
 				else {
-					DebugHandler.info("Not Date Cell Formatted : cell.getNumericCellValue(): " + cell.getNumericCellValue());
 					DataFormatter formatter = new DataFormatter();
 					return formatter.formatCellValue(cell);
 				}

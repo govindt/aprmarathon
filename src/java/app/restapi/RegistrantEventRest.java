@@ -1,5 +1,5 @@
 /*
- * RegistrantEventRest.java
+ * RegistrantEventRest.java - MANUAL EDIT
  *
  * APR Marathon Registration App Project
  *
@@ -74,7 +74,19 @@ public class RegistrantEventRest {
 		RegistrantEventInterface registranteventIf = new RegistrantEventImpl();
 		RegistrantEventObject registranteventObject = new RegistrantEventObject(jObject);
 		DebugHandler.fine(registranteventObject);
-		Integer result = registranteventIf.addRegistrantEvent(registranteventObject);
+		RegistrantEventObject checkRegistrantEventObject = new RegistrantEventObject();
+		checkRegistrantEventObject.setRegistrantId(registranteventObject.getRegistrantId());
+		checkRegistrantEventObject.setRegistrantEvent(registranteventObject.getRegistrantEvent());
+		ArrayList<RegistrantEventObject> existsREObjArr = registranteventIf.getRegistrantEvents(checkRegistrantEventObject);
+		Integer result = new Integer(0);
+		if (existsREObjArr.size() == 0 ) { 
+			result = registranteventIf.addRegistrantEvent(registranteventObject);
+		} else {
+			RegistrantEventObject foundREObj = existsREObjArr.get(0);
+			DebugHandler.info("NOT ADDING. Found an entry already with same registrant id and event id.." + foundREObj);
+			result = new Integer(foundREObj.getRegistrantEventId());
+			registranteventObject = foundREObj;
+		}
 		JSONObject jo = registranteventObject.toJSON();
 		jo.put("result", result);
 		return Response.status(200).entity(jo.toString()).type(MediaType.APPLICATION_JSON).build();
