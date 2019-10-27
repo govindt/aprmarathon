@@ -1,7 +1,7 @@
 /*
  * RegistrantPaymentRest.java
  *
- * APR Marathon Registration App Project
+ * APR Marathon Registration App Project - MANUAL EDIT
  *
  * Author: Govind Thirumalai
  */
@@ -74,7 +74,19 @@ public class RegistrantPaymentRest {
 		RegistrantPaymentInterface registrantpaymentIf = new RegistrantPaymentImpl();
 		RegistrantPaymentObject registrantpaymentObject = new RegistrantPaymentObject(jObject);
 		DebugHandler.fine(registrantpaymentObject);
-		Integer result = registrantpaymentIf.addRegistrantPayment(registrantpaymentObject);
+		RegistrantPaymentObject checkRegistrantPaymentObject = new RegistrantPaymentObject();
+		checkRegistrantPaymentObject.setRegistrant(registrantpaymentObject.getRegistrant());
+		checkRegistrantPaymentObject.setRegistrantEvent(registrantpaymentObject.getRegistrantEvent());
+		ArrayList<RegistrantPaymentObject> existsRPObjArr = registrantpaymentIf.getRegistrantPayments(checkRegistrantPaymentObject);
+		Integer result = new Integer(0);
+		if (existsRPObjArr.size() == 0 ) { 
+			result = registrantpaymentIf.addRegistrantPayment(registrantpaymentObject);
+		} else {
+			RegistrantPaymentObject foundRPObj = existsRPObjArr.get(0);
+			DebugHandler.info("NOT ADDING. Found an entry already with same registrant id and event id.." + foundRPObj);
+			result = new Integer(foundRPObj.getRegistrantPaymentId());
+			registrantpaymentObject = foundRPObj;
+		}
 		JSONObject jo = registrantpaymentObject.toJSON();
 		jo.put("result", result);
 		return Response.status(200).entity(jo.toString()).type(MediaType.APPLICATION_JSON).build();

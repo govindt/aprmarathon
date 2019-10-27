@@ -1,5 +1,5 @@
 /*
- * ParticipantEventRest.java
+ * ParticipantEventRest.java - MANUAL EDIT
  *
  * APR Marathon Registration App Project
  *
@@ -73,8 +73,21 @@ public class ParticipantEventRest {
 
 		ParticipantEventInterface participanteventIf = new ParticipantEventImpl();
 		ParticipantEventObject participanteventObject = new ParticipantEventObject(jObject);
-		DebugHandler.fine(participanteventObject);
-		Integer result = participanteventIf.addParticipantEvent(participanteventObject);
+		DebugHandler.fine(participanteventObject);	
+		ParticipantEventObject checkParticipantEventObject = new ParticipantEventObject();
+		checkParticipantEventObject.setParticipantId(participanteventObject.getParticipantId());
+		checkParticipantEventObject.setParticipantEvent(participanteventObject.getParticipantEvent());
+		checkParticipantEventObject.setParticipantEventType(participanteventObject.getParticipantEventType());
+		ArrayList<ParticipantEventObject> existsPEObjArr = participanteventIf.getParticipantEvents(checkParticipantEventObject);
+		Integer result = new Integer(0);
+		if (existsPEObjArr.size() == 0 ) { 
+			result = participanteventIf.addParticipantEvent(participanteventObject);
+		} else {
+			ParticipantEventObject foundPEObj = existsPEObjArr.get(0);
+			DebugHandler.info("NOT ADDING. Found an entry already with same participant id, event id and event_type.." + foundPEObj);
+			result = new Integer(foundPEObj.getParticipantEventId());
+			participanteventObject = foundPEObj;
+		}
 		JSONObject jo = participanteventObject.toJSON();
 		jo.put("result", result);
 		return Response.status(200).entity(jo.toString()).type(MediaType.APPLICATION_JSON).build();
