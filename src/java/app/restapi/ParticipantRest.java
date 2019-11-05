@@ -76,19 +76,21 @@ public class ParticipantRest {
 		DebugHandler.fine(participantObject);
 		ParticipantObject checkParticipantObject = new ParticipantObject();
 		// For now only first_name, gender, dob to avoid duplicates.
-		checkParticipantObject.setParticipantFirstName(participantObject.getParticipantFirstName());
-		checkParticipantObject.setParticipantGender(participantObject.getParticipantGender());
-		checkParticipantObject.setParticipantDateOfBirth(participantObject.getParticipantDateOfBirth());
-		ArrayList<ParticipantObject> existsPObjArr = participantIf.getParticipants(checkParticipantObject);
+		// Removing the above check for 2019 Marathon. We are going to add to the existing
+		// participant
+		//checkParticipantObject.setParticipantFirstName(participantObject.getParticipantFirstName());
+		//checkParticipantObject.setParticipantGender(participantObject.getParticipantGender());
+		//checkParticipantObject.setParticipantDateOfBirth(participantObject.getParticipantDateOfBirth());
+		//ArrayList<ParticipantObject> existsPObjArr = participantIf.getParticipants(checkParticipantObject);
 		Integer result = new Integer(0);
-		if (existsPObjArr.size() == 0 ) { 
+		//if (existsPObjArr.size() == 0 ) { 
 			result = participantIf.addParticipant(participantObject);
-		} else {
+		/*} else {
 			ParticipantObject foundPObj = existsPObjArr.get(0);
 			DebugHandler.info("NOT ADDING. Found an entry already with same email.." + foundPObj);
 			result = new Integer(foundPObj.getParticipantId());
 			participantObject = foundPObj;
-		}
+		}*/
 		JSONObject jo = participantObject.toJSON();
 		jo.put("result", result);
 		return Response.status(200).entity(jo.toString()).type(MediaType.APPLICATION_JSON).build();
