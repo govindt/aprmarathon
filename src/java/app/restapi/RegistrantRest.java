@@ -135,17 +135,19 @@ public class RegistrantRest {
 		DebugHandler.fine(registrantObject);
 		RegistrantObject checkRegistrantObject = new RegistrantObject();
 		// For now only email to avoid duplicates.
-		checkRegistrantObject.setRegistrantEmail(registrantObject.getRegistrantEmail());
-		ArrayList<RegistrantObject> existsRObjArr = registrantIf.getRegistrants(checkRegistrantObject);
+		// Removing the above check for 2019 Marathon. We are going to add to the existing
+		// registrant
+		//checkRegistrantObject.setRegistrantEmail(registrantObject.getRegistrantEmail());
+		//ArrayList<RegistrantObject> existsRObjArr = registrantIf.getRegistrants(checkRegistrantObject);
 		Integer result = new Integer(0);
-		if (existsRObjArr.size() == 0 ) { 
+		//if (existsRObjArr.size() == 0 ) { 
 			result = registrantIf.addRegistrant(registrantObject);
-		} else {
+		/*} else {
 			RegistrantObject foundRObj = existsRObjArr.get(0);
 			DebugHandler.info("NOT ADDING. Found an entry already with same email.." + foundRObj);
 			result = new Integer(foundRObj.getRegistrantId());
 			registrantObject = foundRObj;
-		}
+		}*/
 		JSONObject jo = registrantObject.toJSON();
 		jo.put("result", result);
 		return Response.status(200).entity(jo.toString()).type(MediaType.APPLICATION_JSON).build();
