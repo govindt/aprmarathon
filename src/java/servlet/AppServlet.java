@@ -89,16 +89,16 @@ public class AppServlet extends HttpServlet {
 
     private void print_table( String msg, Hashtable<String,String> table ) {
 	if ( table != null ) {
-	    DebugHandler.fine("----------" + msg + "-------------");
+	    DebugHandler.debug("----------" + msg + "-------------");
 
 	    for (Enumeration<String> e = table.keys(); e.hasMoreElements();) {
 			String key = e.nextElement();
 			if ( key.equals(AppConstants.PASSWORD_STR))
 				DebugHandler.fine(key + ": ******");
 			else
-				DebugHandler.fine(key + ": " + table.get(key));
+				DebugHandler.debug(key + ": " + table.get(key));
 			}
-			DebugHandler.fine("----------" + msg + "-------------");
+			DebugHandler.debug("----------" + msg + "-------------");
 		}
     }
 
@@ -203,7 +203,7 @@ public class AppServlet extends HttpServlet {
 			session.setMaxInactiveInterval(43200); // 12 Hours	
 		}
 		if ( firstTime ) {
-			DebugHandler.info("Server Name: " + req.getServerName());
+			DebugHandler.debug("Server Name: " + req.getServerName());
 			DebugHandler.fine("Server Port: " + req.getServerPort());
 			DebugHandler.fine("Server Protocol: " + req.getScheme());
 			SiteInterface sif = new SiteImpl();
@@ -237,7 +237,7 @@ public class AppServlet extends HttpServlet {
 			alreadyLoggedIn = valuepairs.get(AppConstants.ALREADY_LOGGED_IN_STR);
 		}
 		
-		DebugHandler.fine("Username 1: " + userNameStr);
+		DebugHandler.debug("Username 1: " + userNameStr);
 	
 		// Now fill from the request
 		valuepairs = fillHash(req);
@@ -246,19 +246,19 @@ public class AppServlet extends HttpServlet {
 		// The following needs to be refilled because it gets reset in Admin Screens.
 		String jspStr = valuepairs.get(Constants.JSP_STR);
 		boolean loginRequired = false;
-		
+		DebugHandler.debug("JSP Str : " + jspStr);	
 		if ( jspStr != null && App.isLoginRequired(jspStr)) {
 			// Check to see if we have already logged in
 			if ( alreadyLoggedIn == null || alreadyLoggedIn.equals("false")) {
-				DebugHandler.fine("alreadyLoggedIn : " + alreadyLoggedIn);
+				DebugHandler.debug("alreadyLoggedIn : " + alreadyLoggedIn);
 				// Check to see if the previos request is the first time username was passed out.
 				userNameStr = valuepairs.get(AppConstants.USER_NAME_STR);
 				passwordStr = valuepairs.get(AppConstants.PASSWORD_STR);
-				DebugHandler.fine("Not Already Logged in ");
+				DebugHandler.debug("Not Already Logged in ");
 				UsersInterface uif = new UsersImpl();
 					try {
 						UsersObject utObj = uif.authenticate(userNameStr, passwordStr);
-						DebugHandler.fine(utObj);
+						DebugHandler.debug(utObj);
 						boolean loggedIn = (utObj != null) && (utObj.getUsersId() != 0);
 						if ( loggedIn) {
 							valuepairs.put(AppConstants.USER_NAME_STR, userNameStr);
@@ -281,14 +281,14 @@ public class AppServlet extends HttpServlet {
 					}
 				} // If already logged in pass the values along
 			else {
-				DebugHandler.fine("Here ");
+				DebugHandler.debug("Here ");
 				// Fill them from prior session to be used on subsequent access.
 				valuepairs.put(AppConstants.ALREADY_LOGGED_IN_STR, alreadyLoggedIn);
 				valuepairs.put(AppConstants.PASSWORD_STR, passwordStr);
 				valuepairs.put(AppConstants.USER_NAME_STR, userNameStr);
 				valuepairs.put(AppConstants.USER_ID_STR, userIdStr);
 				String doDownload = valuepairs.get(UtilBean.DOWNLOAD_FLAG_STR);
-				DebugHandler.fine("Download Flag : " + doDownload);
+				DebugHandler.debug("Download Flag : " + doDownload);
 				if ( doDownload != null && Boolean.valueOf(doDownload).booleanValue() == true ) {
 					String implName = valuepairs.get(Constants.SS_IMPL_NAME_STR);
 					String implParamsName = valuepairs.get(Constants.SS_IMPL_PARAMS_NAME_STR);
@@ -333,12 +333,12 @@ public class AppServlet extends HttpServlet {
 		session.setAttribute(Constants.VALUE_PAIR_STR, valuepairs);
 	
 		print_table("AppServlet:valuepairs: 3: ", valuepairs);
-		DebugHandler.fine("LoginRequired : " + loginRequired);
+		DebugHandler.debug("LoginRequired : " + loginRequired);
 		// Check for a new session
 		if (session != null && session.isNew()) {
-			DebugHandler.fine("jspStr: " + jspStr);
+			DebugHandler.debug("jspStr: " + jspStr);
 			if ( jspStr == null || jspStr.equals("") ) {
-				DebugHandler.fine("Setting jsp to default " );
+				DebugHandler.debug("Setting jsp to default " );
 				jsp = AppConstants.DEFAULT_JSP_STR;
 			}
 			else
@@ -358,7 +358,7 @@ public class AppServlet extends HttpServlet {
 		}
 		else {
 			getServletConfig().getServletContext().getRequestDispatcher(jspBase + jsp).forward(req, res);
-			DebugHandler.fine("JSP " + jspBase + jsp);
+			DebugHandler.debug("JSP " + jspBase + jsp);
 		}
     }
 
