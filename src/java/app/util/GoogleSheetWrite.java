@@ -17,6 +17,7 @@ import com.google.api.client.extensions.jetty.auth.oauth2.LocalServerReceiver;
 import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
 import com.google.api.client.googleapis.auth.oauth2.GoogleClientSecrets;
 import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
+import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.client.json.JsonFactory;
@@ -27,6 +28,8 @@ import com.google.api.services.sheets.v4.Sheets;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.FileNotFoundException;
+import java.security.GeneralSecurityException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ArrayList;
@@ -43,28 +46,16 @@ public class GoogleSheetWrite {
     public static String spreadsheetId;
     public static String participantsRange;
     public static String registrantsRange;
-	public static String eventsId;
+    public static String eventsId;
     
 	
 	
 
     /** Application name. */
-    public static final String APPLICATION_NAME =
-        "Google Sheets API Java Read";
-
-    /** Directory to store user credentials for this application. */
-    public static final java.io.File DATA_STORE_DIR = new java.io.File(
-        System.getProperty("user.home"), ".credentials/sheets.googleapis.com-java-read");
-
-    /** Global instance of the {@link FileDataStoreFactory}. */
-    public static FileDataStoreFactory DATA_STORE_FACTORY;
-
-    /** Global instance of the JSON factory. */
-    public static final JsonFactory JSON_FACTORY =
-        JacksonFactory.getDefaultInstance();
-
-    /** Global instance of the HTTP transport. */
-    public static HttpTransport HTTP_TRANSPORT;
+    private static final String APPLICATION_NAME = "Google Sheets API Java Read"; 
+    private static final String TOKENS_DIRECTORY_PATH = "tokens.sheets";
+    private static final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
+    private static final String CREDENTIALS_FILE_PATH = "client_secret.json";
 
     /** Global instance of the scopes required by this quickstart.
      *
@@ -74,47 +65,36 @@ public class GoogleSheetWrite {
     public static final List<String> SCOPES =
         Arrays.asList(SheetsScopes.SPREADSHEETS);
 	
-
-    static {
-        try {
-            HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
-            DATA_STORE_FACTORY = new FileDataStoreFactory(DATA_STORE_DIR);
-        } catch (Throwable t) {
-            t.printStackTrace();
-            System.exit(1);
-        }
+    /**
+   * Creates an authorized Credential object.
+   *
+   * @param HTTP_TRANSPORT The network HTTP Transport.
+   * @return An authorized Credential object.
+   * @throws IOException If the credentials.json file cannot be found.
+   */
+    private static Credential getCredentials(final NetHttpTransport HTTP_TRANSPORT)
+      throws IOException {
+    // Load client secrets.
+    InputStream in = GoogleSheetWrite.class.getResourceAsStream(CREDENTIALS_FILE_PATH);
+    if (in == null) {
+      throw new FileNotFoundException("Resource not found: " + CREDENTIALS_FILE_PATH);
     }
+    GoogleClientSecrets clientSecrets =
+        GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(in));
+
+    // Build flow and trigger user authorization request.
+    GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(
+        HTTP_TRANSPORT, JSON_FACTORY, clientSecrets, SCOPES)
+        .setDataStoreFactory(new FileDataStoreFactory(new java.io.File(TOKENS_DIRECTORY_PATH)))
+        .setAccessType("offline")
+        .build();
+    LocalServerReceiver receiver = new LocalServerReceiver.Builder().setPort(8888).build();
+    return new AuthorizationCodeInstalledApp(flow, receiver).authorize("user");
+  }
 
     public GoogleSheetWrite(String event_id) {
-		init();
-		eventsId = event_id;
-    }
-
-    /**
-     * Creates an authorized Credential object.
-     * @return an authorized Credential object.
-     * @throws IOException
-     */
-    public static Credential authorize() throws IOException {
-        // Load client secrets.
-        InputStream in = GoogleSheetWrite.class.getClassLoader().getResourceAsStream("app/util/client_secret.json");
-		if ( in == null ) {
-			System.err.println("Unable to read client_secret.json from " +  GoogleSheetWrite.class.getClassLoader());
-		}
-		GoogleClientSecrets clientSecrets =
-			GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(in));
-
-		// Build flow and trigger user authorization request.
-		GoogleAuthorizationCodeFlow flow =
-				new GoogleAuthorizationCodeFlow.Builder(
-						HTTP_TRANSPORT, JSON_FACTORY, clientSecrets, SCOPES)
-				.setDataStoreFactory(DATA_STORE_FACTORY)
-				.setAccessType("offline")
-				.build();
-		Credential credential = new AuthorizationCodeInstalledApp(
-			flow, new LocalServerReceiver()).authorize("user");
-		DebugHandler.fine("Credentials saved to " + DATA_STORE_DIR.getAbsolutePath());
-		return credential;
+	init();
+	eventsId = event_id;
     }
 
     /**
@@ -123,12 +103,21 @@ public class GoogleSheetWrite {
      * @throws IOException
      */
     public static Sheets getSheetsService() throws AppException {
-		Credential credential = null;
-		try {
-			credential = authorize();
-		} catch (IOException ioe) {
-			throw new AppException ("IOException during authorize: " + ioe.getMessage());
-		}
+	Credential credential = null;
+        NetHttpTransport HTTP_TRANSPORT = null;
+	try {
+		HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
+	} catch (GeneralSecurityException gse) {
+		gse.printStackTrace();
+	} catch (IOException ioe1) {
+		ioe1.printStackTrace();
+	}
+    
+	try {
+		credential = getCredentials(HTTP_TRANSPORT);
+	} catch (IOException ioe) {
+		throw new AppException ("IOException during authorize: " + ioe.getMessage());
+	}
         return new Sheets.Builder(HTTP_TRANSPORT, JSON_FACTORY, credential)
                 .setApplicationName(APPLICATION_NAME)
                 .build();
@@ -159,5 +148,6 @@ public class GoogleSheetWrite {
     }
 
 }
+
 
 

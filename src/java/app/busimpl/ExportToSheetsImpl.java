@@ -62,7 +62,9 @@ public class ExportToSheetsImpl implements ExportToSheetsInterface  {
 		int event_id = Integer.parseInt(GoogleSheetWrite.eventsId);
 		
 		rEObj.setRegistrantEvent(event_id);
+		DebugHandler.info("Here " + rEObj);
 		ArrayList<RegistrantEventObject> rEObjArr = rEIf.getRegistrantEvents(rEObj);
+		DebugHandler.info("Here 1" + rEObjArr);
 		List<List<Object>> rListOfList = new ArrayList<List<Object>>();
 		ValueRange vR = new ValueRange();
 		vR.setRange(GoogleSheetWrite.registrantsRange);
@@ -119,9 +121,13 @@ public class ExportToSheetsImpl implements ExportToSheetsInterface  {
 				registrantList.add(rEObj.getRegistrantEmergencyContact());
 				registrantList.add(rEObj.getRegistrantEmergencyPhone());
 				RegistrantPaymentObject rPObj = new RegistrantPaymentObject();
+				DebugHandler.info("Here " + rPObj);
 				rPObj.setRegistrantEvent(event_id);
+				DebugHandler.info("Here 1 " + rPObj);
 				rPObj.setRegistrant(rEObj.getRegistrantId());
+				DebugHandler.info("Here 2 " + rPObj);
 				ArrayList<RegistrantPaymentObject> rPObjArr = rPIf.getRegistrantPayments(rPObj);
+				DebugHandler.fine(rPObjArr);
 				if ( rPObjArr != null && rPObjArr.size() == 1 ) {
 					rPObj = rPObjArr.get(0);
 					PaymentTypeObject pTObj = pTIf.getPaymentType(rPObj.getPaymentType());
@@ -142,6 +148,7 @@ public class ExportToSheetsImpl implements ExportToSheetsInterface  {
 					registrantList.add(Constants.INFO_STR);
 					
 				} else {
+					DebugHandler.fine("No payment or Multiple payment for " + registrantList);
 					throw new AppException("Found none or more than one payment for registrant : " + rObj.toString());
 				}
 				rListOfList.add(registrantList);
@@ -155,6 +162,7 @@ public class ExportToSheetsImpl implements ExportToSheetsInterface  {
 			service.spreadsheets().values().clear(GoogleSheetWrite.spreadsheetId, 
 				GoogleSheetWrite.registrantsRange, new ClearValuesRequest()).execute();
 		} catch (IOException ioe) {
+                        ioe.printStackTrace();
 			throw new AppException("IOException during Clearing Contents. " + ioe.getMessage());
 		}
 		BatchUpdateValuesRequest batchBody = new BatchUpdateValuesRequest()

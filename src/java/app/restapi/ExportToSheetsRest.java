@@ -62,6 +62,7 @@ public class ExportToSheetsRest {
 			eTSIf.updateRegistrants();
 		} catch (AppException ae) {
 			DebugHandler.severe("Failed to write Registrant Info");
+			ae.printStackTrace();
 			jo.put("result", new Integer(1));
 			return Response.status(200).entity(jo.toString()).type(MediaType.APPLICATION_JSON).build();
 		}

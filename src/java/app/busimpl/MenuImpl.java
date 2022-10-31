@@ -42,30 +42,22 @@ public class MenuImpl implements MenuInterface  {
      */
     
     public ArrayList<MenuObject> getMenus(MenuObject menu_obj) throws AppException{
-	MenuObject[] menuObjectArr = getAllMenus();
-	ArrayList<MenuObject> v = new ArrayList<MenuObject>();
-	if ( menuObjectArr == null )
-	    return null;
-	for ( int i = 0; i < menuObjectArr.length; i++ ) {
-	    if ( menuObjectArr[i] != null ) {
+		MenuObject[] menuObjectArr = getAllMenus();
 		if ( menu_obj.getMenuId() == Constants.GET_ALL ) {
-			v.add((MenuObject)menuObjectArr[i].clone());	
-		} else {
-			if ( (menu_obj.getMenuId() != 0 && menu_obj.getMenuId() == menuObjectArr[i].getMenuId())
- || (menu_obj.getMenuName() != null && menu_obj.getMenuName().equals(menuObjectArr[i].getMenuName()))
- || (menu_obj.getSiteId() != 0 && menu_obj.getSiteId() == menuObjectArr[i].getSiteId())
- || (menu_obj.getUrl() != null && menu_obj.getUrl() != "" && menu_obj.getUrl().equals(menuObjectArr[i].getUrl()))
- || (menu_obj.getMenuOrder() != 0 && menu_obj.getMenuOrder() == menuObjectArr[i].getMenuOrder())
- || (menu_obj.getParentMenuId() != 0 && menu_obj.getParentMenuId() == menuObjectArr[i].getParentMenuId())
- || (menu_obj.getRoleId() != 0 && menu_obj.getRoleId() == menuObjectArr[i].getRoleId())
-) {
-			    v.add((MenuObject)menuObjectArr[i].clone());
+			if ( menuObjectArr == null )
+				return null;
+			ArrayList<MenuObject> v = new ArrayList<MenuObject>();
+			for ( int i = 0; i < menuObjectArr.length; i++ ) {
+				v.add((MenuObject)menuObjectArr[i].clone());
 			}
+			return v;
 		}
-	    }
-	}
-	DebugHandler.finest("v: " + v);
-	return v;
+		else {
+			@SuppressWarnings("unchecked")
+			ArrayList<MenuObject> v = (ArrayList<MenuObject>)DBUtil.list(menu_obj,menu_obj);
+			DebugHandler.finest("v: " + v);
+			return v;
+		}
     }
     
     /**

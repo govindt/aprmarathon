@@ -34,6 +34,7 @@ public class MenuBean implements SpreadSheetInterface {
     public int menuId = 0;
     public int parentMenuId = 0;
     public int roleId = 0;
+	public int siteId = 0;
     MenuObject selectedMenuObj = new MenuObject();
     MenuInterface menuIf = new MenuImpl();
 
@@ -61,6 +62,11 @@ public class MenuBean implements SpreadSheetInterface {
 	} catch (NumberFormatException nfe) {
 	    roleId = 0;
 	}
+	try {
+	    siteId = Integer.parseInt(valuepairs.get(AppConstants.SITE_ID_STR));
+	} catch (NumberFormatException nfe) {
+	    siteId = 0;
+	}
 	String saveProfile = valuepairs.get(UtilBean.SAVE_PROFILE_FLAG_STR);
 	if ( saveProfile == null ||
 	     Boolean.valueOf(saveProfile).booleanValue() == false ) {
@@ -77,6 +83,8 @@ public class MenuBean implements SpreadSheetInterface {
 		    SimpleDateFormat dateFormatter = new SimpleDateFormat(Constants.DATE_FORMAT_STR);
 		    buf = Util.trim(valuepairs.get(AppConstants.MENU_NAME_STR));
 		    selectedMenuObj.setMenuName(buf);
+			buf = Util.trim(valuepairs.get(AppConstants.SITE_ID_STR));
+		    selectedMenuObj.setSiteId(Integer.parseInt(buf));
 		    buf = Util.trim(valuepairs.get(AppConstants.URL_STR));
 		    selectedMenuObj.setUrl(buf);
 		    buf = Util.trim(valuepairs.get(AppConstants.MENU_ORDER_STR));
@@ -95,6 +103,8 @@ public class MenuBean implements SpreadSheetInterface {
 		    MenuObject menuObj = new MenuObject();
 		    buf = Util.trim(valuepairs.get(AppConstants.MENU_NAME_STR));
 		    menuObj.setMenuName(buf);
+			buf = Util.trim(valuepairs.get(AppConstants.SITE_ID_STR));
+		    menuObj.setSiteId(Integer.parseInt(buf));
 		    buf = Util.trim(valuepairs.get(AppConstants.URL_STR));
 		    menuObj.setUrl(buf);
 		    buf = Util.trim(valuepairs.get(AppConstants.MENU_ORDER_STR));
@@ -161,6 +171,18 @@ public class MenuBean implements SpreadSheetInterface {
 	    td = new TableDataElement(new InputElement(InputElement.TEXT, AppConstants.MENU_NAME_STR, selectedMenuObj.getMenuName()));
 	else
 	    td = new TableDataElement(new InputElement(InputElement.TEXT, AppConstants.MENU_NAME_STR, Constants.EMPTY));
+	tr.add(td);
+	te.add(tr);
+	
+	tr = new TableRowElement();
+	be = new BoldElement(AppConstants.SITE_ID_LABEL);
+	be.setId(Constants.BODY_ROW_STYLE);
+	td = new TableDataElement(be);
+	tr.add(td);
+	if ( menuId != 0 )
+	    td = new TableDataElement(new InputElement(InputElement.TEXT, AppConstants.SITE_ID_STR, String.valueOf(selectedMenuObj.getSiteId())));
+	else
+	    td = new TableDataElement(new InputElement(InputElement.TEXT, AppConstants.SITE_ID_STR, Constants.EMPTY));
 	tr.add(td);
 	te.add(tr);
 
@@ -313,6 +335,10 @@ public class MenuBean implements SpreadSheetInterface {
 
 	cell = row.createCell((short)col++);
 	cell.setCellStyle(cellstyleTblHdr);
+	cell.setCellValue(AppConstants.SITE_ID_LABEL);
+
+	cell = row.createCell((short)col++);
+	cell.setCellStyle(cellstyleTblHdr);
 	cell.setCellValue(AppConstants.URL_LABEL);
 
 	cell = row.createCell((short)col++);
@@ -349,6 +375,10 @@ public class MenuBean implements SpreadSheetInterface {
 		cell = row.createCell((short)col++);
 		cell.setCellStyle(cellstyleTblLeft);
 		cell.setCellValue(menuObj.getMenuName());
+
+		cell = row.createCell((short)col++);
+		cell.setCellStyle(cellstyleTblLeft);
+		cell.setCellValue(menuObj.getSiteId());
 
 		cell = row.createCell((short)col++);
 		cell.setCellStyle(cellstyleTblLeft);
@@ -430,6 +460,13 @@ public class MenuBean implements SpreadSheetInterface {
 		    menuObject.setMenuName(Util.trim(cell.getStringCellValue()));
 		cell = row.getCell((short)col++);
 		if ( cell != null )
+		try {
+		    menuObject.setSiteId((int)cell.getNumericCellValue());
+		} catch (NumberFormatException nfe) {
+		    menuObject.setSiteId(0);
+		}
+		cell = row.getCell((short)col++);
+		if ( cell != null )
 		    menuObject.setUrl(Util.trim(cell.getStringCellValue()));
 		cell = row.getCell((short)col++);
 		if ( cell != null )
@@ -459,6 +496,13 @@ public class MenuBean implements SpreadSheetInterface {
 		cell = row.getCell((short)col++);
 		if ( cell != null )
 		    menuObject.setMenuName(Util.trim(cell.getStringCellValue()));
+		cell = row.getCell((short)col++);
+		if ( cell != null )
+		try {
+		    menuObject.setSiteId((int)cell.getNumericCellValue());
+		} catch (NumberFormatException nfe) {
+		    menuObject.setSiteId(0);
+		}
 		cell = row.getCell((short)col++);
 		if ( cell != null )
 		    menuObject.setUrl(Util.trim(cell.getStringCellValue()));

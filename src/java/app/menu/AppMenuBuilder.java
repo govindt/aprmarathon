@@ -50,16 +50,16 @@ public class AppMenuBuilder implements MenuBuilder
 				MenuObject mObj = new MenuObject();
 				mObj.setRoleId(usersObj.getRoleId());
 				mObj.setSiteId(AppConstants.SITE_ID);
-				DebugHandler.debug("Menu Object " + mObj);
+				DebugHandler.fine("Menu Object " + mObj);
 				ArrayList<MenuObject> v = mif.getMenus(mObj);
-				DebugHandler.debug("Menu ArrayList " + v);
+				DebugHandler.fine("Menu ArrayList " + v);
 				SiteInterface sif = new SiteImpl();
 				SiteObject sObj = sif.getSite(AppConstants.SITE_ID);
 				for ( int i = 0; i < v.size(); i++) {
 					mObj = v.get(i);
 					String menu_url = sObj.getSiteUrl() + Util.getBaseurl() + 
 						Constants.URL_SEPARATOR + Constants.JSP_STR + Constants.EQUALS_STR + mObj.getUrl();
-					DebugHandler.debug(menu_url);
+					DebugHandler.fine(menu_url);
 					if ( mObj.getParentMenuId() == TOP_PARENT_ID ) {
 						CompositeMenu aTopMenu = new CompositeMenu(Constants.EMPTY + mObj.getMenuId(), mObj.getMenuName(), menu_url);
 						topMenus.add(aTopMenu);
@@ -93,6 +93,7 @@ public class AppMenuBuilder implements MenuBuilder
         boolean isLeaf = false;
 		MenuInterface mIf = new MenuImpl();
 		mObj.setParentMenuId(Integer.parseInt(menuId));
+		mObj.setSiteId(AppConstants.SITE_ID);
 		try {
 			ArrayList<MenuObject> v = mIf.getMenus(mObj);
 			DebugHandler.debug("isLeaf:v : " + v);
@@ -111,6 +112,7 @@ public class AppMenuBuilder implements MenuBuilder
 		MenuInterface mIf = new MenuImpl();
 		MenuObject mObj = new MenuObject();
 		mObj.setParentMenuId(Integer.parseInt(menuId));
+		mObj.setSiteId(AppConstants.SITE_ID);
 		try {
 			SiteObject sObj = sif.getSite(AppConstants.SITE_ID);
 			ArrayList<MenuObject> v = mIf.getMenus(mObj);
